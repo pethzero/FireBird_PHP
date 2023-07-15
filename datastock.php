@@ -104,9 +104,9 @@
         <label for="searchInput" class="form-label">ค้นหา</label>
         <!-- <input type="text" class="form-control" id="searchInput" placeholder="" > -->
           <select  class="form-control select2" id="searchInput"> 
-            <option value="one">First</option>
+            <!-- <option value="one">First</option>
             <option value="two" >Second (disabled)</option>
-            <option value="three">Third</option>
+            <option value="three">Third</option> -->
            </select>
       </div>
     </div>
