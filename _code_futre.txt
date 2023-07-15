@@ -1,0 +1,118 @@
+// function FuccategorizedData(dataArray)
+// {
+//   var data = dataArray;
+//   categorizedData = {};
+//   data.forEach(item => 
+//   {
+//     const year = Object.keys(item)[0];
+//     const month = item["Mouth"];
+//     const totalAmt = item["TOTALAMT"];
+
+//     if (!categorizedData[year])
+//     {
+//       categorizedData[year] = [];
+//     }
+
+//     categorizedData[year].push({ month, totalAmt });
+//   });
+//   console.log(categorizedData);
+// }
+
+function FuccategorizedData(dataArray)
+      {
+        // var data = dataArray;
+        categorizedData = {};
+        dataArray.forEach(item => 
+        {
+          const year = item["Year"];
+          const month = item["Mouth"];
+          const totalAmt = item["TOTALAMT"];
+
+          if (!categorizedData[year])
+          {
+            categorizedData[year] = [];
+          }
+
+          categorizedData[year].push({ month, totalAmt });
+        });
+        console.log(categorizedData);
+      }
+
+
+ function CreateTable() {
+    var tableHead = $("#mytable thead");
+    tableHead.empty();
+    var tableBody = $("#mytable tbody");
+    tableBody.empty();
+    var headRow = $("<tr></tr>");
+    var tablecheck = true;
+
+    if (Object.keys(categorizedData).length === 0) {
+      // ไม่มีข้อมูล
+      tablecheck = false;
+      headRow.append($("<th>ไม่มีข้อมูล</th>"));
+    } else {
+      headRow.append($("<th>ลำดับที่</th>"));
+      headRow.append($("<th>Month</th>"));
+      for (var year in categorizedData) {
+        headRow.append($("<th>" +'ปี'+ year + "</th>"));
+      }
+    }
+
+    tableHead.append(headRow);
+
+    if (Object.keys(categorizedData).length === 0)
+    {
+      // ไม่มีข้อมูล
+      var emptyRow = $("<tr></tr>");
+      emptyRow.append($("<td>ไม่มีข้อมูล</td>"));
+      tableBody.append(emptyRow);
+    } else
+    {
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      months.forEach((month, index) => 
+      {
+        var bodyRow = $("<tr></tr>");
+        bodyRow.append($("<td>" + (index + 1) + "</td>"));
+        bodyRow.append($("<td>" + month + "</td>"));
+        for (var year in categorizedData)
+        {
+          var yearData = categorizedData[year];
+          var found = false;
+          yearData.forEach(data =>
+          {
+            if (data.month === (index + 1).toString())
+            {
+              bodyRow.append($("<td class='text-end'>" + formatCurrency(data.totalAmt) + "</td>"));
+              found = true;
+            }
+          });
+          if (!found)
+          {
+            bodyRow.append($("<td></td>"));
+          }
+        }
+        tableBody.append(bodyRow);
+      });
+
+      var totalRow = $("<tr></tr>"); // เพิ่มแถวผลรวม
+      totalRow.append($("<td>รวม</td>")); // เพิ่มเซลล์รวมสำหรับ 2 คอลัมน์แรก
+      totalRow.append($("<td>รวม</td>"));
+      for (var year in categorizedData) {
+        var yearData = categorizedData[year];
+        var yearTotal = yearData.reduce(function(sum, data) {
+          var totalAmt = parseFloat(data.totalAmt);
+          if (!isNaN(totalAmt)) {
+            return sum + totalAmt;
+          }
+          return sum;
+        }, 0);
+        totalRow.append($("<td class='text-end'>" + formatCurrency(yearTotal.toFixed(2)) + "</td>")); // เพิ่มเซลล์ผลรวมสำหรับแต่ละปี
+      }
+      tableBody.append(totalRow);
+
+    }
+
+
+  }

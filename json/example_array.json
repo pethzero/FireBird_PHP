@@ -1,0 +1,30 @@
+{
+    "data": [
+        {
+            "RECNO":"1",
+            "Show":"",
+            "Machine":"UNCOS508",
+            "Name":"HAAS",
+            "No":"118075",
+            "Interval":"1 Mouth",
+            "Document":"UMC500-1M",
+            "Job":"-",
+            "Area": "CNC-1",
+            "Delay": "3 วัน",
+            "Remark": "CNC-1"
+        },
+        {
+            "RECNO":"2",
+            "Show":"",
+            "Machine":"UNCOS508",
+            "Name":"HAAS",
+            "No":"118075",
+            "Interval":"6 Mouth",
+            "Document":"UMC500-6M",
+            "Job":"-",
+            "Area": "CNC-1",
+            "Delay": "3 วัน",
+            "Remark": "CNC-1"
+        }
+    ]
+}
