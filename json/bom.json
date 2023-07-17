@@ -1,0 +1,17 @@
+{
+    "BOMID": 1,
+    "ProductID": 123,
+    "Components": [
+      {
+        "ComponentID": 456,
+        "Quantity": 2,
+        "UnitOfMeasure": "pcs"
+      },
+      {
+        "ComponentID": 789,
+        "Quantity": 1,
+        "UnitOfMeasure": "kg"
+      }
+    ]
+  }
+  

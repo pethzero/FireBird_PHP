@@ -104,6 +104,7 @@
         <label for="searchInput" class="form-label">ค้นหา</label>
         <!-- <input type="text" class="form-control" id="searchInput" placeholder="" > -->
           <select  class="form-control select2" id="searchInput"> 
+          <option value="">----</option>
             <!-- <option value="one">First</option>
             <option value="two" >Second (disabled)</option>
             <option value="three">Third</option> -->
@@ -542,10 +543,10 @@ $(window).keydown(function(event){
       //   },
       //   cache: true
       // },
-    closeOnSelect: true,
-    placeholder: '',
+    // closeOnSelect: true,
+    // placeholder: '',
     theme: 'bootstrap-5',
-        templateSelection: function(selected) {
+    templateSelection: function(selected) {
             // if (selected.id !== '') {
             //     return selected.text + ' (OutPut: ' + selected.value + ')';
             // }
