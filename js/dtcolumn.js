@@ -69,14 +69,15 @@ var dtcolumn =
     // { data: null,render: function(data, type, row) {return '<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-row-id="' + row['RECNO'] + '">Show</button>';}},
     {
       data: null,
-      render: function(data, type, row) {
-        return customModelRender (data, type, row, 'hq','Show' );
+      render: function(data, type, row)
+      {
+        return customModelRender (data, type, row, 'hq','SHOW' );
       }
     },
     { data: 'QDOCNO' },
     { data: 'STATUS',render: getStatusText},
-    { data: 'NAME' },
     { data: 'CODE' },
+    { data: 'NAME' },
     { data: 'QDOCDATE',render: formatDate},
     { data: 'DELYDATE',render: formatDate},
     { data: 'NETAMT' ,render: formatCurrency},

@@ -1,6 +1,6 @@
-body {
+/* body {
   font-family: "Kanit", sans-serif;
-}
+} */
 
 /* .container-layout 
 {
@@ -78,6 +78,7 @@ max-width: 960px;
 	border-radius: 0 0 8px 8px;	
 	-wedkit-border-radius: 0 0 8px 8px;
 }
+
 
 /* @media (min-width: 1400px) {
 	.modal-xl {

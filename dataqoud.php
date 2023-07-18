@@ -24,6 +24,8 @@
       background-color: #e6f0ff;
     }
   </style>
+
+
   <section>
     <div class="container pt-3">
       <h2>ข้อมูล</h2>
@@ -41,12 +43,47 @@
 
         </div>
       </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+         <div class="mb-3">
+          <label for="searchInput" class="form-label">ค้นหารหัสลูกค้า</label>
+            <select  class="form-control select2" id="searchInput"> 
+            <option value="">----</option>
+            </select>
+        </div>
+      </div>
+      <!-- <div class="col-sm-12 col-md-6 col-lg-6">
+        Column
+      </div> -->
+      <!-- <div class="col-12-sm col-6-md col-6-lg">
+        <div class="mb-3">
+          <label for="searchInput" class="form-label">ค้นหารหัสลูกค้า</label>
+            <select  class="form-control select2" id="searchInput"> 
+            <option value="">----</option>
+            </select>
+        </div>
+      </div>
+
+      <div class="col-12-sm col-6-md col-6-lg">
+        <div class="mb-3">
+          <label for="searchInput" class="form-label">ค้นหารหัสลูกค้า</label>
+            <select  class="form-control select2" id="searchInput"> 
+            <option value="">----</option>
+            </select>
+        </div>
+      </div> -->
+
+    </div>
+
+
       <div class="row">
-        <div class="col-12 text-center">
-          <table id="table_datahd" class="nowrap table  table-bordered">
+          <div class="col-12">
+          <h1>ใบเสนอราคา</h1>
+          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
             <thead class="thead-light">
               <tr>
-                <th>ลำดับ</th>
+              <th>ลำดับ</th>
                 <th>แสดงข้อมูล</th>
                 <th>เลขที่ใบเสนอราคา</th>
                 <th>สถานะ</th>
@@ -62,23 +99,21 @@
               </tr>
             </thead>
             <tbody>
-
             </tbody>
           </table>
-
-        </div>
+          </div>
       </div>
-
+  
     </div>
   </section>
 
 
   <section>
     <div class="container pt-3">
-      <h2>ข้อมูล</h2>
       <div class="row">
-        <div class="col-12 text-center">
-          <table id="table_datadt" class="display nowrap table  table-bordered">
+          <div class="col-12">
+          <h1>ข้อมูล</h1>
+          <table id="table_datadt" class="nowrap table table-striped table-bordered align-middle" width='100%'>
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
@@ -90,28 +125,15 @@
               </tr>
             </thead>
             <tbody>
-
             </tbody>
           </table>
-
-        </div>
+          </div>
       </div>
+  
+
 
     </div>
   </section>
-
-  <!-- <div class="section">
-      <div class="container-layout">
-        <div class="row">
-          <div class="col-md-12 col-12">
-            <h3 class="text-center">TEST INSERT</h3>
-            <canvas id="myChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr> -->
-
 
   <hr>
   <div class="section">
@@ -139,36 +161,15 @@
     </div>
   </footer>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-md modal-lg modal-xl" role="document">
+
+  <div class="modal fade" id="hq" tabindex="-1" aria-labelledby="hqLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="myModalTitle">รายละเอียด</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="hqLabel">Modal Title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        
-          
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary">บันทึก</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="myModalTitle">รายละเอียด</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
         <div class="modal-body">
             <div class="row">
               <div class="col-12 pb-3">
@@ -200,13 +201,15 @@
               </div>
             </div>
         </div>
+
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary">บันทึก</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save Changes</button>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
+
 
   <!-- <button id="loadDataButton" class="btn btn-primary">โหลดข้อมูล</button> -->
 
@@ -223,8 +226,6 @@
     var encodedURL = encodeURIComponent('ajax_data.php');
     var data_array = [];
     var table = $('#table_datahd').DataTable({
-      // processing: true,
-      // serverSide: true,
       ajax: {
         url: encodedURL,
         data: function(d) {
@@ -240,10 +241,14 @@
         }
       },
       scrollX: true,
-      columns: dtcolumn['dataquoud'],
+      columns:
+       dtcolumn['dataquoud'],
       // [
       //   { data: 'RECNO' },
-      //   { data: null,render: function(data, type, row) {return '<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-row-id="' + row['RECNO'] + '">Show</button>';}},
+      //   { data: null,render: function(data, type, row) {
+      //     // return '<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-row-id="' + row['RECNO'] + '">Show</button>';
+      //     return `<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#hq" data-bs-row-id="${row['RECNO']}">Show</button>`;
+      //   }},
       //   { data: 'QDOCNO' },
       //   { data: 'STATUS',render: getStatusText},
       //   { data: 'NAME' },
@@ -280,7 +285,7 @@
 
           if (selectedRecno !== data.RECNO) {
             // เช็คว่ามีแถวที่ถูกเลือกอยู่หรือไม่
-            // tabledtpost(data.RECNO);
+            tabledtpost(data.RECNO);
             selectedRecno = data.RECNO;
             console.log(data.RECNO);
           }
@@ -323,7 +328,6 @@
 
   });
 
-
   var table_datadt = $('#table_datadt').DataTable({
     scrollX: true,
     columns: [{
@@ -359,7 +363,7 @@
 
   function tabledtpost(recnodt) {
     $.ajax({
-      url: 'ajax_post.php',
+      url: 'ajax_data.php',
       data: {
         // queryId: '0003',
         queryId: '0006',
@@ -368,13 +372,14 @@
         },
       },
       dataSrc:'',
-      success: function(response) {
-        console.log(response);
+      success: function(response) 
+      {
+        // console.log(response);
         var dataArray = JSON.parse(response);
-        console.log(dataArray); // แสดงอาร์เรย์ที่ได้หลังจากแปลง
+        // console.log(dataArray); // แสดงอาร์เรย์ที่ได้หลังจากแปลง
+        // console.log(dataArray.data);
         table_datadt.clear();
-        table_datadt.rows.add(dataArray).draw();
-        // $('#table_datahd').DataTable().ajax.reload(); ==> ค่าเปลี่ยน
+        table_datadt.rows.add(dataArray.data).draw();
       },
       error: function(xhr, status, error) {
         // จัดการข้อผิดพลาดที่เกิดขึ้น

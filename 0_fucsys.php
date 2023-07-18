@@ -67,7 +67,7 @@ var dtcolumn =
   'dataquoud':   [
     { data: 'RECNO' },
     // { data: null,render: function(data, type, row) {return '<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-row-id="' + row['RECNO'] + '">Show</button>';}},
-    { data: null, render: customModelRender },
+    { data: null, render: customModelRender(data, type, row, 'show') },
     { data: 'QDOCNO' },
     { data: 'STATUS',render: getStatusText},
     { data: 'NAME' },

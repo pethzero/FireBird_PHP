@@ -2,6 +2,13 @@
 <html lang="en">
   <head>
     <?php 
+          session_start(); 
+          if (!isset($_SESSION["RECNO"])) 
+            {
+              header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
+              exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
+            } 
+            
     include("0_headcss.php"); 
     ?>
     <!-- <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
@@ -18,12 +25,7 @@
 </style>
 
   <?php 
-      session_start(); 
-      if (!isset($_SESSION["RECNO"])) 
-        {
-          header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
-          exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
-        } 
+
       include("0_header.php"); 
       include("0_breadcrumb.php"); 
   ?>
