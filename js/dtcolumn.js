@@ -11,28 +11,6 @@ const getStatusText = (data) => {
   return statusText;
 };
 
-const getStatusTextOther = (data, column) => {
-  // เช็คคอลัมน์ที่ต้องการแปลงค่า
-  // if (column === 'STATUS') {
-  //   // ทำการแปลงค่าตามต้องการ
-  //   if (data === 'A') {
-  //     return 'Active';
-  //   } else if (data === 'C') {
-  //     return 'Cancel';
-  //   } else if (data === 'D') {
-  //     return 'Done';
-  //   }
-  // }
-    if (data != ''){
-      return 'Active';
-    }
-    else{
-      return 'อนุมัติแล้ว'
-    }
-  // ถ้าไม่ใช่คอลัมน์ 'STATUS' ให้คืนค่าเป็นตัวอักษรเดิม
-  // return data;
-};
-
 // แปลงฟังก์ชัน formatDate เป็น Arrow Function
 const formatDate = (data) => {
   if (!data) {
@@ -88,6 +66,7 @@ var dtcolumn =
   ///////////////////////////  DATAQUOD ///////////////////////////
   'dataquoud':   [
     { data: 'RECNO' },
+    // { data: null,render: function(data, type, row) {return '<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-row-id="' + row['RECNO'] + '">Show</button>';}},
     {
       data: null,
       render: function(data, type, row)
@@ -96,12 +75,7 @@ var dtcolumn =
       }
     },
     { data: 'QDOCNO' },
-    { data: 'STATUS',
-    render: function(data, type, row) {
-      let text = row.EMPNAMEAPPROVER !== '' ? 'อนุมัติแล้ว' : 'รออนุมัติ';
-      return text;
-    },
-    },
+    { data: 'STATUS',render: getStatusText},
     { data: 'CODE' },
     { data: 'NAME' },
     { data: 'QDOCDATE',render: formatDate},
@@ -111,15 +85,6 @@ var dtcolumn =
     { data: 'EMPNAMEMAKER' },
     { data: 'EMPNAMEAPPROVER' },
     { data: 'REMARK' },
-  ],
-  'dataquoud_dt':
-  [
-  {data: 'QUOTHD'},
-  {data: 'CODE'},
-  {data: 'DETAIL'},
-  {data: 'QUAN'},
-  {data: 'UNITNAME'},
-  {data: 'UNITAMT',render: formatCurrency},
   ],
   'datainvent': [
     { data: 'RECNO' },
