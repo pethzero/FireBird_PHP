@@ -19,10 +19,9 @@
     include("0_header.php"); 
     include("0_breadcrumb.php"); 
   ?>
+  <link rel="stylesheet" href="css/mycustomize.css">
   <style>
-    .selected {
-      background-color: #e6f0ff;
-    }
+
   </style>
 
 
@@ -30,51 +29,32 @@
     <div class="container pt-3">
       <h2>ข้อมูล</h2>
       <div class="row pb-3">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 ">
-
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <input type="radio" id="showAllBtn" name="fav_language" value="all" checked>
           <label for="showAllBtn">แสดงทั้งหมด</label>
-
+        
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <input type="radio" id="showApprovedBtn" name="fav_language" value="approved">
           <label for="showApprovedBtn">ทำการอนุมัติแล้ว</label>
 
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <input type="radio" id="waitApprovedBtn" name="fav_language" value="wait">
           <label for="waitApprovedBtn">รอทำการอนุมัติ</label>
-
         </div>
+
       </div>
 
-    <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-6">
-         <div class="mb-3">
-          <label for="searchInput" class="form-label">ค้นหารหัสลูกค้า</label>
-            <select  class="form-control select2" id="searchInput"> 
-            <option value="">----</option>
-            </select>
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+          <label for="searchInput" class="form-label">ค้นหารายการรหัสลูกค้า แบบกรอง</label>
+          <div class="input-group">
+            <select class="form-control select2" id="searchInput"></select>
+            <button class="btn btn-primary" id="searchClear">ล้าง</button>
+          </div>
         </div>
       </div>
-      <!-- <div class="col-sm-12 col-md-6 col-lg-6">
-        Column
-      </div> -->
-      <!-- <div class="col-12-sm col-6-md col-6-lg">
-        <div class="mb-3">
-          <label for="searchInput" class="form-label">ค้นหารหัสลูกค้า</label>
-            <select  class="form-control select2" id="searchInput"> 
-            <option value="">----</option>
-            </select>
-        </div>
-      </div>
-
-      <div class="col-12-sm col-6-md col-6-lg">
-        <div class="mb-3">
-          <label for="searchInput" class="form-label">ค้นหารหัสลูกค้า</label>
-            <select  class="form-control select2" id="searchInput"> 
-            <option value="">----</option>
-            </select>
-        </div>
-      </div> -->
-
-    </div>
 
 
       <div class="row">
@@ -104,6 +84,23 @@
           </div>
       </div>
   
+
+
+    <div class="row mb-3 justify-content-end">
+        <div class="col-sm-12 col-md-3 col-lg-3">
+        <label for="pageInput" class="mr-2">Jump to Page:</label>
+          <div class="input-group">
+            <input type="number" class="form-control mr-2" id="pageInput">
+            <button class="btn btn-primary" id="btnjump">ตกลง</button>
+          </div>
+        </div>
+      </div>
+
+
+
+
+</div>
+
     </div>
   </section>
 
@@ -112,7 +109,7 @@
     <div class="container pt-3">
       <div class="row">
           <div class="col-12">
-          <h1>ข้อมูล</h1>
+          <h1>ข้อมูลใบเสนอราคา<label id="dtdocno"></label></h1>
           <table id="table_datadt" class="nowrap table table-striped table-bordered align-middle" width='100%'>
             <thead class="thead-light">
               <tr>
@@ -150,8 +147,8 @@
       </div>
     </div>
   </div>
-  <hr>
-  <footer class="text-center">
+  <!-- <hr> -->
+  <!-- <footer class="text-center">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -159,14 +156,14 @@
         </div>
       </div>
     </div>
-  </footer>
+  </footer> -->
 
 
-  <div class="modal fade" id="hq" tabindex="-1" aria-labelledby="hqLabel" aria-hidden="true">
+  <div class="modal fade" id="hq"  aria-labelledby="hqLabel" aria-hidden="true" >
     <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="hqLabel">Modal Title</h5>
+          <h5 class="modal-title" id="hqLabel">ใบเสนอราคา</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -185,26 +182,60 @@
                 วันที่เปิดใบเสนอราคา: <span id="qdocDate"></span>
               </div>
               <div class="col-12 pb-3">
-                ผู้เสนอขาย: <span id="saleName"></span>
-              </div>
-              <div class="col-12 pb-3">
-                ผุ้ทำเอกสาร: <span id="makegeName"></span>
-              </div>
-              <div class="col-12 pb-3">
-                ผู้อนุมัติ: <span id="approverName"></span>
-              </div>
-              <div class="col-12">
-                <div class="d-flex align-items-center">
-                  <span class="mr-2 mt-1">การอนุมัติ:</span>
-                  <button class="btn btn-success btn-sm" id="approverBtn" disabled></button>
-                </div>
+                ราคา: <span id="price"></span>
               </div>
             </div>
+            
+            <div class="row mb-3 align-items-center">
+                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                    <label class="form-label mb-0">ผู้เสนอขาย:</label>
+                    <span id="saleName"></span>
+                </div>
+                <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                    <select class="form-select" id="selectMenusaleName" aria-label="Select Sale">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                    <label class="form-label mb-0">ผู้ทำเอกสาร:</label>
+                    <span id="makegerName"></span>
+                </div>
+                <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                    <select class="form-select" id="selectMenumakegerName" aria-label="Select Document Maker">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                    <label class="form-label mb-0">ผู้อนุมัติ:</label>
+                    <span id="approverName"></span>
+                </div>
+                <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                    <select class="form-select" id="selectMenuapproverName" aria-label="Select Approver">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-sm-12">
+                    <div class="d-flex align-items-center">
+                        <span class="mr-2 mt-1">การอนุมัติ:</span>
+                        <button class="btn btn-success btn-sm" id="approverBtn" disabled>อนุมัติ</button>
+                    </div>
+                </div>
+            </div>
+
+    
+    
+
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save Changes</button>
+          <button id="save" type="button" class="btn btn-primary">บันทึก</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
     </div>
@@ -214,12 +245,32 @@
   <!-- <button id="loadDataButton" class="btn btn-primary">โหลดข้อมูล</button> -->
 
   <div class="loading">
+
+  <!-- <style>
+        /* Custom CSS for small screens (e.g., mobile phones) */
+        @media (max-width: 576px) {
+            /* Show entries dropdown */
+            .dataTables_length {
+                text-align: left !important;
+                margin-bottom: 10px;
+            }
+
+            /* Search input field */
+            .dataTables_filter {
+                text-align: left !important;
+                margin-bottom: 10px;
+            }
+        }
+    </style> -->
+
 </body>
 <?php include("0_footerjs.php"); ?>
 <script src="js/dtcolumn.js"></script> 
 
+
 <script>
   $(document).ready(function() {
+    var tablejsondata ;
     var selectedRow = null;
     var selectedRecno = null;
 
@@ -231,12 +282,9 @@
         data: function(d) {
           d.queryId = '0001'; // ส่งค่าเป็นพารามิเตอร์ queryId
           d.params = null;
-          // d.params = {
-          //   // STATUS: 'C'
-          // };
         },
         dataSrc: function(json) {
-          console.log(json);
+          tablejsondata = json.data
           return json.data;
         }
       },
@@ -264,19 +312,53 @@
       order: [
         [0, 'desc']
       ],
-      columnDefs: [{
-        "visible": false,
-        "targets": 0
-      }],
+      columnDefs: [
+        {
+        "visible": false,"targets": 0
+        },
+    ],
+      // buttons: [
+      //       'searchPanes'
+      //   ],
+      // dom: 'Bfrtip',
+      // dom: 'Plfrtip',
+      //   searchPanes: {
+      //       preSelect: [{
+      //           rows:['Edinburgh','London'],
+      //           column: 2
+      //       }]
+      //   },
+      // pageLength: 10, // กำหนดจำนวนแถวต่อหน้าที่แสดง
+      // paging: true, // เปิดใช้งานปุ่มแสดงเลขหน้า
       initComplete: function(settings, json) {
         $('.loading').hide();
+        data_json(tablejsondata)
+        select_get()
       },
-      drawCallback: function(settings) {
-        console.log(data_array);
+      createdRow: function(row, data, dataIndex) {
+       // ค่าของคอลัมน์ STATUS อยู่ใน data.STATUS
+        let status = data.EMPNAMEAPPROVER !== '' ? 'bg-success' : 'bg-danger';
+        $(row).find('td:eq(2)').addClass(status); // ในที่นี้ คอลัมน์ STATUS มีลำดับที่ 3 (จำนวนคอลัมน์เริ่มต้นที่ 0)
+        // console.log('crate')
       },
-      rowCallback: function(row, data) {
-        $(row).on('click', function() {
-          
+      drawCallback: function(settings)
+      {
+        if (init_op == 1)
+        {
+         $('.loading').hide();
+         Swal.fire(
+          'บันทึกแล้ว',
+          'คุณได้อนุมัติใบเสนอราคา : '+docno,
+          'success'
+         )
+        }
+        // console.log('callback')
+      },
+      rowCallback: function(row, data)
+      { 
+        // console.log('rowCallback')
+        $(row).on('click', function()
+        {
           if (selectedRow !== null) {
             $(selectedRow).removeClass('selected');
           }
@@ -286,75 +368,56 @@
           if (selectedRecno !== data.RECNO) {
             // เช็คว่ามีแถวที่ถูกเลือกอยู่หรือไม่
             tabledtpost(data.RECNO);
+            $('#dtdocno').text('  '+data.QDOCNO);
             selectedRecno = data.RECNO;
             console.log(data.RECNO);
           }
-
-     
         });
       },
 
     });
 
+    var dataX = [
+      { "id": 0, "text": "---" ,"value":""}
+    ];
 
+    function data_json(tablejsondata)
+    {
+      var existingCodes = {};
+      for (var i = 0; i < tablejsondata.length; i++) {
+          var cus_code = tablejsondata[i]['CODE'];
+          var cus_name = tablejsondata[i]['NAME'];
 
-    // var goToPageInput = $('<span>Jump Page:</span><input id="table_datahdjump" type="number" min="1" max="' + table.page.info().pages + '">');
-    // var goToPageButton = $('<button id="gotojump" >Go</button>');
+          if (!existingCodes[cus_code]) {
+              dataX.push({
+                  "id": dataX.length + 1,
+                  "text": cus_code + ":" + cus_name,
+                  "value": cus_code
+              });
 
-    // goToPageInput.addClass('form-control');
-    // goToPageButton.addClass('btn btn-primary');
+              existingCodes[cus_code] = true;
+          }
+      }
+      dataX.sort(function(a, b)
+      {
+        return a.value.localeCompare(b.value);
+      });
+  }
 
-    // var row = $('<div class="row input-group"></div>');
-    // var col8 = $('<div class="col-12 col-md-6 col-lg-8 col-xl-8"></div>');
-    // var col4 = $('<div class="col-12 col-md-6 col-lg-4 col-xl-4"></div>');
-    // var inputGroup = $('<div class="input-group"></div>');
-
-    // inputGroup.append(goToPageInput);
-    // inputGroup.append($('<span class="input-group-btn"></span>').append(goToPageButton));
-    // col4.append(inputGroup);
-
-    // row.append(col8);
-    // row.append(col4);
-
-    // row.insertBefore('#table_datahd_paginate');
-
-    // $('#gotojump').click(function() {
-    //   var page = $('#table_datahdjump').val();
-    //   if (page !== '') {
-    //     table.page(page - 1).draw(false);
-    //   }
-    // });
-
-
-  });
 
   var table_datadt = $('#table_datadt').DataTable({
     scrollX: true,
-    columns: [{
-        data: 'QUOTHD'
-      },
-      {
-        data: 'CODE'
-      },
-      {
-        data: 'CALLNAME'
-      },
-      {
-        data: 'QUAN'
-      },
-      {
-        data: 'UNITNAME'
-      },
-      {
-        data: 'UNITAMT'
-      },
-    ],
+    columns:
+    dtcolumn['dataquoud_dt'], 
     order: [
       [0, 'desc']
     ],
-    // columnDefs: [
-    //   { "visible": false, "targets": 0}
-    // ],
+    columnDefs: [
+        {
+        "visible": false,"targets": 0
+        },
+    ],
+    dom: 'rt',
     drawCallback: function(settings) {
       // table_datadt.ajax.reload();
     }
@@ -374,10 +437,7 @@
       dataSrc:'',
       success: function(response) 
       {
-        // console.log(response);
         var dataArray = JSON.parse(response);
-        // console.log(dataArray); // แสดงอาร์เรย์ที่ได้หลังจากแปลง
-        // console.log(dataArray.data);
         table_datadt.clear();
         table_datadt.rows.add(dataArray.data).draw();
       },
@@ -389,21 +449,22 @@
 
   }
 
-  // สำหรับการดึงข้อมูลจาก 'RECNO' ตัวสุดท้าย คุณสามารถใช้ฟังก์ชัน fnGetData() ในการดึงข้อมูลจากแถวสุดท้ายของตาราง ดังตัวอย่างต่อไปนี้:
-  // var lastRowData = table.fnGetData(table.fnGetNodes().length - 1);
-  // var lastRECNO = lastRowData.RECNO;
-  // console.log(lastRECNO);
-
+  var recno_no;
+  var recno_saleName;
+  var recno_makegerName;
+  var recno_approverName;
+  var docno;
   $('#table_datahd').on('click', '.btn-primary', function() {
     var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
-    var docno = rowData.QDOCNO;
+    docno = rowData.QDOCNO;
     var name = rowData.NAME;
     var code = rowData.CODE;
     var qdocdate = rowData.QDOCDATE;
     var saleName = rowData.EMPNAMESALES;
     var makegerName = rowData.EMPNAMEMAKER;
     var approverName = rowData.EMPNAMEAPPROVER;
-    console.log(qdocdate);
+    var price = rowData.NETAMT;
+    // console.log(qdocdate);
 
     $('#docNo').text(docno);
     $('#name').text(name);
@@ -412,6 +473,21 @@
     $('#saleName').text(saleName);
     $('#makegerName').text(makegerName);
     $('#approverName').text(approverName);
+    $('#price').text(price + " บาท");
+
+  
+    ///////////////////////////////////////////////////////////////////////////
+    recno_no = rowData.RECNO;
+
+    recno_saleName = setSelect2Value('#selectMenusaleName', saleName);
+    recno_makegerName = setSelect2Value('#selectMenumakegerName', makegerName);
+    recno_approverName = setSelect2Value('#selectMenuapproverName', approverName);
+
+    // console.log(recno_no)
+    // console.log(recno_saleName)
+    // console.log(recno_makegerName)
+    // console.log(recno_approverName)
+    ////////////////////////////////////////////////////////////////////
 
     if (approverName) {
       // ถ้ามีชื่อผู้อนุมัติ
@@ -439,7 +515,7 @@
     $('#showApprovedBtn').on('change', function() {
       if ($(this).is(':checked')) {
         // เปลี่ยนเงื่อนไขการค้นหาให้เป็นค่า "ผู้อนุมัติ"
-        $('#table_datahd').DataTable().columns(3).search('Active').draw();
+        $('#table_datahd').DataTable().columns(3).search('อนุมัติแล้ว').draw();
         $('#table_datahd').DataTable().columns(11).search('.+', true, false).draw();
       }
     });
@@ -447,11 +523,420 @@
     $('#waitApprovedBtn').on('change', function() {
       if ($(this).is(':checked')) {
         // เปลี่ยนเงื่อนไขการค้นหาให้เป็นค่าว่าง
-        $('#table_datahd').DataTable().columns(3).search('Active').draw();
+        $('#table_datahd').DataTable().columns(3).search('รออนุมัติ').draw();
         $('#table_datahd').DataTable().columns(11).search('^$', true, false).draw();
       }
     });
   }
+
+
+    
+    function select_get()
+    {
+      $('#searchInput').select2({
+      data:dataX,
+      closeOnSelect: true,
+      theme: 'bootstrap-5',
+    templateSelection: function(selected) {
+            if (selected.id !== '')
+            {
+                if(selected.id == 0)
+                {
+                  return '';
+                }
+                return selected.text + ' : ' + selected.value ;
+               
+            }
+            return '';
+        },
+        templateResult: function(result)
+        {
+            // console.log(result)
+            if (!result.id) {
+                return result.text;
+            }
+            var $result = $('<span></span>');
+            // $result.text(result.text + ' (Input: ' + result.value + ')');
+            $result.text(result.text);
+            // return $result;
+            if (result.id == 0) 
+            {
+              $result.text('---');
+              return $result;
+            }else{
+              return $result;
+            }
+        },
+        matcher: function(params, data) {
+            if ($.trim(params.term) === '') 
+            {
+                return data;
+            }
+            console.log(data)
+            var inputText = params.term.toLowerCase().replace(/\s/g, '');
+            var optionText = data.text.toLowerCase().replace(/\s/g, '');
+            var optionValue = data.value.toLowerCase().replace(/\s/g, '');
+            if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1) {
+                return data;
+            }
+            return null;
+        }
+      }).on('change', function() {
+        var selectedValue = $(this).select2('data')[0].value;
+        // const selectedValue = $(this).val(); // ค่าที่ถูกเลือกใน <select>
+        console.log(selectedValue)
+        $('#table_datahd').DataTable().column(4).search(selectedValue).draw();
+      });
+    }
+
+    $('#searchClear').on('click', function() {
+      var selectInput = document.getElementById("searchInput");
+      var optionToSelect = "0"; // ตัวเลือกที่ต้องการเลือก (เปลี่ยนเป็นค่าที่คุณต้องการ)
+
+    // ตรวจสอบว่าตัวเลือกที่ต้องการเลือกมีอยู่ใน select หรือไม่
+    if (selectInput.querySelector(`option[value="${optionToSelect}"]`)) 
+    {
+      $(selectInput).val(optionToSelect).trigger("change.select2");
+    }
+
+      $('#table_datahd').DataTable().column(4).search('').draw();
+      
+    })
+
+
+    $("#btnjump").click(function()
+    {
+        jumpToPage();
+    });
+
+     function jumpToPage()
+    {
+            var pageNumber = parseInt($('#pageInput').val(), 10);
+            var maxPage = table.page.info().pages;
+
+            if (pageNumber >= 1 && pageNumber <= maxPage) {
+                table.page(pageNumber - 1).draw('page');
+                $('#pageInput').val('')
+            } else {
+                // alert('Invalid page number');
+                Swal.fire(
+                  'Invalid page number',
+                  'มีการป้อนข้อมูลผิดพลาด',
+                  'error'
+                )
+                $('#pageInput').val('')
+            }
+    }
+
+    $("#save").click(function() 
+    {
+      AlertSave()
+      // console.log('wow')
+    });
+
+
+    function AlertSave()
+   {
+      Swal.fire({
+      title: 'คุณแน่ใจแล้วใช่ไหม',
+      text: "คุณจะเปลี่ยนกลับไม่ได้!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ตกลงบันทึก',
+      cancelButtonText: 'ยกเลิก',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      customClass: {
+        confirmButton: 'ok',
+        cancelButton: 'cancel'
+      },
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $('#hq').modal('hide');
+        SaveDate()
+        // console.log('จบ')
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        Swal.fire(
+          'ยกเลิก',
+          'ยังไม่มีการบันทึก',
+          'error'
+        )
+      }
+        })
+    }
+
+        var init_op = 0;
+        function SaveDate()
+          {
+            $.ajax({
+                type: "POST",
+                url: 'ajax_dupdate.php',
+                data: {
+                  queryIdHD: 'UD_QUOTHD',
+                  queryIdDT: '',
+                  condition:'U',
+                  paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
+                      RECNO:recno_no,
+                      SALES:recno_saleName,
+                      MAKER:recno_makegerName,
+                      APPROVER:recno_approverName,
+                    },
+                  paramdt: { // อาร์เรย์ params ที่คุณต้องการส่ง
+                      datanull:'',
+                    },
+                    paramlist: {
+                      datanull:'',
+                    },
+                    DataJSON:null
+                },
+                dataSrc:'',
+                beforeSend: function() {
+                },
+                complete: function() {
+                },
+                success: function(response){
+                  console.log('load')
+                  init_op = 1;
+                  table.ajax.reload();
+                  $('.loading').show();
+                },
+                error: function(xhr, status, error)
+                {
+                  console.error(error);
+                }
+              });
+          }
+
+          var emp_list;
+          Employee_list()
+          function Employee_list()
+          {
+                $.ajax({
+                url: 'ajax_data_select.php',
+                data: {
+                  queryId: 'EMPL_LIST',
+                  params: null,
+                  condition:'',
+                },
+                dataSrc:'',
+                success: function(response)
+                {
+                  emp_list = JSON.parse(response).data; 
+                //  console.log(emp_list)
+                 data_json_name(emp_list)
+                //  select_get_name()
+                createSelect2('#selectMenusaleName', data_emp_name,'sale');
+                createSelect2('#selectMenumakegerName', data_emp_name,'maker');
+                createSelect2('#selectMenuapproverName', data_emp_name,'apporver');
+                },
+                error: function(xhr, status, error)
+                {
+                  console.error(error);
+                }
+              });
+          }
+
+
+            function createSelect2(selector,data,ifcondition) {
+              return $(selector).select2({
+                  data: data,
+                  // closeOnSelect: true,
+                  theme: 'bootstrap-5',
+                  dropdownParent: $('#hq'),
+                  templateSelection: function(selected) {
+                      if (selected.id !== '') {
+                          if (selected.id == 0) {
+                              return '';
+                          }
+                          return selected.text + ' : ' + selected.value;
+                      }
+                      return '';
+                  },
+                  templateResult: function(result) {
+                      if (!result.id) {
+                          return result.text;
+                      }
+                      var $result = $('<span></span>');
+                      $result.text(result.text);
+                      if (result.id == 0) {
+                          $result.text('---');
+                          return $result;
+                      } else {
+                          return $result;
+                      }
+                  },
+                  matcher: function(params, data) {
+                      if ($.trim(params.term) === '') {
+                          return data;
+                      }
+                      var inputText = params.term.toLowerCase().replace(/\s/g, '');
+                      var optionText = data.text.toLowerCase().replace(/\s/g, '');
+                      var optionValue = data.value.toLowerCase().replace(/\s/g, '');
+                      if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1) {
+                          return data;
+                      }
+                      return null;
+                  }
+              }).on('change', function() {
+                if (ifcondition === 'sale') {
+                    recno_saleName = $(this).select2('data')[0].value;
+                } else if (ifcondition === 'maker'){
+                    recno_makegerName = $(this).select2('data')[0].value;
+                } else if (ifcondition === 'apporver') {
+                    recno_approverName = $(this).select2('data')[0].value;
+                }
+              });
+          }
+
+        function select_get_name()
+        {
+          $('#selectMenumakegerName').select2({
+          data:data_emp_name,
+          closeOnSelect: true,
+          theme: 'bootstrap-5',
+          dropdownParent: $("#hq"),
+          templateSelection: function(selected) {
+                if (selected.id !== '')
+                {
+                    if(selected.id == 0)
+                    {
+                      return '';
+                    }
+                    return selected.text + ' : ' + selected.value ;
+                  
+                }
+                return '';
+            },
+            templateResult: function(result)
+            {
+                if (!result.id) {
+                    return result.text;
+                }
+                var $result = $('<span></span>');
+                $result.text(result.text);
+                if (result.id == 0) 
+                {
+                  $result.text('---');
+                  return $result;
+                }else{
+                  return $result;
+                }
+            },
+            matcher: function(params, data) {
+                if ($.trim(params.term) === '') 
+                {
+                    return data;
+                }
+                console.log(data)
+                var inputText = params.term.toLowerCase().replace(/\s/g, '');
+                var optionText = data.text.toLowerCase().replace(/\s/g, '');
+                var optionValue = data.value.toLowerCase().replace(/\s/g, '');
+                if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1) {
+                    return data;
+                }
+                return null;
+            }
+          }).on('change', function() {
+            recno_makegerName = $(this).select2('data')[0].value;
+          });
+        }
+
+
+
+    var data_emp_name = [
+      { "id": 0, "text": "---" ,"value":""}
+    ];
+
+    function data_json_name(emp_list)
+    {
+      var existingCodes = {};
+      for (var i = 0; i < emp_list.length; i++) {
+          var cus_code = emp_list[i]['RECNO'];
+          var cus_name = emp_list[i]['EMPNAME'];
+
+          if (!existingCodes[cus_code]) {
+            data_emp_name.push({
+                  "id": data_emp_name.length + 1,
+                  "text": cus_name,
+                  "value": cus_code
+              });
+
+              existingCodes[cus_code] = true;
+          }
+      }
+      data_emp_name.sort(function(a, b)
+      {
+        return a.value.localeCompare(b.value);
+      });
+  }
+
+  function setSelect2Value(selector, searchText) {
+    $(selector).val(null).trigger("change.select2"); // ยกเลิกการเลือกทุกตัวเลือกก่อน
+    var optionFound = false;
+    $(selector).find('option').each(function() {
+        if ($(this).text().toLowerCase() === searchText.toLowerCase()) {
+            $(this).prop('selected', true);
+            optionFound = true;
+            return false; // หยุดการวนลูปเมื่อพบตัวเลือกที่ต้องการ
+        }
+    });
+    // ทำการเปิดใช้งาน select2 ใหม่หลังจากทำการเลือกตัวเลือก
+    $(selector).trigger('change.select2');
+    if (!optionFound) {
+        // หากไม่พบตัวเลือกที่ต้องการ
+        return '';
+    } else {
+        return $(selector).select2('data')[0].value;
+    }
+}
+
+
+
+        // function jumpToPage(pageNumber)
+    // {
+    // var table = $('#table_datahd').DataTable();
+    // table.page(pageNumber - 1).draw('page');
+    // }   
+
+    // // เพิ่มข้อมูลใหม่เข้าไปใน dataX
+    // var newOption = {
+    //   id: 6,
+    //   text: '66',
+    //   value: '5555'
+    // };
+
+    // dataX.push(newOption);
+
+    // // เรียกใช้งาน select_get() อีกครั้งเพื่อให้ Select2 ทำการอัปเดตและแสดงตัวเลือกใหม่ที่เพิ่มเข้าไป
+    // select_get();
+
+      ////////////////////////////////////////////
+
+    // var newOption = {
+    //   id: 6,
+    //   text: 'ตัวเลือกที่ 6',
+    //   value: '00000006'
+    // };
+
+    // // สร้าง Element ของตัวเลือก (option)
+    // var option = new Option(newOption.text, newOption.id, false, false);
+    // // กำหนดค่า value และ title ให้กับตัวเลือก
+    // option.setAttribute('value', newOption.value);
+    // option.setAttribute('title', newOption.text);
+    // // เพิ่มตัวเลือกใหม่ลงใน Select element
+    // $('#searchInput').append(option);
+
+    // // เรียกใช้งาน .trigger('change') เพื่อให้ Select2 ทำการอัปเดต
+    // $('#searchInput').trigger('change');
+
+  });
+
+
 </script>
 
 </html>
