@@ -29,43 +29,53 @@ max-width: 960px;
 } */
 
 @media (min-width: 1200px) {
-  /* .container {
+	/* .container {
   max-width: 1500px !important;
   padding-left: 40px;
   padding-right: 40px;
   } */
-  /* .chart-label {
+	/* .chart-label {
     font-size: 20px;
   } */
 }
 
+
+@media (max-width: 576px) {
+	.dataTables_length {
+		text-align: left !important;
+		margin-bottom: 10px;
+	}
+
+	.dataTables_filter {
+		text-align: left !important;
+		margin-bottom: 10px;
+	}
+}
+
 .bg-custom {
-  background-color: #1a174a;
+	background-color: #1a174a;
 }
 
 .bg-white {
-  background-color: #ffffff;
+	background-color: #ffffff;
 }
 
-.content-panel
-{
+.content-panel {
 	clear: both;
 	margin-top: -10px;
 }
 
-.content-line
-{
+.content-line {
 	border-bottom: rgb(11, 85, 158) 4px solid;
 	border-top: none;
 	margin: 0 0 0 0;
-	height:auto;
+	height: auto;
 	width: auto;
 }
 
-.content-tab
-{
+.content-tab {
 	font-size: 18px;
-	text-decoration:none;
+	text-decoration: none;
 	color: #fff;
 	padding: 0;
 	border: 1px solid rgb(11, 85, 158);
@@ -74,8 +84,8 @@ max-width: 960px;
 	position: relative;
 	padding: 4px 8px 4px 8px;
 	background: rgb(11, 85, 158);
-	-moz-border-radius: 0 0 8px 8px;	
-	border-radius: 0 0 8px 8px;	
+	-moz-border-radius: 0 0 8px 8px;
+	border-radius: 0 0 8px 8px;
 	-wedkit-border-radius: 0 0 8px 8px;
 }
 
@@ -97,4 +107,3 @@ max-width: 960px;
 	width: 100%;
 	margin: auto;
   } */
-
