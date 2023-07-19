@@ -1,0 +1,43 @@
+.selected {
+	background-color: #e6f0ff;
+  }
+  /* CSS for DataTables Pagination */
+/* .paginate_button {
+  padding: 5px 10px;
+  margin: 2px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.paginate_button.current {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+} */
+.page-link {
+  padding: 5px 10px;
+  margin: 2px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.page-link:hover {
+  background-color: #f2f2f2;
+}
+
+
+
+@media (max-width: 576px) {
+	.dataTables_length {
+		text-align: left !important;
+		margin-bottom: 10px;
+	}
+
+	.dataTables_filter {
+		text-align: left !important;
+		margin-bottom: 10px;
+	}
+}

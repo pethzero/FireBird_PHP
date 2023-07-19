@@ -151,42 +151,7 @@
   },
 });
 
-//   var goToPageInput = $('<span>Jump Page:</span><input id="mytablejump" type="number" min="1" max="' + table.page.info().pages + '">');
-//   var goToPageButton = $('<button id="gotojump" >Go</button>');
-  
-//   goToPageInput.addClass('form-control');
-//   goToPageButton.addClass('btn btn-primary');
-  
-//   var row = $('<div class="row input-group"></div>');
-//   var col8 = $('<div class="col-12 col-md-6 col-lg-8 col-xl-8"></div>');
-//   var col4 = $('<div class="col-12 col-md-6 col-lg-4 col-xl-4"></div>');
-//   var inputGroup = $('<div class="input-group"></div>');
-  
-//   inputGroup.append(goToPageInput);
-//   inputGroup.append($('<span class="input-group-btn"></span>').append(goToPageButton));
-//   col4.append(inputGroup);
-  
-//   row.append(col8);
-//   row.append(col4);
 
-//   row.insertBefore('#myTable_paginate'); 
-
-//   $('#gotojump').click(function()
-//   {
-//   var page = $('#mytablejump').val();
-//   if (page !== '') {
-//     table.page(page - 1).draw(false);
-//   }
-// });
-
-// $('#mytablejump').keypress(function(event) {
-//   if (event.keyCode === 13) {
-//     var page = $(this).val();
-//     if (page !== '') {
-//       table.page(page - 1).draw(false);
-//     }
-//   }
-// });
 
 function populateTypeNames(dataArray){
   var typeNames = [...new Set(dataArray.map(item => item.TYPENAME))];
