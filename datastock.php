@@ -104,7 +104,7 @@
         <label for="searchInput" class="form-label">ค้นหา</label>
         <!-- <input type="text" class="form-control" id="searchInput" placeholder="" > -->
           <select  class="form-control select2" id="searchInput"> 
-          <!-- <option value="">----</option> -->
+          <option value="">----</option>
             <!-- <option value="one">First</option>
             <option value="two" >Second (disabled)</option>
             <option value="three">Third</option> -->
@@ -201,7 +201,7 @@
   <?php 
   include("0_footerjs.php");
    ?>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
 var selected_REQTYPE
 $("form").submit(function(event){
@@ -521,7 +521,6 @@ $(window).keydown(function(event){
     }
 
     var dataX = [
-    { "id": 0, "text": "---" ,"value":""},
     { "id": 1, "text": "รหัสสินค้า 1" ,"value":"00000001"},
     { "id": 2, "text": "ตัวเลือกที่ 2" ,"value":"00000002"},
     { "id": 3, "text": "ตัวเลือกที่ 3" ,"value":"00000003"},
@@ -561,15 +560,7 @@ $(window).keydown(function(event){
             }
             var $result = $('<span></span>');
             $result.text(result.text + ' (Input: ' + result.value + ')');
-
-            if (result.id == 0) {
-              $result = '---';  
-              return $result;
-            }else{
-              return $result;
-            }
-
-           
+            return $result;
         },
         matcher: function(params, data) {
             if ($.trim(params.term) === '') {
@@ -579,7 +570,6 @@ $(window).keydown(function(event){
             var inputText = params.term.toLowerCase().replace(/\s/g, '');
             var optionText = data.text.toLowerCase().replace(/\s/g, '');
             var optionValue = data.value.toLowerCase().replace(/\s/g, '');
-            var optionValue = "";
             if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1) {
                 return data;
             }

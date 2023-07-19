@@ -21,10 +21,6 @@
     background: linear-gradient(to right, #e8e8e8, #f1f1f1);
     color: #000000;
   }
-  .card-img-top {
-    height: 200px; /* Adjust the height to your desired value */
-    object-fit: cover; /* This ensures the image fills the entire space while maintaining aspect ratio */
-  }
 </style>
   <?php 
 
@@ -33,41 +29,34 @@
   ?>
     
     <div class="section">
-      <div class="container">
+      <div class="container pt-2">
         <div class="row">
 
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+        <div class="col-sm-12 col-md-12 col-lg-3">
           <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
+            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
             <div class="card-body">
              <h2 class="card-title">ฝ่ายขาย</h2>
-             <p class="card-text">
-             <ul>
-              <li><a href="dataqoud.php" >ใบเสนอราคา</a></li>
-            </ul>
-             </p>
+             <p class="card-text"></p>
+              <a class="click-me-btn btn btn-primary" data-number="1" class="btn btn-primary">LINK</a>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+        <div class="col-sm-12 col-md-12 col-lg-3">
           <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/qt.jpg" alt="Card image cap">
+            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
             <div class="card-body">
              <h2 class="card-title">ผลิต</h2>
-             <p class="card-text">
-              <ul>
-                <li><a href="datatablemachine.php" >เครื่องจักร</a></li>
-              </ul>
-             </p>
-              <!-- <a class="click-me-btn btn btn-primary" data-number="2" class="btn btn-primary">LINK</a> -->
+             <p class="card-text"></p>
+              <a class="click-me-btn btn btn-primary" data-number="2" class="btn btn-primary">LINK</a>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+        <div class="col-sm-12 col-md-12 col-lg-3">
           <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
+            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
             <div class="card-body">
              <h2 class="card-title">บริหาร</h2>
              <p class="card-text"></p>
@@ -76,18 +65,13 @@
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+        <div class="col-sm-12 col-md-12 col-lg-3">
           <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
+            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
             <div class="card-body">
              <h2 class="card-title">สโตร์</h2>
-             <p class="card-text">
-              <ul>
-                <li><a href="datainvent.php" >ใบเบิกสินค้า</a></li>
-                <li><a href="datastock.php" >ใบเบิกสินค้า</a></li>
-              </ul>
-             </p>
-              <!-- <a class="click-me-btn btn btn-primary" data-number="4" class="btn btn-primary">LINK</a> -->
+             <p class="card-text"></p>
+              <a class="click-me-btn btn btn-primary" data-number="4" class="btn btn-primary">LINK</a>
             </div>
           </div>
         </div>
@@ -214,53 +198,65 @@
 
 <script>
     $(document).ready(function() {
-    //   var data = [
-    //   {
-    //     type: "ฝ่าย",
-    //     name: "ใบเสนอราคา",
-    //     link: "dataqoud.php",
-    //   },
-    //   {
-    //     type: "ผลิต",
-    //     name: "ชื่อผลิตภัณฑ์ 1",
-    //     link: "link_product_1.php",
-    //   },
-    //   {
-    //     type: "ผลิต",
-    //     name: "ชื่อผลิตภัณฑ์ 2",
-    //     link: "link_product_2.php",
-    //   },
-    //   {
-    //     type: "บริหาร",
-    //     name: "หัวหน้าบริหาร",
-    //     link: "link_management.php",
-    //   },
-    // ];
+      var data = [
+      {
+        type: "ฝ่าย",
+        name: "ใบเสนอราคา",
+        link: "dataqoud.php",
+      },
+      {
+        type: "ผลิต",
+        name: "ชื่อผลิตภัณฑ์ 1",
+        link: "link_product_1.php",
+      },
+      {
+        type: "ผลิต",
+        name: "ชื่อผลิตภัณฑ์ 2",
+        link: "link_product_2.php",
+      },
+      {
+        type: "บริหาร",
+        name: "หัวหน้าบริหาร",
+        link: "link_management.php",
+      },
+    ];
 
-    //   $(".click-me-btn").click(function() {
-    //     var number = $(this).data("number");
-    //     myFunction(number);
-    //   });
+      $(".click-me-btn").click(function() {
+        var number = $(this).data("number");
+        myFunction(number);
+      });
 
-    //   function myFunction(number) {
-    //     // Clear the existing cards
-    //     $("#subweb").empty();
+      function myFunction(number) {
+        // Clear the existing cards
+        $("#subweb").empty();
 
-    //     // Filter the data based on the selected number
-    //     var filteredData = data.filter(function(item) {
-    //     return item.type === (number === 1 ? "ฝ่าย" : number === 2 ? "ผลิต" : number === 3 ? "บริหาร" : "สโตร์");
-    //   });
+        // Filter the data based on the selected number
+        var filteredData = data.filter(function(item) {
+        return item.type === (number === 1 ? "ฝ่าย" : number === 2 ? "ผลิต" : number === 3 ? "บริหาร" : "สโตร์");
+      });
 
-    //     // Generate HTML for each item in the filtered data
-    //     $.each(filteredData, function(index, item) {
-    //       var newCardHTML = `
-    //       <div class="col-md-12 mb-4">
-    //            <a href="${item.link}" class="btn btn-custom">${item.name}</a>
-    //        </div>
-    //       `;
-    //       $("#subweb").append(newCardHTML);
-    //     });
-    //   }
+        // Generate HTML for each item in the filtered data
+        $.each(filteredData, function(index, item) {
+          var newCardHTML = `
+          <div class="col-md-12 mb-4">
+               <a href="${item.link}" class="btn btn-custom">${item.name}</a>
+           </div>
+          `;
+          // var newCardHTML = `
+          //   <div class="col-sm-12 col-md-12 col-lg-3">
+          //     <div class="card">
+          //       <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
+          //       <div class="card-body">
+          //         <h1 class="card-text">
+          //           <a href="${item.link}">${item.name}</a>
+          //         </h1>
+          //       </div>
+          //     </div>
+          //   </div>
+          // `;
+          $("#subweb").append(newCardHTML);
+        });
+      }
     });
   </script>
 
