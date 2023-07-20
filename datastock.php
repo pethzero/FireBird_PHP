@@ -520,17 +520,17 @@ $(window).keydown(function(event){
       });
     }
 
-    var dataX = [
+    var data_invent = [
     { "id": 0, "text": "---" ,"value":""},
-    { "id": 1, "text": "รหัสสินค้า 1" ,"value":"00000001"},
-    { "id": 2, "text": "ตัวเลือกที่ 2" ,"value":"00000002"},
-    { "id": 3, "text": "ตัวเลือกที่ 3" ,"value":"00000003"},
-    { "id": 4, "text": "ตัวเลือกที่ 4" ,"value":"00000004"},
-    { "id": 5, "text": "ตัวเลือกที่ 5" ,"value":"00000005"}
+    // { "id": 1, "text": "รหัสสินค้า 1" ,"value":"00000001"},
+    // { "id": 2, "text": "ตัวเลือกที่ 2" ,"value":"00000002"},
+    // { "id": 3, "text": "ตัวเลือกที่ 3" ,"value":"00000003"},
+    // { "id": 4, "text": "ตัวเลือกที่ 4" ,"value":"00000004"},
+    // { "id": 5, "text": "ตัวเลือกที่ 5" ,"value":"00000005"}
   ]
 
     $('#searchInput').select2({
-      data:dataX,
+      data:data_invent,
       //   ajax: {
       //   url: 'http://localhost:3000/data',
       //   dataType: 'json',

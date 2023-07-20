@@ -10,10 +10,12 @@
             } 
     include("0_headcss.php"); 
     ?>
-    <!-- <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
+    <!--
+    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="css/bootstrap-5.3.0.min.css">
     <link rel="stylesheet" href="css/font.css">
-    <link rel="stylesheet" href="css/mypcu.css"> -->
+    <link rel="stylesheet" href="css/mypcu.css"> 
+    -->
   </head>
   <body>
   <style>
@@ -52,15 +54,15 @@
 
         <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
           <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/qt.jpg" alt="Card image cap">
+            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
             <div class="card-body">
-             <h2 class="card-title">ผลิต</h2>
+             <h2 class="card-title">ฝ่ายจัดซื้อ</h2>
              <p class="card-text">
-              <ul>
-                <li><a href="datatablemachine.php" >เครื่องจักร</a></li>
-              </ul>
+                  <ul>
+                     <li><a href="datapurc.php" >ใบสั่งซื้อ</a></li>
+                  </ul>
              </p>
-              <!-- <a class="click-me-btn btn btn-primary" data-number="2" class="btn btn-primary">LINK</a> -->
+              <!-- <a class="click-me-btn btn btn-primary" data-number="3" class="btn btn-primary"></a> -->
             </div>
           </div>
         </div>
@@ -69,12 +71,18 @@
           <div class="card">
             <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
             <div class="card-body">
-             <h2 class="card-title">บริหาร</h2>
-             <p class="card-text"></p>
-              <a class="click-me-btn btn btn-primary" data-number="3" class="btn btn-primary">LINK</a>
+             <h2 class="card-title">ผลิต</h2>
+             <p class="card-text">
+              <ul>
+                <li><a href="datatablemachine.php">เครื่องจักร(กำลังพัฒนา)</a></li>
+              </ul>
+             </p>
+              <!-- <a class="click-me-btn btn btn-primary" data-number="2" class="btn btn-primary">LINK</a> -->
             </div>
           </div>
         </div>
+
+    
 
         <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
           <div class="card">
@@ -83,7 +91,7 @@
              <h2 class="card-title">สโตร์</h2>
              <p class="card-text">
               <ul>
-                <li><a href="datainvent.php" >ใบเบิกสินค้า</a></li>
+                <li><a href="datainvent.php" >ดูสินค้า</a></li>
                 <li><a href="datastock.php" >ใบเบิกสินค้า</a></li>
               </ul>
              </p>
@@ -91,102 +99,6 @@
             </div>
           </div>
         </div>
-
-
-        <!-- <div class="col-sm-12 col-md-12 col-lg-3">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-            <div class="card-body">
-              <h1 class="card-text">
-                ผลิต
-                <button class="click-me-btn" data-number="2">Click me</button>
-              </h1>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3">
-            <div class="card">
-              <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-              <div class="card-body">
-                <h1 class="card-text">
-                  <a href="#" class="click-me-btn" data-number="3">บริหาร</a>
-                </h1>
-              </div>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3">
-            <div class="card">
-              <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-              <div class="card-body">
-                <h1 class="card-text">
-                  <a href="#" class="click-me-btn" data-number="4">สโตร์</a>
-                </h1>
-              </div>
-            </div>
-        </div> -->
-
-
-
-        <!-- <div class="col-sm-12 col-md-12 col-lg-3">
-            <div class="card" >
-            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-              <div class="card-body">
-                <h1 class="card-text">
-                <a >ฝ่ายขาย</a>
-                <button>Click me</button>
-                </h1>
-              </div>
-            </div>
-          </div> -->
-          
-          <!-- <div class="col-sm-12 col-md-12 col-lg-3">
-            <div class="card" >
-            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-              <div class="card-body">
-                <h1 class="card-text">
-                <a href="datamanage.php">บริหาร</a>
-                </h1>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- <div class="col-sm-12 col-md-12 col-lg-3">
-            <div class="card" >
-            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-              <div class="card-body">
-              <h1 class="card-text">
-                ผลิต
-                <button>Click me</button>
-              </h1>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- <div class="col-sm-12 col-md-12 col-lg-3">
-            <div class="card" >
-            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-              <div class="card-body">
-              <h1 class="card-text">
-                <a href="datainvent.php">สโตร์</a>
-              </h1>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- <div class="col-sm-12 col-md-12 col-lg-3">
-            <div class="card" >
-            <img class="card-img-top img-thumbnail" src="" alt="Card image cap">
-              <div class="card-body">
-              <h1 class="card-text">
-                <a href="datastock.php">เบิกสินค้า</a>
-              </h1>
-              </div>
-            </div>
-          </div> -->
-
-
           
         </div>
       </div>

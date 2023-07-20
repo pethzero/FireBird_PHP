@@ -53,7 +53,7 @@ const formatCurrency = (amount) => {
   }
   let formattedAmount = parseFloat(amount).toFixed(2);
   formattedAmount = formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  formattedAmount += '฿';
+  // formattedAmount += '฿';
   return formattedAmount;
 };
 const formatDecimalData  = (data) =>{
@@ -106,7 +106,8 @@ var dtcolumn =
     { data: 'NAME' },
     { data: 'QDOCDATE',render: formatDate},
     { data: 'DELYDATE',render: formatDate},
-    { data: 'NETAMT' ,render: formatCurrency},
+    // { data: 'NETAMT' ,render: formatCurrency},
+    { data: 'NETAMT' },
     { data: 'EMPNAMESALES' },
     { data: 'EMPNAMEMAKER' },
     { data: 'EMPNAMEAPPROVER' },
@@ -121,6 +122,7 @@ var dtcolumn =
   {data: 'UNITNAME'},
   {data: 'UNITAMT',render: formatCurrency},
   ],
+  //////////////////////////////////////////////////////////////////////////////////////////////
   'datainvent': [
     { data: 'RECNO' },
     { data: 'CODE' },
@@ -133,6 +135,44 @@ var dtcolumn =
     { data: 'LASTOUT',render: formatDate}
   ]
   ,
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  'datapurc':   [
+    { data: 'RECNO' },
+    {
+      data: null,
+      render: function(data, type, row)
+      {
+        return customModelRender (data, type, row, 'hq','SHOW' );
+      }
+    },
+    { data: 'DOCNO' },
+    { data: 'STATUS',
+    render: function(data, type, row) {
+      let text = row.EMPNAMEAPPROVER !== '' ? 'อนุมัติแล้ว' : 'รออนุมัติ';
+      return text;
+    },
+    },
+    { data: 'CODE' },
+    { data: 'NAME' },
+    { data: 'DOCDATE',render: formatDate},
+    { data: 'DELYDATE',render: formatDate},
+    { data: 'NETAMT' ,render: formatCurrency},
+    // { data: 'NETAMT'},
+    { data: 'EMPNAMEBUYER' },
+    { data: 'EMPNAMEMAKER' },
+    { data: 'EMPNAMEAPPROVER' },
+    { data: 'REMARK' },
+  ],
+  'datapurc_dt':
+  [
+  {data: 'PURCHD'},
+  {data: 'CODE'},
+  {data: 'DETAIL'},
+  {data: 'QUANORD'},
+  {data: 'UNITNAME'},
+  {data: 'UNITAMT',render: formatCurrency},
+  ],
+    ///////////////////////////////
   'datamachine': [
     { data: 'RECNO' },
     {

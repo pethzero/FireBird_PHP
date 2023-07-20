@@ -49,11 +49,8 @@ try {
           }
           $response = array(
             'status' => 'success',
-            // 'DataJSON' =>$DataJSON,
-            // 'sqldt' => $sqldt,
             'message' =>  $message
           );
-            
     } else {
       $response = array(
         'status' => 'success',

@@ -58,20 +58,20 @@
 
       <div class="row">
         <div class="col-12">
-          <h1>ใบเสนอราคา</h1>
+          <h1>ใบสั่งซื้อ</h1>
           <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
                 <th>แสดงข้อมูล</th>
-                <th>เลขที่ใบเสนอราคา</th>
+                <th>เลขที่ใบสั่งซื้อ</th>
                 <th>สถานะ</th>
                 <th>รหัสลูกค้า</th>
                 <th>ชื่อลูกค้า</th>
-                <th>วันที่เปิดใบเสนอราคา</th>
-                <th>วันหมดอายุ</th>
+                <th>วันที่เปิดใบสั่งซื้อ</th>
+                <th>กำหนดส่งสินค้า</th>
                 <th>ราคารวม Vat</th>
-                <th>ผู้ขาย</th>
+                <th>ผู้สั่งซื้อ</th>
                 <th>ผู้ทำเอกสาร</th>
                 <th>ผู้อนุมัติ</th>
                 <th>REMARK</th>
@@ -108,7 +108,7 @@
     <div class="container pt-3">
       <div class="row">
         <div class="col-12">
-          <h1>ข้อมูลใบเสนอราคา<label id="dtdocno"></label></h1>
+          <h1>ข้อมูลใบสั่งซื้อ<label id="dtdocno"></label></h1>
           <table id="table_datadt" class="nowrap table table-striped table-bordered align-middle" width='100%'>
             <thead class="thead-light">
               <tr>
@@ -152,14 +152,14 @@
     <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="hqLabel">ใบเสนอราคา</h5>
+          <h5 class="modal-title" id="hqLabel">ใบสั่งซื้อ</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <div class="modal-body">
           <div class="row">
             <div class="col-12 pb-3">
-              เลขที่ใบเสนอราคา: <span id="docNo"></span>
+              เลขที่ใบสั่งซื้อ: <span id="docNo"></span>
             </div>
             <div class="col-12 pb-3">
               ชื่อลูกค้า: <span id="name"></span>
@@ -168,7 +168,7 @@
               รหัสลูกค้า: <span id="code"></span>
             </div>
             <div class="col-12 pb-3">
-              วันที่เปิดใบเสนอราคา: <span id="qdocDate"></span>
+              วันที่เปิดใบสั่งซื้อ: <span id="qdocDate"></span>
             </div>
             <div class="col-12 pb-3">
               ราคา: <span id="price"></span>
@@ -177,11 +177,11 @@
 
           <div class="row mb-3 align-items-center">
             <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
-              <label class="form-label mb-0">ผู้เสนอขาย:</label>
-              <span id="saleName"></span>
+              <label class="form-label mb-0">ผู้สั่งซื้อ:</label>
+              <span id="buyerName"></span>
             </div>
             <div class="col-sm-12 col-md-8 col-lg-6 col-xl-6">
-              <select class="form-select" id="selectMenusaleName" aria-label="Select Sale">
+              <select class="form-select" id="selectMenubuyerName" aria-label="Select buyer">
               </select>
             </div>
           </div>
@@ -245,7 +245,7 @@
       ajax: {
         url: encodedURL,
         data: function(d) {
-          d.queryId = '0001'; // ส่งค่าเป็นพารามิเตอร์ queryId
+          d.queryId = 'PURCHD_LIST'; // ส่งค่าเป็นพารามิเตอร์ queryId
           d.params = null;
         },
         dataSrc: function(json) {
@@ -254,7 +254,7 @@
         }
       },
       scrollX: true,
-      columns: dtcolumn['dataquoud'],
+      columns: dtcolumn['datapurc'],
       order: [
         [0, 'desc']
       ],
@@ -290,7 +290,7 @@
           $('.loading').hide();
           Swal.fire(
             'บันทึกแล้ว',
-            'คุณได้อนุมัติใบเสนอราคา : ' + docno,
+            'คุณได้อนุมัติใบสั่งซื้อ : ' + docno,
             'success'
           )
           init_op = 0;
@@ -308,9 +308,8 @@
           if (selectedRecno !== data.RECNO) {
             // เช็คว่ามีแถวที่ถูกเลือกอยู่หรือไม่
             tabledtpost(data.RECNO);
-            $('#dtdocno').text('  ' + data.QDOCNO);
+            $('#dtdocno').text('  ' + data.DOCNO);
             selectedRecno = data.RECNO;
-            console.log(data.RECNO);
           }
         });
       },
@@ -347,7 +346,7 @@
 
     var table_datadt = $('#table_datadt').DataTable({
       scrollX: true,
-      columns: dtcolumn['dataquoud_dt'],
+      columns: dtcolumn['datapurc_dt'],
       order: [
         [0, 'desc']
       ],
@@ -366,8 +365,7 @@
       $.ajax({
         url: 'ajax_data.php',
         data: {
-          // queryId: '0003',
-          queryId: '0006',
+          queryId: 'PURCHD_DT',
           params: { // อาร์เรย์ params ที่คุณต้องการส่ง
             RECNO: recnodt,
           },
@@ -383,21 +381,20 @@
           console.error(error);
         }
       });
-
     }
 
     var recno_no;
-    var recno_saleName;
+    var recno_buyerName;
     var recno_makegerName;
     var recno_approverName;
     var docno;
     $('#table_datahd').on('click', '.btn-primary', function() {
       var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
-      docno = rowData.QDOCNO;
+      docno = rowData.DOCNO;
       var name = rowData.NAME;
       var code = rowData.CODE;
-      var qdocdate = rowData.QDOCDATE;
-      var saleName = rowData.EMPNAMESALES;
+      var qdocdate = rowData.DOCDATE;
+      var buyerName = rowData.EMPNAMEBUYER;
       var makegerName = rowData.EMPNAMEMAKER;
       var approverName = rowData.EMPNAMEAPPROVER;
       var price = rowData.NETAMT;
@@ -407,14 +404,14 @@
       $('#name').text(name);
       $('#code').text(code);
       $('#qdocDate').text(formatDate(qdocdate));
-      $('#saleName').text(saleName);
+      $('#buyerName').text(buyerName);
       $('#makegerName').text(makegerName);
       $('#approverName').text(approverName);
       $('#price').text(price + " บาท");
 
       ///////////////////////////////////////////////////////////////////////////
       recno_no = rowData.RECNO;
-      recno_saleName = setSelect2Value('#selectMenusaleName', saleName);
+      recno_buyerName = setSelect2Value('#selectMenubuyerName', buyerName);
       recno_makegerName = setSelect2Value('#selectMenumakegerName', makegerName);
       recno_approverName = setSelect2Value('#selectMenuapproverName', approverName);
       ////////////////////////////////////////////////////////////////////
@@ -590,12 +587,12 @@
         type: "POST",
         url: 'ajax_dupdate.php',
         data: {
-          queryIdHD: 'UD_QUOTHD',
+          queryIdHD: 'UD_PURCHD',
           queryIdDT: '',
           condition: 'U',
           paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
             RECNO: recno_no,
-            SALES: recno_saleName,
+            BUYER: recno_buyerName,
             MAKER: recno_makegerName,
             APPROVER: recno_approverName,
           },
@@ -611,7 +608,6 @@
         beforeSend: function() {},
         complete: function() {},
         success: function(response) {
-          console.log('load')
           init_op = 1;
           table.ajax.reload();
           $('.loading').show();
@@ -637,7 +633,7 @@
         success: function(response) {
           emp_list = JSON.parse(response).data;
           data_json_name(emp_list)
-          createSelect2('#selectMenusaleName', data_emp_name, 'sale');
+          createSelect2('#selectMenubuyerName', data_emp_name, 'buyer');
           createSelect2('#selectMenumakegerName', data_emp_name, 'maker');
           createSelect2('#selectMenuapproverName', data_emp_name, 'apporver');
         },
@@ -688,8 +684,8 @@
           return null;
         }
       }).on('change', function() {
-        if (ifcondition === 'sale') {
-          recno_saleName = $(this).select2('data')[0].value;
+        if (ifcondition === 'buyer') {
+          recno_buyerName = $(this).select2('data')[0].value;
         } else if (ifcondition === 'maker') {
           recno_makegerName = $(this).select2('data')[0].value;
         } else if (ifcondition === 'apporver') {

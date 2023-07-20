@@ -23,9 +23,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="dataqoud.php">ใบเสนอราคา</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -33,8 +33,24 @@
             ฝ่ายจัดซื้อ
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">ใบสั่งซื้อ</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item"  href="datapurc.php" >ใบสั่งขาย</a></li> 
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           ผลิต
+          </a>
+          <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="datatablemachine.php">เครื่องจักร(กำลังพัฒนา)</a></li> 
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            สโตร์
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="datainvent.php">ดูสินค้า</a></li> 
+            <li><a class="dropdown-item" href="datastock.php">ใบเบิกสินค้า</a></li> 
           </ul>
         </li>
       <!-- <li class="nav-item">
