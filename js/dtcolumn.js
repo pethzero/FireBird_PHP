@@ -43,7 +43,8 @@ const formatDate = (data) => {
   const day = dateObj.getDate();
   const month = dateObj.getMonth() + 1;
   const year = dateObj.getFullYear();
-  const formattedDate = `${(month < 10 ? '0' + month : month)}/${(day < 10 ? '0' + day : day)}/${year}`;
+  const formattedDate = `${(day < 10 ? '0' + day : day)}/${(month < 10 ? '0' + month : month)}/${year}`;
+  // const formattedDate = `${(month < 10 ? '0' + month : month)}/${(day < 10 ? '0' + day : day)}/${year}`;
   return formattedDate;
 };
 
@@ -53,7 +54,7 @@ const formatCurrency = (amount) => {
   }
   let formattedAmount = parseFloat(amount).toFixed(2);
   formattedAmount = formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  // formattedAmount += '฿';
+  formattedAmount += '฿';
   return formattedAmount;
 };
 const formatDecimalData  = (data) =>{
@@ -75,11 +76,6 @@ const customFocusRender = (data, type, row,datainput) => {
 };
 
 const customModelRender = (data, type, row,idmodel,idname) => {
-  // if (idmodel === 'pmtime') {
-  //   return `<button class="btn btn-primary ${idmodel}" data-bs-toggle="modal" data-bs-target="#${idmodel}" data-bs-row-id="${row['RECNO']}">${idname}</button>`;
-  // } else {
-  //   return `<button class="btn btn-primary ${idmodel}" data-bs-toggle="modal" data-bs-target="#${idmodel}" data-bs-row-id="${row['RECNO']}">${idname}</button>`;
-  // }
   return `<button class="btn btn-primary ${idmodel}" data-bs-toggle="modal" data-bs-target="#${idmodel}" data-bs-row-id="${row['RECNO']}">${idname}</button>`;
 };
 
@@ -106,8 +102,8 @@ var dtcolumn =
     { data: 'NAME' },
     { data: 'QDOCDATE',render: formatDate},
     { data: 'DELYDATE',render: formatDate},
-    // { data: 'NETAMT' ,render: formatCurrency},
-    { data: 'NETAMT' },
+    { data: 'NETAMT' ,render: formatCurrency},
+    // { data: 'NETAMT' },
     { data: 'EMPNAMESALES' },
     { data: 'EMPNAMEMAKER' },
     { data: 'EMPNAMEAPPROVER' },

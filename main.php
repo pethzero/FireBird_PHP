@@ -46,6 +46,8 @@
              <p class="card-text">
              <ul>
               <li><a href="dataqoud.php" >ใบเสนอราคา</a></li>
+              <li><a href="dataactivity_table.php" >ตารางหนัดหมาย</a></li>
+              <li><a href="dataactivity.php" >เพิ่มตารางหนัดหมาย</a></li>
             </ul>
              </p>
             </div>

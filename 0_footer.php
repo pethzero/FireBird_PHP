@@ -7,7 +7,7 @@
     </div>
   </div>
 </footer> -->
-
+<!-- <hr> -->
 <footer class="text-center mt-auto fixed-bottom">
     <div class="container pt-2">
       <div class="row">

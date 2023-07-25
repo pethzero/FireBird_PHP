@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-custom">
-  <a class="navbar-brand text-white" href="#">SAN ENGINEERING</a>
+  <a class="navbar-brand text-white" >SAN ENGINEERING</a>
   <!-- <button class="navbar-toggler navbar-toggler-light bg-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button> -->
@@ -23,6 +23,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="dataqoud.php">ใบเสนอราคา</a></li>
+            <li><a class="dropdown-item" href="dataactivity.php">ตารางหนัดหมาย</a></li>
             <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li> -->
@@ -60,11 +61,16 @@
 
     <!-- Navbar items on the right -->
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
+      <li class="nav-item d-flex align-items-center">
         <span class="nav-link text-white"><?php echo $_SESSION["EMPNAME"] ?></span>
       </li>
-      <li class="nav-item">
-        <img src="images/fox.jpg" width="40" height="40" class="rounded-circle">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" data-bs-haspopup="true" data-bs-expanded="false">
+          <img src="images/fox.jpg" width="40" height="40" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="logout.php">Log Out</a></li>
+        </ul>
       </li>
     </ul>
     

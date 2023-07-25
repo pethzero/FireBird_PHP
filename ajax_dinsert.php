@@ -4,19 +4,32 @@ try {
     include("sql.php");
     // ดึงข้อมูลจากตารางที่ต้องการ
     $message = '';
+    // $queryId = isset($_POST['queryId']) ? $_POST['queryId'] : '';
+    // $params = isset($_POST['params']) ? $_POST['params'] : '';
 
-    $queryId = isset($_POST['queryId']) ? $_POST['queryId'] : '';
-    $params = isset($_POST['params']) ? $_POST['params'] : '';
-    $condition = isset($_POST['condition']) ? $_POST['condition'] : '';
 
+    //SQL ID
     $queryIdHD = isset($_POST['queryIdHD']) ? $_POST['queryIdHD'] : '';
     $queryIdDT = isset($_POST['queryIdDT']) ? $_POST['queryIdDT'] : '';
+    //condition
+    $condition = isset($_POST['condition']) ? $_POST['condition'] : '';
+
+    //POST DATA PARAM SQL
     $paramhd = isset($_POST['paramhd']) ? $_POST['paramhd'] : null;
+    $paramdt = isset($_POST['paramdt']) ? $_POST['paramdt'] : null;
+    $paramlist = isset($_POST['paramlist']) ? $_POST['paramlist'] : null;
+
+    //POST DATA LIST
+    $DataJSON = isset($_POST['DataJSON']) ? json_decode($_POST['DataJSON'], true) : null;
+
     // $paramdt = isset($_POST['paramdt']) ? $_POST['paramdt'] : null;
     // $paramlist = isset($_POST['paramlist']) ? $_POST['paramlist'] : null;
-    $DataJSON  = json_decode($_POST['DataJSON'], true);
+    // $DataJSON  = json_decode($_POST['DataJSON'], true);
+
+    //GENERETOR
+    $genIdHD = isset($_POST['genIdHD']) ? $_POST['genIdHD'] : '';
+    $genIdDT = isset($_POST['genIdDT']) ? $_POST['genIdDT'] : '';
     
-    // if (isset($_POST['queryId']) && isset($_POST['params']))
     if (isset($_POST['queryIdHD']))
     { 
           try {
@@ -51,7 +64,7 @@ try {
               $nextValueDT = $stmt->fetchColumn();
               $paramdt['RECNO'] = $nextValueDT ;
 
-                $paramdt = array(
+              $paramdt = array(
                   'RECNO' => $nextValueDT,
                   'IO' => 'O',
                   'STATUS' => 'D',
@@ -82,10 +95,31 @@ try {
                 $sqlwithdraw = sqlexec('withdrawstock',$paramlist);
                 $stmt = $pdo->prepare($sqlwithdraw);
                 $stmt->execute();
-
                 $count++; 
                }
-
+            }
+            else if($condition == "IHD")
+            {
+               // เพิ่ม Generator hd
+               $sqlgenhd = 'SELECT NEXT VALUE FOR '.$genIdHD.' FROM RDB$DATABASE' ;
+               $stmt = $pdo->prepare($sqlgenhd);
+               $stmt->execute();
+              //  // อ่านค่า Generator hd
+               $nextValueHD = $stmt->fetchColumn();
+               $paramhd['RECNO'] = $nextValueHD;
+               $paramhd['DOCNO'] =  "66" ."/". sprintf("%04d",$nextValueHD);
+               //insert hd
+               $sqlhd = sqlexec($queryIdHD,$paramhd);
+              //  $stmt = $pdo->prepare($sqlhd);
+              //  $stmt->execute();
+            }
+            else if($condition == "IHD")
+            {
+               // เพิ่ม Generator hd
+               $sqlgenhd = 'SELECT NEXT VALUE FOR '.$genIdHD.' FROM RDB$DATABASE' ;
+               $stmt = $pdo->prepare($sqlgenhd);
+               $stmt->execute();
+      
             }
             $pdo->commit();
             $message = 'สำเร็จ';
@@ -107,7 +141,13 @@ try {
             'status' => 'success',
             // 'DataJSON' =>$DataJSON,
             // 'sqldt' => $sqldt,
-            'message' =>  $message
+            'message' =>  $message,
+            // 'sqlgenhd' =>  $sqlgenhd,
+            'sqlhd' =>  $sqlhd,
+            // 'paramhd' =>  $paramhd,
+            // 'test' =>  $test 
+            'test' =>  $paramhd['CUSTNAME'] 
+            
           );
             
     } else {

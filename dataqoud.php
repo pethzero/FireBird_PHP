@@ -126,8 +126,6 @@
         </div>
       </div>
 
-
-
     </div>
   </section>
 
@@ -258,10 +256,29 @@
       order: [
         [0, 'desc']
       ],
-      columnDefs: [{
-        "visible": false,
-        "targets": 0
-      }, ],
+      dom: 'Blfrtip',
+      buttons: ['colvis'],
+      columnDefs: [
+            { type: 'currency', targets: 8 },
+            {"visible": false,"targets": 0},
+            // {
+            //     searchPanes: {
+            //         show: true
+            //     },
+            //     targets: [2]
+            // },
+            // {
+            //     searchPanes: {
+            //         show: false
+            //     },
+            //     // targets: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
+            //     targets: [0,1,2,4,5,6,7,8,9,10,11,12]
+            // }
+        ],
+      // columnDefs: [
+      //   { type: 'currency', targets: 8 },
+      //   {"visible": false,"targets": 0},
+      //  ],
       // buttons: [
       //       'searchPanes'
       //   ],
@@ -567,7 +584,7 @@
       }).then((result) => {
         if (result.isConfirmed) {
           $('#hq').modal('hide');
-          SaveDate()
+          SaveData()
           // console.log('จบ')
 
         } else if (
@@ -585,7 +602,7 @@
 
     var init_op = 0;
 
-    function SaveDate() {
+    function SaveData() {
       $.ajax({
         type: "POST",
         url: 'ajax_dupdate.php',
@@ -625,7 +642,8 @@
     var emp_list;
     Employee_list()
 
-    function Employee_list() {
+    function Employee_list()
+    {
       $.ajax({
         url: 'ajax_data_select.php',
         data: {
@@ -725,7 +743,8 @@
       });
     }
 
-    function setSelect2Value(selector, searchText) {
+    function setSelect2Value(selector, searchText)
+    {
       $(selector).val(null).trigger("change.select2"); // ยกเลิกการเลือกทุกตัวเลือกก่อน
       var optionFound = false;
       $(selector).find('option').each(function() {

@@ -564,7 +564,7 @@
       }).then((result) => {
         if (result.isConfirmed) {
           $('#hq').modal('hide');
-          SaveDate()
+          SaveData()
           // console.log('จบ')
 
         } else if (
@@ -582,7 +582,7 @@
 
     var init_op = 0;
 
-    function SaveDate() {
+    function SaveData() {
       $.ajax({
         type: "POST",
         url: 'ajax_dupdate.php',

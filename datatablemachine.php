@@ -320,7 +320,7 @@ var selectedRecno = null;
     });
 
     $('#pmtime').on('show.bs.modal', function(event) {
-      console.log('SSS');
+      // console.log('SSS');
         // setTimeout(function() {
         //   $('#table_pmtimehd').DataTable().columns.adjust().draw();
         //     console.log('SSS');
