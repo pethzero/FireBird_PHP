@@ -23,14 +23,8 @@ $sql['CUSTCONT_LIST'] =  "SELECT RECNO,CONTNAME,CONTTEL,CONTEMAIL FROM CUSTCONT 
 $sql['0003'] = "UPDATE INVENT SET CODE = ':CODE' WHERE RECNO = :RECNO";
 $sql['0004'] = "INSERT INTO INVENT (CODE, RECNO) VALUES (':CODE', :RECNO)";
 
-
-
-// $sql['InsertINVREQHD'] = "INSERT INTO INVREQHD (RECNO,LASTUPD,DOCDATE) VALUES (:RECNO, 'NOW', 'NOW')";
 $sql['InsertINVREQHD'] = "INSERT INTO INVREQHD (RECNO, LASTUPD, STATUS, CORP, REQTYPE, IO, DOCDATE, DOCNO) VALUES (:RECNO, 'NOW', ':STATUS', :CORP, :REQTYPE, ':IO', ':DOCDATE', ':DOCNO')";
-// $sql['InsertINVREQDT'] = "INSERT INTO INVREQDT (RECNO, LASTUPD, STATUS, CORP,INVREQHD,IO, CUST, SUPP, REFDOCHD, REFDOCDT, LINENO, ITEMNO) VALUES (:RECNO, 'NOW', ':STATUS', :CORP, :INVREQHD, ':IO', NULL, NULL, :REFDOCHD, :REFDOCDT, :LINENO, :ITEMNO)";
 $sql['InsertINVREQDT'] = "INSERT INTO INVREQDT (RECNO, LASTUPD, STATUS, CORP,INVREQHD,IO, CUST, SUPP, REFDOCHD, REFDOCDT, LINENO, ITEMNO, INVENT, QUANORD, QUANDLY, LISTUNIT, PURPOSE) VALUES (:RECNO, 'NOW', ':STATUS', :CORP, :INVREQHD, ':IO', NULL, NULL, :REFDOCHD, :REFDOCDT, :LINENO, :ITEMNO, :INVENT, :QUANORD, :QUANDLY, :LISTUNIT, NULL)";
-// $sql['0005'] = "SELECT * FROM INVENT";
-// $sql['0005'] = "SELECT INVENT.RECNO, INVENT.INVTYPE, INVENT.CODE, INVENT.PRODNAME, INVENT.LISTUNIT, INVENT.QUAN, INVENT.COSTAMT, INVENT.SALEAMT, INVENT.LASTIN, INVENT.LASTOUT, INVENT.IMAGE, INVTYPE.TYPENAME, LISTUNIT.UNITNAME FROM INVENT LEFT JOIN INVTYPE ON (INVENT.INVTYPE = INVTYPE.RECNO) LEFT JOIN LISTUNIT ON (INVENT.LISTUNIT = LISTUNIT.RECNO) ORDER BY INVENT.CODE";
 $sql['0005'] = "SELECT INVENT.RECNO, INVENT.INVTYPE, INVENT.CODE, INVENT.PRODNAME, INVENT.LISTUNIT, INVENT.QUAN, INVENT.COSTAMT, INVENT.SALEAMT, INVENT.LASTIN, INVENT.LASTOUT, INVENT.IMAGE, INVTYPE.TYPENAME, LISTUNIT.UNITNAME FROM INVENT LEFT JOIN INVTYPE ON (INVENT.INVTYPE = INVTYPE.RECNO) LEFT JOIN LISTUNIT ON (INVENT.LISTUNIT = LISTUNIT.RECNO)";
 $sql['0006'] = "SELECT QUOTDT.RECNO, QUOTDT.LASTUPD, QUOTDT.QUOTHD, QUOTDT.CORP, QUOTDT.CUST,QUOTDT.LINENO, QUOTDT.ITEMNO, QUOTDT.DETAIL, QUOTDT.DETAIL1, QUOTDT.DETAIL2,QUOTDT.DETAIL3, QUOTDT.DETAIL4, QUOTDT.DETAIL5, QUOTDT.QUAN, QUOTDT.UNITNO,QUOTDT.UNITAMT, QUOTDT.TOTALAMT, INVENT.CODE, INVENT.CALLNAME, LISTUNIT.UNITNAME FROM QUOTDT LEFT JOIN INVENT ON (QUOTDT.INVENT = INVENT.RECNO) LEFT JOIN LISTUNIT ON (QUOTDT.UNITNO = LISTUNIT.RECNO)  WHERE QUOTDT.QUOTHD = :RECNO ORDER BY QUOTDT.LINENO";
 
@@ -49,11 +43,8 @@ $sql['lastdocnowithdrawstock'] = "SELECT MAX(DOCNO) AS DOCNO FROM INVREQHD";
 
 
 // ACTIVITY
-// $sql['IND_ACTIVITYHD'] = "INSERT INTO ACTIVITYHD (RECNO, CREATED , LASTUPD, STATUS,DOCNO,CUST, CUSTNAME, CONT, CONTNAME) VALUES (:RECNO, 'NOW', 'NOW', ':STATUS',':DOCNO',:CUST, ':CUSTNAME', :CONT, ':CONTNAME')";
-
-// $sql['IND_ACTIVITYHD'] = "INSERT INTO ACTIVITYHD (RECNO, CREATED, LASTUPD,STATUS,DOCNO,CUST, CONT,CUSTNAME,CONTNAME,CONTNAME) VALUES (:RECNO, 'NOW', 'NOW',':STATUS',':DOCNO' , :CUST , :CONT ,':CUSTNAME',':CONTNAME')";
-// $sql['IND_ACTIVITYHD'] = "INSERT INTO ACTIVITYHD (RECNO, CREATED, LASTUPD,STATUS,DOCNO,CUST, CONT,CUSTNAME,CONTNAME,CONTNAME,EMAIL,ADDR,LOCATION,SUBJECT,DETAIL,REF,PRIORITY,TIMED,TIMEH,TIMEM,STARTD,PRICECOST,PRICEPWITHDRAW,OWNERNAME,OWNER) VALUES (:RECNO, 'NOW', 'NOW',':STATUS',':DOCNO' , :CUST , :CONT ,':CUSTNAME',':CONTNAME',':EMAIL',':ADDR',':LOCATION',':SUBJECT',':DETAIL',':REF',':PRIORITY',:TIMED,:TIMEH,:TIMEM,:STARTD,:PRICECOST,:PRICEPWITHDRAW,':OWNERNAME',:OWNER)";
-$sql['IND_ACTIVITYHD'] = "INSERT INTO ACTIVITYHD (RECNO, CREATED, LASTUPD,STATUS,DOCNO,CUST, CONT,CUSTNAME,CONTNAME,CONTNAME) VALUES (:RECNO, 'NOW', 'NOW',':STATUS',':DOCNO',:CUST ,:CONT ,':CUSTNAME',':CONTNAME')";
+$sql['ACTIVITY'] =  "select * from  activityhd  WHERE RECNO = :RECNO";
+$sql['SEL_ACTIVITYHD'] ="SELECT * FROM ACTIVITYHD";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function sqlexec($queryId, $params) 
 {
@@ -70,8 +61,7 @@ function sqlexec($queryId, $params)
         {
           $value = '';
         }
-        // $sqlQuery = str_replace(":$key", $value, $sqlQuery);
-        $sqlQuery = str_replace(":$key", iconv("UTF-8", "TIS-620//TRANSLIT//IGNORE", $value), $sqlQuery);
+        $sqlQuery = str_replace(":$key", $value, $sqlQuery);
       }
     }
     return $sqlQuery;
@@ -80,36 +70,5 @@ function sqlexec($queryId, $params)
   }
 }
 
-
-// function sqlexec($queryId, $params) {
-//   global $sql;
-
-//   // ตรวจสอบว่ามีคำสั่ง SQL ตามหมายเลขที่กำหนดหรือไม่
-//   if (array_key_exists($queryId, $sql)) {
-//     $sqlQuery = $sql[$queryId];
-
-//     // ตรวจสอบว่า params มีค่าหรือไม่
-//     if (!empty($params)){
-//       // เติมค่าพารามิเตอร์ในคำสั่ง SQL
-//       foreach ($params as $key => $value) {
-//         // ตรวจสอบว่า value เป็นอาร์เรย์หรือไม่
-//         if (is_array($value)) {
-//           // สร้างสตริงเปลี่ยนแปลงให้เหมาะสมสำหรับ SQL IN clause
-//           $inClause = implode(',', array_fill(0, count($value), '?'));
-//           $sqlQuery = str_replace(":$key", $inClause, $sqlQuery);
-//         } else {
-//           $sqlQuery = str_replace(":$key", $value, $sqlQuery);
-//         }
-//       }
-//     }
-
-//     return $sqlQuery;
-//   } else {
-//     return null;
-//   }
-// }
-
-// กรณี SELECT * FROM table WHERE column = :MONTHSPAN
-// ELECT * FROM table WHERE column IN (?, ?, ?) หลังจากการแปลงที่ได้จาก SQL
 ?>
 

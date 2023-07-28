@@ -6,15 +6,15 @@
 		include('sysutils.php');
         include("connect.php");  
 		
-		$username = $_POST["username"];
-		$password = $_POST["password"];
+		$username = texttis620($_POST["username"]);
+		$password = texttis620($_POST["password"]);
 		$sql = "SELECT RECNO, EMPNO, EMPNAME, PASS, WEBMAN, WEBPD, WEBST, WEBHR FROM EMPL WHERE UPPER(LOGIN)=:LOGIN";
 		$query = $pdo->prepare($sql);
 		$query->execute(array(strtoupper($username)));
 		$row = $query->fetch();
 		if (empty($row) == false)
 		{
-			if (iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $row["PASS"]) == $password)
+			if ($row["PASS"] == $password)
 			{
 				if (($row["WEBMAN"] == 'T') or ($row["WEBPD"] == 'T') or ($row["WEBST"] == 'T') or ($row["WEBHR"] == 'T'))
 				{

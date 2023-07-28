@@ -747,7 +747,8 @@
     {
       $(selector).val(null).trigger("change.select2"); // ยกเลิกการเลือกทุกตัวเลือกก่อน
       var optionFound = false;
-      $(selector).find('option').each(function() {
+      $(selector).find('option').each(function()
+      {
         if ($(this).text().toLowerCase() === searchText.toLowerCase()) {
           $(this).prop('selected', true);
           optionFound = true;

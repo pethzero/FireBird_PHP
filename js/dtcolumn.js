@@ -1,7 +1,7 @@
 // แปลงฟังก์ชัน getStatusText เป็น Arrow Function
 const getStatusText = (data) => {
   let statusText = '';
-  if (data === 'A'){
+  if (data === '-1'){
     statusText = 'Active';
   } else if (data === 'C') {
     statusText = 'Cancel';
@@ -13,22 +13,35 @@ const getStatusText = (data) => {
 
 const getStatusTextOther = (data, column) => {
   // เช็คคอลัมน์ที่ต้องการแปลงค่า
-  // if (column === 'STATUS') {
-  //   // ทำการแปลงค่าตามต้องการ
-  //   if (data === 'A') {
-  //     return 'Active';
-  //   } else if (data === 'C') {
-  //     return 'Cancel';
-  //   } else if (data === 'D') {
-  //     return 'Done';
-  //   }
-  // }
-    if (data != ''){
-      return 'Active';
+  if (column === 'TABLEACTIVITYHD_STATUS')
+  {
+    // ทำการแปลงค่าตามต้องการ
+    if (data == 'A'){
+      return 'ยังไม่เริ่มดำเนินการ';
+    } else if (data == 'I') {
+      return 'อยู่ระหว่างดำเนินการ';
+    }else if (data == 'W') {
+      return 'รอดำเนินการ';
+    }else if (data == 'D') {
+      return 'ถูกเลื่อนออกไป';
+    }else if (data == 'F') {
+      return 'ถูกเลื่อนออกไป';
+    }else {
+      return '';
     }
-    else{
-      return 'อนุมัติแล้ว'
+  }
+  else if(column === 'TABLEACTIVITYHD_PRIORITY'){
+    if (data == 'H') {
+      return 'สูง';
+    }else if (data == 'N') {
+      return 'ปกติ';
+    }else if (data == 'L') {
+      return 'ต่ำ';
+    }else {
+      return '';
     }
+
+  }
   // ถ้าไม่ใช่คอลัมน์ 'STATUS' ให้คืนค่าเป็นตัวอักษรเดิม
   // return data;
 };
@@ -78,6 +91,11 @@ const customFocusRender = (data, type, row,datainput) => {
 const customModelRender = (data, type, row,idmodel,idname) => {
   return `<button class="btn btn-primary ${idmodel}" data-bs-toggle="modal" data-bs-target="#${idmodel}" data-bs-row-id="${row['RECNO']}">${idname}</button>`;
 };
+
+const customButtonEdit = (data, type,row,idclass,idname) => {
+  return `<button class="btn btn-danger ${idclass}" id="${row['RECNO']}">${idname}</button>`;
+};
+
 
 var dtcolumn = 
 {
@@ -205,6 +223,38 @@ var dtcolumn =
    { data: 'Area'},
    { data: 'Delay'},
    { data: 'Remark'}
-  ]
+  ],
   ///////////////////////////////////////////////////////////////////////////////////////////
+
+  //////////////////////////////////////////////  ACTIVITYHD //////////////////////////////////////////////
+  'DATA_ACTIVITYHD': [
+    { data: 'RECNO' },
+    // {data: null,render: function(data, type, row){return "";}},
+    {
+      data: null,
+      render: function(data, type, row)
+      {
+        return customButtonEdit (data, type, row, 'edit','แก้ไข' );
+      }
+    },
+    {data: 'DOCNO'},
+    // {data: 'STATUS'},
+    {data: null,render: function(data)
+      {
+      return getStatusTextOther(data.STATUS,'TABLEACTIVITYHD_STATUS')
+      ;}
+    },
+    {data: 'CUSTNAME'},
+    {data: 'CONTNAME'},
+    {data: 'STARTD'},
+    // {data: 'PRIORITY'},
+    {data: null,render: function(data)
+      {
+      return getStatusTextOther(data.PRIORITY,'TABLEACTIVITYHD_PRIORITY')
+      ;}
+    },
+    {data: 'PRICECOST'},
+    {data: 'PRICEPWITHDRAW'},
+    {data: 'OWNERNAME'},
+   ]
 };

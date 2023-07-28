@@ -46,7 +46,7 @@
              <p class="card-text">
              <ul>
               <li><a href="dataqoud.php" >ใบเสนอราคา</a></li>
-              <li><a href="dataactivity_table.php" >ตารางหนัดหมาย</a></li>
+              <li><a href="datatable_activity.php" >ตารางหนัดหมาย</a></li>
               <li><a href="dataactivity.php" >เพิ่มตารางหนัดหมาย</a></li>
             </ul>
              </p>
@@ -106,7 +106,7 @@
       </div>
     </div>
  <hr>
- <div class="section">
+    <div class="section">
       <div class="container pt-2">
         <div class="row" id='subweb'>
 

@@ -43,12 +43,11 @@
     <div class="container pt-3">
       <h2>ตารางนัดหมาย</h2>
       <div class="row pb-3">
+     
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <input type="radio" id="showAllBtn" name="fav_language" value="all" checked>
-          <label for="showAllBtn">แสดงทั้งหมด</label>
-
+           <button  type="button" class="btn btn-primary">เพิ่มตารางหนัดหมาย</button>
         </div>
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+        <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <input type="radio" id="showApprovedBtn" name="fav_language" value="approved">
           <label for="showApprovedBtn">ทำการอนุมัติแล้ว</label>
 
@@ -56,11 +55,11 @@
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <input type="radio" id="waitApprovedBtn" name="fav_language" value="wait">
           <label for="waitApprovedBtn">รอทำการอนุมัติ</label>
-        </div>
+        </div> -->
 
       </div>
 
-      <div class="row mb-3">
+      <!-- <div class="row mb-3">
         <div class="col-sm-12 col-md-6 col-lg-6">
           <label for="searchInput" class="form-label">ค้นหารายการรหัสลูกค้า แบบกรอง</label>
           <div class="input-group">
@@ -68,12 +67,11 @@
             <button class="btn btn-primary" id="searchClear">ล้าง</button>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <div class="row">
         <div class="col-12">
-          <h1>ใบเสนอราคา</h1>
           <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
             <thead class="thead-light">
               <tr>
@@ -81,8 +79,9 @@
                 <th>แสดงข้อมูล</th>
                 <th>เลขที่นัดหมาย</th>
                 <th>สถานะ</th>
-                <th>รหัสลูกค้า</th>
-                <th>ชื่อลูกค้า</th>
+                <!-- <th>รหัสลูกค้า</th> -->
+                <th>บริษัท</th>
+                <th>ผู้ติดต่อ</th>
                 <th>วันที่นัดหมาย</th>
                 <th>ความสำคัญ</th>
                 <th>ราคาเบิก</th>
@@ -147,62 +146,73 @@
 <script>
   $(document).ready(function()
   {
+    console.log('wx')
     var tablejsondata;
     var selectedRow = null;
     var selectedRecno = null;
 
-    var encodedURL = encodeURIComponent('ajax_data.php');
+    var encodedURL = encodeURIComponent('ajax_select_sql.php');
     var data_array = [];
     var table = $('#table_datahd').DataTable({
-      // ajax: {
-      //   url: encodedURL,
-      //   data: function(d) {
-      //     d.queryId = '0001'; // ส่งค่าเป็นพารามิเตอร์ queryId
-      //     d.params = null;
-      //   },
-      //   dataSrc: function(json) {
-      //     tablejsondata = json.data
-      //     return json.data;
-      //   }
-      // },
+      ajax: {
+        url: encodedURL,
+        data: function(d) {
+          d.queryId = 'SEL_ACTIVITYHD'; // ส่งค่าเป็นพารามิเตอร์ queryId
+          d.params = null;
+        },
+        dataSrc: function(json) {
+          console.log(json)
+          tablejsondata = json.data
+          return json.data;
+        }
+      },
       scrollX: true,
-      // columns: dtcolumn['dataquoud'],
+      columns: 
+      dtcolumn['DATA_ACTIVITYHD'],
       order: [
         [0, 'desc']
       ],
+      dom: 'Bfrtip',
+      buttons: ['colvis', 'csv', 'excel'],
       columnDefs: [
         { type: 'currency', targets: 8 },
         {
 "visible": false,"targets": 0
       }, ],
       initComplete: function(settings, json) {
-        $('.loading').hide();
+        // $('.loading').hide();
 
       },
       createdRow: function(row, data, dataIndex) {
-        // // ค่าของคอลัมน์ STATUS อยู่ใน data.STATUS
-        // let status = data.EMPNAMEAPPROVER !== '' ? 'bg-success' : 'bg-danger';
-        // $(row).find('td:eq(2)').addClass(status); // ในที่นี้ คอลัมน์ STATUS มีลำดับที่ 3 (จำนวนคอลัมน์เริ่มต้นที่ 0)
+
       },
       drawCallback: function(settings) {
+        
       },
       rowCallback: function(row, data) {
         // // console.log('rowCallback')
-        // $(row).on('click', function() {
-        //   if (selectedRow !== null) {
-        //     $(selectedRow).removeClass('selected');
-        //   }
-        //   $(this).addClass('selected');
-        //   selectedRow = this;
+        $(row).on('click', function() {
+          if (selectedRow !== null) {
+            $(selectedRow).removeClass('selected');
+          }
+          $(this).addClass('selected');
+          selectedRow = this;
 
-        //   if (selectedRecno !== data.RECNO) {
-        //     // เช็คว่ามีแถวที่ถูกเลือกอยู่หรือไม่
-        //     selectedRecno = data.RECNO;
-        //     console.log(data.RECNO);
-        //   }
-        // });
+          if (selectedRecno !== data.RECNO) {
+            // เช็คว่ามีแถวที่ถูกเลือกอยู่หรือไม่
+            selectedRecno = data.RECNO;
+            // console.log(data.RECNO);
+          }
+        });
       },
+    });
 
+    $('#table_datahd').on('click', '.edit', function() {
+      var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
+      console.log(rowData.RECNO);
+      var url = "dataactivity.php?edit&recno=" + rowData.RECNO;
+      // เปิดหน้าเว็บ dataactivity.php ในหน้าต่างใหม่
+      window.open(url, "_blank");
     });
 
 

@@ -1,7 +1,8 @@
 <?php
 try {
     include("connect.php");    
-    include("sql.php");
+    // include("sql.php");
+    include("sql_exe.php");
 
     $queryId = isset($_GET['queryId']) ? $_GET['queryId'] : '';
     $params = isset($_GET['params']) ? $_GET['params'] : '';
@@ -10,8 +11,12 @@ try {
     $countyear = isset($_GET['countyear']) ? $_GET['countyear'] : '';
     $data = array();
 
-
-    $sql = sqlexec($queryId, $params);
+    if($condition == "mix"){
+        $sql = sqlmixexe($queryId, $params);
+    }   
+    else{
+      $sql = sqlexec($queryId);
+    }
 
 
     if ($sql) 
@@ -41,6 +46,9 @@ try {
     } else {
         $response = array(
             'status' => 'error',
+            'queryId' => $data,
+            'params' => $params,
+            'sql' => $sql,
             'data' => $data
         );
 

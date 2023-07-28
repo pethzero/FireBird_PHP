@@ -9,6 +9,8 @@
     header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
     exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
   }
+  // header('Location: http://stackoverflow.com');
+
   include("0_headcss.php");
   ?>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome-4.7.0.min.css"> -->
@@ -16,12 +18,75 @@
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> -->
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
+<?php
+$data_link = "";
+$size = count($_GET);
+$recno = null;
+if ($size === 0) {
+  $data_link = "add";
+} else if ($size === 2) {
+  $urlArray = $_GET;
+  $data_link = "edit";
+
+  if (count($urlArray) >= 2) {
+    $firstParam = array_keys($urlArray)[0];
+    $secondParam = array_keys($urlArray)[1];
+    $recno = $_GET['recno'];
+    if ($firstParam !== "edit" || $secondParam !== "recno") {
+      header("Location: 404.php");
+      exit;
+    }
+  } else {
+    header("Location: 404.php");
+    exit;
+  }
+} else {
+  header("Location: 404.php");
+  exit;
+}
+?>
+
+<!-- <script>
+        var link;
+        const urlParams = new URLSearchParams(window.location.search);
+        const size = Array.from(urlParams).length
+      //  console.log(link);
+       if(size == 0)
+       {
+         link = 'add'; 
+       }
+       else if(size == 2)
+       {
+        const urlArray = Array.from(urlParams.entries());
+         link = 'edit';
+        if (urlArray.length >= 2) 
+        {
+          const firstParam = urlArray[0][0]; // ชื่อตัวแรกในอาเรย์ URL
+          // const firstValue = urlArray[0][1]; // ค่าตัวแรกในอาเรย์ URL
+          const secondParam = urlArray[1][0]; // ชื่อตัวที่สองในอาเรย์ URL
+          // const secondValue = urlArray[1][1]; // ค่าตัวที่สองในอาเรย์ URL
+          // console.log(firstParam)
+          // console.log(firstValue)
+          // console.log(secondParam)
+          // console.log(secondValue)
+          if (firstParam != "edit" && secondParam != "recno")
+           {
+            window.location.replace("404.php");  
+            } 
+        } else {
+          // console.log("Not enough parameters in the URL.");
+         window.location.replace("404.php");  
+        }
+       }
+       else{
+        window.location.replace("404.php");  
+       }
+</script> -->
 
 <body>
   <?php
   include("0_header.php");
   include("0_breadcrumb.php");
-
   ?>
   <link rel="stylesheet" href="css/mycustomize.css">
   <style>
@@ -54,6 +119,11 @@
   include("sql.php");
   // include("0_fselect.php");
   ?>
+
+  <?php
+
+  ?>
+
   <form id="idForm" method="POST">
     <section>
       <div class="container">
@@ -108,34 +178,6 @@
           </div>
         </div>
 
-        <!-- <div class="row ">
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-          <div class="row">
-            <div class="input-group mb-3">
-              <span class="input-group-text c_activity">ลูกค้า:</span>
-              <input type="text" class="form-control"  id="contname" placeholder="ลูกค้า">
-            </div>
-
-            <div class="input-group mb-3">
-                <span class="input-group-text c_activity" id="ref">อ้างอิง:</span>
-                <input type="text" class="form-control" placeholder="อ้างอิง">
-            </div>
-
-          </div>
-        </div>
-
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-        <div class="input-group mb-3">
-              <span class="input-group-text c_activity" >โทรศัทพ์:</span>
-              <input type="text" class="form-control"  id="tel" placeholder="โทรศัทพ์">
-            </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text c_activity" >อีเมล:</span>
-              <input type="text" class="form-control" id="email" placeholder="อีเมล">
-            </div>  
-        </div>
-      </div> -->
-
         <div class="row mb-3">
           <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
@@ -180,24 +222,24 @@
 
         <div class="row ">
           <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            <div class="row">
-              <!-- <div class="input-group mb-3">
+            <!-- <div class="row"> -->
+            <!-- <div class="input-group mb-3">
                 <span class="input-group-text c_activity" id="ref">อ้างอิง:</span>
                 <input type="text" class="form-control" placeholder="อ้างอิง">
             </div> -->
-              <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
               <div class="input-group mb-3">
                 <span class="input-group-text c_activity" id="ref">อ้างอิง:</span>
                 <input type="text" class="form-control" placeholder="อ้างอิง">
               </div>
             </div> -->
-              <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
               <div class="input-group mb-3">
                 <span class="input-group-text c_activity" id="">Status:</span>
                 <input type="text" class="form-control" placeholder="บริษัท">
               </div>
             </div> -->
-            </div>
+            <!-- </div> -->
 
             <div class="row">
               <div class="input-group mb-3">
@@ -340,24 +382,16 @@
 
 
 <script>
+  //  console.log(link);
+
   $(document).ready(function() {
 
 
-    var recno_cust = -1;
-    var name_cust = "";
-    var recno_cont = -1;
-    var name_cont = "";
-    var recno_tel = "";
-    var recno_email = "";
-    var recno_location = $("input[name='location']:checked").val();
-    var recno_owner = -1;
-    var recno_nowner = "";
-   
-    $(window).keydown(function(event){
-    if((event.keyCode == 13) && ($(event.target)[0]!=$("textarea")[0])) {
+    $(window).keydown(function(event) {
+      if ((event.keyCode == 13) && ($(event.target)[0] != $("textarea")[0])) {
         event.preventDefault();
-            return false;
-        }
+        return false;
+      }
     });
 
     function matchCustom(params, data) {
@@ -381,7 +415,6 @@
       if ($.trim(params.term) === '') {
         return data;
       }
-      console.log(data)
       var inputText = params.term.toLowerCase().replace(/\s/g, '');
       var optionText = data.text.toLowerCase().replace(/\s/g, '');
       var optionValue = data.value.toLowerCase().replace(/\s/g, '');
@@ -393,7 +426,6 @@
     }
 
     // $('#datepicker').datepicker();
-    $('#date').val(moment(new Date()).format('DD/MM/YYYY'));
     $(function() {
       $("#datepicker").datepicker({
         format: "dd/mm/yyyy",
@@ -401,127 +433,32 @@
         autoclose: true
       });
     });
-
-    var con_list;
-    var contact;
-    var targetEmail = '';
-    var targetTel = '';
-  
-    var data_cont_name = [
-      {
-      "id": 0,
-      "text": "เลือกชื่อลูกค้า...",
-      "value": "-1"
-    }
-   ];
-    var cust_list;
-    var data_cust_name = [];
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // GET CONTACT
-    function Contact_list(recno_data)
-    {
-      $.ajax({
-        url: 'ajax_data_select.php',
-        data: {
-          queryId: 'CUSTCONT_LIST',
-          params: {
-            CUST: recno_data
-          },
-          condition: '',
-        },
-        dataSrc: '',
-        success: function(response) {
-          con_list = JSON.parse(response).data;
-          data_json_name(con_list)
-          console.log(con_list)
-          $('#cont').empty();
-          $('#cont').select2("destroy").select2();
-          createSelect_contact('#cont', data_cont_name);
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
-      });
-    }
-    // DATA JSON SEND SELECT2
-    function data_json_name(data_list)
-    {
-      data_cont_name = [{}]
-      data_cont_name.push({
-        "id": 0,
-        "text": "เลือกชื่อลูกค้า...",
-        "value": "-1"
-      });
-      var existingCodes = {};
-      for (var i = 0; i < data_list.length; i++) {
-        var select2_code = data_list[i]['RECNO'];
-        var select2_name = data_list[i]['CONTNAME'];
-
-        if (select2_name != '') {
-          if (!existingCodes[select2_code]) {
-            data_cont_name.push({
-              "id": data_cont_name.length + 1,
-              "text": select2_name,
-              "value": select2_code
-            });
-            existingCodes[select2_code] = true;
-          }
-        }
-
-      }
-      data_cont_name.sort(function(a, b) {
-        return a.value.localeCompare(b.value);
-      });
-    }
-
-    createSelect_contact('#cont', data_cont_name);
-    function createSelect_contact(selector, data)
-    {
-      return $(selector).select2({
-        data: data,
-        // closeOnSelect: true,
-        theme: 'bootstrap-5',
-        // tags: true,
-        // maximumSelectionLength: 1,
-        matcher: matchCustom
-      });
-    }
-
-    $("#cont").change(function()
-          {
-          recno_cont = $(this).select2('data')[0].value;
-          $("#email").val("");
-          $("#tel").val("");
-          // ค้นหาค่า CONTEMAIL ที่มี RECNO เท่ากับ recno_cont
-          var targetItem = con_list.find(item => item.RECNO === recno_cont.toString());
-          name_cont = targetItem ? targetItem.CONTNAME : '';
-          recno_tel = targetItem ? targetItem.CONTEMAIL : '';
-          recno_email = targetItem ? targetItem.CONTTEL : '';
-          $("#contname").val(name_cont);
-          $("#email").val(recno_tel);
-          $("#tel").val(recno_email);
-        });
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // GET cust_list()
-    cust_list()
-    function cust_list()
-    {
+    var cust_init_process = 0;
+
+    function cust_list() {
       $.ajax({
-        url: 'ajax_data_select.php',
+        url: 'ajax_select_sql.php',
         data: {
           queryId: 'CUST_LIST',
           params: null,
-          condition: '',
+          condition: 'mix',
         },
         dataSrc: '',
         success: function(response) {
           cust_list = JSON.parse(response).data;
           data_json_cust(cust_list)
-          console.log(data_cust_name)
           createSelect_customer('#cust', data_cust_name);
+          if (link == "edit") {
+            if (cust_init_process == 0) {
+              Contact_list(recno_cust)
+              // console.log('init')
+            }
+            cust_init_process = 1
+            // $('#cust').val(parseInt(recno_cust)).trigger('change');
+          }
+          // cust_change_process = 1;
         },
         error: function(xhr, status, error) {
           console.error(error);
@@ -545,12 +482,22 @@
 
         if (select2_name != '') {
           if (!existingCodes[select2_code]) {
-            data_cust_name.push({
-              "id": data_cust_name.length + 1,
-              "text": select2_name,
-              "value": select2_recno,
-              "title": select2_code,
-            });
+            if (link == "edit" && recno_cust == select2_recno) {
+              data_cust_name.push({
+                "id": select2_recno,
+                "text": select2_name,
+                "value": select2_recno,
+                "title": select2_code,
+                "selected": true
+              });
+            } else {
+              data_cust_name.push({
+                "id": select2_recno,
+                "text": select2_name,
+                "value": select2_recno,
+                "title": select2_code,
+              });
+            }
             existingCodes[select2_code] = true;
           }
         }
@@ -560,12 +507,7 @@
     function createSelect_customer(selector, data) {
       return $(selector).select2({
         data: data,
-        // closeOnSelect: true,
         theme: 'bootstrap-5',
-        // tags: true,
-        // maximumSelectionLength: 1,
-        // dropdownParent: $('#hq'),
-        // matcher: matchCustom,
         matcher: matchCustom_ajax,
         templateSelection: function(selected) {
           if (selected.id !== '') {
@@ -589,39 +531,166 @@
             return $result;
           }
         }
-      }).on('change', function() {
-        if ($(this).val() != -1)
-        {
-          // recno_cust = $(this).val();
-          recno_cust = $(this).select2('data')[0].value;
-          name_cust = $(this).select2('data')[0].text;
-          Contact_list($(this).val())
-          $("#contname").val('');
-          $("#email").val('');
-          $("#tel").val('');
-        }
       });
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // ใช้งานฟังก์ชัน data_json เพื่อกำหนดค่าให้กับ data_owner_name
-    var owner_list;
-    var data_owner_name = [];
-    select2_owner_list()
-    function select2_owner_list()
-    {
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // GET CONTACT
+    var cont_process = 0;
+    var cont_process_select_init = 1
+
+    function Contact_list(recno_data) {
       $.ajax({
-        url: 'ajax_data_select.php',
+        // url: 'ajax_data_select.php',
+        url: 'ajax_select_sql.php',
+        data: {
+          queryId: 'CUSTCONT_LIST',
+          params: {
+            CUST: recno_data
+          },
+          condition: 'mix',
+        },
+        dataSrc: '',
+        success: function(response) {
+          con_list = JSON.parse(response).data;
+          data_json_name(con_list)
+          if (link == 'add') {
+            $('#cont').empty();
+            $('#cont').select2("destroy").select2();
+          } else {
+            if (cont_process == 1) {
+              $('#cont').empty();
+              $('#cont').select2("destroy").select2();
+            }
+            cust_change_process = 0
+            cont_process = 1
+          }
+          createSelect_contact('#cont', data_cont_name);
+          cont_change_process = 1
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+    // DATA JSON SEND SELECT2
+    function data_json_name(data_list) {
+      data_cont_name = [{}]
+      data_cont_name.push({
+        "id": 0,
+        "text": "เลือกชื่อลูกค้า...",
+        "value": "-1"
+      });
+      var existingCodes = {};
+      for (var i = 0; i < data_list.length; i++) {
+        var select2_code = data_list[i]['RECNO'];
+        var select2_name = data_list[i]['CONTNAME'];
+
+        if (select2_name != '') {
+          if (!existingCodes[select2_code]) {
+            if (link == "edit" && recno_cont == select2_code) {
+              data_cont_name.push({
+                // "id": target_list.length + 1,
+                "id": parseInt(select2_code),
+                "text": select2_name,
+                "value": select2_code,
+                "title": select2_code,
+                "selected": true
+              });
+            } else {
+              data_cont_name.push({
+                // "id": data_cont_name.length + 1,
+                "id": select2_code,
+                "text": select2_name,
+                "value": select2_code
+              });
+            }
+
+            existingCodes[select2_code] = true;
+          }
+        }
+
+      }
+      data_cont_name.sort(function(a, b) {
+        return a.value.localeCompare(b.value);
+      });
+    }
+
+    function createSelect_contact(selector, data) {
+      return $(selector).select2({
+        data: data,
+        // closeOnSelect: true,
+        theme: 'bootstrap-5',
+        // tags: true,
+        // maximumSelectionLength: 1,
+        matcher: matchCustom
+      });
+    }
+    ////////////////////////////////////////////////////////// CHANGE ///////////////////////////////////////////////////////
+    var cust_change_process; // เกี่ยวกับการปิดเปิด
+    $("#cust").change(function() {
+
+      if ($(this).val() != -1) {
+        // recno_cust = $(this).val();
+        recno_cust = $(this).select2('data')[0].value;
+        name_cust = $(this).select2('data')[0].text;
+        Contact_list($(this).val())
+        $("#contname").val('');
+        $("#email").val('');
+        $("#tel").val('');
+        if (cust_change_process == 0) {
+          recno_cont = -1
+          console.log('xx')
+          console.log(recno_cont)
+        }
+      }
+      console.log(cust_change_process)
+    });
+
+
+    // var cont_change_process = 0; 
+    $("#cont").change(function() {
+      recno_cont = $(this).select2('data')[0].value;
+      $("#email").val("");
+      $("#tel").val("");
+      // ค้นหาค่า CONTEMAIL ที่มี RECNO เท่ากับ recno_cont
+      var targetItem = con_list.find(item => item.RECNO === recno_cont.toString());
+      name_cont = targetItem ? targetItem.CONTNAME : '';
+      recno_tel = targetItem ? targetItem.CONTEMAIL : '';
+      recno_email = targetItem ? targetItem.CONTTEL : '';
+      $("#contname").val(name_cont);
+      $("#email").val(recno_tel);
+      $("#tel").val(recno_email);
+    });
+
+    var owner_process = 0;
+    $("#owner").change(function() {
+      if (owner_process != 0) {
+        recno_owner = $(this).select2('data')[0].value;
+      }
+      if (recno_owner == -1) {
+        recno_nowner = '';
+      } else {
+        recno_nowner = $(this).select2('data')[0].text;
+      }
+    });
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // ใช้งานฟังก์ชัน data_json เพื่อกำหนดค่าให้กับ data_owner_name
+    function select2_owner_list() {
+      $.ajax({
+        // url: 'ajax_data_select.php',
+        url: 'ajax_select_sql.php',
         data: {
           queryId: 'EMPL_LIST',
           params: null,
-          condition: '',
+          condition: 'mix',
         },
         dataSrc: '',
         success: function(response) {
           owner_list = JSON.parse(response).data;
           data_owner_name = data_json(owner_list, 'RECNO', 'EMPNO', 'EMPNAME'); // กำหนดค่าใหม่ให้กับ data_owner_name
-          console.log('www', data_owner_name)
           createSelect_owner('#owner', data_owner_name)
+          owner_process = 1;
         },
         error: function(xhr, status, error) {
           console.error(error);
@@ -630,15 +699,9 @@
     }
 
     function createSelect_owner(selector, data) {
-      let i = 0;
       return $(selector).select2({
         data: data,
-        // closeOnSelect: true,
         theme: 'bootstrap-5',
-        // tags: true,
-        // maximumSelectionLength: 1,
-        // dropdownParent: $('#hq'),
-        // matcher: matchCustom,
         matcher: matchCustom_ajax,
         templateSelection: function(selected) {
           if (selected.id !== '') {
@@ -655,31 +718,15 @@
           }
           var $result = $('<span></span>');
           $result.text("รหัส" + result.title + ":" + result.text);
-          if (result.id == 0)
-          {
+          if (result.id == 0) {
             $result.text('เลือกชื่อผู้รับผิดชอบงาน...');
             return $result;
           } else {
             return $result;
           }
         }
-      }).on('change', function() {
-      recno_owner =  $(this).select2('data')[0].value;
-      
-      if(recno_owner == -1){
-        recno_nowner = '';
-      }else{
-        recno_nowner = $(this).select2('data')[0].text;
-      }
-      console.log(recno_owner)
-      console.log(recno_nowner)
       });
     }
-
-
-
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     function data_json(data_list, recno_key, code_key, name_key) {
       var target_list = [{
@@ -689,29 +736,83 @@
         "title": ""
       }];
       var existingCodes = {};
-      for (var i = 0; i < data_list.length; i++)
-      {
+      for (var i = 0; i < data_list.length; i++) {
         var select2_recno = data_list[i][recno_key];
         var select2_code = data_list[i][code_key];
         var select2_name = data_list[i][name_key];
-
         if (select2_name != '') {
           if (!existingCodes[select2_code]) {
-            target_list.push({
-              "id": target_list.length + 1,
-              "text": select2_name,
-              "value": select2_recno,
-              "title": select2_code,
-            });
+            if (link == "edit" && recno_owner == select2_recno) {
+              target_list.push({
+                // "id": target_list.length + 1,
+                "id": parseInt(select2_recno),
+                "text": select2_name,
+                "value": select2_recno,
+                "title": select2_code,
+                "selected": true
+              });
+            } else {
+              target_list.push({
+                // "id": target_list.length + 1,
+                "id": parseInt(select2_recno),
+                "text": select2_name,
+                "value": select2_recno,
+                "title": select2_code,
+              });
+            }
+
             existingCodes[select2_code] = true;
           }
         }
       }
+      // console.log(target_list)
       return target_list; // คืนค่า target_list กลับไป
     }
+    /////////////////////////////////// INITOPEATION ///////////////////////////////////
+    var recno_cust = -1;
+    var name_cust = "";
+    var recno_cont = -1;
+    var name_cont = "";
+    var recno_tel = "";
+    var recno_email = "";
+    var recno_location = $("input[name='location']:checked").val();
+    var recno_owner = -1;
+    var recno_nowner = "";
+
+    var con_list;
+    var contact;
+    var targetEmail = '';
+    var targetTel = '';
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
+    var data_cont_name = [{
+      "id": 0,
+      "text": "เลือกชื่อลูกค้า...",
+      "value": "-1"
+    }];
+    var cust_list;
+    var data_cust_name = [];
+    var owner_list;
+    var data_owner_name = [];
+
+    var recno_edit = "<?php echo $recno; ?>"
+    var link = "<?php echo $data_link; ?>"
+    Operation(link)
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    function Operation(optdata) {
+      if (optdata == "add") {
+        cust_change_process = 0
+        cust_list()
+        createSelect_contact('#cont', data_cont_name);
+        select2_owner_list()
+        $('#date').val(moment(new Date()).format('DD/MM/YYYY'));
+      } else {
+        cust_change_process = 1
+        DataEdit(recno_edit)
+      }
+    }
+
+    ////////////////////////////////////////////////// SAVE /////////////////////////////////////////////
 
     $("#idForm").submit(function(event) {
       event.preventDefault();
@@ -724,12 +825,17 @@
         return false
       }
       // SaveData()
-      AlertSave() 
-
+      if (link == "edit") {
+        // SaveData()
+        UpdateData()
+        // AlertSave() 
+      } else {
+        AlertSave() 
+        // SaveData()
+      }
     });
 
-    function AlertSave()
-    {
+    function AlertSave() {
       Swal.fire({
         title: 'คุณแน่ใจแล้วใช่ไหม',
         text: "คุณจะเปลี่ยนกลับไม่ได้!",
@@ -747,11 +853,6 @@
       }).then((result) => {
         if (result.isConfirmed) {
           SaveData()
-          Swal.fire(
-            'บันทึกแล้ว',
-            'นัดหมาย: '+name_cust,
-            'success'
-          )
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
@@ -765,11 +866,17 @@
       })
     }
 
-
+    /////////////////////////////////////////////////////////////// INSERT UPDATE ///////////////////////////////////////////////////////////
     function SaveData() {
+      // console.log("CUST",parseInt(recno_cust))
+      // console.log("CONT",parseInt(recno_cont))
+      // console.log(recno_owner)
+      // console.log(recno_location)
+
+      recno_location = $("input[name='location']:checked").val();
       $.ajax({
         type: "POST",
-        url: 'ajax_thai_insert.php',
+        url: 'ajax_db_insert.php',
         data: {
           queryIdHD: 'IND_ACTIVITYHD',
           queryIdDT: '',
@@ -783,6 +890,7 @@
             CONTNAME: $('#contname').val(),
             CUST: recno_cust,
             CONT: recno_cont,
+            TEL: $('#tel').val(),
             EMAIL: $('#email').val(),
             ADDR: $('#addr').val(),
             LOCATION: recno_location,
@@ -810,12 +918,118 @@
         dataSrc: '',
         beforeSend: function() {},
         complete: function() {},
+        success: function(response) {
+          console.log(response)
+          if (response.status == 'success') {
+            console.log('success')
+            Swal.fire({
+              title: "บันทึกแล้ว",
+              text: "ข้อความที่คุณต้องการแสดง",
+              icon: "success",
+              buttons: ["OK"],
+              dangerMode: true,
+            }).then(function(willRedirect) {
+              // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
+              if (willRedirect) {
+                // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
+                location.href = "datatable_activity.php";
+              }
+            });
+
+            setTimeout(function() {
+              swal.close(); // ปิด SweetAlert
+              location.href = "datatable_activity.php"; // เปลี่ยนหน้าไปยัง "datatable_activity.php"
+            }, 2000);
+            /////////////////////////////////
+          } else {
+            Swal.fire(
+              'เกิดปัญหาในการบันทึก',
+              response.message,
+              'error'
+            )
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log('error')
+          console.error(error);
+        }
+      });
+    }
+
+
+    function UpdateData() {
+      console.log("<?php echo $recno; ?>")
+      recno_location = $("input[name='location']:checked").val();
+      $.ajax({
+        type: "POST",
+        url: 'ajax_db_update.php',
+        data: {
+          queryIdHD: 'UPD_ACTIVITYHD',
+          queryIdDT: '',
+          genIdHD: 'GEN_ACTIVITYHD',
+          genIdDT: '',
+          condition: 'UHD',
+          paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
+            RECNO: <?php echo $recno; ?>,
+            STATUS: $('#status').val(),
+            CUSTNAME: name_cust,
+            CONTNAME: $('#contname').val(),
+            CUST: recno_cust,
+            CONT: recno_cont,
+            TEL:$('#tel').val(),
+            EMAIL: $('#email').val(),
+            ADDR: $('#addr').val(),
+            LOCATION: recno_location ,
+            SUBJECT: $('#subject').val(),
+            DETAIL: $('#detail').val(),
+            REF: $('#ref').val(),
+            PRIORITY: $('#priority').val(),
+            TIMED: $('#timed').val(),
+            TIMEH: $('#timeh').val(),
+            TIMEM: $('#timem').val(),
+            STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'),
+            PRICECOST: $('#pcost').val(),
+            PRICEPWITHDRAW: $('#pwithdraw').val(),
+            OWNERNAME: recno_nowner,
+            OWNER: recno_owner,
+          },
+          paramdt: { // อาร์เรย์ params ที่คุณต้องการส่ง
+            datanull: '',
+          },
+          paramlist: {
+            datanull: '',
+          },
+          DataJSON: null
+        },
+        dataSrc: '',
+        beforeSend: function() {},
+        complete: function() {},
         success: function(response)
         {
-          // console.log(response)
+          console.log(response)
           if(response.status == 'success')
           {
             console.log('success')
+            Swal.fire({
+              title: "บันทึกแล้ว",
+              text: "ข้อมูลได้ถูกอัทเดท",
+              icon: "success",
+              buttons: ["OK"],
+              dangerMode: true,
+            }).then(function (willRedirect) 
+            {
+              // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
+              if (willRedirect) {
+                // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
+                location.href = "datatable_activity.php";
+              }
+            });
+
+            setTimeout(function () {
+              swal.close(); // ปิด SweetAlert
+              location.href = "datatable_activity.php"; // เปลี่ยนหน้าไปยัง "datatable_activity.php"
+            }, 2000);
+            /////////////////////////////////
           }
           else{
             Swal.fire(
@@ -832,8 +1046,58 @@
         }
       });
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    var edit_recno_cust;
+    var edti_recno_cont;
+    ////////////////////////////////////////////// EDIT AJAX /////////////////////////////////////////////////
+    function DataEdit(recno_edit) {
+      $.ajax({
+        url: 'ajax_select_sql.php',
+        data: {
+          queryId: 'EDSEL_ACTIVITYHD',
+          params: {
+            RECNO: recno_edit
+          },
+          condition: 'mix',
+        },
+        dataSrc: '',
+        success: function(response) {
+          datae_list = JSON.parse(response).data;
+          recno_cust = datae_list[0].CUST
+          recno_cont = datae_list[0].CONT
+          recno_owner = datae_list[0].OWNER
+          name_cust = datae_list[0].CUSTNAME
+          recno_nowner = datae_list[0].OWNERNAME
+          console.log(recno_location)
 
+          $('#contname').val(datae_list[0].CONTNAME)
+          $('#tel').val(datae_list[0].TEL)
+          $('#email').val(datae_list[0].EMAIL)
+          $('#addr').val(datae_list[0].ADDR)
+          $('#subject').val(datae_list[0].SUBJECT)
+          $('#detail').val(datae_list[0].DETAIL)
+          $('#ref').val(datae_list[0].REF)
+          $('#status').val(datae_list[0].STATUS)
+          $('#priority').val(datae_list[0].PRIORITY)
+          $('#timed').val(datae_list[0].TIMED)
+          $('#timeh').val(datae_list[0].TIMEH)
+          $('#timem').val(datae_list[0].TIMEM)
+          $('#pcost').val(datae_list[0].PRICECOST)
+          $('#pwithdraw').val(datae_list[0].PRICEPWITHDRAW)
+          $('input[name="location"]').filter('[value="' + datae_list[0].LOCATION + '"]').prop('checked', true);
 
+          $('#date').val(moment(new Date(datae_list[0].STARTD)).format('DD/MM/YYYY'));
+
+          cust_list()
+          select2_owner_list()
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     $('html, body').animate({
       scrollTop: $('#dataactivity').offset().top
     }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
