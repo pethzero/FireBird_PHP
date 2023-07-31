@@ -41,11 +41,11 @@
 ?>
   <section>
     <div class="container pt-3">
-      <h2>ตารางนัดหมาย</h2>
+      <h2>ลงทะเบียน Drawing</h2>
       <div class="row pb-3">
      
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-           <button id='new' type="button" class="btn btn-primary">เพิ่มตารางหนัดหมาย</button>
+           <!-- <button id='new' type="button" class="btn btn-primary">เพิ่มตารางหนัดหมาย</button> -->
         </div>
         <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <input type="radio" id="showApprovedBtn" name="fav_language" value="approved">
@@ -77,16 +77,16 @@
               <tr>
                 <th>ลำดับ</th>
                 <th>แสดงข้อมูล</th>
-                <th>เลขที่นัดหมาย</th>
-                <th>สถานะ</th>
+                <th>Customer</th>
+                <th>Drawing Number</th>
                 <!-- <th>รหัสลูกค้า</th> -->
-                <th>บริษัท</th>
-                <th>ผู้ติดต่อ</th>
-                <th>วันที่นัดหมาย</th>
-                <th>ความสำคัญ</th>
-                <th>ราคาเบิก</th>
+                <th>Rev No.</th>
+                <th>Part Name</th>
+                <th>Date</th>
+                <th>Remark</th>
+                <!-- <th>ราคาเบิก</th>
                 <th>ราคาจ่าย</th>
-                <th>ผู้นัดหมาย</th>
+                <th>ผู้นัดหมาย</th> -->
               
               </tr>
             </thead>
@@ -147,20 +147,6 @@
   $(document).ready(function()
   {
     // console.log('wx')
-    // jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-    // "date-uk-pre": function ( a ) {
-    //     var ukDatea = a.split('/');
-    //     return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
-    // },
-
-    // "date-uk-asc": function ( a, b ) {
-    //     return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-    // },
-
-    // "date-uk-desc": function ( a, b ) {
-    //     return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-    // }
-    // });
     var tablejsondata;
     var selectedRow = null;
     var selectedRecno = null;
@@ -172,24 +158,22 @@
     var encodedURL = encodeURIComponent('ajax_select_sql.php');
     var data_array = [];
     var table = $('#table_datahd').DataTable({
-      ajax: {
-        url: encodedURL,
-        data: function(d) {
-          d.queryId = 'SEL_ACTIVITYHD'; // ส่งค่าเป็นพารามิเตอร์ queryId
-          d.params = null;
-        },
-        dataSrc: function(json) {
-          console.log(json)
-          tablejsondata = json.data
-          return json.data;
-        }
-      },
+      // ajax: {
+      //   url: encodedURL,
+      //   data: function(d) {
+      //     d.queryId = 'SEL_ACTIVITYHD'; // ส่งค่าเป็นพารามิเตอร์ queryId
+      //     d.params = null;
+      //   },
+      //   dataSrc: function(json) {
+      //     console.log(json)
+      //     tablejsondata = json.data
+      //     return json.data;
+      //   }
+      // },
       scrollX: true,
-      columns: 
-      dtcolumn['DATA_ACTIVITYHD'],
-      order: [
-        [0, 'desc']
-      ],
+      // columns: 
+      // dtcolumn['DATA_ACTIVITYHD'],
+      order: [ [0, 'desc']],
       dom: 'Bfrtip',
       buttons: ['colvis',
       //  'csv', 
@@ -198,7 +182,7 @@
                 title: 'Data export'
             }],
       columnDefs: [
-        { type: 'currency', targets: 8 },
+        // { type: 'currency', targets: 8 },
         {
 "visible": false,"targets": 0
       }, ],
@@ -230,7 +214,6 @@
       },
     });
 
-    
     $('#table_datahd').on('click', '.edit', function() {
       var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
       console.log(rowData.RECNO);

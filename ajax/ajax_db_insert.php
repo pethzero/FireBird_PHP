@@ -1,10 +1,10 @@
 <?php 
 header('Content-Type: application/json');
 try {
-  include("connect.php"); 
-  include("sql_exe.php"); 
-  include("0_functions.php"); // เพิ่ม include เข้ามาเพื่อเรียกใช้งานฟังก์ชั่นที่สร้างไว้ใน functions.php
-  include("0_fucinchd.php");
+  include("../connect.php"); 
+  include("../sql_exe.php"); 
+  include("../0_functions.php"); // เพิ่ม include เข้ามาเพื่อเรียกใช้งานฟังก์ชั่นที่สร้างไว้ใน functions.php
+  include("../0_fucinchd.php");
   $queryIdHD = isset($_POST['queryIdHD']) ? $_POST['queryIdHD'] : '';
   $queryIdDT = isset($_POST['queryIdDT']) ? $_POST['queryIdDT'] : '';
   $genIdHD = isset($_POST['genIdHD']) ? $_POST['genIdHD'] : '';

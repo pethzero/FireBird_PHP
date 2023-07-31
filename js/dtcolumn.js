@@ -1,4 +1,19 @@
 // แปลงฟังก์ชัน getStatusText เป็น Arrow Function
+  jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "date-uk-pre": function ( a ) {
+        var ukDatea = a.split('/');
+        return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+    },
+
+    "date-uk-asc": function ( a, b ) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+    },
+
+    "date-uk-desc": function ( a, b ) {
+        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+    }
+    });
+
 const getStatusText = (data) => {
   let statusText = '';
   if (data === '-1'){
@@ -246,7 +261,7 @@ var dtcolumn =
     },
     {data: 'CUSTNAME'},
     {data: 'CONTNAME'},
-    {data: 'STARTD'},
+    {data: 'STARTD',render: formatDate,"sType": "date-uk"},
     // {data: 'PRIORITY'},
     {data: null,render: function(data)
       {

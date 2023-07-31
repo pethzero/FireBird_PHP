@@ -45,44 +45,6 @@ if ($size === 0) {
   exit;
 }
 ?>
-
-<!-- <script>
-        var link;
-        const urlParams = new URLSearchParams(window.location.search);
-        const size = Array.from(urlParams).length
-      //  console.log(link);
-       if(size == 0)
-       {
-         link = 'add'; 
-       }
-       else if(size == 2)
-       {
-        const urlArray = Array.from(urlParams.entries());
-         link = 'edit';
-        if (urlArray.length >= 2) 
-        {
-          const firstParam = urlArray[0][0]; // ชื่อตัวแรกในอาเรย์ URL
-          // const firstValue = urlArray[0][1]; // ค่าตัวแรกในอาเรย์ URL
-          const secondParam = urlArray[1][0]; // ชื่อตัวที่สองในอาเรย์ URL
-          // const secondValue = urlArray[1][1]; // ค่าตัวที่สองในอาเรย์ URL
-          // console.log(firstParam)
-          // console.log(firstValue)
-          // console.log(secondParam)
-          // console.log(secondValue)
-          if (firstParam != "edit" && secondParam != "recno")
-           {
-            window.location.replace("404.php");  
-            } 
-        } else {
-          // console.log("Not enough parameters in the URL.");
-         window.location.replace("404.php");  
-        }
-       }
-       else{
-        window.location.replace("404.php");  
-       }
-</script> -->
-
 <body>
   <?php
   include("0_header.php");
@@ -382,8 +344,6 @@ if ($size === 0) {
 
 
 <script>
-  //  console.log(link);
-
   $(document).ready(function() {
 
 
@@ -453,7 +413,6 @@ if ($size === 0) {
           if (link == "edit") {
             if (cust_init_process == 0) {
               Contact_list(recno_cust)
-              // console.log('init')
             }
             cust_init_process = 1
             // $('#cust').val(parseInt(recno_cust)).trigger('change');
@@ -640,11 +599,8 @@ if ($size === 0) {
         $("#tel").val('');
         if (cust_change_process == 0) {
           recno_cont = -1
-          console.log('xx')
-          console.log(recno_cont)
         }
       }
-      console.log(cust_change_process)
     });
 
 
@@ -765,7 +721,6 @@ if ($size === 0) {
           }
         }
       }
-      // console.log(target_list)
       return target_list; // คืนค่า target_list กลับไป
     }
     /////////////////////////////////// INITOPEATION ///////////////////////////////////
@@ -797,6 +752,7 @@ if ($size === 0) {
 
     var recno_edit = "<?php echo $recno; ?>"
     var link = "<?php echo $data_link; ?>"
+    // var recno_get = <?php echo  isset($recno) ? $recno: -1; ?>;
     Operation(link)
     //////////////////////////////////////////////////////////////////////////////////////////////
     function Operation(optdata) {
@@ -868,15 +824,11 @@ if ($size === 0) {
 
     /////////////////////////////////////////////////////////////// INSERT UPDATE ///////////////////////////////////////////////////////////
     function SaveData() {
-      // console.log("CUST",parseInt(recno_cust))
-      // console.log("CONT",parseInt(recno_cont))
-      // console.log(recno_owner)
-      // console.log(recno_location)
-
       recno_location = $("input[name='location']:checked").val();
       $.ajax({
         type: "POST",
-        url: 'ajax_db_insert.php',
+        url: 'ajax/ajax_db_insert.php',
+        // url: 'fucinsert.php',
         data: {
           queryIdHD: 'IND_ACTIVITYHD',
           queryIdDT: '',
@@ -919,7 +871,6 @@ if ($size === 0) {
         beforeSend: function() {},
         complete: function() {},
         success: function(response) {
-          console.log(response)
           if (response.status == 'success') {
             console.log('success')
             Swal.fire({
@@ -958,11 +909,10 @@ if ($size === 0) {
 
 
     function UpdateData() {
-      console.log("<?php echo $recno; ?>")
       recno_location = $("input[name='location']:checked").val();
       $.ajax({
         type: "POST",
-        url: 'ajax_db_update.php',
+        url: 'ajax/ajax_db_update.php',
         data: {
           queryIdHD: 'UPD_ACTIVITYHD',
           queryIdDT: '',
@@ -970,7 +920,7 @@ if ($size === 0) {
           genIdDT: '',
           condition: 'UHD',
           paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
-            RECNO: <?php echo $recno; ?>,
+            RECNO: <?php echo  isset($recno) ? $recno: -1; ?>,
             STATUS: $('#status').val(),
             CUSTNAME: name_cust,
             CONTNAME: $('#contname').val(),
@@ -1006,10 +956,10 @@ if ($size === 0) {
         complete: function() {},
         success: function(response)
         {
-          console.log(response)
+          // console.log(response)
           if(response.status == 'success')
           {
-            console.log('success')
+            // console.log('success')
             Swal.fire({
               title: "บันทึกแล้ว",
               text: "ข้อมูลได้ถูกอัทเดท",
@@ -1063,12 +1013,11 @@ if ($size === 0) {
         dataSrc: '',
         success: function(response) {
           datae_list = JSON.parse(response).data;
-          recno_cust = datae_list[0].CUST
-          recno_cont = datae_list[0].CONT
-          recno_owner = datae_list[0].OWNER
-          name_cust = datae_list[0].CUSTNAME
-          recno_nowner = datae_list[0].OWNERNAME
-          console.log(recno_location)
+          recno_cust = datae_list[0].CUST;
+          recno_cont = datae_list[0].CONT;
+          recno_owner = datae_list[0].OWNER;
+          name_cust = datae_list[0].CUSTNAME;
+          recno_nowner = datae_list[0].OWNERNAME;
 
           $('#contname').val(datae_list[0].CONTNAME)
           $('#tel').val(datae_list[0].TEL)

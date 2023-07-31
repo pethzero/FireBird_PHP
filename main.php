@@ -108,9 +108,19 @@
  <hr>
     <div class="section">
       <div class="container pt-2">
+        <h1> NEW FEATURE</h1>
         <div class="row" id='subweb'>
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+             <button class="btn btn-primary" onclick="window.location='datatable_activity.php';">ดูตารางนัดหมาย</button>
+        </div>
 
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+             <button class="btn btn-primary" onclick="window.location='datatable_activity.php';">สร้างตารางนัดหมาย</button>
+        </div>
 
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+             <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
+        </div>
 
         </div>
       </div>

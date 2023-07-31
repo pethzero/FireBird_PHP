@@ -8,6 +8,16 @@ function getvalue($queryIdHD, $paramhd)
 {
   if ($queryIdHD == 'IND_ACTIVITYHD')
   {
+    $custname = convertToTIS620($paramhd['CUSTNAME']);
+    $contname = convertToTIS620($paramhd['CONTNAME']);
+    $tel = convertToTIS620($paramhd['TEL']);
+    $email = convertToTIS620($paramhd['EMAIL']);
+    $addr = convertToTIS620($paramhd['ADDR']);
+    $subject = convertToTIS620($paramhd['SUBJECT']);
+    $detail = convertToTIS620($paramhd['DETAIL']);
+    $ref = convertToTIS620($paramhd['REF']);
+    $ownername = convertToTIS620($paramhd['OWNERNAME']);
+
     return array(
       'custname' => convertToTIS620($paramhd['CUSTNAME']),
       'contname' => convertToTIS620($paramhd['CONTNAME']),
@@ -20,18 +30,29 @@ function getvalue($queryIdHD, $paramhd)
       'ownername' => convertToTIS620($paramhd['OWNERNAME'])
     );
   }
-  elseif($queryIdHD == 'UPD_ACTIVITYHD')
+
+  else if($queryIdHD == 'UPD_ACTIVITYHD')
   {
+    $custname = convertToTIS620($paramhd['CUSTNAME']);
+    $contname = convertToTIS620($paramhd['CONTNAME']);
+    $tel = convertToTIS620($paramhd['TEL']);
+    $email = convertToTIS620($paramhd['EMAIL']);
+    $addr = convertToTIS620($paramhd['ADDR']);
+    $subject = convertToTIS620($paramhd['SUBJECT']);
+    $detail = convertToTIS620($paramhd['DETAIL']);
+    $ref = convertToTIS620($paramhd['REF']);
+    $ownername = convertToTIS620($paramhd['OWNERNAME']);
+
     return array(
-      'custname' => convertToTIS620($paramhd['CUSTNAME']),
-      'contname' => convertToTIS620($paramhd['CONTNAME']),
-      'tel' =>convertToTIS620($paramhd['TEL']),
-      'email' =>   convertToTIS620($paramhd['EMAIL']),
-      'addr' => convertToTIS620($paramhd['ADDR']),
-      'subject' => convertToTIS620($paramhd['SUBJECT']),
-      'detail' => convertToTIS620($paramhd['DETAIL']),
-      'ref' => convertToTIS620($paramhd['REF']),
-      'ownername' => convertToTIS620($paramhd['OWNERNAME'])
+      'custname' => $custname,
+      'contname' => $contname,
+      'tel' => $tel,
+      'email' => $email,
+      'addr' => $addr,
+      'subject' => $subject,
+      'detail' => $detail,
+      'ref' => $ref,
+      'ownername' => $ownername
     );
   }
 }

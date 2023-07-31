@@ -1,10 +1,10 @@
 <?php 
 header('Content-Type: application/json');
 try {
-  include("connect.php"); 
-  include("sql_exe.php"); 
-  include("0_functions.php"); // เพิ่ม include เข้ามาเพื่อเรียกใช้งานฟังก์ชั่นที่สร้างไว้ใน functions.php
-  include("0_fucinchd.php");
+  include("../connect.php"); 
+  include("../sql_exe.php"); 
+  include("../0_functions.php"); // เพิ่ม include เข้ามาเพื่อเรียกใช้งานฟังก์ชั่นที่สร้างไว้ใน functions.php
+  include("../0_fucinchd.php");
   $queryIdHD = isset($_POST['queryIdHD']) ? $_POST['queryIdHD'] : '';
   $queryIdDT = isset($_POST['queryIdDT']) ? $_POST['queryIdDT'] : '';
   $genIdHD = isset($_POST['genIdHD']) ? $_POST['genIdHD'] : '';
@@ -14,6 +14,7 @@ try {
   $paramdt = isset($_POST['paramdt']) ? $_POST['paramdt'] : array();
   $paramlist = isset($_POST['paramlist']) ? $_POST['paramlist'] : array();
   
+  $nextValueHD = '';
   // ตรวจสอบค่าที่ต้องการเพิ่มลงในฐานข้อมูล
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // สร้างฟังก์ชั่น getvalue() ในไฟล์ 0_functions.php
@@ -22,16 +23,13 @@ try {
   $pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
   $pdo->beginTransaction();
 
-  // เตรียมคำสั่ง SQL สำหรับ INSERT ข้อมูลลงในตาราง users (ให้แก้ไขตามโครงสร้างตารางของคุณ)
-  $sqlgenhd = 'SELECT NEXT VALUE FOR ' . $genIdHD . ' FROM RDB$DATABASE';
-  $stmt = $pdo->prepare($sqlgenhd);
-  $stmt->execute();
-  $nextValueHD = $stmt->fetchColumn();
+  // เตรียมคำสั่ง SQL สำหรับ UPDATE ข้อมูลลงในตาราง users (ให้แก้ไขตามโครงสร้างตารางของคุณ)
 
   $sqlhd = sqlexec($queryIdHD);
+  // $sqlhd = "UPDATE ACTIVITYHD SET LASTUPD = 'NOW', STATUS = :STATUS, CUST = :CUST, CONT = :CONT, CUSTNAME = :CUSTNAME, CONTNAME = :CONTNAME, TEL = :TEL, EMAIL = :EMAIL, ADDR = :ADDR, LOCATION = :LOCATION, SUBJECT = :SUBJECT, DETAIL = :DETAIL, REF = :REF, PRIORITY = :PRIORITY, TIMED = :TIMED, TIMEH = :TIMEH, TIMEM = :TIMEM, STARTD = :STARTD, PRICECOST = :PRICECOST, PRICEPWITHDRAW = :PRICEPWITHDRAW, OWNER = :OWNER, OWNERNAME = :OWNERNAME WHERE RECNO = :RECNO";
   $stmt = $pdo->prepare($sqlhd);
-  //////////////////////////////////////////// BEGIN HEAD DATA //////////////////////////////////////////////////////////////
-  // // // // ผูกค่าในอาร์เรย์กับพารามิเตอร์ในคำสั่ง SQL
+  ////////////////////////////////////////// BEGIN HEAD DATA //////////////////////////////////////////////////////////////
+  // // // ผูกค่าในอาร์เรย์กับพารามิเตอร์ในคำสั่ง SQL
   // ทำการเรียกใช้ฟังก์ชั่น getvalue() และเก็บค่าที่ได้กลับมาไว้ในตัวแปร $result_hd
   $result_hd = getvalue($queryIdHD, $paramhd);
   tranexe($queryIdHD, $paramhd, $result_hd, $stmt, $nextValueHD);
@@ -39,11 +37,13 @@ try {
  //////////////////////////////////////////// START HEAD DATA //////////////////////////////////////////////////////////////
   // // // สั่งให้ประมวลผลคำสั่ง SQL
   $stmt->execute();
+  // $stmt = true;
   if($stmt){
     $response = array(
       'status' => 'success',
       'message' => 'เพิ่มข้อมูลสำเร็จ'
-      // ,'sqlhd' => $sqlhd,
+      // ,'sqlhd' => $sqlhd
+      ,'$queryIdHD' => $queryIdHD
       // 'sqlgenhd' => $sqlgenhd,
       // 'STATUS'=>$paramhd['STATUS'],
       // 'CONT'=> $paramhd['CONT']
