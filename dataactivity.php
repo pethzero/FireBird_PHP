@@ -14,7 +14,7 @@
   include("0_headcss.php");
   ?>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome-4.7.0.min.css"> -->
-  <link rel="stylesheet" href="css/fontawesome-6.4.0.min.css">
+  <!-- <link rel="stylesheet" href="css/fontawesome-6.4.0.min.css"> -->
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"> -->
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>

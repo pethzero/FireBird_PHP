@@ -69,6 +69,5 @@ function sqlexec($queryId, $params)
     return null;
   }
 }
-
 ?>
 

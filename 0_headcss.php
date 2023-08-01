@@ -30,26 +30,15 @@
 
 <!-- Styles -->
 
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" /> -->
+<link rel="stylesheet" href="css/fontawesome-6.4.0.min.css">
 <link rel="stylesheet" href="css/select2.min.css">
 <link rel="stylesheet" href="css/select2-bootstrap-5-theme.min.css">
 
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/1.3.0/css/searchPanes.dataTables.min.css" />
-<link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.3/css/select.dataTables.min.css" /> -->
+
 <link rel="stylesheet" href="css/select.dataTables-1.3.3.min.css" />
-<!-- <link rel="stylesheet" href="css/buttons.dataTables-2.0.1.min.css" /> -->
 <link rel="stylesheet" href="css/buttons.dataTables-2.4.1.min.css" />
 
-<!-- Or for RTL support -->
-<!-- <link rel="stylesheet" href="css/select2-bootstrap-5-theme-1.3.0.rtl.min.css" /> -->
 
-<!-- Scripts -->
-<!-- <script src="js/jquery-3.6.0.min.js" ></script>
-<script src="js/bootstrap.bundle.min.js" ></script>
-<script src="js/select2-4.1.0.min.js"></script> -->
 
-<!-- <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script> -->
-<!-- <script src="https://cdn.datatables.net/searchpanes/1.3.0/js/dataTables.searchPanes.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script> -->
+
+

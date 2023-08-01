@@ -52,6 +52,8 @@ $sqlsreach['IND_ACTIVITYHD'] = "INSERT INTO ACTIVITYHD (RECNO, CREATED,LASTUPD,S
 // $sqlsreach['IND_ACTIVITYHD'] = "UPDATE ACTIVITYHD SET LASTUPD = 'NOW', STATUS = :STATUS, CUST = :CUST, CONT = :CONT, CUSTNAME = :CUSTNAME, CONTNAME = :CONTNAME, TEL = :TEL, EMAIL = :EMAIL, ADDR = :ADDR, LOCATION = :LOCATION, SUBJECT = :SUBJECT, DETAIL = :DETAIL, REF = :REF, PRIORITY = :PRIORITY, TIMED = :TIMED, TIMEH = :TIMEH, TIMEM = :TIMEM, STARTD = :STARTD, PRICECOST = :PRICECOST, PRICEPWITHDRAW = :PRICEPWITHDRAW, OWNER = :OWNER, OWNERNAME = :OWNERNAME WHERE RECNO = :RECNO";
 $sqlsreach['SEL_ACTIVITYHD'] ="SELECT * FROM ACTIVITYHD";
 $sqlsreach['EDSEL_ACTIVITYHD'] ="SELECT * FROM ACTIVITYHD WHERE RECNO = :RECNO";
+$sqlsreach['DATESEL_ACTIVITYHD'] ="SELECT * FROM ACTIVITYHD WHERE  STARTD = :STARTD ";
+// $sqlsreach['DATESEL_ACTIVITYHD'] ="SELECT * FROM ACTIVITYHD WHERE STARTD = :STARTD ";
 $sqlsreach['UPD_ACTIVITYHD'] = "UPDATE ACTIVITYHD SET LASTUPD = 'NOW', STATUS = :STATUS, CUST = :CUST, CONT = :CONT, CUSTNAME = :CUSTNAME, CONTNAME = :CONTNAME, TEL = :TEL, EMAIL = :EMAIL, ADDR = :ADDR, LOCATION = :LOCATION, SUBJECT = :SUBJECT, DETAIL = :DETAIL, REF = :REF, PRIORITY = :PRIORITY, TIMED = :TIMED, TIMEH = :TIMEH, TIMEM = :TIMEM, STARTD = :STARTD, PRICECOST = :PRICECOST, PRICEPWITHDRAW = :PRICEPWITHDRAW, OWNER = :OWNER, OWNERNAME = :OWNERNAME WHERE RECNO = :RECNO";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,6 +84,8 @@ function sqlmixexe($queryId, $params)
           if ($value === null || $value === '')
           {
             $value = '';
+          }else {
+            $value = is_numeric($value) ? strval($value) : "'".$value."'"; // เปลี่ยนเป็น string number ถ้าเป็นตัวเลข หรือแปลงเป็นสตริงและเพิ่มเครื่องหมาย ' (single quotes) ถ้าไม่ใช่ตัวเลข
           }
           $sqlQuery = str_replace(":$key", $value, $sqlQuery);
         } 

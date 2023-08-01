@@ -17,7 +17,7 @@
   <?php
   include("0_header.php");
   include("0_breadcrumb.php");
-  
+
   ?>
   <link rel="stylesheet" href="css/mycustomize.css">
   <style>
@@ -32,20 +32,69 @@
     textarea {
       overflow-y: scroll;
     }
+
+    .datepicker td,
+    th {
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .datepicker {
+      border: 1px solid black;
+    }
   </style>
 
-<?php
-  include("connect.php"); 
+  <?php
+  include("connect.php");
   include("sql.php");
   include("0_fselect.php");
-?>
+  ?>
   <section>
     <div class="container pt-3">
       <h2>ตารางนัดหมาย</h2>
-      <div class="row pb-3">
-     
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="input-group date mb-3" id="datepicker">
+            <span class="input-group-append">
+              <span class="input-group-text bg-light d-block">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </span>
+            <input type="text" class="form-control" id="date" readonly />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="input-group mb-3">
+            <span class="input-group-text c_activity">สถานะ:</span>
+            <select class="form-select" id="status">
+              <option value="" selected>เลือก...</option>
+              <option value="ยังไม่เริ่มดำเนินการ">ยังไม่เริ่มดำเนินการ</option>
+              <option value="อยู่ระหว่างดำเนินการ">อยู่ระหว่างดำเนินการ</option>
+              <option value="รอดำเนินการ">รอดำเนินการ</option>
+              <option value="ถูกเลื่อนออกไป">ถูกเลื่อนออกไป</option>
+              <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-           <button id='new' type="button" class="btn btn-primary">เพิ่มตารางหนัดหมาย</button>
+          <button id='seacrh' type="button" class="btn btn-primary">ค้นหา</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row pb-3">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+          <button id='new' type="button" class="btn btn-primary">เพิ่มตารางหนัดหมาย</button>
         </div>
         <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <input type="radio" id="showApprovedBtn" name="fav_language" value="approved">
@@ -87,7 +136,7 @@
                 <th>ราคาเบิก</th>
                 <th>ราคาจ่าย</th>
                 <th>ผู้นัดหมาย</th>
-              
+
               </tr>
             </thead>
             <tbody>
@@ -125,18 +174,19 @@
         </div>
 
         <div class="modal-body">
+          <!-- ส่วนที่เพิ่มเนื้อหาภายในกล่องโมดอลได้ที่นี่ -->
+        </div>
 
-
-
-          <div class="modal-footer">
-            <button id="save" type="button" class="btn btn-primary">บันทึก</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-          </div>
+        <div class="modal-footer">
+          <button id="save" type="button" class="btn btn-primary">บันทึก</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- <div class="loading"> -->
+
+  <!-- <div class="loading"> -->
 
 </body>
 <?php include("0_footerjs.php"); ?>
@@ -144,8 +194,7 @@
 
 
 <script>
-  $(document).ready(function()
-  {
+  $(document).ready(function() {
     // console.log('wx')
     // jQuery.extend( jQuery.fn.dataTableExt.oSort, {
     // "date-uk-pre": function ( a ) {
@@ -161,13 +210,16 @@
     //     return ((a < b) ? 1 : ((a > b) ? -1 : 0));
     // }
     // });
+    var recno = null;
+    var qid = 'SEL_ACTIVITYHD';
+    var startd = null;
     var tablejsondata;
     var selectedRow = null;
     var selectedRecno = null;
 
     $('#new').click(function() {
-       window.location='dataactivity.php';
-      });
+      window.location = 'dataactivity.php';
+    });
 
     var encodedURL = encodeURIComponent('ajax_select_sql.php');
     var data_array = [];
@@ -175,33 +227,46 @@
       ajax: {
         url: encodedURL,
         data: function(d) {
-          d.queryId = 'SEL_ACTIVITYHD'; // ส่งค่าเป็นพารามิเตอร์ queryId
-          d.params = null;
+          d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
+          d.params = {
+            // RECNO:recno,
+            STARTD: startd,
+          };
+          d.condition = 'mix';
         },
         dataSrc: function(json) {
-          console.log(json)
+          // console.log(json)
           tablejsondata = json.data
           return json.data;
         }
       },
       scrollX: true,
-      columns: 
-      dtcolumn['DATA_ACTIVITYHD'],
+      columns: dtcolumn['DATA_ACTIVITYHD'],
       order: [
         [0, 'desc']
       ],
       dom: 'Bfrtip',
       buttons: ['colvis',
-      //  'csv', 
-         {
-                extend: 'excelHtml5',
-                title: 'Data export'
-            }],
-      columnDefs: [
-        { type: 'currency', targets: 8 },
+        //  'csv', 
         {
-"visible": false,"targets": 0
-      }, ],
+          extend: 'excelHtml5',
+          title: 'Data export'
+        }
+      ],
+      columnDefs: [{
+          className: 'dt-center',
+          // targets: '_all'
+          targets: [3]
+        },
+        {
+          type: 'currency',
+          targets: 8
+        },
+        {
+          "visible": false,
+          "targets": 0
+        },
+      ],
       initComplete: function(settings, json) {
         // $('.loading').hide();
 
@@ -210,15 +275,15 @@
 
       },
       drawCallback: function(settings) {
-        
+
       },
       rowCallback: function(row, data) {
         // // console.log('rowCallback')
         $(row).on('click', function() {
           if (selectedRow !== null) {
-            $(selectedRow).removeClass('selected');
+            $(selectedRow).removeClass('table-custom');
           }
-          $(this).addClass('selected');
+          $(this).addClass('table-custom');
           selectedRow = this;
 
           if (selectedRecno !== data.RECNO) {
@@ -230,7 +295,7 @@
       },
     });
 
-    
+
     $('#table_datahd').on('click', '.edit', function() {
       var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
       console.log(rowData.RECNO);
@@ -239,6 +304,43 @@
       window.open(url, "_blank");
     });
 
+    $(function() {
+      $("#datepicker").datepicker({
+        format: "dd/mm/yyyy",
+        todayHighlight: true,
+        autoclose: true,
+        clearBtn: true
+      });
+    });
+
+    $('#seacrh').click(function() {
+      var dateValue = $('#date').val();
+
+      console.log(startd)
+      if (dateValue) {
+        startd = moment($('#date').val(), 'DD/MM/YYYY').format('DD/MM/YYYY')
+      } else {
+        startd = '';
+      }
+
+      console.log(startd)
+      $('#table_datahd').DataTable().column(6).search(startd).draw();
+      $('#table_datahd').DataTable().column(3).search($('#status').val()).draw();
+      // if (dateValue) {
+      //   qid = 'DATESEL_ACTIVITYHD'
+      // startd = moment($('#date').val(), 'DD/MM/YYYY').format('MM/DD/YYYY')
+      // } else {
+      //   qid = 'SEL_ACTIVITYHD';
+      //   startd = null;
+      // }
+
+
+      // // recno = 7
+      // console.log(dateValue)
+      // console.log(startd)
+
+      // table.ajax.reload();
+    })
 
   });
 </script>

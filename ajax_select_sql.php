@@ -39,6 +39,8 @@ try {
         }
         $response = array(
             'status' => 'success',
+            // 'sql' => $sql,
+            '$params' => $params, 
             'data' => $data
         );
 
@@ -46,9 +48,9 @@ try {
     } else {
         $response = array(
             'status' => 'error',
-            'queryId' => $data,
-            'params' => $params,
-            'sql' => $sql,
+            // 'queryId' => $data,
+            // 'params' => $params,
+            // 'sql' => $sql,
             'data' => $data
         );
 
@@ -58,6 +60,7 @@ try {
     $errorMessage = "เกิดข้อผิดพลาดในการเชื่อมต่อกับฐานข้อมูล: " . $e->getMessage();
     $response = array(
         'status' => 'error',
+        'sql' => $sql,
         'message' => $errorMessage
     );
 

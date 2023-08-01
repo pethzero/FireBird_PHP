@@ -1,18 +1,18 @@
 // แปลงฟังก์ชัน getStatusText เป็น Arrow Function
-  jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-    "date-uk-pre": function ( a ) {
-        var ukDatea = a.split('/');
-        return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
-    },
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+      "date-uk-pre": function ( a ) {
+          var ukDatea = a.split('/');
+          return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+      },
 
-    "date-uk-asc": function ( a, b ) {
-        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-    },
+      "date-uk-asc": function ( a, b ) {
+          return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      },
 
-    "date-uk-desc": function ( a, b ) {
-        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-    }
-    });
+      "date-uk-desc": function ( a, b ) {
+          return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+      }
+      });
 
 const getStatusText = (data) => {
   let statusText = '';
@@ -32,15 +32,18 @@ const getStatusTextOther = (data, column) => {
   {
     // ทำการแปลงค่าตามต้องการ
     if (data == 'A'){
-      return 'ยังไม่เริ่มดำเนินการ';
+      // return 'ยังไม่เริ่มดำเนินการ';
+      return '<h5><span class="badge bg-secondary mt-2">ยังไม่เริ่มดำเนินการ</span></h5>'
     } else if (data == 'I') {
       return 'อยู่ระหว่างดำเนินการ';
     }else if (data == 'W') {
-      return 'รอดำเนินการ';
+      return '<h5><span class="badge bg-warning mt-2 text-dark">รอดำเนินการ</span></h5>';
     }else if (data == 'D') {
-      return 'ถูกเลื่อนออกไป';
+      return '<h5><span class="badge bg-danger mt-2">ถูกเลื่อนออกไป</span></h5>';
     }else if (data == 'F') {
-      return 'ถูกเลื่อนออกไป';
+      // return 'เสร็จสิ้น';
+      // return  '<span class="badge bg-success">เสร็จสิ้น</span>'
+      return '<h5><span class="badge bg-success mt-2">เสร็จสิ้น</span></h5>'
     }else {
       return '';
     }
@@ -55,7 +58,6 @@ const getStatusTextOther = (data, column) => {
     }else {
       return '';
     }
-
   }
   // ถ้าไม่ใช่คอลัมน์ 'STATUS' ให้คืนค่าเป็นตัวอักษรเดิม
   // return data;
@@ -108,7 +110,9 @@ const customModelRender = (data, type, row,idmodel,idname) => {
 };
 
 const customButtonEdit = (data, type,row,idclass,idname) => {
-  return `<button class="btn btn-danger ${idclass}" id="${row['RECNO']}">${idname}</button>`;
+  // return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}">${idname}</button>`;
+  return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}"><i class="far fa-edit"></i></button>`;
+  // return '';
 };
 
 

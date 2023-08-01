@@ -1,0 +1,28 @@
+{
+    "data": [
+      {
+        "Order": "1",
+        "ShowData": null,
+        "Customer": "NIC LD SYSTEM",
+        "DrawingNumber": "N029-PIN-R001",
+        "RevNo": "0",
+        "PartName": "เจียร์ PIN 12x3.5CL",
+        "Date": "31/07/2023",
+        "Remark": "N0290001 FINSHED 1/11/21/เขียนแบบ QC",
+        "CreatedBy": "John Doe",
+        "LastModified": "นาย ...."
+      },
+      {
+        "Order": "2",
+        "ShowData": null,
+        "Customer": "NIC LD SYSTEM",
+        "DrawingNumber": "N029-PIN-R002",
+        "RevNo": "0",
+        "PartName": "เจียร์ PIN 12x3.5CL",
+        "Date": "31/07/2023",
+        "Remark": "N0290001 FINSHED 1/11/21/เขียนแบบ QC",
+        "CreatedBy": "John Doe",
+        "LastModified": "นาย ...."
+      }
+    ]
+  }
