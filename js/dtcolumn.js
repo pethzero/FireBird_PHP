@@ -32,17 +32,14 @@ const getStatusTextOther = (data, column) => {
   {
     // ทำการแปลงค่าตามต้องการ
     if (data == 'A'){
-      // return 'ยังไม่เริ่มดำเนินการ';
       return '<h5><span class="badge bg-secondary mt-2">ยังไม่เริ่มดำเนินการ</span></h5>'
     } else if (data == 'I') {
-      return 'อยู่ระหว่างดำเนินการ';
+      return '<h5><span class="badge bg-info mt-2 text-dark">อยู่ระหว่างดำเนินการ</span></h5>';
     }else if (data == 'W') {
       return '<h5><span class="badge bg-warning mt-2 text-dark">รอดำเนินการ</span></h5>';
     }else if (data == 'D') {
       return '<h5><span class="badge bg-danger mt-2">ถูกเลื่อนออกไป</span></h5>';
     }else if (data == 'F') {
-      // return 'เสร็จสิ้น';
-      // return  '<span class="badge bg-success">เสร็จสิ้น</span>'
       return '<h5><span class="badge bg-success mt-2">เสร็จสิ้น</span></h5>'
     }else {
       return '';
@@ -106,7 +103,8 @@ const customFocusRender = (data, type, row,datainput) => {
 };
 
 const customModelRender = (data, type, row,idmodel,idname) => {
-  return `<button class="btn btn-primary ${idmodel}" data-bs-toggle="modal" data-bs-target="#${idmodel}" data-bs-row-id="${row['RECNO']}">${idname}</button>`;
+  // return `<button class="btn btn-primary ${idmodel}" data-bs-toggle="modal" data-bs-target="#${idmodel}" data-bs-row-id="${row['RECNO']}">${idname}</button>`;
+  return `<button class="btn btn-primary btn-sm ${idmodel}" data-bs-toggle="modal" data-bs-target="#${idmodel}" data-bs-row-id="${row['RECNO']}"><i class="fa fa-eye"></i></button>`;
 };
 
 const customButtonEdit = (data, type,row,idclass,idname) => {
@@ -130,8 +128,9 @@ var dtcolumn =
     },
     { data: 'QDOCNO' },
     { data: 'STATUS',
-    render: function(data, type, row) {
-      let text = row.EMPNAMEAPPROVER !== '' ? 'อนุมัติแล้ว' : 'รออนุมัติ';
+      render: function(data, type, row) {
+      // let text = row.EMPNAMEAPPROVER !== '' ? 'อนุมัติแล้ว' : 'รออนุมัติ';
+      let text = row.EMPNAMEAPPROVER !== '' ? '<h5><span class="badge bg-success mt-2">อนุมัติแล้ว</span></h5>' : '<h5><span class="badge bg-danger mt-2">รออนุมัติ</span></h5>';
       return text;
     },
     },

@@ -33,7 +33,7 @@
       overflow-y: scroll;
     }
 
-    .datepicker td,
+    /* .datepicker td,
     th {
       text-align: center;
       padding: 8px 12px;
@@ -42,7 +42,7 @@
 
     .datepicker {
       border: 1px solid black;
-    }
+    } */
   </style>
 
   <?php
@@ -96,16 +96,6 @@
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <button id='new' type="button" class="btn btn-primary">เพิ่มตารางหนัดหมาย</button>
         </div>
-        <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <input type="radio" id="showApprovedBtn" name="fav_language" value="approved">
-          <label for="showApprovedBtn">ทำการอนุมัติแล้ว</label>
-
-        </div>
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <input type="radio" id="waitApprovedBtn" name="fav_language" value="wait">
-          <label for="waitApprovedBtn">รอทำการอนุมัติ</label>
-        </div> -->
-
       </div>
 
       <!-- <div class="row mb-3">
@@ -125,7 +115,7 @@
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
-                <th>แสดงข้อมูล</th>
+                <th>ข้อมูล</th>
                 <th>เลขที่นัดหมาย</th>
                 <th>สถานะ</th>
                 <!-- <th>รหัสลูกค้า</th> -->
@@ -242,22 +232,16 @@
       },
       scrollX: true,
       columns: dtcolumn['DATA_ACTIVITYHD'],
-      order: [
-        [0, 'desc']
-      ],
-      dom: 'Bfrtip',
-      buttons: ['colvis',
-        //  'csv', 
+      columnDefs: [
         {
-          extend: 'excelHtml5',
-          title: 'Data export'
-        }
-      ],
-      columnDefs: [{
-          className: 'dt-center',
-          // targets: '_all'
+          className:'noVis',
+          targets: [0]
+        },
+        {
+          className:'dt-center',
           targets: [3]
         },
+        { "orderable": false, "targets": 1 },
         {
           type: 'currency',
           targets: 8
@@ -267,6 +251,28 @@
           "targets": 0
         },
       ],
+      order: [
+        [0, 'desc']
+      ],
+      dom: 'Bfrtip',
+      buttons: [{
+                extend: 'colvis',
+                text: 'Show/Hide',
+                columns: ':not(.noVis)',
+                // columnText: function ( dt, idx, title ) {
+                // return (idx+1)+': '+title;
+                // }
+              },
+        //  'csv', 
+        {
+          extend: 'excelHtml5',
+          title: 'Data export',
+          exportOptions: {
+                    columns: [ 2, 3,4,5,6,7,8,9,10 ]
+                }
+        }
+      ],
+    
       initComplete: function(settings, json) {
         // $('.loading').hide();
 

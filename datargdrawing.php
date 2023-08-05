@@ -81,6 +81,7 @@
               <tr>
                 <th>ลำดับ</th>
                 <th>ข้อมูล</th>
+                <!-- <th>สถานะ</th> -->
                 <th>Customer</th>
                 <th>Drawing Number</th>
                 <th>Rev No.</th>
@@ -215,6 +216,7 @@
       "data": [{
           "Order": "1",
           "ShowData": null,
+          // "STATUS": 'A',
           "Customer": "NIC LD SYSTEM",
           "DrawingNumber": "N029-PIN-R001",
           "RevNo": "0",
@@ -227,11 +229,12 @@
         {
         "Order": "2",
         "ShowData": null,
+        // "STATUS": 'A',
         "Customer": "NIC LD SYSTEM",
         "DrawingNumber": "N029-PIN-R002",
         "RevNo": "0",
         "PartName": "เจียร์ PIN 12x3.5CL",
-        "Date": "31/07/2023",
+        "Date": "2023-07-31",
         "Remark": "N0290001 FINSHED 1/11/21/เขียนแบบ QC",
         "CreatedBy": "John Doe",
         "LastModified": "นาย ...."
@@ -253,6 +256,24 @@
           }
         }
       },
+      // { data: 'Status',
+      //   render: function(data, type, row) {
+      //     // if(row.STATUS == 'A')
+      //     // {
+      //     //   return 'YES';
+      //     // }
+      //     // else{
+      //     //   return 'NO'
+      //     // }
+      //     if(row.Customer != '')
+      //     {
+      //       return 'YES';
+      //     }
+      //     else{
+      //       return 'NO'
+      //     }
+      //   },
+      // },
       {
         data: 'Customer'
       },
@@ -302,7 +323,10 @@
         //  'csv', 
         {
           extend: 'excelHtml5',
-          title: 'Data export'
+          title: 'ลงทะเบียน Drawing',
+          exportOptions: {
+                    columns: [ 2, 3,4,5,6,7,8,9]
+                },
         }
       ],
       columnDefs: [
@@ -319,9 +343,13 @@
 
       },
       drawCallback: function(settings) {
-
+      
       },
       rowCallback: function(row, data) {
+          // console.log('sss')
+        // if ( data.STATUS == "CCC" ) {
+        //     $('td:eq(2)', row).html( '<b>XXX</b>' );
+        //   }
         $(row).on('click', function() {
           if (selectedRow !== null) {
             $(selectedRow).removeClass('table-custom');
@@ -412,8 +440,11 @@
     ///////////////////////////////////////////////////////// EDIT //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $('#save_edit').on('click', function() {
       // console.log(selectedRow)
-      var rowData = table.row(selectedRecno).data(); // ดึงข้อมูลแถวที่เลือกใน DataTable
-      var rowIndex = table.row(selectedRecno).index(); // หาตำแหน่งแถวที่เลือกใน DataTable
+      if (selectedRow === null) {
+      return; // ถ้าไม่มีแถวที่ถูกเลือกใน DataTable จะไม่ทำอะไรเพิ่ม
+      }
+      var rowData = table.row(selectedRow).data(); // ดึงข้อมูลแถวที่เลือกใน DataTable
+      var rowIndex = table.row(selectedRow).index(); // หาตำแหน่งแถวที่เลือกใน DataTable
 
       console.log(rowData)
       console.log(rowIndex)
@@ -425,8 +456,10 @@
       rowData.Date = $('#date').val();
       rowData.Remark = $('#remark').val();
       rowData.LastModified = "นาย ...."; // กำหนดชื่อผู้แก้ไข
-
+      // rowData.STATUS = '';
       // อัปเดตข้อมูลใน DataTable
+      console.log(rowIndex)
+      console.log(rowData)
       table.row(rowIndex).data(rowData).draw();
       $('#hq').modal('hide');
     });

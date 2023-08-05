@@ -20,6 +20,7 @@
 </head>
 <?php
 $data_link = "";
+$data_message = "";
 $size = count($_GET);
 $recno = null;
 if ($size === 0) {
@@ -27,7 +28,7 @@ if ($size === 0) {
 } else if ($size === 2) {
   $urlArray = $_GET;
   $data_link = "edit";
-
+  // $data_message = "( แก้ไข )";
   if (count($urlArray) >= 2) {
     $firstParam = array_keys($urlArray)[0];
     $secondParam = array_keys($urlArray)[1];
@@ -45,6 +46,7 @@ if ($size === 0) {
   exit;
 }
 ?>
+
 <body>
   <?php
   include("0_header.php");
@@ -89,7 +91,14 @@ if ($size === 0) {
   <form id="idForm" method="POST">
     <section>
       <div class="container">
-        <h2 id="dataactivity">ตารางนัดหมาย</h2>
+
+      <div class="row pb-3">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+          <button id='backhis' type="button" class="btn btn-primary">ดูตารางนัดหมาย</button>
+        </div>
+      </div>
+      
+        <h2 id="dataactivity">ตารางนัดหมาย  <span id='story' class="badge"></span></h2>
         <hr>
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -177,32 +186,13 @@ if ($size === 0) {
         <div class="row mb-3">
           <div class="input-group">
             <span class="input-group-text">รายละเอียด:</span>
-            <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="With textarea"></textarea>
+            <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
           </div>
         </div>
 
 
         <div class="row ">
           <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            <!-- <div class="row"> -->
-            <!-- <div class="input-group mb-3">
-                <span class="input-group-text c_activity" id="ref">อ้างอิง:</span>
-                <input type="text" class="form-control" placeholder="อ้างอิง">
-            </div> -->
-            <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <div class="input-group mb-3">
-                <span class="input-group-text c_activity" id="ref">อ้างอิง:</span>
-                <input type="text" class="form-control" placeholder="อ้างอิง">
-              </div>
-            </div> -->
-            <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-              <div class="input-group mb-3">
-                <span class="input-group-text c_activity" id="">Status:</span>
-                <input type="text" class="form-control" placeholder="บริษัท">
-              </div>
-            </div> -->
-            <!-- </div> -->
-
             <div class="row">
               <div class="input-group mb-3">
                 <span class="input-group-text c_activity">สถานะ:</span>
@@ -314,27 +304,6 @@ if ($size === 0) {
     <?php
     //  include("0_footer.php");
     ?>
-
-    <!-- <div class="modal fade" id="hq" aria-labelledby="hqLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="hqLabel">ใบเสนอราคา</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-
-
-
-          <div class="modal-footer">
-            <button id="save" type="button" class="btn btn-primary">บันทึก</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <!-- <div class="loading"> -->
   </form>
 
@@ -348,10 +317,15 @@ if ($size === 0) {
 
 
     $(window).keydown(function(event) {
-      if ((event.keyCode == 13) && ($(event.target)[0] != $("textarea")[0])) {
-        event.preventDefault();
-        return false;
-      }
+      // if ((event.keyCode == 13) && ($(event.target)[0] != $("textarea")[0])) 
+      // {
+      //   event.preventDefault();
+      //   return false;
+      // }
+      if (event.keyCode == 13 && !event.is("textarea")) {
+            event.preventDefault();
+            return false;
+        }
     });
 
     function matchCustom(params, data) {
@@ -752,7 +726,7 @@ if ($size === 0) {
 
     var recno_edit = "<?php echo $recno; ?>"
     var link = "<?php echo $data_link; ?>"
-    // var recno_get = <?php echo  isset($recno) ? $recno: -1; ?>;
+    // var recno_get = <?php echo  isset($recno) ? $recno : -1; ?>;
     Operation(link)
     //////////////////////////////////////////////////////////////////////////////////////////////
     function Operation(optdata) {
@@ -762,15 +736,17 @@ if ($size === 0) {
         createSelect_contact('#cont', data_cont_name);
         select2_owner_list()
         $('#date').val(moment(new Date()).format('DD/MM/YYYY'));
+        $('#story').removeClass('bg-danger').addClass('bg-secondary').text('เพิ่ม');
       } else {
         cust_change_process = 1
         DataEdit(recno_edit)
+        $('#story').removeClass('bg-secondary').addClass('bg-danger').text('แก้ไข');
       }
     }
 
     ////////////////////////////////////////////////// SAVE /////////////////////////////////////////////
 
-    $("#idForm").submit(function(event) {
+    $("#idForm").submit(function(event){
       event.preventDefault();
       if (recno_cust == -1) {
         Swal.fire(
@@ -780,14 +756,10 @@ if ($size === 0) {
         )
         return false
       }
-      // SaveData()
       if (link == "edit") {
-        // SaveData()
-        UpdateData()
-        // AlertSave() 
-      } else {
         AlertSave() 
-        // SaveData()
+      } else {
+        AlertSave()
       }
     });
 
@@ -808,7 +780,12 @@ if ($size === 0) {
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
-          SaveData()
+          if (link == 'edit') {
+            UpdateData()
+          } else {
+            SaveData() 
+          }
+
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
@@ -822,7 +799,7 @@ if ($size === 0) {
       })
     }
 
-    /////////////////////////////////////////////////////////////// INSERT UPDATE ///////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////// INSERT AND UPDATE ///////////////////////////////////////////////////////////
     function SaveData() {
       recno_location = $("input[name='location']:checked").val();
       $.ajax({
@@ -920,16 +897,16 @@ if ($size === 0) {
           genIdDT: '',
           condition: 'UHD',
           paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
-            RECNO: <?php echo  isset($recno) ? $recno: -1; ?>,
+            RECNO: <?php echo  isset($recno) ? $recno : -1; ?>,
             STATUS: $('#status').val(),
             CUSTNAME: name_cust,
             CONTNAME: $('#contname').val(),
             CUST: recno_cust,
             CONT: recno_cont,
-            TEL:$('#tel').val(),
+            TEL: $('#tel').val(),
             EMAIL: $('#email').val(),
             ADDR: $('#addr').val(),
-            LOCATION: recno_location ,
+            LOCATION: recno_location,
             SUBJECT: $('#subject').val(),
             DETAIL: $('#detail').val(),
             REF: $('#ref').val(),
@@ -954,11 +931,9 @@ if ($size === 0) {
         dataSrc: '',
         beforeSend: function() {},
         complete: function() {},
-        success: function(response)
-        {
+        success: function(response) {
           // console.log(response)
-          if(response.status == 'success')
-          {
+          if (response.status == 'success') {
             // console.log('success')
             Swal.fire({
               title: "บันทึกแล้ว",
@@ -966,8 +941,7 @@ if ($size === 0) {
               icon: "success",
               buttons: ["OK"],
               dangerMode: true,
-            }).then(function (willRedirect) 
-            {
+            }).then(function(willRedirect) {
               // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
               if (willRedirect) {
                 // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
@@ -975,22 +949,20 @@ if ($size === 0) {
               }
             });
 
-            setTimeout(function () {
+            setTimeout(function() {
               swal.close(); // ปิด SweetAlert
               location.href = "datatable_activity.php"; // เปลี่ยนหน้าไปยัง "datatable_activity.php"
             }, 2000);
             /////////////////////////////////
-          }
-          else{
+          } else {
             Swal.fire(
-                'เกิดปัญหาในการบันทึก',
-                response.message,
-                'error'
-              )
+              'เกิดปัญหาในการบันทึก',
+              response.message,
+              'error'
+            )
           }
         },
-        error: function(xhr, status, error)
-        {
+        error: function(xhr, status, error) {
           console.log('error')
           console.error(error);
         }
@@ -1051,6 +1023,9 @@ if ($size === 0) {
       scrollTop: $('#dataactivity').offset().top
     }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
 
+    $('#backhis').click(function() {
+      window.location = 'datatable_activity.php';
+    });
 
   });
 </script>

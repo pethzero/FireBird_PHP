@@ -68,20 +68,22 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" data-bs-haspopup="true" data-bs-expanded="false">
           <?php  
-              include('connect.php');
-              $sql = "SELECT USERIMG FROM EMPL WHERE RECNO=:RECNO";
-              $query = $pdo->prepare($sql);
-              $query->execute(array($_SESSION["RECNO"]));
-              $row = $query->fetch();
-              $base64Data = base64_encode($row["USERIMG"]);
-              if ($base64Data) {
-                echo '<img src="data:image/jpeg;base64,' . $base64Data . '" width="40" height="40" class="rounded-circle">';
-              } else {
-                echo '<img src="images/fox.jpg" width="40" height="40" class="rounded-circle">';
-              }
+              echo $_SESSION["IMAGEEMPL"];
+              // include('connect.php');
+              // $sql = "SELECT USERIMG FROM EMPL WHERE RECNO=:RECNO";
+              // $query = $pdo->prepare($sql);
+              // $query->execute(array($_SESSION["RECNO"]));
+              // $row = $query->fetch();
+              // $base64Data = base64_encode($row["USERIMG"]);
+              // if ($base64Data) {
+              //   echo '<img src="data:image/jpeg;base64,' . $base64Data . '" width="40" height="40" class="rounded-circle">';
+              // } else {
+              //   echo '<img src="images/fox.jpg" width="40" height="40" class="rounded-circle">';
+              // }
             ?>
 
           <!-- <img src="images/fox.jpg" width="40" height="40" class="rounded-circle"> -->
+          <!-- <img src='images/data:image/jpeg;base64,' width="40" height="40" class="rounded-circle"> -->
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
           <li><a class="dropdown-item" href="logout.php">Log Out</a></li>

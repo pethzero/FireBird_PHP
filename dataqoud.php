@@ -63,7 +63,7 @@
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
-                <th>แสดงข้อมูล</th>
+                <th>ข้อมูล</th>
                 <th>เลขที่ใบเสนอราคา</th>
                 <th>สถานะ</th>
                 <th>รหัสลูกค้า</th>
@@ -258,23 +258,29 @@
       ],
       dom: 'Blfrtip',
       buttons: ['colvis'],
-      columnDefs: [
-            { type: 'currency', targets: 8 },
-            {"visible": false,"targets": 0},
-            // {
-            //     searchPanes: {
-            //         show: true
-            //     },
-            //     targets: [2]
-            // },
-            // {
-            //     searchPanes: {
-            //         show: false
-            //     },
-            //     // targets: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
-            //     targets: [0,1,2,4,5,6,7,8,9,10,11,12]
-            // }
-        ],
+      columnDefs: [{
+          type: 'currency',
+          targets: 8
+        },
+        {
+          "visible": false,
+          "targets": 0
+        },
+        { "orderable": false, "targets": 1 },
+        // {
+        //     searchPanes: {
+        //         show: true
+        //     },
+        //     targets: [2]
+        // },
+        // {
+        //     searchPanes: {
+        //         show: false
+        //     },
+        //     // targets: [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
+        //     targets: [0,1,2,4,5,6,7,8,9,10,11,12]
+        // }
+      ],
       // columnDefs: [
       //   { type: 'currency', targets: 8 },
       //   {"visible": false,"targets": 0},
@@ -299,8 +305,9 @@
       },
       createdRow: function(row, data, dataIndex) {
         // ค่าของคอลัมน์ STATUS อยู่ใน data.STATUS
-        let status = data.EMPNAMEAPPROVER !== '' ? 'bg-success' : 'bg-danger';
-        $(row).find('td:eq(2)').addClass(status); // ในที่นี้ คอลัมน์ STATUS มีลำดับที่ 3 (จำนวนคอลัมน์เริ่มต้นที่ 0)
+        // console.log(status);
+        // let status = data.EMPNAMEAPPROVER !== '' ? 'bg-success' : 'bg-danger';
+        // $(row).find('td:eq(2)').addClass(status); // ในที่นี้ คอลัมน์ STATUS มีลำดับที่ 3 (จำนวนคอลัมน์เริ่มต้นที่ 0)
       },
       drawCallback: function(settings) {
         if (init_op == 1) {
@@ -317,9 +324,9 @@
         // console.log('rowCallback')
         $(row).on('click', function() {
           if (selectedRow !== null) {
-            $(selectedRow).removeClass('selected');
+            $(selectedRow).removeClass('table-custom');
           }
-          $(this).addClass('selected');
+          $(this).addClass('table-custom');
           selectedRow = this;
 
           if (selectedRecno !== data.RECNO) {
@@ -327,7 +334,7 @@
             tabledtpost(data.RECNO);
             $('#dtdocno').text('  ' + data.QDOCNO);
             selectedRecno = data.RECNO;
-            console.log(data.RECNO);
+            // console.log(data.RECNO);
           }
         });
       },
@@ -368,7 +375,8 @@
       order: [
         [0, 'desc']
       ],
-      columnDefs: [{
+      columnDefs: [
+        {
         "visible": false,
         "targets": 0
       }, ],
@@ -511,7 +519,7 @@
           if ($.trim(params.term) === '') {
             return data;
           }
-          console.log(data)
+          // console.log(data)
           var inputText = params.term.toLowerCase().replace(/\s/g, '');
           var optionText = data.text.toLowerCase().replace(/\s/g, '');
           var optionValue = data.value.toLowerCase().replace(/\s/g, '');
@@ -523,7 +531,7 @@
       }).on('change', function() {
         var selectedValue = $(this).select2('data')[0].value;
         // const selectedValue = $(this).val(); // ค่าที่ถูกเลือกใน <select>
-        console.log(selectedValue)
+        // console.log(selectedValue)
         $('#table_datahd').DataTable().column(4).search(selectedValue).draw();
       });
     }
@@ -603,47 +611,64 @@
     var init_op = 0;
 
     function SaveData() {
-      $.ajax({
-        type: "POST",
-        url: 'ajax_dupdate.php',
-        data: {
-          queryIdHD: 'UD_QUOTHD',
-          queryIdDT: '',
-          condition: 'U',
-          paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
-            RECNO: recno_no,
-            SALES: recno_saleName,
-            MAKER: recno_makegerName,
-            APPROVER: recno_approverName,
-          },
-          paramdt: { // อาร์เรย์ params ที่คุณต้องการส่ง
-            datanull: '',
-          },
-          paramlist: {
-            datanull: '',
-          },
-          DataJSON: null
-        },
-        dataSrc: '',
-        beforeSend: function() {},
-        complete: function() {},
-        success: function(response) {
-          console.log('load')
-          init_op = 1;
-          table.ajax.reload();
-          $('.loading').show();
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
-      });
+      var rowData = table.row(selectedRow).data(); // ดึงข้อมูลแถวที่เลือกใน DataTable
+      var rowIndex = table.row(selectedRow).index(); // หาตำแหน่งแถวที่เลือกใน DataTable
+
+      // console.log(rowData)
+      // console.log(rowIndex)
+      // console.log(rowData)
+      rowData.QDOCNO = 'SX'
+      rowData.EMPNAMEAPPROVER = 'คมกริช ยาวระ'
+      rowData.STATUS = 'คมกริช ยาวระ'
+
+      // console.log(rowIndex)
+      // console.log(rowData)
+      table.row(rowIndex).data(rowData).draw();
+      // $.ajax({
+      //   type: "POST",
+      //   url: 'ajax_dupdate.php',
+      //   data: {
+      //     queryIdHD: 'UD_QUOTHD',
+      //     queryIdDT: '',
+      //     condition: 'U',
+      //     paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
+      //       RECNO: recno_no,
+      //       SALES: recno_saleName,
+      //       MAKER: recno_makegerName,
+      //       APPROVER: recno_approverName,
+      //     },
+      //     paramdt: { // อาร์เรย์ params ที่คุณต้องการส่ง
+      //       datanull: '',
+      //     },
+      //     paramlist: {
+      //       datanull: '',
+      //     },
+      //     DataJSON: null
+      //   },
+      //   dataSrc: '',
+      //   beforeSend: function() {},
+      //   complete: function() {},
+      //   success: function(response) 
+      //   {
+
+      //     // console.log('load')
+
+      //     init_op = 1;
+      //     // table.ajax.reload();
+      //     // $('.loading').show();
+
+
+      //   },
+      //   error: function(xhr, status, error) {
+      //     console.error(error);
+      //   }
+      // });
     }
 
     var emp_list;
     Employee_list()
 
-    function Employee_list()
-    {
+    function Employee_list() {
       $.ajax({
         url: 'ajax_data_select.php',
         data: {
@@ -743,12 +768,10 @@
       });
     }
 
-    function setSelect2Value(selector, searchText)
-    {
+    function setSelect2Value(selector, searchText) {
       $(selector).val(null).trigger("change.select2"); // ยกเลิกการเลือกทุกตัวเลือกก่อน
       var optionFound = false;
-      $(selector).find('option').each(function()
-      {
+      $(selector).find('option').each(function() {
         if ($(this).text().toLowerCase() === searchText.toLowerCase()) {
           $(this).prop('selected', true);
           optionFound = true;

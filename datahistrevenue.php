@@ -386,7 +386,8 @@
             return obj;
           });
         }
-        const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const labels = ["ม.ค.", "ก.พ.", "ม.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "พ.ค.", "ส.ค.", "ก.ย.", "ต.ย.", "พ.ย.", "ธ.ค."];
         const datasets = [];
         var countchart = 0;
         for (const year in updatedDatasetChart)

@@ -71,3 +71,20 @@
   background-color: #ef98d3; /* เปลี่ยนสีตามที่คุณต้องการ */
   /* color: #fff; */
 }
+
+@media (min-width: 1200px) {
+  .modal-xl {
+    --bs-modal-width: 1500px !important;
+  }
+}
+
+.datepicker td,
+th {
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.datepicker {
+  border: 1px solid black;
+}

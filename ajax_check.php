@@ -8,7 +8,7 @@
 		
 		$username = texttis620($_POST["username"]);
 		$password = texttis620($_POST["password"]);
-		$sql = "SELECT RECNO, EMPNO, EMPNAME, PASS, WEBMAN, WEBPD, WEBST, WEBHR FROM EMPL WHERE UPPER(LOGIN)=:LOGIN";
+		$sql = "SELECT RECNO, EMPNO, EMPNAME, PASS, WEBMAN, WEBPD, WEBST, WEBHR,USERIMG FROM EMPL WHERE UPPER(LOGIN)=:LOGIN";
 		$query = $pdo->prepare($sql);
 		$query->execute(array(strtoupper($username)));
 		$row = $query->fetch();
@@ -26,6 +26,12 @@
 					$_SESSION["WEBPD"] = textutf8($row["WEBPD"]);
 					$_SESSION["WEBST"] = textutf8($row["WEBST"]);
 					$_SESSION["WEBHR"] = textutf8($row["WEBHR"]);
+					$base64Data = base64_encode($row["USERIMG"]);
+					if ($base64Data) {
+						$_SESSION["IMAGEEMPL"] = '<img src="data:image/jpeg;base64,' . $base64Data . '" width="40" height="40" class="rounded-circle">';
+					} else {
+						$_SESSION["IMAGEEMPL"] = '<img src="images/fox.jpg" width="40" height="40" class="rounded-circle">';
+					}
 					// $_SESSION["RECNO"] =   $row["RECNO"];
 					// $_SESSION["EMPNO"] =   $row["EMPNO"];
 					// $_SESSION["EMPNAME"] = $row["EMPNAME"];

@@ -122,6 +122,12 @@
              <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
         </div>
 
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+             <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
+        </div>
+ 
+        
+
         </div>
       </div>
     </div>
