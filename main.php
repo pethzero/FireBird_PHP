@@ -29,9 +29,8 @@
   }
 </style>
   <?php 
-
       include("0_header.php"); 
-      include("0_breadcrumb.php"); 
+      // include("0_breadcrumb.php"); 
   ?>
     
     <div class="section">
@@ -45,7 +44,7 @@
              <h2 class="card-title">ฝ่ายขาย</h2>
              <p class="card-text">
              <ul>
-              <li><a href="dataqoud.php" >ใบเสนอราคา</a></li>
+              <!-- <li><a href="dataqoud.php" >ใบเสนอราคา</a></li> -->
               <li><a href="datatable_activity.php" >ตารางหนัดหมาย</a></li>
               <li><a href="dataactivity.php" >เพิ่มตารางหนัดหมาย</a></li>
             </ul>
@@ -64,7 +63,6 @@
                      <li><a href="datapurc.php" >ใบสั่งซื้อ</a></li>
                   </ul>
              </p>
-              <!-- <a class="click-me-btn btn btn-primary" data-number="3" class="btn btn-primary"></a> -->
             </div>
           </div>
         </div>
@@ -79,7 +77,6 @@
                 <li><a href="datatablemachine.php">เครื่องจักร(กำลังพัฒนา)</a></li>
               </ul>
              </p>
-              <!-- <a class="click-me-btn btn btn-primary" data-number="2" class="btn btn-primary">LINK</a> -->
             </div>
           </div>
         </div>
@@ -97,7 +94,6 @@
                 <li><a href="datastock.php" >ใบเบิกสินค้า</a></li>
               </ul>
              </p>
-              <!-- <a class="click-me-btn btn btn-primary" data-number="4" class="btn btn-primary">LINK</a> -->
             </div>
           </div>
         </div>

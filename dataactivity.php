@@ -197,8 +197,8 @@ if ($size === 0) {
               <div class="input-group mb-3">
                 <span class="input-group-text c_activity">สถานะ:</span>
                 <select class="form-select" id="status">
-                  <option value="-1" selected>เลือก...</option>
-                  <option value="A">ยังไม่เริ่มดำเนินการ</option>
+                  <!-- <option value="-1" selected>เลือก...</option> -->
+                  <option value="A" selected>ยังไม่เริ่มดำเนินการ</option>
                   <option value="I">อยู่ระหว่างดำเนินการ</option>
                   <option value="W">รอดำเนินการ</option>
                   <option value="D">ถูกเลื่อนออกไป</option>
@@ -317,16 +317,26 @@ if ($size === 0) {
 
 
     $(window).keydown(function(event) {
-      // if ((event.keyCode == 13) && ($(event.target)[0] != $("textarea")[0])) 
-      // {
-      //   event.preventDefault();
-      //   return false;
-      // }
-      if (event.keyCode == 13 && !event.is("textarea")) {
-            event.preventDefault();
-            return false;
-        }
-    });
+            if (event.keyCode == 13 && !$(event.target).is('textarea')) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    // $(window).keydown(function(event) {
+    //   // if ((event.keyCode == 13) && ($(event.target)[0] != $("textarea")[0])) 
+    //   // {
+    //   //   event.preventDefault();
+    //   //   return false;
+    //   // }
+    //   if (event.keyCode == 13 && !event.is("textarea") ) {
+    //         event.preventDefault();
+    //         return false;
+    //     }
+    //   // if (event.keyCode == 13 && !event.is("textarea")) {
+    //   //       event.preventDefault();
+    //   //       return false;
+    //   //   }
+    // });
 
     function matchCustom(params, data) {
       var inputText = $.trim(params.term).toLowerCase().replace(/\s/g, '');
