@@ -147,7 +147,6 @@
         <div class="input-group date" id="datepicker">
             <input type="text" class="form-control" id="date" placeholder="Date Of Birth" />
             <span class="input-group-append">
-
             </span>
         </div>
 
@@ -388,7 +387,7 @@ $(window).keydown(function(event){
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        SaveDate()
+        SaveData()
         Swal.fire(
           'บันทึกแล้ว',
           'คุณได้บันทึกการเบิก : '+jsondoncno,
@@ -418,7 +417,7 @@ $(window).keydown(function(event){
   }
 
   var jsonDatatable;
-  function SaveDate()
+  function SaveData()
   {
     $.ajax({
         type: "POST",
@@ -520,76 +519,62 @@ $(window).keydown(function(event){
       });
     }
 
-    var dataX = [
+    var data_invent = [
     { "id": 0, "text": "---" ,"value":""},
-    { "id": 1, "text": "รหัสสินค้า 1" ,"value":"00000001"},
-    { "id": 2, "text": "ตัวเลือกที่ 2" ,"value":"00000002"},
-    { "id": 3, "text": "ตัวเลือกที่ 3" ,"value":"00000003"},
-    { "id": 4, "text": "ตัวเลือกที่ 4" ,"value":"00000004"},
-    { "id": 5, "text": "ตัวเลือกที่ 5" ,"value":"00000005"}
+    // { "id": 1, "text": "รหัสสินค้า 1" ,"value":"00000001"},
+    // { "id": 2, "text": "ตัวเลือกที่ 2" ,"value":"00000002"},
+    // { "id": 3, "text": "ตัวเลือกที่ 3" ,"value":"00000003"},
+    // { "id": 4, "text": "ตัวเลือกที่ 4" ,"value":"00000004"},
+    // { "id": 5, "text": "ตัวเลือกที่ 5" ,"value":"00000005"}
   ]
 
-    $('#searchInput').select2({
-      data:dataX,
-      //   ajax: {
-      //   url: 'http://localhost:3000/data',
-      //   dataType: 'json',
-      //   // delay: 250,
-      //   processResults: function(data)
-      //   {   
-      //       console.log(data)
-      //       return {
-      //           results: data
-      //       };
-      //   },
-      //   cache: true
-      // },
-    // closeOnSelect: true,
-    // placeholder: '',
-    theme: 'bootstrap-5',
-    templateSelection: function(selected) {
-            // if (selected.id !== '') {
-            //     return selected.text + ' (OutPut: ' + selected.value + ')';
-            // }
-            return '';
-        },
-        templateResult: function(result)
-        {
-            
-            if (!result.id) {
-                return result.text;
-            }
-            var $result = $('<span></span>');
-            $result.text(result.text + ' (Input: ' + result.value + ')');
+    // $('#searchInput').select2({
+    //   data:data_invent,
 
-            if (result.id == 0) {
-              $result = '---';  
-              return $result;
-            }else{
-              return $result;
-            }
+    //    theme: 'bootstrap-5',
+    // templateSelection: function(selected) {
+    //         // if (selected.id !== '') {
+    //         //     return selected.text + ' (OutPut: ' + selected.value + ')';
+    //         // }
+    //         return '';
+    //     },
+    //     templateResult: function(result)
+    //     {
+            
+    //         if (!result.id) {
+    //             return result.text;
+    //         }
+    //         var $result = $('<span></span>');
+    //         $result.text(result.text + ' (Input: ' + result.value + ')');
+
+    //         if (result.id == 0) {
+    //           $result = '---';  
+    //           return $result;
+    //         }else{
+    //           return $result;
+    //         }
 
            
-        },
-        matcher: function(params, data) {
-            if ($.trim(params.term) === '') {
-                return data;
-            }
-            console.log(data)
-            var inputText = params.term.toLowerCase().replace(/\s/g, '');
-            var optionText = data.text.toLowerCase().replace(/\s/g, '');
-            var optionValue = data.value.toLowerCase().replace(/\s/g, '');
-            var optionValue = "";
-            if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1) {
-                return data;
-            }
-            return null;
-        }
-    }).on('change', function() {
-        var selectedValue = $(this).select2('data')[0].value;
-        Check_BarCode(selectedValue)
-        $(this).val('');
-      });
+    //     },
+    //     matcher: function(params, data) {
+    //         if ($.trim(params.term) === '') {
+    //             return data;
+    //         }
+    //         console.log(data)
+    //         var inputText = params.term.toLowerCase().replace(/\s/g, '');
+    //         var optionText = data.text.toLowerCase().replace(/\s/g, '');
+    //         var optionValue = data.value.toLowerCase().replace(/\s/g, '');
+    //         var optionValue = "";
+    //         if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1) {
+    //             return data;
+    //         }
+    //         return null;
+    //     }
+    // }).on('change', function() {
+    //     var selectedValue = $(this).select2('data')[0].value;
+    //     Check_BarCode(selectedValue)
+    //     $(this).val('');
+    //   });
 
  
 </script>

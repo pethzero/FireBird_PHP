@@ -2,6 +2,12 @@
 <html lang="en">
   <head>
     <?php 
+          session_start(); 
+          if (!isset($_SESSION["RECNO"])) 
+            {
+              header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
+              exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
+            } 
     include("0_headcss.php"); 
     ?>
     <!-- <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
@@ -43,14 +49,8 @@
 </style>
 
   <?php 
-      session_start(); 
-      if (!isset($_SESSION["RECNO"])) 
-        {
-          header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
-          exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
-        } 
       include("0_header.php"); 
-      include("0_breadcrumb.php"); 
+      // include("0_breadcrumb.php"); 
   ?>
     
 <div class="section">
@@ -386,7 +386,8 @@
             return obj;
           });
         }
-        const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const labels = ["ม.ค.", "ก.พ.", "ม.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "พ.ค.", "ส.ค.", "ก.ย.", "ต.ย.", "พ.ย.", "ธ.ค."];
         const datasets = [];
         var countchart = 0;
         for (const year in updatedDatasetChart)

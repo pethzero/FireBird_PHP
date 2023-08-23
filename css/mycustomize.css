@@ -24,9 +24,9 @@
   background-color: #fff;
 }
 
-.page-link:hover {
-  background-color: #f2f2f2;
-}
+/* .page-link:hover {
+  background-color: #0c13d8 !important;
+} */
 
 
 
@@ -40,4 +40,51 @@
 		text-align: left !important;
 		margin-bottom: 10px;
 	}
+}
+
+.table-custom  {
+  --bs-table-color: #000;
+  /* --bs-table-bg: #cfe2ff; */
+  --bs-table-bg:#98b7ef;
+  --bs-table-border-color: #bacbe6;
+  --bs-table-striped-bg: #c5d7f2;
+  --bs-table-striped-color: #000;
+  --bs-table-active-bg: #bacbe6;
+  --bs-table-active-color: #000;
+  --bs-table-hover-bg: #bfd1ec;
+  --bs-table-hover-color: #000;
+  color: var(--bs-table-color);
+  border-color: var(--bs-table-border-color)
+}
+
+/* .bg-custom {
+  background-color: #ff9800; 
+  color: #fff;
+} */
+.bg-oragne {
+  background-color: #ff9800; /* เปลี่ยนสีตามที่คุณต้องการ */
+  /* color: #fff; */
+}
+
+
+.bg-pink {
+  background-color: #ef98d3; /* เปลี่ยนสีตามที่คุณต้องการ */
+  /* color: #fff; */
+}
+
+@media (min-width: 1200px) {
+  .modal-xl {
+    --bs-modal-width: 1500px !important;
+  }
+}
+
+.datepicker td,
+th {
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.datepicker {
+  border: 1px solid black;
 }

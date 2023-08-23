@@ -27,7 +27,7 @@ if (isset($_SESSION["RECNO"]))
 		<form name="formlogin" action="ajax_check.php" method="post" id="login">
 			<div class="field">
 				<input type="text" name="username" 
-				value="komkrid"
+				value="superadmin"
 				required>
 				<label>Username</label>
 			</div>

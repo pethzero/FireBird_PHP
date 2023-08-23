@@ -210,9 +210,9 @@
   <?php
   //  include("0_dtcolumn.php");
    ?>
+      <?php include("0_footerjs.php"); ?>
      <script src="js/dtcolumn.js" rel="preload" as="script"></script>
      <!-- <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script> -->
-  <?php include("0_footerjs.php"); ?>
 
 </body>
 
@@ -320,7 +320,7 @@ var selectedRecno = null;
     });
 
     $('#pmtime').on('show.bs.modal', function(event) {
-      console.log('SSS');
+      // console.log('SSS');
         // setTimeout(function() {
         //   $('#table_pmtimehd').DataTable().columns.adjust().draw();
         //     console.log('SSS');
