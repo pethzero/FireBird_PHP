@@ -395,6 +395,7 @@ if ($size === 0) {
         dataSrc: '',
         success: function(response) {
           cust_list = JSON.parse(response).data;
+          console.log(cust_list)
           data_json_cust(cust_list)
           createSelect_customer('#cust', data_cust_name);
           if (link == "edit") {

@@ -1,18 +1,4 @@
 // แปลงฟังก์ชัน getStatusText เป็น Arrow Function
-    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-      "date-uk-pre": function ( a ) {
-          var ukDatea = a.split('/');
-          return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
-      },
-
-      "date-uk-asc": function ( a, b ) {
-          return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-      },
-
-      "date-uk-desc": function ( a, b ) {
-          return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-      }
-      });
 
 const getStatusText = (data) => {
   let statusText = '';
@@ -60,6 +46,24 @@ const getStatusTextOther = (data, column) => {
   // return data;
 };
 
+// แปลงฟังก์ชัน formatDateTH เป็น Arrow Function
+const formatDateTHddmmyyyy = (data) => {
+  if (!data) {
+    return ''; // ถ้าค่าว่างหรือไม่ถูกต้อง ส่งค่าว่างกลับไป
+  }
+  
+  const dateObj = new Date(data);
+  const day = dateObj.getDate();
+  const month = dateObj.getMonth() + 1;
+  const year = dateObj.getFullYear() + 543;
+  // const formattedDate = `${(month < 10 ? '0' + month : month)}/${(day < 10 ? '0' + day : day)}/${year}`;
+
+  // const formattedDate = `${(day < 10 ? '0' + day : day)}.${(month < 10 ? '0' + month : month)}.${year}`;
+  const formattedDate = `${(day < 10 ? '0' + day : day)}/${(month < 10 ? '0' + month : month)}/${year}`;
+  // const formattedDate = `${(day < 10 ? '0' + day : day)}-${(month < 10 ? '0' + month : month)}-${year}`; 
+  return formattedDate;
+};
+
 // แปลงฟังก์ชัน formatDate เป็น Arrow Function
 const formatDate = (data) => {
   if (!data) {
@@ -70,7 +74,7 @@ const formatDate = (data) => {
   const day = dateObj.getDate();
   const month = dateObj.getMonth() + 1;
   const year = dateObj.getFullYear();
-  const formattedDate = `${(day < 10 ? '0' + day : day)}/${(month < 10 ? '0' + month : month)}/${year}`;
+  const formattedDate = `${(day < 10 ? '0' + day : day)}.${(month < 10 ? '0' + month : month)}.${year}`;
   // const formattedDate = `${(month < 10 ? '0' + month : month)}/${(day < 10 ? '0' + day : day)}/${year}`;
   return formattedDate;
 };
@@ -264,7 +268,10 @@ var dtcolumn =
     },
     {data: 'CUSTNAME'},
     {data: 'CONTNAME'},
-    {data: 'STARTD',render: formatDate,"sType": "date-uk"},
+    // {data: 'STARTD',render: formatDate},
+    {data: 'STARTD',render: formatDateTHddmmyyyy},
+    // {data: 'STARTD',render: formatDate,"sType": "date-uk"},
+    
     // {data: 'PRIORITY'},
     {data: null,render: function(data)
       {
@@ -274,5 +281,16 @@ var dtcolumn =
     {data: 'PRICECOST'},
     {data: 'PRICEPWITHDRAW'},
     {data: 'OWNERNAME'},
+   ],
+
+   'DATA_EQUIPMENT': [
+    { data: 'RECNO' },
+    {  data: null,
+      render: function(data, type, row)
+      {
+        return customButtonEdit (data, type, row, 'edit','แก้ไข' );
+      }
+    },
+    {data: 'ID'},
    ]
 };

@@ -35,18 +35,30 @@
             ฝ่ายจัดซื้อ
           </a>
           <ul class="dropdown-menu">
-          <li><a class="dropdown-item"  href="datapurc.php" >ใบสั่งขาย</a></li> 
+              <!-- <li><a class="dropdown-item"  href="datapurc.php" >ใบสั่งขาย</a></li>  -->
+              <li><a class="dropdown-item">coming soon</a></li> 
           </ul>
         </li>
-        <li class="nav-item dropdown">
+
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
            ผลิต
           </a>
           <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="datatablemachine.php">เครื่องจักร(กำลังพัฒนา)</a></li> 
           </ul>
-        </li>
+        </li> -->
+
         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           ดูแล
+          </a>
+          <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="dataequipment.php">เพิ่มอุปกรณ์</a></li> 
+          </ul>
+        </li>
+
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             สโตร์
           </a>
@@ -54,7 +66,8 @@
             <li><a class="dropdown-item" href="datainvent.php">ดูสินค้า</a></li> 
             <li><a class="dropdown-item" href="datastock.php">ใบเบิกสินค้า</a></li> 
           </ul>
-        </li>
+        </li> -->
+
       <!-- <li class="nav-item">
         <a class="nav-link disabled text-white" href="#">Disabled</a>
       </li> -->

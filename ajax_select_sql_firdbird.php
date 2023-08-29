@@ -1,7 +1,6 @@
 <?php
 try {
-    // include("connect.php");    //FIRDBIRD
-    include("connect_sql.php");   //MYSQL   
+    include("connect.php");    //FIRDBIRD
     include("sql_exe.php");
 
     $queryId = isset($_GET['queryId']) ? $_GET['queryId'] : '';
@@ -30,10 +29,10 @@ try {
                     $base64Data = base64_encode($value);
                     $row[$key] = $base64Data; 
                 } 
-                // else 
-                // {
-                //     $row[$key] = iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $value);
-                // }
+                else 
+                {
+                    $row[$key] = iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $value);
+                }
             }
             $data[] = $row;
         }

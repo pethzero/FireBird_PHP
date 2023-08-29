@@ -79,7 +79,7 @@ if ($size === 0) {
   </style>
 
   <?php
-  include("connect.php");
+  include("connect_sql.php");
   include("sql.php");
   // include("0_fselect.php");
   ?>
@@ -315,9 +315,9 @@ if ($size === 0) {
 <script>
   $(document).ready(function() {
 
-    var encodedURL_Select = encodeURIComponent('ajax_select_sql_firdbird.php'); 
-    var encodedURL_Insert = encodeURIComponent('ajax/ajax_db_insert.php'); 
-    var encodedURL_Update = encodeURIComponent('ajax/ajax_db_update.php'); 
+    var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php'); 
+    var encodedURL_Insert = 'ajax/ajaxdbinsertmysql.php';
+    var encodedURL_Update = 'ajax/ajaxdbupdatemysql.php';
 
     $(window).keydown(function(event) {
             if (event.keyCode == 13 && !$(event.target).is('textarea')) {
@@ -364,11 +364,21 @@ if ($size === 0) {
       }
       var inputText = params.term.toLowerCase().replace(/\s/g, '');
       var optionText = data.text.toLowerCase().replace(/\s/g, '');
-      var optionValue = data.value.toLowerCase().replace(/\s/g, '');
+      
       var optionTitle = data.title.toLowerCase().replace(/\s/g, '');
-      if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1 || optionTitle.indexOf(inputText) > -1) {
-        return data;
+      if (typeof data.value === 'string') {
+            // ทำสิ่งที่คุณต้องการเมื่อ data.value เป็น string
+          var optionValue = data.value.toLowerCase().replace(/\s/g, '');
+          if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1 || optionTitle.indexOf(inputText) > -1) {
+            return data;
+          }
+      } else {
+          if (optionText.indexOf(inputText) > -1 || optionTitle.indexOf(inputText) > -1) {
+            return data;
+          }
+          // ทำสิ่งที่คุณต้องการเมื่อ data.value ไม่ใช่ string
       }
+    
       return null;
     }
 
@@ -395,6 +405,7 @@ if ($size === 0) {
         dataSrc: '',
         success: function(response) {
           cust_list = JSON.parse(response).data;
+          // console.log(cust_list)
           data_json_cust(cust_list)
           createSelect_customer('#cust', data_cust_name);
           if (link == "edit") {
@@ -426,12 +437,13 @@ if ($size === 0) {
         var select2_code = data_list_cust[i]['CODE'];
         var select2_name = data_list_cust[i]['NAME'];
 
+           
+        if (select2_code === null ) {
+            select2_code = '';
+        }
+
         if (select2_name != '') {
           if (!existingCodes[select2_code]) {
-            if (select2_code == null)
-              {
-                select2_code = ''
-              }
             if (link == "edit" && recno_cust == select2_recno) 
             {
            
@@ -505,7 +517,9 @@ if ($size === 0) {
         dataSrc: '',
         success: function(response) {
           con_list = JSON.parse(response).data;
+          // console.log(con_list);
           data_json_name(con_list)
+          // console.log(data_cont_name)
           if (link == 'add') {
             $('#cont').empty();
             $('#cont').select2("destroy").select2();
@@ -527,7 +541,8 @@ if ($size === 0) {
     }
     // DATA JSON SEND SELECT2
     function data_json_name(data_list) {
-      data_cont_name = [{}]
+      // data_cont_name = [{}]
+      data_cont_name = []
       data_cont_name.push({
         "id": 0,
         "text": "เลือกชื่อลูกค้า...",
@@ -543,6 +558,7 @@ if ($size === 0) {
             if (link == "edit" && recno_cont == select2_code) {
               data_cont_name.push({
                 // "id": target_list.length + 1,
+                // "id": parseInt(select2_code),
                 "id": parseInt(select2_code),
                 "text": select2_name,
                 "value": select2_code,
@@ -563,9 +579,9 @@ if ($size === 0) {
         }
 
       }
-      data_cont_name.sort(function(a, b) {
-        return a.value.localeCompare(b.value);
-      });
+      // data_cont_name.sort(function(a, b) {
+      //   return a.value.localeCompare(b.value);
+      // });
     }
 
     function createSelect_contact(selector, data) {
@@ -602,8 +618,10 @@ if ($size === 0) {
       recno_cont = $(this).select2('data')[0].value;
       $("#email").val("");
       $("#tel").val("");
+      // console.log(recno_cont)
       // ค้นหาค่า CONTEMAIL ที่มี RECNO เท่ากับ recno_cont
-      var targetItem = con_list.find(item => item.RECNO === recno_cont.toString());
+      // var targetItem = con_list.find(item => item.RECNO === recno_cont.toString());
+      var targetItem = con_list.find(item => item.RECNO === recno_cont);
       name_cont = targetItem ? targetItem.CONTNAME : '';
       recno_tel = targetItem ? targetItem.CONTEMAIL : '';
       recno_email = targetItem ? targetItem.CONTTEL : '';
@@ -831,7 +849,7 @@ if ($size === 0) {
           genIdDT: '',
           condition: 'IHD',
           paramhd: { // อาร์เรย์ params ที่คุณต้องการส่ง
-            RECNO: '',
+            // RECNO: '',
             STATUS: $('#status').val(),
             CUSTNAME: name_cust,
             CONTNAME: $('#contname').val(),
@@ -848,7 +866,8 @@ if ($size === 0) {
             TIMED: $('#timed').val(),
             TIMEH: $('#timeh').val(),
             TIMEM: $('#timem').val(),
-            STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'),
+            // STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'), // FIRDBIRD
+            STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
             PRICECOST: $('#pcost').val(),
             PRICEPWITHDRAW: $('#pwithdraw').val(),
             OWNERNAME: recno_nowner,
@@ -866,8 +885,9 @@ if ($size === 0) {
         beforeSend: function() {},
         complete: function() {},
         success: function(response) {
+          console.log(response)
           if (response.status == 'success') {
-            console.log('success')
+            // console.log('success')
             Swal.fire({
               title: "บันทึกแล้ว",
               text: "ข้อความที่คุณต้องการแสดง",
@@ -908,6 +928,7 @@ if ($size === 0) {
       $.ajax({
         type: "POST",
         url: encodedURL_Update,
+        // url: 'ajax/ajaxdbupdatemysql.php',
         data: {
           queryIdHD: 'UPD_ACTIVITYHD',
           queryIdDT: '',
@@ -932,11 +953,12 @@ if ($size === 0) {
             TIMED: $('#timed').val(),
             TIMEH: $('#timeh').val(),
             TIMEM: $('#timem').val(),
-            STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'),
+            // STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'), // FIRDBIRD
+            STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
             PRICECOST: $('#pcost').val(),
             PRICEPWITHDRAW: $('#pwithdraw').val(),
-            OWNERNAME: recno_nowner,
-            OWNER: recno_owner,
+            OWNER_NUM: recno_owner,
+            OWNERNAME_STR: recno_nowner,
           },
           paramdt: { // อาร์เรย์ params ที่คุณต้องการส่ง
             datanull: '',

@@ -9,11 +9,7 @@
     header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
     exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
   }
-  include("0_headcss.php"); 
-  $csrfToken = bin2hex(random_bytes(32)); // สร้าง token สุ่ม
-  $_SESSION['csrf_token'] = $csrfToken;
-  // $_SESSION['csrf_token'] = keyse();
-  ?>
+  include("0_headcss.php"); ?>
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 
@@ -204,11 +200,6 @@
     });
 
     // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
-    var encodeData = "<?php echo $csrfToken; ?>";
-    function secertkey(){
-      return encodeData;
-    }
-
     var encodedURL = encodeURIComponent('ajax_select_sql_mysql.php');
     var data_array = [];
     var table = $('#table_datahd').DataTable({
@@ -221,10 +212,9 @@
             STARTD: startd,
           };
           d.condition = 'mix';
-          d.sqlprotect = encodeData;
         },
         dataSrc: function(json) {
-          console.log(json) 
+          // console.log(json) 
           tablejsondata = json.data
           return json.data;
         }
@@ -331,7 +321,7 @@
         startd = '';
       }
 
-      // console.log(startd)
+      console.log(startd)
       $('#table_datahd').DataTable().column(6).search(startd).draw();
       $('#table_datahd').DataTable().column(3).search($('#status').val()).draw();
       // if (dateValue) {
