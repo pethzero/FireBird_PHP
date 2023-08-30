@@ -71,17 +71,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //////////////////////////////////////////////////  CONDITION  ////////////////////////////////////////////////////
-        if ($condition == "IHD") {
-            $sqlhd = sqlmixexe($queryIdHD, $paramhd);
-        } else {
-            $sqlhd = sqlexec($queryIdHD);
-        }
+        // if ($condition == "IHD") {
+        //     $sqlhd = sqlmixexe($queryIdHD, $paramhd);
+        // } else {
+        //     $sqlhd = sqlexec($queryIdHD);
+        // }
+        $sqlhd = sqlmixexe($queryIdHD, $paramhd);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////  SQL INSERT ///////////////////////////////////////////////////
         $pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
         $pdo->beginTransaction();
         /////////  AUTO INCREMENT /////////
-        $query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'SAN' AND TABLE_NAME = 'equipment'"; // SERVER
+        $query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'SAN' AND TABLE_NAME = '".$uploadnamedb."'"; // SERVER
         $stmt = $pdo->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -100,17 +101,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /////////  EXCUTE  /////////
         $itemrunnig = substr( date("Y")+543, -2) . sprintf("%04d", $autoIncrementValue);
         $stmt = $pdo->prepare($sqlhd);
-        $stmt->bindParam(':ID', $itemrunnig);
-        $stmt->bindParam(':UPLOAD', $filename_db);
-        // $stmt->bindParam(':DOCNO', $docno);
-        // if ($runnigitem == "0001") {
-        //     $stmt->bindParam(':ID', $itemrunnig);
-        // } else {
-        //     $stmt->bindParam(':DOCNO', $docno);
-        // }
+
+        if ($condition == "IHD") {
+            // $sqlhd = sqlmixexe($queryIdHD, $paramhd);
+            $stmt->bindParam(':ID', $itemrunnig);
+            $stmt->bindParam(':UPLOAD', $filename_db);
+        } else {
+            $stmt->bindParam(':ID', $itemrunnig);  
+        }
+
         $stmt->execute();
         /////////////
-        // $stmt = true;
+        $stmt = true;
         if ($stmt) {
             /////// UPLOAD ///////
             if (isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]["error"] === UPLOAD_ERR_OK) {
@@ -124,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response = array(
                 'status' => 'success',
                 'message' => 'เพิ่มข้อมูลสำเร็จ',
-                // 'pass' => 'pass',
+                'sqlhd' =>  $sqlhd,
                 // 'itemrunnig' => $itemrunnig,
                 // 'queryIdHD' => $queryIdHD,
                 // 'queryIdDT' => $queryIdDT,
@@ -135,6 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // 'messageupload' => $messageupload
             );
             $pdo->commit();
+            // $pdo->rollBack();
             echo json_encode($response);
         } else {
             $response = array(

@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <h2>อุปกรณ์และเครื่องจักร</h2>
+      <h2>แจ้งซ่อม</h2>
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
           <div class="input-group date mb-3" id="datepicker_search">
@@ -106,7 +106,7 @@
           <button id='new' type="button" class="btn btn-primary">เพิ่มอุปกรณ์</button>
         </div> -->
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-          <button id='newmodel' type="button" class="btn btn-primary">เพิ่มอุปกรณ์และเครื่องจักร</button>
+          <button id='newmodel' type="button" class="btn btn-primary">ทำการแจ้งซ่อม</button>
         </div>
       </div>
 
@@ -129,6 +129,11 @@
                 <th>ลำดับ</th>
                 <th>ข้อมูล</th>
                 <th>เลขที่</th>
+                <th>บุคคลติดต่อ</th>
+                <th>สถานะ</th>
+                <th>ความสำคัญ</th>
+                <th>วันที่นัด</th>
+
                 <!-- <th>สถานะ</th>
                 <th>บริษัท</th>
                 <th>ผู้ติดต่อ</th>
@@ -170,7 +175,7 @@
       <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="hqLabel">อุปกรณ์ <span id='story' class="badge"></span></h5>
+            <h5 class="modal-title" id="hqLabel">บันทึกแจ้งซ่อม <span id='story' class="badge"></span></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
@@ -189,21 +194,22 @@
                 <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">ชื่ออุปกรณ์:</span>
-                      <input type="text" class="form-control" id="name" placeholder="ชื่ออุปกรณ์" maxlength="255">
-
+                      <span class="input-group-text c_activity">หัวข้อเรื่อง:</span>
+                      <input type="text" class="form-control" id="name" placeholder="หัวข้อเรื่อง" maxlength="255">
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+                  <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">ประเภท:</span>
                       <input type="text" class="form-control" id="type" placeholder="ประเภท" maxlength="255">
                     </div>
-                  </div>
+                  </div> -->
+
                 </div>
 
 
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">รหัส:</span>
@@ -216,24 +222,49 @@
                       <input type="text" class="form-control" id="model" placeholder="ยี่ห้อ" maxlength="50">
                     </div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">บริษัท:</span>
                       <input type="text" class="form-control" id="cust" placeholder="ซื้อกับบริษัท" maxlength="255">
                     </div>
+                  </div> -->
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ชื่ออุปกรณ์:</span>
+                      <!-- <input type="text" class="form-control" id="name" placeholder="ชื่ออุปกรณ์" maxlength="255"> -->
+                      <select class="form-select" id="equipment">
+                      </select>
+                    </div>
                   </div>
+
+
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">บุคคล:</span>
                       <input type="text" class="form-control" id="cont" placeholder="ติดต่อบุคคล" maxlength="255">
                     </div>
                   </div>
+
+
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">โทรศัทพ์:</span>
+                      <input type="text" class="form-control" id="phone" placeholder="โทรศัทพ์" maxlength="150">
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">อีเมล:</span>
+                      <input type="text" class="form-control" id="email" placeholder="อีเมล" maxlength="150">
+                    </div>
+                  </div>
+
                 </div>
 
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">โทรศัทพ์:</span>
@@ -260,8 +291,7 @@
                       <input type="text" class="form-control" id="docno" placeholder="คู่มือ" maxlength="255">
                     </div>
                   </div>
-
-                </div>
+                </div> -->
 
                 <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -291,94 +321,71 @@
                     </div>
                   </div>
 
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">ประกัน:</span>
-                          <input type="number" class="form-control" id="warranty" min=0 placeholder="อายุประกัน" step="1">
-                        </div>
+                
+
+                  <div class="row mb-3">
+                    <div class="input-group">
+                      <span class="input-group-text">รายละเอียด:</span>
+                      <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="row">
+
+                  
+
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
+                        <input id="pcost" type="number" min=0 class="form-control">
                       </div>
+                    </div>
 
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">การบำรุง:</span>
-                          <input type="number" class="form-control" id="maintenance" min=0 placeholder="จำนวนการบำรุง" step="1">
-                        </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text c_activity">ค่าเบิก:</span>
+                        <input id="pwithdraw" type="number" min=0 class="form-control">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="input-group date mb-3" id="datepicker">
+                        <span class="input-group-text c_activity">วันที่นัด:</span>
+                        <input type="text" class="form-control" id="date" placeholder="วันที่นัดดูแลอุปกรณ์" />
+                        <span class="input-group-append">
+                          <span class="input-group-text bg-light d-block">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
+
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text ">ผู้บันทึก:</span>
+                        <select class="form-select" id="owner">
+                        </select>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="row mb-3">
-                  <div class="input-group">
-                    <span class="input-group-text">รายละเอียด:</span>
-                    <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group date mb-3" id="datepicker">
-                      <span class="input-group-text c_activity">วันที่ซื้อ:</span>
-                      <input type="text" class="form-control" id="date" placeholder="วันที่ซื้อสินค้า" />
-                      <span class="input-group-append">
-                        <span class="input-group-text bg-light d-block">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
 
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group date mb-3" id="datepicker_first">
-                      <span class="input-group-text c_activity">วันที่เริ่มต้น:</span>
-                      <input type="text" class="form-control" id="date_first" placeholder="วันที่เริ่มต้น" />
-                      <span class="input-group-append">
-                        <span class="input-group-text bg-light d-block">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group date mb-3" id="datepicker_last">
-                      <span class="input-group-text c_activity">ดูแลล่าสุด:</span>
-                      <input type="text" class="form-control" id="date_last" placeholder="วันที่ดูแลล่าสุด" />
-                      <span class="input-group-append">
-                        <span class="input-group-text bg-light d-block">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text ">ผู้บันทึก:</span>
-                      <select class="form-select" id="owner">
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row">
+                  <!-- <div class="row">
                   <div class="mb-3">
                     <label for="formFile" class="form-label">แนบเอกสาร</label>
                     <input class="form-control" type="file" id="fileToUpload">
                   </div>
-                </div>
+                </div> -->
 
-                <div class="row">
-                  <div class="">
-                    <label for="fileLabel" class="form-label" id="fileLabel"> </label>
-                    <!-- <label for="formFile" class="form-label">แนบเอกสาร</label>
-                    <input class="form-control" type="file" id="fileToUpload"> -->
+                  <div class="row">
+                    <div class="">
+                      <label for="fileLabel" class="form-label" id="fileLabel"> </label>
+                    </div>
                   </div>
-                </div>
 
-              </div>
+                </div>
             </section>
           </div>
 
@@ -401,30 +408,30 @@
 <script>
   $(document).ready(function() {
 
-    // รับ element input จาก DOM
-    var fileInput = document.getElementById('fileToUpload');
+    // // รับ element input จาก DOM
+    // var fileInput = document.getElementById('fileToUpload');
 
-    // เพิ่ม event listener เมื่อมีการเลือกไฟล์
-    fileInput.addEventListener('change', function(event) {
-      var file = event.target.files[0]; // ไฟล์ที่ถูกเลือก
+    // // เพิ่ม event listener เมื่อมีการเลือกไฟล์
+    // fileInput.addEventListener('change', function(event) {
+    //   var file = event.target.files[0]; // ไฟล์ที่ถูกเลือก
 
-      // ตรวจสอบขนาดไฟล์ (10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        alert('ไฟล์ขนาดเกิน 10MB ไม่ได้รับอนุญาต');
-        fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-        return;
-      }
+    //   // ตรวจสอบขนาดไฟล์ (10MB)
+    //   if (file.size > 10 * 1024 * 1024) {
+    //     alert('ไฟล์ขนาดเกิน 10MB ไม่ได้รับอนุญาต');
+    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
+    //     return;
+    //   }
 
-      // ตรวจสอบประเภทไฟล์ (pdf, png)
-      var allowedTypes = ['application/pdf', 'image/jpg', 'image/png', 'image/jpeg', 'image/gif'];
-      if (!allowedTypes.includes(file.type)) {
-        alert('รูปแบบไฟล์ไม่ได้รับอนุญาต (รองรับเฉพาะ PDF , JPG, PNG , และ GIF)');
-        fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-        return;
-      }
-      // ทำสิ่งที่ต้องการเมื่อไฟล์ผ่านการตรวจสอบ
-      // ตัวอย่างเช่น ส่งไฟล์ไปยังเซิร์ฟเวอร์ หรือประมวลผล
-    });
+    //   // ตรวจสอบประเภทไฟล์ (pdf, png)
+    //   var allowedTypes = ['application/pdf', 'image/jpg', 'image/png', 'image/jpeg', 'image/gif'];
+    //   if (!allowedTypes.includes(file.type)) {
+    //     alert('รูปแบบไฟล์ไม่ได้รับอนุญาต (รองรับเฉพาะ PDF , JPG, PNG , และ GIF)');
+    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
+    //     return;
+    //   }
+    //   // ทำสิ่งที่ต้องการเมื่อไฟล์ผ่านการตรวจสอบ
+    //   // ตัวอย่างเช่น ส่งไฟล์ไปยังเซิร์ฟเวอร์ หรือประมวลผล
+    // });
 
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
     $(window).keydown(function(event) {
@@ -435,7 +442,7 @@
     });
 
     var recno = null;
-    var qid = 'SEL_EQUIPMENT';
+    var qid = 'SEL_NOTIMAINTEN';
     var startd = null;
     var tablejsondata;
     var selectedRow = null;
@@ -445,7 +452,7 @@
     var recno_owner = 0;
     var recno_nowner = "";
     var recno_edit;
-
+    var recno_equipment = 0;
     var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
     var encodedURL_Insert = 'ajax/ajaxinsertnew.php';
     var encodedURL_Update = 'ajax/ajaxupdatenew.php';
@@ -453,7 +460,7 @@
 
     $(function() {
       select2_owner_list();
-
+      select2_equipment_list()
 
       $("#date_search").datepicker({
         format: "dd/mm/yyyy",
@@ -463,9 +470,6 @@
       });
     });
 
-    function Operation(optdata) {
-      select2_owner_list()
-    }
 
     function matchCustom_ajax(params, data) {
       if ($.trim(params.term) === '') {
@@ -525,26 +529,23 @@
         }
       },
       scrollX: true,
-      // columns:[  { data: 'RECNO' },
-      // {data: 'ID'},
-      // { data: 'RECNO' },],
-      // columns: dtcolumn['DATA_EQUIPMENT'],
-      // columnDefs: [{
-      //     className: 'noVis',
-      //     targets: [0]
-      //   },
-      //   // {
-      //   //   className:'dt-center',
-      //   //   targets: [2]
-      //   // },
-      //   // {
-      //   //   "visible": false,
-      //   //   "targets": 0
-      //   // },
-      // ],
-      // order: [
-      //   [0, 'desc'],
-      // ],
+      columns: dtcolumn['DATA_NOTIMAINTEN'],
+      columnDefs: [{
+          className: 'noVis',
+          targets: [0]
+        },
+        // {
+        //   className:'dt-center',
+        //   targets: [2]
+        // },
+        // {
+        //   "visible": false,
+        //   "targets": 0
+        // },
+      ],
+      order: [
+        [0, 'desc'],
+      ],
       dom: 'Bfrtip',
       buttons: [{
           extend: 'colvis',
@@ -646,27 +647,29 @@
 
       datasave = 'save';
       recno_owner = 0;
+      recno_equipment = 0;
       $uploadolddb = '';
       $('#name').val('');
-      $('#type').val('');
-      $('#code').val('');
-      $('#model').val('');
-      $('#cust').val('');
+      $('#equipment').val(0).trigger('change');
+      // $('#type').val('');
+      // $('#code').val('');
+      // $('#model').val('');
+      // $('#cust').val('');
       $('#cont').val('');
       $('#phone').val('');
       $('#email').val('');
-      $('#area').val('');
-      $('#docno').val('');
+      // $('#area').val('');
+      // $('#docno').val('');
       $('#status').val('A');
       $('#priority').val('0');
-      $('#warranty').val(0);
-      $('#maintenance').val(0);
+      $('#pcost').val(0);
+      $('#pwithdraw').val(0);
       $('#detail').val('');
       $('#owner').val(0).trigger('change');
       $('#date').val('');
-      $('#date_first').val('');
-      $('#date_last').val('');
-      $('#fileToUpload').val('');
+      // $('#date_first').val('');
+      // $('#date_last').val('');
+      // $('#fileToUpload').val('');
       $("#hq").modal("show"); // เปิดกล่องโมดอล
     });
 
@@ -692,8 +695,8 @@
         success: function(response) {
           // console.log(response)
           owner_list = JSON.parse(response).data;
-          data_owner_name = data_json(owner_list, 'RECNO', 'EMPNO', 'EMPNAME','เลือกชื่อผู้รับผิดชอบงาน...'); // กำหนดค่าใหม่ให้กับ data_owner_name
-          createSelect2('#owner', data_owner_name,'เลือกชื่อผู้รับผิดชอบงาน...')
+          data_owner_name = data_json(owner_list, 'RECNO', 'EMPNO', 'EMPNAME', 'เลือกชื่อผู้รับผิดชอบงาน...'); // กำหนดค่าใหม่ให้กับ data_owner_name
+          createSelect2('#owner', data_owner_name, 'เลือกชื่อผู้รับผิดชอบงาน...')
           owner_process = 1;
         },
         error: function(xhr, status, error) {
@@ -702,7 +705,29 @@
       });
     }
 
-    function createSelect2(selector, data,gettextselect) {
+    function select2_equipment_list() {
+      $.ajax({
+        url: encodedURL_Select,
+        data: {
+          queryId: 'EQUIPMENT_LIST',
+          params: null,
+          condition: 'mix',
+        },
+        dataSrc: '',
+        success: function(response) {
+          // console.log(response)
+          equipment_list = JSON.parse(response).data;
+          data_equipment_name = data_json(equipment_list, 'RECNO', 'CODE', 'NAME', 'เลือกอุปกรณ์...'); // กำหนดค่าใหม่ให้กับ data_owner_name
+          createSelect2('#equipment', data_equipment_name, 'เลือกอุปกรณ์...')
+          // owner_process = 1;
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+
+    function createSelect2(selector, data, gettextselect) {
       return $(selector).select2({
         data: data,
         theme: 'bootstrap-5',
@@ -732,7 +757,7 @@
       });
     }
 
-    function data_json(data_list, recno_key, code_key, name_key,gettextselect) {
+    function data_json(data_list, recno_key, code_key, name_key, gettextselect) {
       var target_list = [{
         "id": 0,
         "text": gettextselect,
@@ -770,10 +795,29 @@
       }
     });
 
+
+    $("#equipment").change(function() {
+      recno_equipment= $(this).select2('data')[0].value;
+      // if (recno_owner == -1) {
+      //   recno_nowner = '';
+      // } else {
+      //   recno_nowner = $(this).select2('data')[0].text;
+      // }
+    });
+
     //////////////////////////////////////////////////////////////// SAVE ///////////////////////////////////////////////////////////////
 
     $("#idForm").submit(function(event) {
       event.preventDefault();
+      // console.log('xx')
+      // if ($('#name').val().trim() == '') {
+      //   Swal.fire(
+      //     'กรุณาเลือกชื่อใส่ชื่ออุปกรณ์',
+      //     'ไม่สามารถบันทึกได้',
+      //     'error'
+      //   )
+      //   return false
+      // }
       AlertSave()
     });
 
@@ -795,7 +839,7 @@
           // console.log(response);
           // save_json = JSON.parse(response);
           save_json = JSON.parse(response);
-          // console.log(save_json);
+          console.log(save_json);
           if (save_json.status == 'success') {
             Swal.fire({
               title: "บันทึกแล้ว",
@@ -807,7 +851,11 @@
               // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
               var newData = {
                 RECNO: save_json.autoIncrementValue, // หรือค่า recno ที่คุณต้องการกำหน
-                ID: String((new Date().getFullYear() + 543) % 100) + '/' + String(3).padStart(4, '0')
+                ID: String((new Date().getFullYear() + 543) % 100) + '/' + String(3).padStart(4, '0'),
+                CONTNAME:'',
+                STATUS:'',
+                PRIORITY:'',
+                WARNINGDATE:''
               }
               table.row.add(newData).draw(); // เพิ่มแถวใหม่ใน DataTable และวาดใหม่
               // ซ่อน Modal หลังจากบันทึก
@@ -902,38 +950,38 @@
       //   modify = 'F';
       // }
       formData.append('fileToUpload', '');
+      $uploadolddb = '';
       // else
       // {
       // }
       /////////////
 
-      var purchaseValue = $('#date').val();
-      var firstUsageValue = $('#date_first').val();
-      var lastUsageValue = $('#date_last').val();
+      var warningValue = $('#date').val();
+      // var firstUsageValue = $('#date_first').val();
+      // var lastUsageValue = $('#date_last').val();
 
       /// id ,param ///
       paramhd = {
         RECNO: recno_edit,
-        // IDEDIT: '5555',
         NAME: $('#name').val(),
-        TYPE: $('#type').val(),
-        CODE: $('#code').val(),
-        MODEL: $('#model').val(),
-        CUSTNAME: $('#cust').val(),
+        EQUIPMENT: $('#equipment').val(),
+        // CODE: $('#code').val(),
+        // MODEL: $('#model').val(),
+        // CUSTNAME: $('#cust').val(),
         CONTNAME: $('#cont').val(),
         PHONE: $('#phone').val(),
         EMAIL: $('#email').val(),
-        AREA: $('#area').val(),
-        DOCINFO: $('#docno').val(),
+        // AREA: $('#area').val(),
+        // DOCINFO: $('#docno').val(),
         STATUS: $('#status').val(),
         PRIORITY: $('#priority').val(),
-        WARRANTY: $('#warranty').val(),
-        MAINTENANCETIMES: $('#maintenance').val(),
-        BROKENTIMES: '',
+        PRICECOST: $('#pcost').val(),
+        PRICEPWITHDRAW: $('#pwithdraw').val(),
+        // BROKENTIMES: '',
         DETAILS: $('#detail').val(),
-        PURCHASEDATE: purchaseValue ? moment(purchaseValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        FIRSTUSAGE: firstUsageValue ? moment(firstUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        LASTUSAGE: lastUsageValue ? moment(lastUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+        WARNINGDATE: warningValue ? moment(warningValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+        // FIRSTUSAGE: firstUsageValue ? moment(firstUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+        // LASTUSAGE: lastUsageValue ? moment(lastUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
         // FIRSTUSAGE: moment($('#date_first').val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
         RECORDERNO: recno_owner,
         RECORDERNAME: recno_nowner,
@@ -945,19 +993,19 @@
       if (conditionsformdata == "save") {
         // ประมวลผลเพิ่มข้อมูล
         // process to insert data
-        formData.append('queryIdHD', 'EQUIPMENT');
+        formData.append('queryIdHD', 'IND_NOTIMAINTEN');
 
       } else if (conditionsformdata == "delete") {
         // ประมวลผลลบข้อมูล
         // process to delete data
       } else {
-        formData.append('queryIdHD', 'UPD_EQUIPMENT');
+        formData.append('queryIdHD', 'UPD_NOTIMAINTEN');
         // กรณีอื่น ๆ
         // other cases
       }
       formData.append('queryIdDT', '');
-      formData.append('condition', 'IHD');
-      formData.append('uploadnamedb', 'equipment');
+      formData.append('condition', 'I_NOTIMAINTEN');
+      formData.append('uploadnamedb', 'notimainten');
       formData.append('uploadolddb', $uploadolddb);
       formData.append('modify', modify);
 
@@ -986,7 +1034,6 @@
         if (result.isConfirmed) {
           if (datasave == "save") {
             SaveData()
-            // console.log('save')
           } else {
             UpdateData()
           }
@@ -1008,7 +1055,7 @@
       $.ajax({
         url: encodedURL_Select,
         data: {
-          queryId: 'EDSEL_EQUIPMENT',
+          queryId: 'EDSEL_NOTIMAINTEN',
           params: {
             RECNO: data_equipment
           },
@@ -1022,35 +1069,36 @@
           // console.log(json_equipment[0].NAME)
           recno_edit = json_equipment[0].RECNO;
           $('#name').val(json_equipment[0].NAME);
-          $('#type').val(json_equipment[0].TYPE);
-          $('#code').val(json_equipment[0].CODE);
-          $('#model').val(json_equipment[0].MODEL);
+          // $('#type').val(json_equipment[0].TYPE);
+          // $('#code').val(json_equipment[0].CODE);
+          // $('#model').val(json_equipment[0].MODEL);
           $('#cust').val(json_equipment[0].CUSTNAME);
           $('#cont').val(json_equipment[0].CONTNAME);
           $('#phone').val(json_equipment[0].PHONE);
-          $('#email').val(json_equipment[0].CODE);
-          $('#area').val(json_equipment[0].AREA);
-          $('#docno').val(json_equipment[0].DOCINFO);
+          $('#email').val(json_equipment[0].EMAIL);
+          // $('#area').val(json_equipment[0].AREA);
+          // $('#docno').val(json_equipment[0].DOCINFO);
           $('#status').val(json_equipment[0].STATUS);
           $('#priority').val(json_equipment[0].PRIORITY);
-          $('#warranty').val(json_equipment[0].WARRANTY);
-          $('#maintenance').val(json_equipment[0].MAINTENANCETIMES);
+          $('#pcost').val(json_equipment[0].PRICECOST);
+          $('#pwithdraw').val(json_equipment[0].PRICEPWITHDRAW);
           $('#detail').val(json_equipment[0].DETAILS);
           $('#owner').val(json_equipment[0].RECORDERNO).trigger('change');
-          $('#fileToUpload').val('');
-          $('#date').val(moment(json_equipment[0].PURCHASEDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].PURCHASEDATE).format('DD/MM/YYYY') : '');
-          $('#date_first').val(moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') : '');
-          $('#date_last').val(moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') : '');
+          $('#equipment').val(json_equipment[0].EQUIPMENT).trigger('change');
+          // $('#fileToUpload').val('');
+          $('#date').val(moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') : '');
+          // $('#date_first').val(moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') : '');
+          // $('#date_last').val(moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') : '');
 
 
-          owner_process = 1;
-          if (json_equipment[0].UPLOAD) {
-            $uploadolddb = json_equipment[0].UPLOAD;
-            $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: <a id="downloadLink" href="uploads/' + json_equipment[0].UPLOAD + '" download>Download Here</a>');
-          } else {
-            $uploadolddb = '';
-            $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: ไม่มี');
-          }
+          // owner_process = 1;
+          // if (json_equipment[0].UPLOAD) {
+          //   $uploadolddb = json_equipment[0].UPLOAD;
+          //   $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: <a id="downloadLink" href="uploads/' + json_equipment[0].UPLOAD + '" download>Download Here</a>');
+          // } else {
+          //   $uploadolddb = '';
+          //   $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: ไม่มี');
+          // }
 
         },
         error: function(xhr, status, error) {
@@ -1060,15 +1108,15 @@
     }
 
 
-       ////////////////////////////////////////////// MISCELLANEOUS /////////////////////////////////////////////////
-      //  $('html, body').animate({
-      //       scrollTop: $('#dataoffset').offset().top
-      //   }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
+    ////////////////////////////////////////////// MISCELLANEOUS /////////////////////////////////////////////////
+    //  $('html, body').animate({
+    //       scrollTop: $('#dataoffset').offset().top
+    //   }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
 
-        $('#backhis').click(function() {
-            window.location = 'main.php';
-        });
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $('#backhis').click(function() {
+      window.location = 'main.php';
+    });
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   });

@@ -292,5 +292,19 @@ var dtcolumn =
       }
     },
     {data: 'ID'},
+   ],
+   'DATA_NOTIMAINTEN': [
+    { data: 'RECNO' },
+    {  data: null,
+      render: function(data, type, row)
+      {
+        return customButtonEdit (data, type, row, 'edit','แก้ไข' );
+      }
+    },
+    {data: 'ID'},
+    {data: 'CONTNAME'},
+    {data: 'STATUS'},
+    {data: 'PRIORITY'},
+    {data: 'WARNINGDATE'},
    ]
 };

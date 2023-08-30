@@ -463,9 +463,9 @@
       });
     });
 
-    function Operation(optdata) {
-      select2_owner_list()
-    }
+    // function Operation(optdata) {
+    //   select2_owner_list()
+    // }
 
     function matchCustom_ajax(params, data) {
       if ($.trim(params.term) === '') {
@@ -525,26 +525,23 @@
         }
       },
       scrollX: true,
-      // columns:[  { data: 'RECNO' },
-      // {data: 'ID'},
-      // { data: 'RECNO' },],
-      // columns: dtcolumn['DATA_EQUIPMENT'],
-      // columnDefs: [{
-      //     className: 'noVis',
-      //     targets: [0]
-      //   },
-      //   // {
-      //   //   className:'dt-center',
-      //   //   targets: [2]
-      //   // },
-      //   // {
-      //   //   "visible": false,
-      //   //   "targets": 0
-      //   // },
-      // ],
-      // order: [
-      //   [0, 'desc'],
-      // ],
+      columns: dtcolumn['DATA_EQUIPMENT'],
+      columnDefs: [{
+          className: 'noVis',
+          targets: [0]
+        },
+        // {
+        //   className:'dt-center',
+        //   targets: [2]
+        // },
+        // {
+        //   "visible": false,
+        //   "targets": 0
+        // },
+      ],
+      order: [
+        [0, 'desc'],
+      ],
       dom: 'Bfrtip',
       buttons: [{
           extend: 'colvis',
@@ -774,6 +771,14 @@
 
     $("#idForm").submit(function(event) {
       event.preventDefault();
+      if ($('#name').val().trim() == '') {
+        Swal.fire(
+          'กรุณาเลือกชื่อใส่ชื่ออุปกรณ์',
+          'ไม่สามารถบันทึกได้',
+          'error'
+        )
+        return false
+      }
       AlertSave()
     });
 
@@ -807,7 +812,7 @@
               // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
               var newData = {
                 RECNO: save_json.autoIncrementValue, // หรือค่า recno ที่คุณต้องการกำหน
-                ID: String((new Date().getFullYear() + 543) % 100) + '/' + String(3).padStart(4, '0')
+                ID: String((new Date().getFullYear() + 543) % 100) + '/' + String(save_json.autoIncrementValue).padStart(4, '0')
               }
               table.row.add(newData).draw(); // เพิ่มแถวใหม่ใน DataTable และวาดใหม่
               // ซ่อน Modal หลังจากบันทึก
@@ -1027,7 +1032,7 @@
           $('#cust').val(json_equipment[0].CUSTNAME);
           $('#cont').val(json_equipment[0].CONTNAME);
           $('#phone').val(json_equipment[0].PHONE);
-          $('#email').val(json_equipment[0].CODE);
+          $('#email').val(json_equipment[0].EMAIL);
           $('#area').val(json_equipment[0].AREA);
           $('#docno').val(json_equipment[0].DOCINFO);
           $('#status').val(json_equipment[0].STATUS);

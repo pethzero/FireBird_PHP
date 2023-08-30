@@ -74,11 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //////////////////////////////////////////////////  CONDITION  ////////////////////////////////////////////////////
-        if ($condition == "IHD") {
-            $sqlhd = sqlmixexe($queryIdHD, $paramhd);
-        } else {
-            $sqlhd = sqlexec($queryIdHD);
-        }
+        // if ($condition == "IHD") {
+        //     $sqlhd = sqlmixexe($queryIdHD, $paramhd);
+        // } else {
+        //     $sqlhd = sqlexec($queryIdHD);
+        // }
+        $sqlhd = sqlmixexe($queryIdHD, $paramhd);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////  SQL INSERT ///////////////////////////////////////////////////
         $pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
@@ -93,7 +94,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // $itemrunnig = "66/" . sprintf("%04d", $autoIncrementValue);
         $stmt = $pdo->prepare($sqlhd);
         // $stmt->bindParam(':ID', $itemrunnig);
-        $stmt->bindParam(':UPLOAD', $uploadolddb);
+        if ($condition == "IHD") {
+            $stmt->bindParam(':UPLOAD', $uploadolddb);
+        } // else {
+        //     // $sqlhd = sqlexec($queryIdHD);
+        // }
         // $stmt->bindParam(':DOCNO', $docno);
         // if ($runnigitem == "0001") {
         //     $stmt->bindParam(':ID', $itemrunnig);
