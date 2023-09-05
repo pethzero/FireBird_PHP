@@ -54,7 +54,7 @@
   ?>
 
   <section>
-    <div class="container pt-3">
+    <div class="container-fluid pt-3">
 
       <div class="row pb-3">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
@@ -102,47 +102,27 @@
       <hr>
 
       <div class="row pb-3">
-        <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <button id='new' type="button" class="btn btn-primary">เพิ่มอุปกรณ์</button>
-        </div> -->
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
           <button id='newmodel' type="button" class="btn btn-primary">ทำการแจ้งซ่อม</button>
         </div>
       </div>
 
-      <!-- <div class="row mb-3">
-        <div class="col-sm-12 col-md-6 col-lg-6">
-          <label for="searchInput" class="form-label">ค้นหารายการรหัสลูกค้า แบบกรอง</label>
-          <div class="input-group">
-            <select class="form-control select2" id="searchInput"></select>
-            <button class="btn btn-primary" id="searchClear">ล้าง</button>
-          </div>
-        </div>
-      </div> -->
 
 
       <div class="row">
         <div class="col-12">
-          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
+          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
                 <th>ข้อมูล</th>
                 <th>เลขที่</th>
+                <th>หัวข้อเรื่อง</th>
+                <th>ชื่ออุปกรณ์</th>
                 <th>บุคคลติดต่อ</th>
                 <th>สถานะ</th>
                 <th>ความสำคัญ</th>
                 <th>วันที่นัด</th>
-
-                <!-- <th>สถานะ</th>
-                <th>บริษัท</th>
-                <th>ผู้ติดต่อ</th>
-                <th>วันที่นัดหมาย</th>
-                <th>ความสำคัญ</th>
-                <th>ราคาเบิก</th>
-                <th>ราคาจ่าย</th>
-                <th>ผู้นัดหมาย</th> -->
-
               </tr>
             </thead>
             <tbody>
@@ -171,11 +151,11 @@
   //  include("0_footer.php");
   ?>
   <form id="idForm" method="POST">
-    <div class="modal fade" id="hq" aria-labelledby="hqLabel" aria-hidden="true">
+    <div class="modal fade" id="myModal" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="hqLabel">บันทึกแจ้งซ่อม <span id='story' class="badge"></span></h5>
+            <h5 class="modal-title" id="myModalLabel">บันทึกแจ้งซ่อม <span id='story' class="badge"></span></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
@@ -183,14 +163,6 @@
             <!-- ส่วนที่เพิ่มเนื้อหาภายในกล่องโมดอลได้ที่นี่ -->
             <section>
               <div class="container-fluid">
-                <!-- <div class="row pb-3">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-                  <button id='backhis' type="button" class="btn btn-primary">กลับดูอุปกรณ์</button>
-                </div>
-              </div> -->
-
-                <!-- <h2 id="dataoffset">อุปกรณ์ <span id='story' class="badge"></span></h2>
-              <hr> -->
                 <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
@@ -198,43 +170,14 @@
                       <input type="text" class="form-control" id="name" placeholder="หัวข้อเรื่อง" maxlength="255">
                     </div>
                   </div>
-
-                  <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">ประเภท:</span>
-                      <input type="text" class="form-control" id="type" placeholder="ประเภท" maxlength="255">
-                    </div>
-                  </div> -->
-
                 </div>
 
 
-                <!-- <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">รหัส:</span>
-                      <input type="text" class="form-control" id="code" placeholder="รหัส" maxlength="50">
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">ยี่ห้อ:</span>
-                      <input type="text" class="form-control" id="model" placeholder="ยี่ห้อ" maxlength="50">
-                    </div>
-                  </div>
-                </div> -->
 
                 <div class="row">
-                  <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">บริษัท:</span>
-                      <input type="text" class="form-control" id="cust" placeholder="ซื้อกับบริษัท" maxlength="255">
-                    </div>
-                  </div> -->
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">ชื่ออุปกรณ์:</span>
-                      <!-- <input type="text" class="form-control" id="name" placeholder="ชื่ออุปกรณ์" maxlength="255"> -->
                       <select class="form-select" id="equipment">
                       </select>
                     </div>
@@ -261,37 +204,7 @@
                       <input type="text" class="form-control" id="email" placeholder="อีเมล" maxlength="150">
                     </div>
                   </div>
-
                 </div>
-
-                <!-- <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">โทรศัทพ์:</span>
-                      <input type="text" class="form-control" id="phone" placeholder="โทรศัทพ์" maxlength="150">
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">อีเมล:</span>
-                      <input type="text" class="form-control" id="email" placeholder="อีเมล" maxlength="150">
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">พื้นที่:</span>
-                      <input type="text" class="form-control" id="area" placeholder="พื้นที่" maxlength="255">
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">คู่มือ:</span>
-                      <input type="text" class="form-control" id="docno" placeholder="คู่มือ" maxlength="255">
-                    </div>
-                  </div>
-                </div> -->
 
                 <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -321,8 +234,6 @@
                     </div>
                   </div>
 
-                
-
                   <div class="row mb-3">
                     <div class="input-group">
                       <span class="input-group-text">รายละเอียด:</span>
@@ -331,9 +242,6 @@
                   </div>
 
                   <div class="row">
-
-                  
-
                     <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                       <div class="input-group mb-3">
                         <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
@@ -370,15 +278,6 @@
                     </div>
                   </div>
 
-
-
-                  <!-- <div class="row">
-                  <div class="mb-3">
-                    <label for="formFile" class="form-label">แนบเอกสาร</label>
-                    <input class="form-control" type="file" id="fileToUpload">
-                  </div>
-                </div> -->
-
                   <div class="row">
                     <div class="">
                       <label for="fileLabel" class="form-label" id="fileLabel"> </label>
@@ -407,32 +306,6 @@
 
 <script>
   $(document).ready(function() {
-
-    // // รับ element input จาก DOM
-    // var fileInput = document.getElementById('fileToUpload');
-
-    // // เพิ่ม event listener เมื่อมีการเลือกไฟล์
-    // fileInput.addEventListener('change', function(event) {
-    //   var file = event.target.files[0]; // ไฟล์ที่ถูกเลือก
-
-    //   // ตรวจสอบขนาดไฟล์ (10MB)
-    //   if (file.size > 10 * 1024 * 1024) {
-    //     alert('ไฟล์ขนาดเกิน 10MB ไม่ได้รับอนุญาต');
-    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-    //     return;
-    //   }
-
-    //   // ตรวจสอบประเภทไฟล์ (pdf, png)
-    //   var allowedTypes = ['application/pdf', 'image/jpg', 'image/png', 'image/jpeg', 'image/gif'];
-    //   if (!allowedTypes.includes(file.type)) {
-    //     alert('รูปแบบไฟล์ไม่ได้รับอนุญาต (รองรับเฉพาะ PDF , JPG, PNG , และ GIF)');
-    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-    //     return;
-    //   }
-    //   // ทำสิ่งที่ต้องการเมื่อไฟล์ผ่านการตรวจสอบ
-    //   // ตัวอย่างเช่น ส่งไฟล์ไปยังเซิร์ฟเวอร์ หรือประมวลผล
-    // });
-
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
     $(window).keydown(function(event) {
       if (event.keyCode == 13 && !$(event.target).is('textarea')) {
@@ -460,7 +333,7 @@
 
     $(function() {
       select2_owner_list();
-      select2_equipment_list()
+      select2_equipment_list();
 
       $("#date_search").datepicker({
         format: "dd/mm/yyyy",
@@ -599,7 +472,7 @@
       // recno_edit = rowData.RECNO;
       datasave = 'edit';
       search_equipment(rowData.RECNO);
-      $("#hq").modal("show");
+      $("#myModal").modal("show");
 
     });
 
@@ -647,6 +520,7 @@
 
       datasave = 'save';
       recno_owner = 0;
+      recno_nowner = '';
       recno_equipment = 0;
       $uploadolddb = '';
       $('#name').val('');
@@ -670,12 +544,12 @@
       // $('#date_first').val('');
       // $('#date_last').val('');
       // $('#fileToUpload').val('');
-      $("#hq").modal("show"); // เปิดกล่องโมดอล
+      $("#myModal").modal("show"); // เปิดกล่องโมดอล
     });
 
     // คลิกที่ปุ่ม "ยกเลิก" หรือปุ่มปิดของกล่องโมดอล
     $(".modal .btn-secondary, .modal .btn-close").click(function() {
-      $("#hq").modal("hide"); // ปิดกล่องโมดอล
+      $("#myModal").modal("hide"); // ปิดกล่องโมดอล
     });
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -696,6 +570,7 @@
           // console.log(response)
           owner_list = JSON.parse(response).data;
           data_owner_name = data_json(owner_list, 'RECNO', 'EMPNO', 'EMPNAME', 'เลือกชื่อผู้รับผิดชอบงาน...'); // กำหนดค่าใหม่ให้กับ data_owner_name
+          console.log(data_owner_name)
           createSelect2('#owner', data_owner_name, 'เลือกชื่อผู้รับผิดชอบงาน...')
           owner_process = 1;
         },
@@ -718,8 +593,8 @@
           // console.log(response)
           equipment_list = JSON.parse(response).data;
           data_equipment_name = data_json(equipment_list, 'RECNO', 'CODE', 'NAME', 'เลือกอุปกรณ์...'); // กำหนดค่าใหม่ให้กับ data_owner_name
+          console.log(data_equipment_name)
           createSelect2('#equipment', data_equipment_name, 'เลือกอุปกรณ์...')
-          // owner_process = 1;
         },
         error: function(xhr, status, error) {
           console.error(error);
@@ -731,6 +606,7 @@
       return $(selector).select2({
         data: data,
         theme: 'bootstrap-5',
+        dropdownParent: $('#myModal'),
         matcher: matchCustom_ajax,
         templateSelection: function(selected) {
           if (selected.id !== '') {
@@ -787,8 +663,8 @@
     //////////////////////////////////////////////////////////////// CHANGE //////////////////////////////////////////////////////////////// 
     var owner_process = 0;
     $("#owner").change(function() {
-      recno_owner = $(this).select2('data')[0].value;
-      if (recno_owner == -1) {
+      recno_owner = $(this).select2('data')[0].id;
+      if (recno_owner == 0) {
         recno_nowner = '';
       } else {
         recno_nowner = $(this).select2('data')[0].text;
@@ -797,7 +673,8 @@
 
 
     $("#equipment").change(function() {
-      recno_equipment= $(this).select2('data')[0].value;
+      // console.log($(this).select2('data')[0].value);
+      // recno_equipment = $(this).select2('data')[0].id;
       // if (recno_owner == -1) {
       //   recno_nowner = '';
       // } else {
@@ -840,6 +717,7 @@
           // save_json = JSON.parse(response);
           save_json = JSON.parse(response);
           console.log(save_json);
+          table.ajax.reload();
           if (save_json.status == 'success') {
             Swal.fire({
               title: "บันทึกแล้ว",
@@ -849,23 +727,24 @@
               dangerMode: true,
             }).then(function(willRedirect) {
               // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
-              var newData = {
-                RECNO: save_json.autoIncrementValue, // หรือค่า recno ที่คุณต้องการกำหน
-                ID: String((new Date().getFullYear() + 543) % 100) + '/' + String(3).padStart(4, '0'),
-                CONTNAME:'',
-                STATUS:'',
-                PRIORITY:'',
-                WARNINGDATE:''
-              }
-              table.row.add(newData).draw(); // เพิ่มแถวใหม่ใน DataTable และวาดใหม่
+              // var newData = {
+              //   RECNO: save_json.autoIncrementValue, // หรือค่า recno ที่คุณต้องการกำหน
+              //   DOCNO: String((new Date().getFullYear() + 543) % 100) + '/' + String(3).padStart(4, '0'),
+              //   NAME: '',
+              //   CONTNAME:'',
+              //   STATUS:'',
+              //   PRIORITY:'',
+              //   WARNINGDATE:''
+              // }
+              // table.row.add(newData).draw(); // เพิ่มแถวใหม่ใน DataTable และวาดใหม่
               // ซ่อน Modal หลังจากบันทึก
               if (willRedirect) {
-                $('#hq').modal('hide');
+                $('#myModal').modal('hide');
               }
             });
             setTimeout(function() {
               swal.close(); // ปิด SweetAlert
-              $('#hq').modal('hide');
+              $('#myModal').modal('hide');
             }, 2000);
             /////////////////////////////////
           } else {
@@ -900,9 +779,9 @@
           // save_json = JSON.parse(response);
           save_json = JSON.parse(response);
           console.log(save_json);
+          table.ajax.reload();
           if (save_json.status == 'success') {
             // console.log(paramhd)
-            table.ajax.reload();
             console.log('success')
 
             Swal.fire({
@@ -915,7 +794,7 @@
               // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
               if (willRedirect) {
                 // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
-                $('#hq').modal('hide');
+                $('#myModal').modal('hide');
               }
             });
             /////////////////////////////////
@@ -1004,7 +883,7 @@
         // other cases
       }
       formData.append('queryIdDT', '');
-      formData.append('condition', 'I_NOTIMAINTEN');
+      formData.append('condition', 'I_ID');
       formData.append('uploadnamedb', 'notimainten');
       formData.append('uploadolddb', $uploadolddb);
       formData.append('modify', modify);
@@ -1085,6 +964,9 @@
           $('#detail').val(json_equipment[0].DETAILS);
           $('#owner').val(json_equipment[0].RECORDERNO).trigger('change');
           $('#equipment').val(json_equipment[0].EQUIPMENT).trigger('change');
+
+          // console.log(json_equipment[0].RECORDERNO)
+          // console.log(json_equipment[0].EQUIPMENT)
           // $('#fileToUpload').val('');
           $('#date').val(moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') : '');
           // $('#date_first').val(moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') : '');

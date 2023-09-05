@@ -38,10 +38,9 @@
   ?>
 
   <div class="section">
-    <div class="container">
-      <div class="row">
-
-        <div class="col-sm-12 col-md-12 col-lg-4 pt-2">
+    <div class="container-fluid">
+      <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
           <div class="card">
             <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
             <div class="card-body">
@@ -58,7 +57,7 @@
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-4 pt-2">
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
           <div class="card">
             <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
             <div class="card-body">
@@ -72,7 +71,7 @@
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-4 pt-2">
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
           <div class="card">
             <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
             <div class="card-body">
@@ -124,40 +123,65 @@
   <div class="section">
     <div class="container pt-2">
       <h1> NEW FEATURE</h1>
-      <div class="row" id='subweb'>
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <!-- <button class="btn btn-primary" onclick="window.location='datatable_activity.php';">ดูตารางนัดหมาย</button> -->
-          <button class="btn btn-primary" onclick="window.location='datatable_activity.php';">ดูตารางนัดหมาย</button>
-        </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <button class="btn btn-primary" onclick="window.location='dataactivity.php';">สร้างตารางนัดหมาย</button>
+      <h1>ผู้ใช้งาน</h1>
+      <div class="row" >
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datatable_activity_new.php';">ดูตารางนัดหมาย</button>
         </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+        <div class="col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-4">
-          <button class="btn btn-primary" onclick="window.location='datatable_equipment.php';">ดูอุปกรณ์</button>
+        <div class="col-sm-12 col-md-12 col-lg-2">
+             <button class="btn btn-primary" onclick="window.location='datatable_equipment.php';">ดูอุปรณ์</button>
         </div>
 
-        <!-- <div class="col-sm-12 col-md-12 col-lg-3 pt-4">
-             <button class="btn btn-primary" onclick="window.location='datatable_equipment.php';">แก้ไขอุปกรณ์</button>
-        </div> -->
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-4">
+        <div class="col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='datatable_warning.php';">ดูตารางแจ้งซ่อม</button>
         </div>
 
-
-
-
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
+        </div>
       </div>
+
+      <h1>แอดมิน</h1>
+      <div class="row" >
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='dataempl.php';">พนักงงาน </button>
+        </div>
+      </div>
+
+      <!-- <div class="row" id='subweb'>
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datatable_activity_new.php';">ดูตารางนัดหมาย</button>
+        </div>
+        <div class="col-sm-12 col-md-4 col-lg-2 ">
+          <button class="btn btn-primary" onclick="window.location='dataactivity.php';">สร้างตารางนัดหมาย</button>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='dataempl.php.php';">พนักงงาน </button>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-3 pt-4">
+             <button class="btn btn-primary" onclick="window.location='datatable_empl.php.php';">แก้ไขอุปกรณ์</button>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datatable_warning.php';">ดูตารางแจ้งซ่อม</button>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
+        </div>
+
+      </div> -->
     </div>
   </div>
   <!-- <hr> -->

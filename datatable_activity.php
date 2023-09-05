@@ -47,6 +47,8 @@
     .datepicker {
       border: 1px solid black;
     } */
+
+
   </style>
 
   <?php
@@ -56,7 +58,7 @@
   include("0_fselect.php");
   ?>
   <section>
-    <div class="container pt-3">
+    <div class="container-fluid pt-3">
       <h2>ตารางนัดหมาย</h2>
 
       <div class="row">
@@ -240,6 +242,10 @@
           className:'dt-center',
           targets: [3]
         },
+        {
+          className:'dt-right',
+          targets: [8,9]
+        },
         { "orderable": false, "targets": 1 },
         {
           type: 'currency',
@@ -331,7 +337,6 @@
         startd = '';
       }
 
-      // console.log(startd)
       $('#table_datahd').DataTable().column(6).search(startd).draw();
       $('#table_datahd').DataTable().column(3).search($('#status').val()).draw();
       // if (dateValue) {
@@ -341,11 +346,6 @@
       //   qid = 'SEL_ACTIVITYHD';
       //   startd = null;
       // }
-
-
-      // // recno = 7
-      // console.log(dateValue)
-      // console.log(startd)
 
       // table.ajax.reload();
     })

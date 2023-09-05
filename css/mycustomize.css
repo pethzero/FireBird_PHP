@@ -29,6 +29,24 @@
 } */
 
 
+@media (min-width: 576px) {
+.container-layout {
+max-width: 540px;
+}
+}
+
+@media (min-width: 768px) {
+.container-layout {
+max-width: 720px;
+}
+}
+
+@media (min-width: 992px) {
+.container {
+max-width: 960px;
+}
+}
+
 
 @media (max-width: 576px) {
 	.dataTables_length {
@@ -87,4 +105,18 @@ th {
 
 .datepicker {
   border: 1px solid black;
+}
+
+
+    
+.container-fluid {
+  transition: padding 0.3s ease;  /* เพิ่มเอฟเฟกต์การเปลี่ยนขนาดอย่างนุ่มนวล */
+
+  /* ใช้ media query เพื่อปรับแต่งสไตล์เมื่อหน้าจอมีความกว้างเกิน 1000px */
+  @media (min-width: 960px) {
+    margin-left: auto;  /* จัดตำแหน่งกล่องส่วนข้างซ้าย */
+    margin-right: auto; /* จัดตำแหน่งกล่องส่วนข้างขวา */
+    padding-left: 40px; /* ปรับขอบซ้ายเล็กน้อย */
+    padding-right: 40px; /* ปรับขอบขวาเล็กน้อย */
+  }
 }

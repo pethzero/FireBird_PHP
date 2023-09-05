@@ -866,7 +866,6 @@ if ($size === 0) {
             TIMED: $('#timed').val(),
             TIMEH: $('#timeh').val(),
             TIMEM: $('#timem').val(),
-            // STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('MM/DD/YYYY'), // FIRDBIRD
             STARTD: moment($('#date').val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
             PRICECOST: $('#pcost').val(),
             PRICEPWITHDRAW: $('#pwithdraw').val(),
@@ -945,7 +944,7 @@ if ($size === 0) {
             TEL: $('#tel').val(),
             EMAIL: $('#email').val(),
             ADDR: $('#addr').val(),
-            LOCATION: recno_location,
+            LOCATION: $("input[name='location']:checked").val(),
             SUBJECT: $('#subject').val(),
             DETAIL: $('#detail').val(),
             REF: $('#ref').val(),

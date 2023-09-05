@@ -96,15 +96,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // $stmt->bindParam(':ID', $itemrunnig);
         if ($condition == "IHD") {
             $stmt->bindParam(':UPLOAD', $uploadolddb);
+        } elseif ($condition == "I_IMG") {
+            $stmt->bindParam(':IMG', $uploadolddb);
         } // else {
-        //     // $sqlhd = sqlexec($queryIdHD);
-        // }
-        // $stmt->bindParam(':DOCNO', $docno);
-        // if ($runnigitem == "0001") {
-        //     $stmt->bindParam(':ID', $itemrunnig);
-        // } else {
-        //     $stmt->bindParam(':DOCNO', $docno);
-        // }
+      
         $stmt->execute();
         /////////////
         // $stmt = true;
@@ -126,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'status' => 'success',
                 'message' => 'เพิ่มข้อมูลสำเร็จ',
                 // 'pass' => 'pass',
-                // 'sqlhd' => $sqlhd,
+                'sqlhd' => $sqlhd,
                 // 'queryIdHD' => $queryIdHD,
                 // 'queryIdDT' => $queryIdDT,
                 // 'queryIdDT' => $queryIdDT,
@@ -150,10 +145,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } catch (PDOException $e) {
         $pdo->rollBack();
-
+ 
         // กรณีเกิดข้อผิดพลาดในการเพิ่มข้อมูล
         $response = array(
             'status' => 'error',
+            'sqlhd' => $sqlhd,
             'message' => 'เกิดปัญหาในการเพิ่มข้อมูล: ' . $e->getMessage()
         );
         echo json_encode($response);

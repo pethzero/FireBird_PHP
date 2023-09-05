@@ -99,20 +99,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //////////////////////////////
 
         /////////  EXCUTE  /////////
-        $itemrunnig = substr( date("Y")+543, -2) . sprintf("%04d", $autoIncrementValue);
+        $itemrunnig = substr( date("Y")+543, -2) .'/'. sprintf("%04d", $autoIncrementValue);
         $stmt = $pdo->prepare($sqlhd);
 
         if ($condition == "IHD") {
             // $sqlhd = sqlmixexe($queryIdHD, $paramhd);
-            $stmt->bindParam(':ID', $itemrunnig);
+            $stmt->bindParam(':DOCNO', $itemrunnig);
             $stmt->bindParam(':UPLOAD', $filename_db);
-        } else {
-            $stmt->bindParam(':ID', $itemrunnig);  
-        }
-
+        } elseif ($condition == "I_ID" || $condition == 'I_DOC') {
+            $stmt->bindParam(':DOCNO', $itemrunnig);  
+        } elseif ($condition == "I_IMG") {
+            $stmt->bindParam(':IMG', $filename_db);  
+        } 
+        
         $stmt->execute();
         /////////////
-        $stmt = true;
+        // $stmt = true;
         if ($stmt) {
             /////// UPLOAD ///////
             if (isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]["error"] === UPLOAD_ERR_OK) {
@@ -153,6 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // กรณีเกิดข้อผิดพลาดในการเพิ่มข้อมูล
         $response = array(
             'status' => 'error',
+            'sqlhd' =>  $sqlhd,
             'message' => 'เกิดปัญหาในการเพิ่มข้อมูล: ' . $e->getMessage()
         );
         echo json_encode($response);

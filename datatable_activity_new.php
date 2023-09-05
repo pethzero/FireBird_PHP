@@ -47,8 +47,6 @@
     .datepicker {
       border: 1px solid black;
     }
-
- 
   </style>
 
   <?php
@@ -64,8 +62,8 @@
         </div>
       </div>
 
-      <h2>อุปกรณ์และเครื่องจักร</h2>
-      <!-- <div class="row">
+      <h2>ตารางนัดหมาย</h2>
+      <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
           <div class="input-group date mb-3" id="datepicker_search">
             <span class="input-group-append">
@@ -76,9 +74,9 @@
             <input type="text" class="form-control" id="date_search" readonly />
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
           <div class="input-group mb-3">
             <span class="input-group-text c_activity">สถานะ:</span>
@@ -92,53 +90,43 @@
             </select>
           </div>
         </div>
-      </div> -->
+      </div>
 
 
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <button id='seacrh' type="button" class="btn btn-primary">ค้นหา</button>
         </div>
-      </div> -->
+      </div>
 
       <hr>
 
       <div class="row pb-3">
-        <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <button id='new' type="button" class="btn btn-primary">เพิ่มอุปกรณ์</button>
-        </div> -->
+
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-          <button id='newmodel' type="button" class="btn btn-primary">เพิ่มอุปกรณ์และเครื่องจักร</button>
+          <button id='newmodel' type="button" class="btn btn-primary">ตารางนัดหมาย</button>
         </div>
       </div>
 
-      <!-- <div class="row mb-3">
-        <div class="col-sm-12 col-md-6 col-lg-6">
-          <label for="searchInput" class="form-label">ค้นหารายการรหัสลูกค้า แบบกรอง</label>
-          <div class="input-group">
-            <select class="form-control select2" id="searchInput"></select>
-            <button class="btn btn-primary" id="searchClear">ล้าง</button>
-          </div>
-        </div>
-      </div> -->
+
 
 
       <div class="row">
         <div class="col-12">
-          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
+          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
                 <th>ข้อมูล</th>
-                <th>เลขที่</th>
-                <!-- <th>สถานะ</th>
+                <th>เลขที่นัดหมาย</th>
+                <th>สถานะ</th>
                 <th>บริษัท</th>
                 <th>ผู้ติดต่อ</th>
                 <th>วันที่นัดหมาย</th>
                 <th>ความสำคัญ</th>
                 <th>ราคาเบิก</th>
                 <th>ราคาจ่าย</th>
-                <th>ผู้นัดหมาย</th> -->
+                <th>ผู้นัดหมาย</th>
 
               </tr>
             </thead>
@@ -172,7 +160,7 @@
       <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="myModalLabel">อุปกรณ์ <span id='story' class="badge"></span></h5>
+            <h5 class="modal-title" id="myModalLabel">บันทึกแจ้งซ่อม <span id='story' class="badge"></span></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
@@ -180,57 +168,49 @@
             <!-- ส่วนที่เพิ่มเนื้อหาภายในกล่องโมดอลได้ที่นี่ -->
             <section>
               <div class="container-fluid">
-                <!-- <div class="row pb-3">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-                  <button id='backhis' type="button" class="btn btn-primary">กลับดูอุปกรณ์</button>
-                </div>
-              </div> -->
 
-                <!-- <h2 id="dataoffset">อุปกรณ์ <span id='story' class="badge"></span></h2>
-              <hr> -->
-                <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">ชื่ออุปกรณ์:</span>
-                      <input type="text" class="form-control" id="name" placeholder="ชื่ออุปกรณ์" maxlength="255">
-
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">ประเภท:</span>
-                      <input type="text" class="form-control" id="type" placeholder="ประเภท" maxlength="255">
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">รหัส:</span>
-                      <input type="text" class="form-control" id="code" placeholder="รหัส" maxlength="50">
-                    </div>
-                  </div>
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">ยี่ห้อ:</span>
-                      <input type="text" class="form-control" id="model" placeholder="ยี่ห้อ" maxlength="50">
-                    </div>
-                  </div>
-                </div>
-
+                <h2 id="dataactivity">ตารางนัดหมาย <span id='story' class="badge"></span></h2>
+                <hr>
                 <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">บริษัท:</span>
-                      <input type="text" class="form-control" id="cust" placeholder="ซื้อกับบริษัท" maxlength="255">
+                      <select class="form-select" id="cust">
+                      </select>
+                    </div>
+
+                    <!-- <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">บริษัท:</span>
+                      <input type="text" class="form-control" id="custname" placeholder="บริษัท" readonly>
+                    </div> -->
+
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <select class="form-select cont" id="cont">
+                      </select>
+                    </div>
+
+                    <!-- <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ลูกค้า:</span>
+                      <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
+                    </div> -->
+
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ลูกค้า:</span>
+                      <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
                     </div>
                   </div>
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">บุคคล:</span>
-                      <input type="text" class="form-control" id="cont" placeholder="ติดต่อบุคคล" maxlength="255">
+                      <span class="input-group-text c_activity">อ้างอิง:</span>
+                      <input type="text" class="form-control" id="ref" placeholder="อ้างอิง">
                     </div>
                   </div>
                 </div>
@@ -239,76 +219,48 @@
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">โทรศัทพ์:</span>
-                      <input type="text" class="form-control" id="phone" placeholder="โทรศัทพ์" maxlength="150">
+                      <input type="text" class="form-control" id="phone" placeholder="โทรศัทพ์">
                     </div>
                   </div>
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">อีเมล:</span>
-                      <input type="text" class="form-control" id="email" placeholder="อีเมล" maxlength="150">
+                      <input type="text" class="form-control" id="email" placeholder="อีเมล">
                     </div>
                   </div>
-
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">พื้นที่:</span>
-                      <input type="text" class="form-control" id="area" placeholder="พื้นที่" maxlength="255">
-                    </div>
-                  </div>
-
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">คู่มือ:</span>
-                      <input type="text" class="form-control" id="docno" placeholder="คู่มือ" maxlength="255">
-                    </div>
-                  </div>
-
                 </div>
 
-                <div class="row">
+                <div class="row mb-3">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">สถานะ:</span>
-                          <select class="form-select" id="status">
-                            <option value="A" selected>ปกติ</option>
-                            <option value="P">ดูแล</option>
-                            <option value="E">เสียหาย</option>
-                          </select>
-                        </div>
-                      </div>
 
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">ความสำคัญ:</span>
-                          <select class="form-select" id="priority">
-                            <option value="0" selected>เลือก...</option>
-                            <option value="H">สูง</option>
-                            <option value="N">ปกติ</option>
-                            <option value="L">ต่ำ</option>
-                          </select>
-                        </div>
+                    <div class="input-group ">
+                      <span class="input-group-text">ตำแหน่งนัดหมาย</span>
+                      <textarea id="addr" class="form-control h_textarea" rows="3" aria-label="With textarea"></textarea>
+                    </div>
+
+                    <div class="mt-2">
+                      <label class="form-label">สถานที่ติดต่อ</label>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="location" id="location1" value='I' checked>
+                        <label class="form-check-label" for="location1">
+                          นอกสถานที่
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="location" id="locatio2" value='O'>
+                        <label class="form-check-label" for="locatio2">
+                          ภายในบริษัท
+                        </label>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">ประกัน:</span>
-                          <input type="number" class="form-control" id="warranty" min=0 placeholder="อายุประกัน" step="1">
-                        </div>
-                      </div>
 
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">การบำรุง:</span>
-                          <input type="number" class="form-control" id="maintenance" min=0 placeholder="จำนวนการบำรุง" step="1">
-                        </div>
-                      </div>
-                    </div>
+                <div class="row mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text c_activity">เรื่อง:</span>
+                    <input type="text" class="form-control" id="subject" placeholder="หัวข้อที่นัดหมาย">
                   </div>
                 </div>
 
@@ -319,66 +271,121 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group date mb-3" id="datepicker">
-                      <span class="input-group-text c_activity">วันที่ซื้อ:</span>
-                      <input type="text" class="form-control" id="date" placeholder="วันที่ซื้อสินค้า" />
-                      <span class="input-group-append">
-                        <span class="input-group-text bg-light d-block">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
 
+                <div class="row ">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group date mb-3" id="datepicker_first">
-                      <span class="input-group-text c_activity">วันที่เริ่มต้น:</span>
-                      <input type="text" class="form-control" id="date_first" placeholder="วันที่เริ่มต้น" />
-                      <span class="input-group-append">
-                        <span class="input-group-text bg-light d-block">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
+                    <div class="row">
+                      <div class="input-group mb-3">
+                        <span class="input-group-text c_activity">สถานะ:</span>
+                        <select class="form-select" id="status">
+                          <option value="A" selected>ยังไม่เริ่มดำเนินการ</option>
+                          <option value="I">อยู่ระหว่างดำเนินการ</option>
+                          <option value="W">รอดำเนินการ</option>
+                          <option value="D">ถูกเลื่อนออกไป</option>
+                          <option value="F">เสร็จสิ้น</option>
+                        </select>
+                      </div>
 
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <div class="input-group date mb-3" id="datepicker_last">
-                      <span class="input-group-text c_activity">ดูแลล่าสุด:</span>
-                      <input type="text" class="form-control" id="date_last" placeholder="วันที่ดูแลล่าสุด" />
-                      <span class="input-group-append">
-                        <span class="input-group-text bg-light d-block">
-                          <i class="fa fa-calendar"></i>
-                        </span>
-                      </span>
+                      <div class="input-group mb-3">
+                        <span class="input-group-text c_activity">ความสำคัญ:</span>
+                        <select class="form-select" id="priority">
+                          <option value="0" selected>เลือก...</option>
+                          <option value="H">สูง</option>
+                          <option value="N">ปกติ</option>
+                          <option value="L">ต่ำ</option>
+                        </select>
+                      </div>
                     </div>
+
+                    <div class="row">
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <label class="form-label mt-2">ระยะเวลา</label>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">วัน:</span>
+                          <input type="number" class="form-control" min=0 value=0 id="timed" placeholder="">
+                        </div>
+                      </div>
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">ชม:</span>
+                          <input type="number" class="form-control" min=0 value=0 id="timeh" placeholder="">
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">น.:</span>
+                          <input type="number" class="form-control" min=0 value=0 id="timem" placeholder="">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <div class="row">
+                      <div class="input-group date mb-3" id="datepicker">
+                        <span class="input-group-text c_activity">วันที่นัด:</span>
+                        <input type="text" class="form-control" id="date" />
+                        <span class="input-group-append">
+                          <span class="input-group-text bg-light d-block">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </span>
+                      </div>
+                    </div> -->
+
                   </div>
 
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
-                      <span class="input-group-text ">ผู้บันทึก:</span>
+                      <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
+                      <input id="pcost" type="number" min=0 class="form-control">
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ค่าเบิก:</span>
+                      <input id="pwithdraw" type="number" min=0 class="form-control">
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <span class="input-group-text ">เจ้าของนัดหมาย:</span>
                       <select class="form-select" id="owner">
                       </select>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group date mb-3" id="datepicker">
+                      <span class="input-group-text c_activity">วันที่นัด:</span>
+                      <input type="text" class="form-control" id="date" />
+                      <span class="input-group-append">
+                        <span class="input-group-text bg-light d-block">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group date mb-3" id="datepicker_warn">
+                      <span class="input-group-text ">วันที่แจ้งเตือน:</span>
+                      <input type="text" class="form-control" id="datewarn" />
+                      <span class="input-group-append">
+                        <span class="input-group-text bg-light d-block">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="mb-3">
-                    <label for="formFile" class="form-label">แนบเอกสาร</label>
-                    <input class="form-control" type="file" id="fileToUpload">
-                  </div>
-                </div>
 
-                <div class="row">
-                  <div class="">
-                    <label for="fileLabel" class="form-label" id="fileLabel"> </label>
-                    <!-- <label for="formFile" class="form-label">แนบเอกสาร</label>
-                    <input class="form-control" type="file" id="fileToUpload"> -->
-                  </div>
-                </div>
 
               </div>
             </section>
@@ -399,34 +406,33 @@
 <?php include("0_footerjs.php"); ?>
 <script src="js/dtcolumn.js"></script>
 
-
 <script>
   $(document).ready(function() {
 
-    // รับ element input จาก DOM
-    var fileInput = document.getElementById('fileToUpload');
+    // // รับ element input จาก DOM
+    // var fileInput = document.getElementById('fileToUpload');
 
-    // เพิ่ม event listener เมื่อมีการเลือกไฟล์
-    fileInput.addEventListener('change', function(event) {
-      var file = event.target.files[0]; // ไฟล์ที่ถูกเลือก
+    // // เพิ่ม event listener เมื่อมีการเลือกไฟล์
+    // fileInput.addEventListener('change', function(event) {
+    //   var file = event.target.files[0]; // ไฟล์ที่ถูกเลือก
 
-      // ตรวจสอบขนาดไฟล์ (10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        alert('ไฟล์ขนาดเกิน 10MB ไม่ได้รับอนุญาต');
-        fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-        return;
-      }
+    //   // ตรวจสอบขนาดไฟล์ (10MB)
+    //   if (file.size > 10 * 1024 * 1024) {
+    //     alert('ไฟล์ขนาดเกิน 10MB ไม่ได้รับอนุญาต');
+    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
+    //     return;
+    //   }
 
-      // ตรวจสอบประเภทไฟล์ (pdf, png)
-      var allowedTypes = ['application/pdf', 'image/jpg', 'image/png', 'image/jpeg', 'image/gif'];
-      if (!allowedTypes.includes(file.type)) {
-        alert('รูปแบบไฟล์ไม่ได้รับอนุญาต (รองรับเฉพาะ PDF , JPG, PNG , และ GIF)');
-        fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-        return;
-      }
-      // ทำสิ่งที่ต้องการเมื่อไฟล์ผ่านการตรวจสอบ
-      // ตัวอย่างเช่น ส่งไฟล์ไปยังเซิร์ฟเวอร์ หรือประมวลผล
-    });
+    //   // ตรวจสอบประเภทไฟล์ (pdf, png)
+    //   var allowedTypes = ['application/pdf', 'image/jpg', 'image/png', 'image/jpeg', 'image/gif'];
+    //   if (!allowedTypes.includes(file.type)) {
+    //     alert('รูปแบบไฟล์ไม่ได้รับอนุญาต (รองรับเฉพาะ PDF , JPG, PNG , และ GIF)');
+    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
+    //     return;
+    //   }
+    //   // ทำสิ่งที่ต้องการเมื่อไฟล์ผ่านการตรวจสอบ
+    //   // ตัวอย่างเช่น ส่งไฟล์ไปยังเซิร์ฟเวอร์ หรือประมวลผล
+    // });
 
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
     $(window).keydown(function(event) {
@@ -437,7 +443,7 @@
     });
 
     var recno = null;
-    var qid = 'SEL_EQUIPMENT';
+    var qid = 'SEL_ACTIVITYHD';
     var startd = null;
     var tablejsondata;
     var selectedRow = null;
@@ -446,8 +452,15 @@
 
     var recno_owner = 0;
     var recno_nowner = "";
-    var recno_edit;
 
+    var recno_cust = 0;
+    var recno_namecust = "";
+
+    var recno_cont = 0;
+    var recno_namecont = "";
+
+    var recno_edit;
+    var recno_equipment = 0;
     var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
     var encodedURL_Insert = 'ajax/ajaxinsertnew.php';
     var encodedURL_Update = 'ajax/ajaxupdatenew.php';
@@ -455,19 +468,37 @@
 
     $(function() {
       select2_owner_list();
+      select2_cust_list();
+      // select2_equipment_list()
 
+      var currentDate = new Date();
+      currentDate.setYear(currentDate.getFullYear() + 543);
+      // Birth date
+      // $("#date-of-birth").datepicker({
+      //   changeMonth: true,
+      //   changeYear: true,
+      //   yearRange: '+443:+543',
+      //   dateFormat: 'dd/mm/yy',
+      //   // onSelect: function(date) {
+      //   //   $("#edit-date-of-birth").addClass('filled');
+      //   // }
+      // });
 
       $("#date_search").datepicker({
         format: "dd/mm/yyyy",
+        language: "th",
         clearBtn: true,
         todayHighlight: true,
         autoclose: true
       });
+
+      // $('#date_search').datepicker("setDate",currentDate );
+      // $('#date_search').val(moment(new Date()).format('DD/MM/YYYY'));
+
+
+
     });
 
-    // function Operation(optdata) {
-    //   select2_owner_list()
-    // }
 
     function matchCustom_ajax(params, data) {
       if ($.trim(params.term) === '') {
@@ -521,25 +552,41 @@
           d.sqlprotect = encodeData;
         },
         dataSrc: function(json) {
-          // console.log(json)
           tablejsondata = json.data;
           return json.data;
         }
       },
       scrollX: true,
-      columns: dtcolumn['DATA_EQUIPMENT'],
+      columns: dtcolumn['DATA_ACTIVITYHD'],
       columnDefs: [{
           className: 'noVis',
           targets: [0]
         },
-        // {
-        //   className:'dt-center',
-        //   targets: [2]
-        // },
-        // {
-        //   "visible": false,
-        //   "targets": 0
-        // },
+        {
+          className: 'dt-center',
+          targets: [3]
+        },
+        {
+          className: 'dt-right',
+          targets: [8, 9]
+        },
+        {
+          "orderable": false,
+          "targets": 1
+        },
+        {
+          type: 'currency',
+          targets: 8
+        },
+        {
+          "visible": false,
+          "targets": 0
+        },
+        // { type: 'de_date', targets: 6 }
+        {
+          type: 'th_date',
+          targets: 6
+        }
       ],
       order: [
         [0, 'desc'],
@@ -571,7 +618,16 @@
 
       },
       drawCallback: function(settings) {
+        var api = this.api();
+        api.rows().every(function(rowIdx, tableLoop, rowLoop) {
+          var data = this.data();
+          var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
 
+          if (variableT === 'T') {
+            var row = api.row(rowIdx).node();
+            $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
+          }
+        });
       },
       rowCallback: function(row, data) {
         $(row).on('click', function() {
@@ -596,7 +652,7 @@
       $('#story').removeClass('bg-secondary').addClass('bg-danger').text('แก้ไข');
       // recno_edit = rowData.RECNO;
       datasave = 'edit';
-      search_equipment(rowData.RECNO);
+      search_datalist(rowData.RECNO);
       $("#myModal").modal("show");
 
     });
@@ -624,49 +680,86 @@
       autoclose: true
     });
 
+    $("#datepicker_warn").datepicker({
+      format: "dd/mm/yyyy",
+      clearBtn: true,
+      todayHighlight: true,
+      autoclose: true
+    });
+
 
 
     $('#seacrh').click(function() {
-      // var dateValue = $('#date_search').val();
-      // $('#date_search').val('');
-      // $('#date').val('');
-      // $('#date_first').val('');
-      // $('#date_last').val('');
+      var dateValue = $('#date_search').val();
+
+      if (dateValue) {
+        startd = moment($('#date_search').val(), 'DD/MM/YYYY').format('DD/MM/YYYY')
+      } else {
+        startd = '';
+      }
+
+      console.log(startd)
+
+
+      $('#table_datahd').DataTable().column(6).search(startd).draw();
+      $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
     })
 
+    //     const currentDate = new Date();
+    // const newYear = currentDate.getFullYear() + 543;
+    // console.log(currentDate);
+    // console.log(`New Year: ${newYear}`);
 
-
-    $('#date_search').val(moment(new Date()).format('DD/MM/YYYY'));
+    // console.log(new Date())
 
     $("#newmodel").click(function() {
       $('#ok').removeClass('btn-danger').addClass('btn-primary').text('บันทึก');
       $('#story').removeClass('bg-danger').addClass('bg-secondary').text('เพิ่ม');
       // <button id="ok" type="submit" class="btn btn-primary">บันทึก</button>
 
+
+
       datasave = 'save';
       recno_owner = 0;
       recno_nowner = '';
+      recno_equipment = 0;
+
+      recno_cust = 0;
+      recno_namecust = "";
+      recno_cont = 0;
+      recno_namecont = "";
+
       $uploadolddb = '';
+
+      $('#custname').val('');
       $('#name').val('');
-      $('#type').val('');
-      $('#code').val('');
-      $('#model').val('');
-      $('#cust').val('');
-      $('#cont').val('');
+      $('#contname').val('');
+
+      $('#addr').val('')
+      $('#ref').val('')
       $('#phone').val('');
       $('#email').val('');
-      $('#area').val('');
-      $('#docno').val('');
+      $('#subject').val('')
+
+      $('#timed').val(0)
+      $('#timeh').val(0)
+      $('#timem').val(0)
+
       $('#status').val('A');
       $('#priority').val('0');
-      $('#warranty').val(0);
-      $('#maintenance').val(0);
+      $('#pcost').val(0);
+      $('#pwithdraw').val(0);
       $('#detail').val('');
-      $('#owner').val(0).trigger('change');
       $('#date').val('');
-      $('#date_first').val('');
-      $('#date_last').val('');
-      $('#fileToUpload').val('');
+      $('#datewarn').val('');
+      // $('#custname').val('');
+      process_select_cust = 0;
+      search_cont = 0;
+      $('#cust').val(0).trigger('change');
+      $('#owner').val(0).trigger('change');
+      $('#cont').empty().trigger("change");
+
+
       $("#myModal").modal("show"); // เปิดกล่องโมดอล
     });
 
@@ -690,10 +783,9 @@
         },
         dataSrc: '',
         success: function(response) {
-          // console.log(response)
           owner_list = JSON.parse(response).data;
-          data_owner_name = data_json(owner_list, 'RECNO', 'EMPNO', 'EMPNAME'); // กำหนดค่าใหม่ให้กับ data_owner_name
-          createSelect_owner('#owner', data_owner_name)
+          data_owner_name = data_json(owner_list, 'RECNO', 'EMPNO', 'EMPNAME', 'เลือกชื่อผู้รับผิดชอบงาน...'); // กำหนดค่าใหม่ให้กับ data_owner_name
+          createSelect2('#owner', data_owner_name, 'เลือกชื่อผู้รับผิดชอบงาน...')
           owner_process = 1;
         },
         error: function(xhr, status, error) {
@@ -702,15 +794,82 @@
       });
     }
 
-    function createSelect_owner(selector, data) {
+    function select2_cust_list() {
+      $.ajax({
+        url: encodedURL_Select,
+        data: {
+          queryId: 'CUST_LIST',
+          params: null,
+          condition: 'mix',
+        },
+        dataSrc: '',
+        success: function(response) {
+          cust_list = JSON.parse(response).data;
+          data_cust_name = data_json(cust_list, 'RECNO', 'CODE', 'NAME', 'เลือกชื่อบริษัท...'); // กำหนดค่าใหม่ให้กับ data_owner_name
+          createSelect2('#cust', data_cust_name, 'เลือกชื่อบริษัท...')
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+
+    var process_select_cust;
+    function select2_contact_list(recno_data) {
+      $.ajax({
+        // url: 'ajax_data_select.php',
+        url: encodedURL_Select,
+        data: {
+          queryId: 'CUSTCONT_LIST',
+          params: {
+            CUST: recno_data
+          },
+          condition: 'mix',
+        },
+        dataSrc: '',
+        success: function(response) {
+          cont_list = JSON.parse(response).data;
+          // console.log('start contact')
+          // process_select_cust = 0;
+          // $('#cont').empty().trigger("change");
+          if (cont_list.length > 0)
+          {
+            process_select_cust = 1
+          }
+          data_cont_name = data_json(cont_list, 'RECNO', 'RECNO', 'CONTNAME', 'เลือกชื่อลูกค้า...'); // กำหนดค่าใหม่ให้กับ data_owner_name
+          createSelect2('#cont', data_cont_name, 'เลือกชื่อลูกค้า...')
+          // console.log(recno_cont)
+          // console.log(process_select_cust)
+           if (search_cont === 1)
+          {
+            $('#cont').val(recno_cont).trigger('change');
+            search_cont = 0;
+          }
+          // if (search_cont == 0)
+          // {
+          //   $('#cont').val(0).trigger('change');
+          // }else{
+          //   console.log('555')
+          //   $('#cont').val(recno_cont).trigger('change');
+          // }
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+        }
+      });
+    }
+
+    ///////////////////////////////
+    function createSelect2(selector, data, gettextselect) {
       return $(selector).select2({
         data: data,
         theme: 'bootstrap-5',
+        dropdownParent: $('#myModal'),
         matcher: matchCustom_ajax,
         templateSelection: function(selected) {
           if (selected.id !== '') {
             if (selected.id == 0) {
-              return 'เลือกชื่อผู้รับผิดชอบงาน...';
+              return gettextselect;
             }
             return selected.text;
           }
@@ -723,7 +882,7 @@
           var $result = $('<span></span>');
           $result.text("รหัส" + result.title + ":" + result.text);
           if (result.id == 0) {
-            $result.text('เลือกชื่อผู้รับผิดชอบงาน...');
+            $result.text(gettextselect);
             return $result;
           } else {
             return $result;
@@ -732,10 +891,10 @@
       });
     }
 
-    function data_json(data_list, recno_key, code_key, name_key) {
+    function data_json(data_list, recno_key, code_key, name_key, gettextselect) {
       var target_list = [{
         "id": 0,
-        "text": "เลือกชื่อผู้รับผิดชอบงาน...",
+        "text": gettextselect,
         "value": "0",
         "title": ""
       }];
@@ -744,6 +903,9 @@
         var select2_recno = data_list[i][recno_key];
         var select2_code = data_list[i][code_key];
         var select2_name = data_list[i][name_key];
+        if (select2_code === null) {
+          select2_code = '';
+        }
         if (select2_name != '') {
           if (!existingCodes[select2_code]) {
             target_list.push({
@@ -770,13 +932,82 @@
       }
     });
 
+
+    $("#cust").change(function() {
+      recno_cust = $(this).select2('data')[0].value;
+      if (recno_cust == 0) {
+        recno_namecust = '';
+        // $('#custname').val('');
+      } else {
+        recno_namecust = $(this).select2('data')[0].text;
+        // $('#custname').val($(this).select2('data')[0].text);
+        if (datasave == 'save')
+        {
+          // $('#cont').empty().trigger("change");
+          process_select_cust = 0;
+          $('#cont').empty().trigger("change");
+          select2_contact_list($(this).select2('data')[0].value)
+        }
+        else{
+          process_select_cust = 0;
+          if(frist_search_cont == 1)
+          {
+            frist_search_cont = 0;
+            process_select_cust = 0;
+            search_cont = 1;
+            $('#cont').empty().trigger("change");
+            select2_contact_list(recno_cust)
+          }
+          else{
+            $('#cont').empty().trigger("change");
+            select2_contact_list($(this).select2('data')[0].value)
+          }
+         
+        }
+      }
+
+      // if (datasave == 'save')
+      // {
+      //   $('#cont').empty().trigger("change");
+      //   select2_contact_list($(this).select2('data')[0].value)
+      // }
+
+
+    });
+
+    $("#cont").change(function() {
+      if (process_select_cust == 1) {
+        // console.log('change contact')
+        recno_cont = $(this).select2('data')[0].value;
+        if (recno_cont == 0) {
+          recno_namecont = '';
+        } else {
+          if(frist_name_cont == 1)
+          {
+            // recno_namecont = $(this).select2('data')[0].text;
+            $('#contname').val(recno_namecont)
+            frist_name_cont = 0;
+          }
+          else{
+            recno_namecont = $(this).select2('data')[0].text;
+            $('#contname').val(recno_namecont)
+          }
+       
+        }
+      }
+      // else{
+      //    console.log('init')
+      // }
+    });
+
+
     //////////////////////////////////////////////////////////////// SAVE ///////////////////////////////////////////////////////////////
 
     $("#idForm").submit(function(event) {
       event.preventDefault();
-      if ($('#name').val().trim() == '') {
+      if (recno_cust == 0) {
         Swal.fire(
-          'กรุณาเลือกชื่อใส่ชื่ออุปกรณ์',
+          'กรุณาเลือกชื่อบริษัท',
           'ไม่สามารถบันทึกได้',
           'error'
         )
@@ -800,10 +1031,7 @@
         beforeSend: function() {},
         complete: function() {},
         success: function(response) {
-          // console.log(response);
-          // save_json = JSON.parse(response);
           save_json = JSON.parse(response);
-          // console.log(save_json);
           table.ajax.reload();
           if (save_json.status == 'success') {
             Swal.fire({
@@ -813,13 +1041,6 @@
               buttons: ["OK"],
               dangerMode: true,
             }).then(function(willRedirect) {
-              // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
-              // var newData = {
-              //   RECNO: save_json.autoIncrementValue, // หรือค่า recno ที่คุณต้องการกำหน
-              //   DOCNO: String((new Date().getFullYear() + 543) % 100) + '/' + String(save_json.autoIncrementValue).padStart(4, '0')
-              // }
-              // table.row.add(newData).draw(); // เพิ่มแถวใหม่ใน DataTable และวาดใหม่
-              // ซ่อน Modal หลังจากบันทึก
               if (willRedirect) {
                 $('#myModal').modal('hide');
               }
@@ -858,9 +1079,7 @@
         complete: function() {},
         success: function(response) {
           save_json = JSON.parse(response);
-          // console.log(save_json);
           if (save_json.status == 'success') {
-            // console.log(paramhd)
             table.ajax.reload();
             Swal.fire({
               title: "บันทึกแล้ว",
@@ -899,69 +1118,62 @@
       formData.append('name', $('#name').val());
 
       /// upload ///
-      var selectedFile = $('#fileToUpload')[0].files[0];
-      if (selectedFile) {
-        formData.append('fileToUpload', selectedFile);
-        modify = 'T';
-      } else {
-        modify = 'F';
-      }
-      // else
-      // {
-      // }
+
+      formData.append('fileToUpload', '');
+      $uploadolddb = '';
+
       /////////////
 
-      var purchaseValue = $('#date').val();
-      var firstUsageValue = $('#date_first').val();
-      var lastUsageValue = $('#date_last').val();
-
+      var dateValue = $('#date').val();
+      
+      console.log()
       /// id ,param ///
       paramhd = {
         RECNO: recno_edit,
-        // IDEDIT: '5555',
-        NAME: $('#name').val(),
-        TYPE: $('#type').val(),
-        CODE: $('#code').val(),
-        MODEL: $('#model').val(),
-        CUSTNAME: $('#cust').val(),
-        CONTNAME: $('#cont').val(),
-        PHONE: $('#phone').val(),
-        EMAIL: $('#email').val(),
-        AREA: $('#area').val(),
-        DOCINFO: $('#docno').val(),
         STATUS: $('#status').val(),
+        CUSTNAME: recno_namecust,
+        // CUSTNAME: $('#custname').val(),
+        CONTNAME: $('#contname').val(),
+        CUST: recno_cust,
+        CONT: recno_cont,
+        TEL: $('#phone').val(),
+        EMAIL: $('#email').val(),
+        ADDR: $('#addr').val(),
+        LOCATION: $("input[name='location']:checked").val(),
+        SUBJECT: $('#subject').val(),
+        DETAIL: $('#detail').val(),
+        REF: $('#ref').val(),
         PRIORITY: $('#priority').val(),
-        WARRANTY: $('#warranty').val(),
-        MAINTENANCETIMES: $('#maintenance').val(),
-        BROKENTIMES: '',
-        DETAILS: $('#detail').val(),
-        PURCHASEDATE: purchaseValue ? moment(purchaseValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        FIRSTUSAGE: firstUsageValue ? moment(firstUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        LASTUSAGE: lastUsageValue ? moment(lastUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        // FIRSTUSAGE: moment($('#date_first').val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
-        RECORDERNO: recno_owner,
-        RECORDERNAME: recno_nowner,
+        TIMED: $('#timed').val(),
+        TIMEH: $('#timeh').val(),
+        TIMEM: $('#timem').val(),
+        STARTD: dateValue ? moment(dateValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+        WARND:  $('#datewarn').val() ? moment( $('#datewarn').val(), 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+        PRICECOST: $('#pcost').val(),
+        PRICEPWITHDRAW: $('#pwithdraw').val(),
+        OWNERNAMESTR: recno_nowner,
+        OWNERNUM: recno_owner,
+
       };
-      // console.log(paramhd);
       // var paramhd = null;
       // เพิ่มอาร์เรย์ paramhd เข้าไปใน FormData และแปลงเป็น JSON ก่อน
 
       if (conditionsformdata == "save") {
         // ประมวลผลเพิ่มข้อมูล
         // process to insert data
-        formData.append('queryIdHD', 'EQUIPMENT');
+        formData.append('queryIdHD', 'IND_ACTIVITYHD');
 
       } else if (conditionsformdata == "delete") {
         // ประมวลผลลบข้อมูล
         // process to delete data
       } else {
-        formData.append('queryIdHD', 'UPD_EQUIPMENT');
+        formData.append('queryIdHD', 'UPD_ACTIVITYHD');
         // กรณีอื่น ๆ
         // other cases
       }
       formData.append('queryIdDT', '');
-      formData.append('condition', 'IHD');
-      formData.append('uploadnamedb', 'equipment');
+      formData.append('condition', 'I_DOC');
+      formData.append('uploadnamedb', 'activityhd');
       formData.append('uploadolddb', $uploadolddb);
       formData.append('modify', modify);
 
@@ -990,7 +1202,6 @@
         if (result.isConfirmed) {
           if (datasave == "save") {
             SaveData()
-            // console.log('save')
           } else {
             UpdateData()
           }
@@ -1008,53 +1219,59 @@
       })
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function search_equipment(data_equipment) {
+    var search_cont = 0;
+    var frist_search_cont = 0;
+    var frist_name_cont = 0;
+    function search_datalist(search_senddata) {
       $.ajax({
         url: encodedURL_Select,
         data: {
-          queryId: 'EDSEL_EQUIPMENT',
+          queryId: 'EDSEL_ACTIVITYHD',
           params: {
-            RECNO: data_equipment
+            RECNO: search_senddata
           },
           condition: 'mix',
         },
         dataSrc: '',
         success: function(response) {
-          // console.log(response)
-          json_equipment = JSON.parse(response).data;
-          // console.log(json_equipment)
-          // console.log(json_equipment[0].NAME)
-          recno_edit = json_equipment[0].RECNO;
-          $('#name').val(json_equipment[0].NAME);
-          $('#type').val(json_equipment[0].TYPE);
-          $('#code').val(json_equipment[0].CODE);
-          $('#model').val(json_equipment[0].MODEL);
-          $('#cust').val(json_equipment[0].CUSTNAME);
-          $('#cont').val(json_equipment[0].CONTNAME);
-          $('#phone').val(json_equipment[0].PHONE);
-          $('#email').val(json_equipment[0].EMAIL);
-          $('#area').val(json_equipment[0].AREA);
-          $('#docno').val(json_equipment[0].DOCINFO);
-          $('#status').val(json_equipment[0].STATUS);
-          $('#priority').val(json_equipment[0].PRIORITY);
-          $('#warranty').val(json_equipment[0].WARRANTY);
-          $('#maintenance').val(json_equipment[0].MAINTENANCETIMES);
-          $('#detail').val(json_equipment[0].DETAILS);
-          $('#owner').val(json_equipment[0].RECORDERNO).trigger('change');
-          $('#fileToUpload').val('');
-          $('#date').val(moment(json_equipment[0].PURCHASEDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].PURCHASEDATE).format('DD/MM/YYYY') : '');
-          $('#date_first').val(moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') : '');
-          $('#date_last').val(moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') : '');
+          json_searchdatalist = JSON.parse(response).data;
+
+          recno_edit = json_searchdatalist[0].RECNO;
+          recno_cust = json_searchdatalist[0].CUST;
+          recno_cont = json_searchdatalist[0].CONT;
+          recno_owner = json_searchdatalist[0].OWNER;
+          recno_namecont = json_searchdatalist[0].CONTNAME;
+          recno_nowner = json_searchdatalist[0].OWNERNAME;
+
+          frist_search_cont = 1;
+          frist_name_cont = 1;
+          $('#cust').val(json_searchdatalist[0].CUST).trigger('change');
+      
+          // $('#cont').empty().trigger("change");
+          // process_select_cust = 0;
+          // search_cont = 1
+          // select2_contact_list(recno_cust)
 
 
-          owner_process = 1;
-          if (json_equipment[0].UPLOAD) {
-            $uploadolddb = json_equipment[0].UPLOAD;
-            $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: <a id="downloadLink" href="uploads/' + json_equipment[0].UPLOAD + '" download>Download Here</a>');
-          } else {
-            $uploadolddb = '';
-            $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: ไม่มี');
-          }
+          $('#contname').val(json_searchdatalist[0].CONTNAME)
+          $('#phone').val(json_searchdatalist[0].TEL)
+          $('#email').val(json_searchdatalist[0].EMAIL)
+          $('#addr').val(json_searchdatalist[0].ADDR)
+          $('#subject').val(json_searchdatalist[0].SUBJECT)
+          $('#detail').val(json_searchdatalist[0].DETAIL)
+          $('#ref').val(json_searchdatalist[0].REF)
+          $('#status').val(json_searchdatalist[0].STATUS)
+          $('#priority').val(json_searchdatalist[0].PRIORITY)
+          $('#timed').val(json_searchdatalist[0].TIMED)
+          $('#timeh').val(json_searchdatalist[0].TIMEH)
+          $('#timem').val(json_searchdatalist[0].TIMEM)
+          $('#pcost').val(json_searchdatalist[0].PRICECOST)
+          $('#pwithdraw').val(json_searchdatalist[0].PRICEPWITHDRAW)
+          $('input[name="location"]').filter('[value="' + json_searchdatalist[0].LOCATION + '"]').prop('checked', true);
+
+          $('#date').val(moment(json_searchdatalist[0].STARTD).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_searchdatalist[0].STARTD).format('DD/MM/YYYY') : '');
+          $('#datewarn').val(moment(json_searchdatalist[0].WARND).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_searchdatalist[0].WARND).format('DD/MM/YYYY') : '');
+          // $('#date').val(moment(new Date(json_searchdatalist[0].STARTD)).format('DD/MM/YYYY'));
 
         },
         error: function(xhr, status, error) {
@@ -1064,15 +1281,15 @@
     }
 
 
-       ////////////////////////////////////////////// MISCELLANEOUS /////////////////////////////////////////////////
-      //  $('html, body').animate({
-      //       scrollTop: $('#dataoffset').offset().top
-      //   }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
+    ////////////////////////////////////////////// MISCELLANEOUS /////////////////////////////////////////////////
+    //  $('html, body').animate({
+    //       scrollTop: $('#dataoffset').offset().top
+    //   }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
 
-        $('#backhis').click(function() {
-            window.location = 'main.php';
-        });
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $('#backhis').click(function() {
+      window.location = 'main.php';
+    });
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   });
