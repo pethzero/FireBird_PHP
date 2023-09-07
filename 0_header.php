@@ -23,8 +23,8 @@
           </a>
           <ul class="dropdown-menu">
             <!-- <li><a class="dropdown-item" href="dataqoud.php">ใบเสนอราคา</a></li> -->
-            <li><a class="dropdown-item" href="datatable_activity.php">ตารางหนัดหมาย</a></li>
-            <li><a class="dropdown-item" href="dataactivity.php">เพิ่มตารางหนัดหมาย</a></li>
+            <li><a class="dropdown-item" href="datatable_activity_new.php">ตารางหนัดหมาย</a></li>
+            <!-- <li><a class="dropdown-item" href="dataactivity.php">เพิ่มตารางหนัดหมาย</a></li> -->
             <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li> -->
@@ -55,8 +55,23 @@
           </a>
           <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="dataequipment.php">เพิ่มอุปกรณ์</a></li> 
+          <li><a class="dropdown-item" href="dataempl.php">พนักงงาน</a></li> 
           </ul>
         </li>
+
+        
+        <li class="nav-item ">
+          <a class="nav-link text-white" href="miscellaneous.php">รายงาน</a>
+       </li>
+
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+           รายงาน
+          </a>
+          <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="miscellaneous.php">รายงาน</a></li> 
+          </ul>
+        </li> -->
 
         <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

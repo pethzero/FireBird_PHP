@@ -69,7 +69,7 @@
       labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5','TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10'],
       datasets: [{
         label: 'Weekly Sales',
-        data: [65, 59, -2000, 81, 56, 55, 40,95,30,200000],
+        data: [65, 59, 150, 81, 56, 55, 40,95,30,200],
         backgroundColor: [
           'rgba(255, 26, 104, 0.2)',
           'rgba(54, 162, 235, 0.2)',

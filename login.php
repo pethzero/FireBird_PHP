@@ -77,7 +77,8 @@ if (isset($_SESSION["RECNO"]))
 			// ตัวอย่าง: แสดง SweetAlert เมื่อคลิกที่ลิงก์
 			Swal.fire({
 				title: 'ลืมรหัสผ่าน',
-				text: 'ตอนนี้ กดได้ เฉยๆ ยังไม่มีอะไรหลอก',
+				html: '<img src="doc/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์ลืม</h4>',
+				// text: 'ตอนนี้ กดได้ เฉยๆ ยังไม่มีอะไรหลอก',
 				icon: 'info',
 				confirmButtonText: 'OK'
 			});

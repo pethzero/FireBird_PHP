@@ -85,11 +85,11 @@
 
 
 
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
             <button id='seacrh' type="button" class="btn btn-primary">ค้นหา</button>
           </div>
-        </div>
+        </div> -->
 
         <hr>
 
@@ -114,6 +114,7 @@
                   <th>ชื่อ</th>
                   <th>ชื่อเล่น</th>
                   <th>ระดับ</th>
+                  <th width='3%'>ลบ</th>
                   <!-- <th>ผู้ติดต่อ</th>
                   <th>วันที่นัดหมาย</th>
                   <th>ความสำคัญ</th>
@@ -165,45 +166,45 @@
                   <hr>
                   <div class="row">
 
-                      <div class="input-group mb-3">
-                        <span class="input-group-text ">รหัสประจำตัว:</span>
-                        <input type="text" class="form-control" id="code" placeholder="กรอกรหัสประจำตัว" maxlength="16">
-                      </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text ">รหัสประจำตัว:</span>
+                      <input type="text" class="form-control" id="code" placeholder="กรอกรหัสประจำตัว" maxlength="16">
+                    </div>
 
-                      <div class="input-group mb-3">
-                        <span class="input-group-text c_activity">ระดับ:</span>
-                        <select class="form-select" id="userlevel">
-                          <option value="F" selected>ผู้ใช้งาน</option>
-                          <option value="T">แอดมิน</option>
-                          <!-- <option value="N">ปกติ</option>
-                          <option value="L">ต่ำ</option> -->
-                        </select>
-                      </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ระดับ:</span>
+                      <select class="form-select" id="userlevel">
+                        <option value="F" selected>ผู้ใช้งาน</option>
+                        <option value="T">แอดมิน</option>
+                        <?php
+                        // ตรวจสอบค่าของ SESSION USERLEVEL และแสดง <option> เพิ่มเติม
+                        if ($_SESSION['USERLEVEL'] == 'S') {
+                          echo '<option value="S">super admin</option>';
+                        }
+                        ?>
+                      </select>
+                    </div>
 
-                      <div class="input-group mb-3">
-                        <span class="input-group-text c_activity">ชื่อจริง:</span>
-                        <input type="text" class="form-control" id="namereal" placeholder="ชื่อจริง" maxlength="80">
-                      </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ชื่อจริง:</span>
+                      <input type="text" class="form-control" id="namereal" placeholder="ชื่อจริง" maxlength="80">
+                    </div>
 
-                      <div class="input-group mb-3">
-                        <span class="input-group-text c_activity">ชื่อเล่น:</span>
-                        <input type="text" class="form-control" id="namenick" placeholder="ชื่อเล่น" maxlength="80">
-                      </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ชื่อเล่น:</span>
+                      <input type="text" class="form-control" id="namenick" placeholder="ชื่อเล่น" maxlength="80">
+                    </div>
 
-                      <div class="input-group mb-3">
-                        <span class="input-group-text c_activity">Login:</span>
-                        <input type="text" class="form-control" id="login" placeholder="ชื่อล๊อคอิน" maxlength="128">
-                      </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">Login:</span>
+                      <input type="text" class="form-control" id="login" placeholder="ชื่อล๊อคอิน" maxlength="128">
+                    </div>
 
-                      <div class="input-group mb-3">
-                        <span class="input-group-text c_activity">Password:</span>
-                        <input type="password" class="form-control" id="password" placeholder="รหัสผ่าน" maxlength="128">
-                      </div>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">Password:</span>
+                      <input type="password" class="form-control" id="password" placeholder="รหัสผ่าน" maxlength="128">
+                    </div>
                   </div>
-
-
-
-
                 </div>
               </section>
             </div>
@@ -222,10 +223,9 @@
   </body>
   <?php include("0_footerjs.php"); ?>
   <script>
-    $(document).ready(function()
-    {
+    $(document).ready(function() {
       var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
-      
+      console.log(userlevel)
       // // รับ element input จาก DOM
       // var fileInput = document.getElementById('fileToUpload');
 
@@ -281,14 +281,14 @@
       var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
       var encodedURL_Insert = 'ajax/ajaxinsertnew.php';
       var encodedURL_Update = 'ajax/ajaxupdatenew.php';
-
+      var encodedURL_Delete = 'ajax/ajaxdelete.php';
 
       $(function() {
         // select2_owner_list();
         // select2_cust_list();
         // select2_equipment_list()
         // console.log(userlevel)
-        if (userlevel == "T"){
+        if (userlevel == "T") {
           console.log('admin')
         }
 
@@ -327,12 +327,21 @@
       //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
       console.log(userlevel)
       const customModelRender = (row, istatus) => {
-        if (istatus == "T") {
+        if (istatus == "T" || istatus == "S") {
           return `<div class="button-container">` + `<button class="btn btn-primary btn-sm view" id="view_table_modal_${row['RECNO']}"><i class="far fa-eye"></i></button>` + `<button class="btn btn-danger btn-sm edit" id="edit_table_modal_${row['RECNO']}"><i class="far fa-edit"></i></button>` + `</div>`;
         } else {
           return `<div class="button-container">` + `<button class="btn btn-primary btn-sm view" id="view_table_modal_${row['RECNO']}"><i class="far fa-eye"></i></button>` + `</div>`;
         }
       };
+
+      const customModelDelete = (row, istatus) => {
+        if (istatus == "T" || istatus == "S") {
+          return `<div class="button-container">` + `<button class="btn btn-danger btn-sm trash" id="trash_table_modal_${row['RECNO']}"><i class="fa fa-trash"></i></button>` + `</div>`;
+        } else {
+          return `<div class="button-container">` + `<button class="btn btn-danger btn-sm trash""><i class="fa fa-trash"></i></button>` + `</div>`;
+        }
+      };
+
 
 
       // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
@@ -369,9 +378,7 @@
           {
             data: null,
             render: function(data, type, row) {
-              // return `<div class="button-container">` + `<button class="btn btn-primary btn-sm view" id="view_table_modal_${row['RECNO']}"><i class="far fa-eye"></i></button>` + `<button class="btn btn-danger btn-sm edit" id="edit_table_modal_${row['RECNO']}"><i class="far fa-edit"></i></button>` + `</div>`;
-              // return `<button class="btn btn-primary btn-sm edt" data-bs-toggle="modal" data-bs-target="#edt" data-bs-row-id="${row['RECNO']}"><i class="fa fa-edit"></i></button>`;
-              return customModelRender(row,userlevel);
+              return customModelRender(row, userlevel);
             }
           },
           {
@@ -386,40 +393,34 @@
           {
             data: 'USERLEVEL'
           },
+          {
+            data: null,
+            render: function(data, type, row) {
+              return customModelDelete(row, userlevel);
+            }
+          },
         ],
-        // columnDefs: [{
-        //     className: 'noVis',
-        //     targets: [0]
-        //   },
-        //   {
-        //     className: 'dt-center',
-        //     targets: [3]
-        //   },
-        //   {
-        //     className: 'dt-right',
-        //     targets: [8, 9]
-        //   },
-        //   {
-        //     "orderable": false,
-        //     "targets": 1
-        //   },
-        //   {
-        //     type: 'currency',
-        //     targets: 8
-        //   },
-        //   {
-        //     "visible": false,
-        //     "targets": 0
-        //   },
-        //   // { type: 'de_date', targets: 6 }
-        //   {
-        //     type: 'th_date',
-        //     targets: 6
-        //   }
-        // ],
-        // order: [
-        //   [0, 'desc'],
-        // ],
+        columnDefs: [{
+            className: 'noVis',
+            targets: [0]
+          },
+          {
+            "visible": false,
+            "targets": 0
+          },
+          {
+            "orderable": false,
+            "targets": 1
+          },
+          // {
+          //   className: 'dt-center',
+          //   targets: [3]
+          // }
+        ],
+        order: [
+          // [2, 'desc'],
+          [2, 'asc'],
+        ],
         dom: 'Bfrtip',
         buttons: [{
             extend: 'colvis',
@@ -442,6 +443,11 @@
 
         initComplete: function(settings, json) {
           // $('.loading').hide();
+          var api = this.api();
+          if (userlevel !== "S") {
+            // Hide  column
+            api.column(6).visible(false);
+          }
         },
         createdRow: function(row, data, dataIndex) {
 
@@ -466,23 +472,56 @@
       });
 
 
+      $("#newmodel").click(function() {
+        $('#ok').removeClass('btn-danger').addClass('btn-primary').text('บันทึก');
+        $('#story').removeClass('bg-danger').addClass('bg-secondary').text('เพิ่ม');
+        datasave = 'save';
+        $uploadolddb = '';
+
+        viewstatus = 'T';
+        $('#code').val('')
+        $('#namereal').val('')
+        $('#namenick').val('')
+        $('#login').val('')
+        $('#password').val('')
+        $('#userlevel').val('F')
+        $("#myModal").modal("show"); // เปิดกล่องโมดอล
+      });
+
+      // คลิกที่ปุ่ม "ยกเลิก" หรือปุ่มปิดของกล่องโมดอล
+      $(".modal .btn-secondary, .modal .btn-close").click(function() {
+        $("#myModal").modal("hide"); // ปิดกล่องโมดอล
+      });
+
+
       $('#table_datahd').on('click', '.edit', function() {
         var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
-        $('#ok').removeClass('btn-primary').addClass('btn-danger').text('บันทึกแก้ไข');
-        $('#story').removeClass('bg-secondary').addClass('bg-danger').text('แก้ไข');
+        $('#ok').removeClass('btn-primary btn-success').addClass('btn-danger').text('บันทึกแก้ไข');
+        $('#story').removeClass('bg-secondary bg-success').addClass('bg-danger').text('แก้ไข');
         // recno_edit = rowData.RECNO;
+        viewstatus = 'T';
         datasave = 'update';
         search_datalist(rowData.RECNO);
         $("#myModal").modal("show");
       });
 
+      $('#table_datahd').on('click', '.trash', function() {
+        var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
+        $('#ok').removeClass('btn-primary btn-success').addClass('btn-danger').text('ลบ');
+        $('#story').removeClass('bg-secondary bg-success').addClass('bg-danger').text('!!ลบ!!');
+        // recno_edit = rowData.RECNO;
+        viewstatus = 'T';
+        datasave = 'delete';
+        search_datalist(rowData.RECNO);
+        $("#myModal").modal("show");
+      });
 
       $('#table_datahd').on('click', '.view', function() {
         var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
-        $('#ok').removeClass('btn-primary').addClass('btn-danger').text('บันทึกแก้ไข');
-        $('#story').removeClass('bg-secondary').addClass('bg-danger').text('แก้ไข');
-        // recno_edit = rowData.RECNO;
-        // datasave = 'edit';
+        $('#ok').removeClass('btn-primary btn-danger').addClass('btn-success').text('ดูรายการ');
+        $('#story').removeClass('bg-secondary bg-danger').addClass('bg-success').text('ดูรายการ');
+
+        viewstatus = 'F';
         search_datalist(rowData.RECNO);
         $("#myModal").modal("show");
       });
@@ -524,29 +563,7 @@
 
       $('#date_search').val(moment(new Date()).format('DD/MM/YYYY'));
 
-      $("#newmodel").click(function() {
 
-        $('#ok').removeClass('btn-danger').addClass('btn-primary').text('บันทึก');
-        $('#story').removeClass('bg-danger').addClass('bg-secondary').text('เพิ่ม');
-        datasave = 'save';
-        $uploadolddb = '';
-
-        viewstatus = 'T';
-        // $('#name').val('');
-        // $('#contname').val('');
-
-        // $('#addr').val('')
-        // $('#ref').val('')
-        // $('#phone').val('');
-        // $('#email').val('');
-        // $('#subject').val('')
-        $("#myModal").modal("show"); // เปิดกล่องโมดอล
-      });
-
-      // คลิกที่ปุ่ม "ยกเลิก" หรือปุ่มปิดของกล่องโมดอล
-      $(".modal .btn-secondary, .modal .btn-close").click(function() {
-        $("#myModal").modal("hide"); // ปิดกล่องโมดอล
-      });
 
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -618,7 +635,7 @@
 
       //////////////////////////////////////////////////////////////// CHANGE //////////////////////////////////////////////////////////////// 
       var owner_process = 0;
-   
+
 
 
       //////////////////////////////////////////////////////////////// CHANGE //////////////////////////////////////////////////////////////// 
@@ -629,8 +646,7 @@
       var viewstatus = 'F';
       $("#idForm").submit(function(event) {
         event.preventDefault();
-        if (viewstatus == 'T')
-        {
+        if (viewstatus == 'T') {
           AlertSave();
         }
       });
@@ -687,7 +703,6 @@
       ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
 
       function UpdateData() {
-        console.log('xx')
         $.ajax({
           url: encodedURL_Update,
           type: "POST",
@@ -733,6 +748,54 @@
         });
       }
 
+      ////////////////////////////////////////////////////////////// DELETE //////////////////////////////////////////////////////////////
+      function DeleteData() {
+        $.ajax({
+          url: encodedURL_Delete,
+          type: "POST",
+          data: set_formdata('delete'),
+          dataSrc: '',
+          contentType: false,
+          processData: false,
+          cache: false,
+          beforeSend: function() {},
+          complete: function() {},
+          success: function(response) {
+            save_json = JSON.parse(response);
+            if (save_json.status == 'success') {
+              console.log(save_json)
+              table.ajax.reload();
+              Swal.fire({
+                title: "บันทึกแล้ว",
+                text: "ข้อความที่คุณต้องการแสดง",
+                icon: "success",
+                buttons: ["OK"],
+                dangerMode: true,
+              }).then(function(willRedirect) {
+                // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
+                if (willRedirect) {
+                  // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
+                  $('#myModal').modal('hide');
+                }
+              });
+              /////////////////////////////////
+            } else {
+              Swal.fire(
+                'เกิดปัญหาในการบันทึก',
+                // response.message,
+                JSON.parse(response).message,
+                'error'
+              )
+            }
+          },
+          error: function(xhr, status, error) {
+            console.log('error')
+            console.error(error);
+          }
+        });
+      }
+
+
       var modify = 'F';
       ////////////////////////////////////////////////////////////// set_formdata //////////////////////////////////////////////////////////////
       function set_formdata(conditionsformdata) {
@@ -767,7 +830,7 @@
         } else if (conditionsformdata == "delete") {
           // ประมวลผลลบข้อมูล
           // process to delete data
-          formData.append('queryIdHD', 'XXXXX');
+          formData.append('queryIdHD', 'DLT_EMPL');
         } else if (conditionsformdata == "update") {
           // ประมวลผลอัพเดทข้อมูล
           // process to update data
@@ -850,7 +913,7 @@
             $('#namenick').val(json_searchdatalist[0].EMPNICK)
             $('#login').val(json_searchdatalist[0].LOGIN)
             $('#password').val(json_searchdatalist[0].PASS)
-          
+            $('#userlevel').val(json_searchdatalist[0].USERLEVEL)
           },
           error: function(xhr, status, error) {
             console.error(error);
