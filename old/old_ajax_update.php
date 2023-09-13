@@ -1,6 +1,6 @@
 <?php
 try {
-    include("connect.php");    
+    include("connect_sql.php");    
     include("sql.php");
     // ดึงข้อมูลจากตารางที่ต้องการ
     $message = '';

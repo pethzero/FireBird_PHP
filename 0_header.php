@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-custom">
-  <a class="navbar-brand text-white" >SAN ENGINEERING</a>
+  <a class="navbar-brand text-white" style="margin-left: 15px;" >SAN ENGINEERING</a>
   <!-- <button class="navbar-toggler navbar-toggler-light bg-white" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button> -->
@@ -97,7 +97,7 @@
         <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" data-bs-haspopup="true" data-bs-expanded="false">
           <?php  
               echo $_SESSION["IMAGEEMPL"];
-              // include('connect.php');
+              // include('connect_sql.php');
               // $sql = "SELECT USERIMG FROM EMPL WHERE RECNO=:RECNO";
               // $query = $pdo->prepare($sql);
               // $query->execute(array($_SESSION["RECNO"]));

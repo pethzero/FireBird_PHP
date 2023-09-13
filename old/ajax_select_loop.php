@@ -1,6 +1,6 @@
 <?php
 try {
-    include("connect.php");    
+    include("connect_sql.php");    
     include("sql.php");
 
     $queryId = isset($_GET['queryId']) ? $_GET['queryId'] : '';

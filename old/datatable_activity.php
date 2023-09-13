@@ -9,7 +9,11 @@
     header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
     exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
   }
-  include("0_headcss.php"); ?>
+  include("0_headcss.php"); 
+  $csrfToken = bin2hex(random_bytes(32)); // สร้าง token สุ่ม
+  $_SESSION['csrf_token'] = $csrfToken;
+  // $_SESSION['csrf_token'] = keyse();
+  ?>
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 
@@ -43,16 +47,18 @@
     .datepicker {
       border: 1px solid black;
     } */
+
+
   </style>
 
   <?php
-  // include("connect.php");
+  // include("connect_sql.php");
   include("connect_sql.php");
   include("sql.php");
   include("0_fselect.php");
   ?>
   <section>
-    <div class="container pt-3">
+    <div class="container-fluid pt-3">
       <h2>ตารางนัดหมาย</h2>
 
       <div class="row">
@@ -200,6 +206,11 @@
     });
 
     // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
+    var encodeData = "<?php echo $csrfToken; ?>";
+    function secertkey(){
+      return encodeData;
+    }
+
     var encodedURL = encodeURIComponent('ajax_select_sql_mysql.php');
     var data_array = [];
     var table = $('#table_datahd').DataTable({
@@ -212,9 +223,10 @@
             STARTD: startd,
           };
           d.condition = 'mix';
+          d.sqlprotect = encodeData;
         },
         dataSrc: function(json) {
-          // console.log(json) 
+          console.log(json) 
           tablejsondata = json.data
           return json.data;
         }
@@ -229,6 +241,10 @@
         {
           className:'dt-center',
           targets: [3]
+        },
+        {
+          className:'dt-right',
+          targets: [8,9]
         },
         { "orderable": false, "targets": 1 },
         {
@@ -321,7 +337,6 @@
         startd = '';
       }
 
-      console.log(startd)
       $('#table_datahd').DataTable().column(6).search(startd).draw();
       $('#table_datahd').DataTable().column(3).search($('#status').val()).draw();
       // if (dateValue) {
@@ -331,11 +346,6 @@
       //   qid = 'SEL_ACTIVITYHD';
       //   startd = null;
       // }
-
-
-      // // recno = 7
-      // console.log(dateValue)
-      // console.log(startd)
 
       // table.ajax.reload();
     })

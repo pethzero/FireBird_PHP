@@ -6,8 +6,8 @@
 		include("connect_sql.php"); 
 		$username = $_POST["username"];
 		$password = $_POST["password"];
+		// $sql = "SELECT RECNO, EMPNO, EMPNAME, PASS,IMG,USERLEVEL FROM empl WHERE UPPER(LOGIN)=:LOGIN";
 		$sql = "SELECT RECNO, EMPNO, EMPNAME, PASS,IMG,USERLEVEL FROM empl WHERE UPPER(LOGIN)=:LOGIN";
-	
 		//////////////////////////////////////
 		$query = $pdo->prepare($sql);
 		// ผูกค่าพารามิเตอร์

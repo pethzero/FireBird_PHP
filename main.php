@@ -144,6 +144,15 @@
         <div class="col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
         </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datatable_po.php';">ดูอันดับใบเสนอราคา</button>
+        </div>
+
+        <div class="col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datatable_invoice.php';">ดู Invoice</button>
+        </div>
+
       </div>
 
       <h1>แอดมิน</h1>

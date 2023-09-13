@@ -1,6 +1,6 @@
 <?php
 try {
-    // include("connect.php");    //FIRDBIRD
+    // include("connect_sql.php");    //FIRDBIRD
     session_start(); // เริ่มเซสชัน (ถ้ายังไม่ได้เปิด)
 
     include("connect_sql.php");   //MYSQL   

@@ -47,6 +47,17 @@
     .datepicker {
       border: 1px solid black;
     }
+
+    /* body .select2-container--bootstrap-5 {
+    z-index: 9999 !important;
+} */
+    .select2-close-mask {
+      z-index: 2099;
+    }
+
+    .select2-dropdown {
+      z-index: 3051;
+    }
   </style>
 
   <?php
@@ -152,12 +163,10 @@
       </div>
     </div>
   </footer>
-  <?php
-  //  include("0_footer.php");
-  ?>
+
   <form id="idForm" method="POST">
-    <div class="modal fade" id="myModal" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm modal-md modal-lg modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="myModalLabel">บันทึกแจ้งซ่อม <span id='story' class="badge"></span></h5>
@@ -165,10 +174,8 @@
           </div>
 
           <div class="modal-body">
-            <!-- ส่วนที่เพิ่มเนื้อหาภายในกล่องโมดอลได้ที่นี่ -->
             <section>
               <div class="container-fluid">
-
                 <h2 id="dataactivity">ตารางนัดหมาย <span id='story' class="badge"></span></h2>
                 <hr>
                 <div class="row">
@@ -178,24 +185,12 @@
                       <select class="form-select" id="cust">
                       </select>
                     </div>
-
-                    <!-- <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">บริษัท:</span>
-                      <input type="text" class="form-control" id="custname" placeholder="บริษัท" readonly>
-                    </div> -->
-
                   </div>
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <select class="form-select cont" id="cont">
                       </select>
                     </div>
-
-                    <!-- <div class="input-group mb-3">
-                      <span class="input-group-text c_activity">ลูกค้า:</span>
-                      <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                    </div> -->
-
                   </div>
                 </div>
 
@@ -271,6 +266,8 @@
                   </div>
                 </div>
 
+                
+
 
                 <div class="row ">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -325,18 +322,6 @@
                       </div>
                     </div>
 
-                    <!-- <div class="row">
-                      <div class="input-group date mb-3" id="datepicker">
-                        <span class="input-group-text c_activity">วันที่นัด:</span>
-                        <input type="text" class="form-control" id="date" />
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                      </div>
-                    </div> -->
-
                   </div>
 
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -352,7 +337,7 @@
 
                     <div class="input-group mb-3">
                       <span class="input-group-text ">เจ้าของนัดหมาย:</span>
-                      <select class="form-select" id="owner">
+                      <select class="form-select " id="owner">
                       </select>
                     </div>
 
@@ -385,7 +370,12 @@
                   </div>
                 </div>
 
-
+                <div class="row mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text">หมายเหตุ:</span>
+                    <textarea id="remark" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
+                  </div>
+                </div>
 
               </div>
             </section>
@@ -398,9 +388,8 @@
         </div>
       </div>
     </div>
-    </div>
-
-    <!-- <div class="loading"> -->
+  </form>
+  <!-- <div class="loading"> -->
 
 </body>
 <?php include("0_footerjs.php"); ?>
@@ -408,7 +397,6 @@
 
 <script>
   $(document).ready(function() {
-
     // // รับ element input จาก DOM
     // var fileInput = document.getElementById('fileToUpload');
 
@@ -467,22 +455,12 @@
 
 
     $(function() {
+    
       select2_owner_list();
       select2_cust_list();
-      // select2_equipment_list()
 
       var currentDate = new Date();
       currentDate.setYear(currentDate.getFullYear() + 543);
-      // Birth date
-      // $("#date-of-birth").datepicker({
-      //   changeMonth: true,
-      //   changeYear: true,
-      //   yearRange: '+443:+543',
-      //   dateFormat: 'dd/mm/yy',
-      //   // onSelect: function(date) {
-      //   //   $("#edit-date-of-birth").addClass('filled');
-      //   // }
-      // });
 
       $("#date_search").datepicker({
         format: "dd/mm/yyyy",
@@ -491,11 +469,6 @@
         todayHighlight: true,
         autoclose: true
       });
-
-      // $('#date_search').datepicker("setDate",currentDate );
-      // $('#date_search').val(moment(new Date()).format('DD/MM/YYYY'));
-
-
 
     });
 
@@ -529,6 +502,15 @@
       window.location = 'dataequipment.php';
     });
 
+    const customButtonEdit = (data, type, row, idclass, idname) => {
+      // return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}">${idname}</button>`;
+      return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}"><i class="far fa-edit"></i></button>`;
+      // return '';
+    };
+
+
+
+
     // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
     var encodeData = "<?php echo $csrfToken; ?>";
 
@@ -557,7 +539,81 @@
         }
       },
       scrollX: true,
-      columns: dtcolumn['DATA_ACTIVITYHD'],
+      columns:
+        // dtcolumn['DATA_ACTIVITYHD'],
+        [{
+            data: 'RECNO'
+          },
+          // {data: null,render: function(data, type, row){return "";}},
+          {
+            data: null,
+            render: function(data, type, row) {
+              return customButtonEdit(data, type, row, 'edit', 'แก้ไข');
+            }
+          },
+          {
+            data: 'DOCNO'
+          },
+          // {data: 'STATUS'},
+          {
+            data: null,
+            render: function(data) {
+              // return getStatusTextOther(data.STATUS, 'TABLEACTIVITYHD_STATUS');
+              if (data.STATUS == 'A') {
+                return '<h5><span class="badge bg-secondary mt-2">ยังไม่เริ่มดำเนินการ</span></h5>'
+              } else if (data.STATUS == 'I') {
+                return '<h5><span class="badge bg-info mt-2 text-dark">อยู่ระหว่างดำเนินการ</span></h5>';
+              } else if (data.STATUS == 'W') {
+                return '<h5><span class="badge bg-warning mt-2 text-dark">รอดำเนินการ</span></h5>';
+              } else if (data.STATUS == 'D') {
+                return '<h5><span class="badge bg-danger mt-2">ถูกเลื่อนออกไป</span></h5>';
+              } else if (data.STATUS == 'F') {
+                return '<h5><span class="badge bg-success mt-2">เสร็จสิ้น</span></h5>'
+              } else {
+                return '';
+              }
+            }
+          },
+          {
+            data: 'CUSTNAME'
+          },
+          {
+            data: 'CONTNAME'
+          },
+          // {data: 'STARTD',render: formatDate},
+          {
+            data: 'STARTD',
+            render: formatDate
+          },
+          // {data: 'STARTD',render: formatDate,"sType": "date-uk"},
+          // {data: 'PRIORITY'},
+          {
+            data: null,
+            render: function(data) {
+              // return getStatusTextOther(data.PRIORITY, 'TABLEACTIVITYHD_PRIORITY');
+              if (data.PRIORITY == 'H') {
+                return 'สูง';
+              } else if (data.PRIORITY == 'N') {
+                return 'ปกติ';
+              } else if (data.PRIORITY == 'L') {
+                return 'ต่ำ';
+              } else {
+                return '-';
+              }
+            }
+          },
+          {
+            data: 'PRICECOST',
+            render: formatCurrency
+          },
+          {
+            data: 'PRICEPWITHDRAW',
+            render: formatCurrency
+          },
+          {
+            data: 'OWNERNAME'
+          },
+        ],
       columnDefs: [{
           className: 'noVis',
           targets: [0]
@@ -580,7 +636,7 @@
         },
         {
           "visible": false,
-          "targets": 0
+          "targets": [0,2]
         },
         // { type: 'de_date', targets: 6 }
         {
@@ -698,19 +754,12 @@
         startd = '';
       }
 
-      console.log(startd)
+      // console.log(startd)
 
 
       $('#table_datahd').DataTable().column(6).search(startd).draw();
       $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
     })
-
-    //     const currentDate = new Date();
-    // const newYear = currentDate.getFullYear() + 543;
-    // console.log(currentDate);
-    // console.log(`New Year: ${newYear}`);
-
-    // console.log(new Date())
 
     $("#newmodel").click(function() {
       $('#ok').removeClass('btn-danger').addClass('btn-primary').text('บันทึก');
@@ -750,14 +799,16 @@
       $('#pcost').val(0);
       $('#pwithdraw').val(0);
       $('#detail').val('');
+      $('#remark').val('');
+      
       $('#date').val('');
       $('#datewarn').val('');
       // $('#custname').val('');
       process_select_cust = 0;
       search_cont = 0;
       $('#cust').val(0).trigger('change');
-      $('#owner').val(0).trigger('change');
       $('#cont').empty().trigger("change");
+      $('#owner').val(0).trigger('change');
 
 
       $("#myModal").modal("show"); // เปิดกล่องโมดอล
@@ -815,6 +866,7 @@
     }
 
     var process_select_cust;
+
     function select2_contact_list(recno_data) {
       $.ajax({
         // url: 'ajax_data_select.php',
@@ -829,29 +881,16 @@
         dataSrc: '',
         success: function(response) {
           cont_list = JSON.parse(response).data;
-          // console.log('start contact')
-          // process_select_cust = 0;
-          // $('#cont').empty().trigger("change");
-          if (cont_list.length > 0)
-          {
+          if (cont_list.length > 0) {
             process_select_cust = 1
           }
           data_cont_name = data_json(cont_list, 'RECNO', 'RECNO', 'CONTNAME', 'เลือกชื่อลูกค้า...'); // กำหนดค่าใหม่ให้กับ data_owner_name
           createSelect2('#cont', data_cont_name, 'เลือกชื่อลูกค้า...')
-          // console.log(recno_cont)
-          // console.log(process_select_cust)
-           if (search_cont === 1)
-          {
+          if (search_cont === 1) {
             $('#cont').val(recno_cont).trigger('change');
             search_cont = 0;
           }
-          // if (search_cont == 0)
-          // {
-          //   $('#cont').val(0).trigger('change');
-          // }else{
-          //   console.log('555')
-          //   $('#cont').val(recno_cont).trigger('change');
-          // }
+
         },
         error: function(xhr, status, error) {
           console.error(error);
@@ -864,7 +903,8 @@
       return $(selector).select2({
         data: data,
         theme: 'bootstrap-5',
-        dropdownParent: $('#myModal'),
+        dropdownParent: $('#myModal .modal-content'),
+        // dropdownParent: $(this).parent(),
         matcher: matchCustom_ajax,
         templateSelection: function(selected) {
           if (selected.id !== '') {
@@ -941,38 +981,26 @@
       } else {
         recno_namecust = $(this).select2('data')[0].text;
         // $('#custname').val($(this).select2('data')[0].text);
-        if (datasave == 'save')
-        {
+        if (datasave == 'save') {
           // $('#cont').empty().trigger("change");
           process_select_cust = 0;
           $('#cont').empty().trigger("change");
           select2_contact_list($(this).select2('data')[0].value)
-        }
-        else{
+        } else {
           process_select_cust = 0;
-          if(frist_search_cont == 1)
-          {
+          if (frist_search_cont == 1) {
             frist_search_cont = 0;
             process_select_cust = 0;
             search_cont = 1;
             $('#cont').empty().trigger("change");
             select2_contact_list(recno_cust)
-          }
-          else{
+          } else {
             $('#cont').empty().trigger("change");
             select2_contact_list($(this).select2('data')[0].value)
           }
-         
+
         }
       }
-
-      // if (datasave == 'save')
-      // {
-      //   $('#cont').empty().trigger("change");
-      //   select2_contact_list($(this).select2('data')[0].value)
-      // }
-
-
     });
 
     $("#cont").change(function() {
@@ -982,17 +1010,15 @@
         if (recno_cont == 0) {
           recno_namecont = '';
         } else {
-          if(frist_name_cont == 1)
-          {
+          if (frist_name_cont == 1) {
             // recno_namecont = $(this).select2('data')[0].text;
             $('#contname').val(recno_namecont)
             frist_name_cont = 0;
-          }
-          else{
+          } else {
             recno_namecont = $(this).select2('data')[0].text;
             $('#contname').val(recno_namecont)
           }
-       
+
         }
       }
       // else{
@@ -1125,7 +1151,7 @@
       /////////////
 
       var dateValue = $('#date').val();
-      
+
       console.log()
       /// id ,param ///
       paramhd = {
@@ -1142,13 +1168,14 @@
         LOCATION: $("input[name='location']:checked").val(),
         SUBJECT: $('#subject').val(),
         DETAIL: $('#detail').val(),
+        REMARK: $('#remark').val(),
         REF: $('#ref').val(),
         PRIORITY: $('#priority').val(),
         TIMED: $('#timed').val(),
         TIMEH: $('#timeh').val(),
         TIMEM: $('#timem').val(),
         STARTD: dateValue ? moment(dateValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        WARND:  $('#datewarn').val() ? moment( $('#datewarn').val(), 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+        WARND: $('#datewarn').val() ? moment($('#datewarn').val(), 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
         PRICECOST: $('#pcost').val(),
         PRICEPWITHDRAW: $('#pwithdraw').val(),
         OWNERNAMESTR: recno_nowner,
@@ -1222,6 +1249,7 @@
     var search_cont = 0;
     var frist_search_cont = 0;
     var frist_name_cont = 0;
+
     function search_datalist(search_senddata) {
       $.ajax({
         url: encodedURL_Select,
@@ -1246,12 +1274,14 @@
           frist_search_cont = 1;
           frist_name_cont = 1;
           $('#cust').val(json_searchdatalist[0].CUST).trigger('change');
-      
+
+          // console.log(recno_owner)
+          $('#owner').val(recno_owner).trigger('change');
+
           // $('#cont').empty().trigger("change");
           // process_select_cust = 0;
           // search_cont = 1
           // select2_contact_list(recno_cust)
-
 
           $('#contname').val(json_searchdatalist[0].CONTNAME)
           $('#phone').val(json_searchdatalist[0].TEL)
@@ -1259,6 +1289,7 @@
           $('#addr').val(json_searchdatalist[0].ADDR)
           $('#subject').val(json_searchdatalist[0].SUBJECT)
           $('#detail').val(json_searchdatalist[0].DETAIL)
+          $('#remark').val(json_searchdatalist[0].REMARK)
           $('#ref').val(json_searchdatalist[0].REF)
           $('#status').val(json_searchdatalist[0].STATUS)
           $('#priority').val(json_searchdatalist[0].PRIORITY)

@@ -1,6 +1,6 @@
 <?php
 try {
-    include("connect.php");    //FIRDBIRD
+    include("connect_firebird.php");    //FIRDBIRD
     include("sql_exe.php");
 
     $queryId = isset($_GET['queryId']) ? $_GET['queryId'] : '';
@@ -10,7 +10,8 @@ try {
     $countyear = isset($_GET['countyear']) ? $_GET['countyear'] : '';
     $data = array();
 
-    if($condition == "mix"){
+    if($condition == "mix")
+    {
         $sql = sqlmixexe($queryId, $params);
     }   
     else{
@@ -38,7 +39,7 @@ try {
         }
         $response = array(
             'status' => 'success',
-            // 'sql' => $sql,
+            'sql' => $sql,
             '$params' => $params, 
             'data' => $data
         );
@@ -66,4 +67,3 @@ try {
     echo json_encode($response);
     exit();
 }
-?>

@@ -19,7 +19,7 @@ try {
     echo "เกิดข้อผิดพลาดในการเชื่อมต่อกับ Firebird: " . $e->getMessage();
 }
 
-// require '../z_excel.php';
+// require '../sql_exe.php';
 require '../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;

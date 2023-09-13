@@ -3,12 +3,15 @@
 <title>Web App</title> -->
 <!-- <meta charset="UTF-8"> -->
 <meta http-equiv="Content-Type" content="text/html; charset=tis-620" />
-<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Web App</title>
 
-
+  <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
+  <link rel='shortcut icon' href='favicon-16x16.png' type='image/x-icon'>
+  <!-- <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"> -->
+    <!-- หากคุณต้องการระบุไฟล์รูปภาพสำหรับ Apple Touch Icon (สำหรับ iOS) ด้วย -->
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"> -->
 
   <!-- Preload CSS -->
 <link rel="preload" href="css/bootstrap-5.3.0.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">

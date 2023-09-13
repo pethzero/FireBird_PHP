@@ -67,7 +67,7 @@
 
     <?php
     //  include("header.php"); 
-    //  include("connect.php");
+    //  include("connect_sql.php");
     ?>
     <form id="myForm">
     <section>

@@ -1,6 +1,6 @@
 <?php
 try {
-    // include("connect.php");    //FIRDBIRD
+    // include("connect_sql.php");    //FIRDBIRD
     include("connect_sql.php");   //MYSQL   
     include("sql_exe.php");
 

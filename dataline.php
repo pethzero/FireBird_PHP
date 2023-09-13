@@ -50,7 +50,7 @@
   </style>
 
   <?php
-  include("connect.php");
+  include("connect_sql.php");
   include("sql.php");
   include("0_fselect.php");
   ?>
@@ -134,7 +134,8 @@
         url: 'ajax_line.php',
         method: 'POST',
         data: {
-          accessToken: 'Hh0ura2RMQuxyHutazonFsR4SdKT5f6ASoAGGEInuXv',
+          // accessToken: 'Hh0ura2RMQuxyHutazonFsR4SdKT5f6ASoAGGEInuXv',
+          accessToken: 'UWQeqRDaeOqyhYkzdtkFqKrsMarFL6aIWxz9Z5kDYgO',
           message: message,
         },
         success: function(response) {

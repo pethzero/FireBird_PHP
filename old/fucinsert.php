@@ -1,10 +1,18 @@
 <?php 
 header('Content-Type: application/json');
+
+function convertToTIS620($data) {
+  return iconv("UTF-8", "TIS-620//TRANSLIT//IGNORE", $data);
+}
+
+
 try {
-  include("connect.php"); 
-  include("sql_exe.php"); 
-  include("0_functions.php"); // เพิ่ม include เข้ามาเพื่อเรียกใช้งานฟังก์ชั่นที่สร้างไว้ใน functions.php
-  include("0_fucinchd.php");
+  include("connect_sql.php"); 
+  // include("sql_exe.php"); 
+  // include("0_functions.php"); // เพิ่ม include เข้ามาเพื่อเรียกใช้งานฟังก์ชั่นที่สร้างไว้ใน functions.php
+  // include("0_fucinchd.php");
+
+
   $queryIdHD = isset($_POST['queryIdHD']) ? $_POST['queryIdHD'] : '';
   $queryIdDT = isset($_POST['queryIdDT']) ? $_POST['queryIdDT'] : '';
   $genIdHD = isset($_POST['genIdHD']) ? $_POST['genIdHD'] : '';
@@ -17,7 +25,7 @@ try {
   // ตรวจสอบค่าที่ต้องการเพิ่มลงในฐานข้อมูล
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // สร้างฟังก์ชั่น getvalue() ในไฟล์ 0_functions.php
-  // $result_hd = getvalue($queryIdHD, $paramhd);
+  // $ = getvalue($queryIdHD, $paramhd);
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   $pdo->setAttribute(PDO::ATTR_AUTOCOMMIT, false);
   $pdo->beginTransaction();
@@ -28,14 +36,45 @@ try {
   $stmt->execute();
   $nextValueHD = $stmt->fetchColumn();
 
-  $sqlhd = sqlexec($queryIdHD);
-  $stmt = $pdo->prepare($sqlhd);
+  $custname = convertToTIS620($paramhd['CUSTNAME']);
+  $contname = convertToTIS620($paramhd['CONTNAME']);
+  $tel = convertToTIS620($paramhd['TEL']);
+  $email = convertToTIS620($paramhd['EMAIL']);
+  $addr = convertToTIS620($paramhd['ADDR']);
+  $subject = convertToTIS620($paramhd['SUBJECT']);
+  $detail = convertToTIS620($paramhd['DETAIL']);
+  $ref = convertToTIS620($paramhd['REF']);
+  $ownername = convertToTIS620($paramhd['OWNERNAME']);
+
+
+  $stmt = $pdo->prepare("INSERT INTO ACTIVITYHD (RECNO, CREATED,LASTUPD,STATUS,DOCNO,CUST,CONT,CUSTNAME,CONTNAME,TEL,EMAIL,ADDR,LOCATION,SUBJECT,DETAIL,REF,PRIORITY,TIMED,TIMEH,TIMEM,STARTD,PRICECOST,PRICEPWITHDRAW,OWNER,OWNERNAME) VALUES (:RECNO,'NOW', 'NOW',:STATUS,:DOCNO,:CUST,:CONT,:CUSTNAME,:CONTNAME,:TEL,:EMAIL,:ADDR,:LOCATION,:SUBJECT,:DETAIL,:REF,:PRIORITY,:TIMED,:TIMEH,:TIMEM,:STARTD,:PRICECOST,:PRICEPWITHDRAW,:OWNER,:OWNERNAME)");
   //////////////////////////////////////////// BEGIN HEAD DATA //////////////////////////////////////////////////////////////
   // // // // ผูกค่าในอาร์เรย์กับพารามิเตอร์ในคำสั่ง SQL
-  // ทำการเรียกใช้ฟังก์ชั่น getvalue() และเก็บค่าที่ได้กลับมาไว้ในตัวแปร $result_hd
-  $result_hd = getvalue($queryIdHD, $paramhd);
-  tranexe($queryIdHD, $paramhd, $result_hd, $stmt, $nextValueHD);
-
+  // ทำการเรียกใช้ฟังก์ชั่น getvalue() และเก็บค่าที่ได้กลับมาไว้ในตัวแปร $
+  $docno = "66" . "/" . sprintf("%04d", $nextValueHD);
+  $stmt->bindParam(':RECNO', $nextValueHD);
+  $stmt->bindParam(':STATUS', $paramhd['STATUS']);
+  $stmt->bindParam(':DOCNO', $docno);
+  $stmt->bindParam(':CUST', $paramhd['CUST']);
+  $stmt->bindParam(':CONT', $paramhd['CONT']);
+  $stmt->bindParam(':CUSTNAME',$custname);
+  $stmt->bindParam(':CONTNAME', $contname);
+  $stmt->bindParam(':TEL',  $tel);
+  $stmt->bindParam(':EMAIL', $email );
+  $stmt->bindParam(':ADDR', $addr);
+  $stmt->bindParam(':LOCATION', $paramhd['LOCATION']);
+  $stmt->bindParam(':SUBJECT', $subject );
+  $stmt->bindParam(':DETAIL', $detail );
+  $stmt->bindParam(':REF',  $ref );
+  $stmt->bindParam(':PRIORITY', $paramhd['PRIORITY']);
+  $stmt->bindParam(':TIMED', $paramhd['TIMED']);
+  $stmt->bindParam(':TIMEH', $paramhd['TIMEH']);
+  $stmt->bindParam(':TIMEM', $paramhd['TIMEM']);
+  $stmt->bindParam(':STARTD', $paramhd['STARTD']);
+  $stmt->bindParam(':PRICECOST', $paramhd['PRICECOST']);
+  $stmt->bindParam(':PRICEPWITHDRAW', $paramhd['PRICEPWITHDRAW']);
+  $stmt->bindParam(':OWNER', $paramhd['OWNER']);
+  $stmt->bindParam(':OWNERNAME',$ownername);
  //////////////////////////////////////////// START HEAD DATA //////////////////////////////////////////////////////////////
   // // // สั่งให้ประมวลผลคำสั่ง SQL
   $stmt->execute();
@@ -43,10 +82,6 @@ try {
     $response = array(
       'status' => 'success',
       'message' => 'เพิ่มข้อมูลสำเร็จ'
-      // ,'sqlhd' => $sqlhd,
-      // 'sqlgenhd' => $sqlgenhd,
-      // 'STATUS'=>$paramhd['STATUS'],
-      // 'CONT'=> $paramhd['CONT']
   );
   $pdo->commit();
   echo json_encode($response);

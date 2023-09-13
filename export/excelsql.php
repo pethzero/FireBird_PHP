@@ -22,6 +22,7 @@ try {
 }
 
 // require '../z_excel.php';
+require '../sql_exe.php';
 require '../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -29,6 +30,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // รับข้อมูลจาก AJAX
 $dataname = $_POST['data'];
+$queryId = isset($_POST['queryId']) ? $_POST['queryId'] : '';
+$params = isset($_POST['params']) ? $_POST['params'] : '';
 // สร้าง Spreadsheet ใหม่
 $spreadsheet = new Spreadsheet();
 
@@ -61,8 +64,9 @@ foreach ($header as $item) {
     $col++;
 }
 
+    $sql = sqlmixexe($queryId, $params);
 // $sql = "SELECT QUOTHD.RECNO, QUOTHD.DOCDATE, QUOTHD.DOCNO, QUOTHD.REVISE, CUST.CODE, CUST.SNAME, CUST.NAME, CUSTCONT.CONTNAME, EMPL.EMPNAME, QUOTHD.CREDIT, QUOTHD.REMARK, QUOTDT.DETAIL, QUOTDT.QUAN, QUOTDT.UNITAMT, QUOTDT.TOTALAMT FROM QUOTHD LEFT JOIN CUST ON (QUOTHD.CUST = CUST.RECNO) LEFT JOIN CUSTCONT ON (QUOTHD.CONT = CUSTCONT.RECNO) LEFT JOIN EMPL ON (QUOTHD.SALES = EMPL.RECNO) LEFT JOIN quotdt ON (QUOTHD.RECNO = quotdt.QUOTHD) WHERE  (QUOTHD.STATUS <> 'C') AND  (QUOTDT.DETAIL <> '')  AND ( QUOTHD.RECNO BETWEEN 1 AND 10) ORDER BY QUOTHD.RECNO";
-$sql = "SELECT QUOTHD.RECNO, QUOTHD.DOCDATE, QUOTHD.DOCNO, QUOTHD.REVISE, CUST.CODE, CUST.SNAME, CUST.NAME, QUOTDT.DETAIL, CUSTCONT.CONTNAME, EMPL.EMPNAME, QUOTHD.CREDIT, QUOTHD.REMARK, QUOTDT.QUAN, QUOTDT.UNITAMT, QUOTDT.TOTALAMT FROM QUOTHD LEFT JOIN CUST ON (QUOTHD.CUST = CUST.RECNO) LEFT JOIN CUSTCONT ON (QUOTHD.CONT = CUSTCONT.RECNO) LEFT JOIN EMPL ON (QUOTHD.SALES = EMPL.RECNO) LEFT JOIN quotdt ON (QUOTHD.RECNO = quotdt.QUOTHD) WHERE  (QUOTHD.STATUS <> 'C') AND  (QUOTDT.DETAIL <> '')  ORDER BY QUOTHD.RECNO";
+// $sql = "SELECT QUOTHD.RECNO, QUOTHD.DOCDATE, QUOTHD.DOCNO, QUOTHD.REVISE, CUST.CODE, CUST.SNAME, CUST.NAME, QUOTDT.DETAIL, CUSTCONT.CONTNAME, EMPL.EMPNAME, QUOTHD.CREDIT, QUOTHD.REMARK, QUOTDT.QUAN, QUOTDT.UNITAMT, QUOTDT.TOTALAMT FROM QUOTHD LEFT JOIN CUST ON (QUOTHD.CUST = CUST.RECNO) LEFT JOIN CUSTCONT ON (QUOTHD.CONT = CUSTCONT.RECNO) LEFT JOIN EMPL ON (QUOTHD.SALES = EMPL.RECNO) LEFT JOIN quotdt ON (QUOTHD.RECNO = quotdt.QUOTHD) WHERE  (QUOTHD.STATUS <> 'C') AND  (QUOTDT.DETAIL <> '')  ORDER BY QUOTHD.RECNO";
 
 if ($sql) {
     $stmt = $pdo->prepare($sql);
@@ -94,15 +98,9 @@ $writer = new Xlsx($spreadsheet);
 
 // กำหนดชื่อไฟล์ด้วยตัวแปร $today
 $today = date("d_m_Y"); // สร้างรูปแบบวันที่ตามที่คุณต้องการ
-$filename = "$dataname"."_$today.xlsx"; // เพิ่ม $today ในชื่อไฟล์
-
-// // กำหนดคำสั่งสำหรับแสดงไฟล์ Excel ที่สร้าง
-// header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-// header('Content-Disposition: attachment;filename="' . $filename . '"'); // ใช้ตัวแปร $filename ในชื่อไฟล์
-// header('Cache-Control: max-age=0');
-
-// // ส่งข้อมูลไปยัง output
-// $writer->save('php://output');
+// $filename = "$dataname"."_$today.xlsx"; // เพิ่ม $today ในชื่อไฟล์
+$filename ="../uploads/". "$dataname".".xlsx"; 
+// $filename ="../uploads/MyFilename.xls";
 
 $writer = new Xlsx($spreadsheet);
 $writer->save($filename);

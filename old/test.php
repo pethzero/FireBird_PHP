@@ -3,7 +3,7 @@
 
 	if (true)
 	{
-		include("connect.php"); 
+		include("connect_sql.php"); 
 		echo 'ZZZ';
 		$username = 'superadmin';
 		$password = '1234';

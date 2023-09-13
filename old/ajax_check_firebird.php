@@ -4,7 +4,7 @@
 	if (isset($_POST["username"]))
 	{
 		include('sysutils.php');
-         include("connect.php");  
+         include("connect_sql.php");  
 		
 		$username = texttis620($_POST["username"]);
 		$password = texttis620($_POST["password"]);
