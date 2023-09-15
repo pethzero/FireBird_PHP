@@ -174,218 +174,211 @@
           </div>
 
           <div class="modal-body">
-            <nav>
-              <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">หน้าหลัก</button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">ลูกค้าติดต่อ</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
-              </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-              <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                <section>
-                  <div class="container-fluid">
-                    <h2 id="dataactivity">ตารางนัดหมาย <span id='story' class="badge"></span></h2>
-                    <hr>
+            <section>
+              <div class="container-fluid">
+                <h2 id="dataactivity">ตารางนัดหมาย <span id='story' class="badge"></span></h2>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">บริษัท:</span>
+                      <select class="form-select" id="cust">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <select class="form-select cont" id="cont">
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ลูกค้า:</span>
+                      <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">อ้างอิง:</span>
+                      <input type="text" class="form-control" id="ref" placeholder="อ้างอิง">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">โทรศัทพ์:</span>
+                      <input type="text" class="form-control" id="phone" placeholder="โทรศัทพ์">
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">อีเมล:</span>
+                      <input type="text" class="form-control" id="email" placeholder="อีเมล">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+                    <div class="input-group ">
+                      <span class="input-group-text">ตำแหน่งนัดหมาย</span>
+                      <textarea id="addr" class="form-control h_textarea" rows="3" aria-label="With textarea"></textarea>
+                    </div>
+
+                    <div class="mt-2">
+                      <label class="form-label">สถานที่ติดต่อ</label>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="location" id="location1" value='I' checked>
+                        <label class="form-check-label" for="location1">
+                          นอกสถานที่
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="location" id="locatio2" value='O'>
+                        <label class="form-check-label" for="locatio2">
+                          ภายในบริษัท
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text c_activity">เรื่อง:</span>
+                    <input type="text" class="form-control" id="subject" placeholder="หัวข้อที่นัดหมาย">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text">รายละเอียด:</span>
+                    <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
+                  </div>
+                </div>
+
+
+
+
+                <div class="row ">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">บริษัท:</span>
-                          <select class="form-select" id="cust">
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <select class="form-select cont" id="cont">
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">ลูกค้า:</span>
-                          <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">อ้างอิง:</span>
-                          <input type="text" class="form-control" id="ref" placeholder="อ้างอิง">
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">โทรศัทพ์:</span>
-                          <input type="text" class="form-control" id="phone" placeholder="โทรศัทพ์">
-                        </div>
-                      </div>
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">อีเมล:</span>
-                          <input type="text" class="form-control" id="email" placeholder="อีเมล">
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-
-                        <div class="input-group ">
-                          <span class="input-group-text">ตำแหน่งนัดหมาย</span>
-                          <textarea id="addr" class="form-control h_textarea" rows="3" aria-label="With textarea"></textarea>
-                        </div>
-
-                        <div class="mt-2">
-                          <label class="form-label">สถานที่ติดต่อ</label>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="location" id="location1" value='I' checked>
-                            <label class="form-check-label" for="location1">
-                              นอกสถานที่
-                            </label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="location" id="locatio2" value='O'>
-                            <label class="form-check-label" for="locatio2">
-                              ภายในบริษัท
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <div class="input-group">
-                        <span class="input-group-text c_activity">เรื่อง:</span>
-                        <input type="text" class="form-control" id="subject" placeholder="หัวข้อที่นัดหมาย">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <div class="input-group">
-                        <span class="input-group-text">รายละเอียด:</span>
-                        <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
-                      </div>
-                    </div>
-                    <div class="row ">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="row">
-                          <div class="input-group mb-3">
-                            <span class="input-group-text c_activity">สถานะ:</span>
-                            <select class="form-select" id="status">
-                              <option value="A" selected>ยังไม่เริ่มดำเนินการ</option>
-                              <option value="I">อยู่ระหว่างดำเนินการ</option>
-                              <option value="W">รอดำเนินการ</option>
-                              <option value="D">ถูกเลื่อนออกไป</option>
-                              <option value="F">เสร็จสิ้น</option>
-                            </select>
-                          </div>
-
-                          <div class="input-group mb-3">
-                            <span class="input-group-text c_activity">ความสำคัญ:</span>
-                            <select class="form-select" id="priority">
-                              <option value="0" selected>เลือก...</option>
-                              <option value="H">สูง</option>
-                              <option value="N">ปกติ</option>
-                              <option value="L">ต่ำ</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                            <div class="input-group mb-3">
-                              <label class="form-label mt-2">ระยะเวลา</label>
-                            </div>
-                          </div>
-
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                            <div class="input-group mb-3">
-                              <span class="input-group-text ">วัน:</span>
-                              <input type="number" class="form-control" min=0 value=0 id="timed" placeholder="">
-                            </div>
-                          </div>
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                            <div class="input-group mb-3">
-                              <span class="input-group-text ">ชม:</span>
-                              <input type="number" class="form-control" min=0 value=0 id="timeh" placeholder="">
-                            </div>
-                          </div>
-
-                          <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
-                            <div class="input-group mb-3">
-                              <span class="input-group-text ">น.:</span>
-                              <input type="number" class="form-control" min=0 value=0 id="timem" placeholder="">
-                            </div>
-                          </div>
-                        </div>
-
+                      <div class="input-group mb-3">
+                        <span class="input-group-text c_activity">สถานะ:</span>
+                        <select class="form-select" id="status">
+                          <option value="A" selected>ยังไม่เริ่มดำเนินการ</option>
+                          <option value="I">อยู่ระหว่างดำเนินการ</option>
+                          <option value="W">รอดำเนินการ</option>
+                          <option value="D">ถูกเลื่อนออกไป</option>
+                          <option value="F">เสร็จสิ้น</option>
+                        </select>
                       </div>
 
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
-                          <input id="pcost" type="number" min=0 class="form-control">
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">ค่าเบิก:</span>
-                          <input id="pwithdraw" type="number" min=0 class="form-control">
-                        </div>
-
-                        <div class="input-group mb-3">
-                          <span class="input-group-text ">เจ้าของนัดหมาย:</span>
-                          <select class="form-select " id="owner">
-                          </select>
-                        </div>
-
+                      <div class="input-group mb-3">
+                        <span class="input-group-text c_activity">ความสำคัญ:</span>
+                        <select class="form-select" id="priority">
+                          <option value="0" selected>เลือก...</option>
+                          <option value="H">สูง</option>
+                          <option value="N">ปกติ</option>
+                          <option value="L">ต่ำ</option>
+                        </select>
                       </div>
                     </div>
 
                     <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group date mb-3" id="datepicker">
-                          <span class="input-group-text c_activity">วันที่นัด:</span>
-                          <input type="text" class="form-control" id="date" />
-                          <span class="input-group-append">
-                            <span class="input-group-text bg-light d-block">
-                              <i class="fa fa-calendar"></i>
-                            </span>
-                          </span>
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <label class="form-label mt-2">ระยะเวลา</label>
                         </div>
                       </div>
 
-                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group date mb-3" id="datepicker_warn">
-                          <span class="input-group-text ">วันที่แจ้งเตือน:</span>
-                          <input type="text" class="form-control" id="datewarn" />
-                          <span class="input-group-append">
-                            <span class="input-group-text bg-light d-block">
-                              <i class="fa fa-calendar"></i>
-                            </span>
-                          </span>
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">วัน:</span>
+                          <input type="number" class="form-control" min=0 value=0 id="timed" placeholder="">
                         </div>
                       </div>
-                    </div>
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">ชม:</span>
+                          <input type="number" class="form-control" min=0 value=0 id="timeh" placeholder="">
+                        </div>
+                      </div>
 
-                    <div class="row mb-3">
-                      <div class="input-group">
-                        <span class="input-group-text">หมายเหตุ:</span>
-                        <textarea id="remark" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
+                      <div class="col-sm-12 col-md-6 col-lg-3 col-xl-3">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">น.:</span>
+                          <input type="number" class="form-control" min=0 value=0 id="timem" placeholder="">
+                        </div>
                       </div>
                     </div>
 
                   </div>
-                </section>
+
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
+                      <input id="pcost" type="number" min=0 class="form-control">
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ค่าเบิก:</span>
+                      <input id="pwithdraw" type="number" min=0 class="form-control">
+                    </div>
+
+                    <div class="input-group mb-3">
+                      <span class="input-group-text ">เจ้าของนัดหมาย:</span>
+                      <select class="form-select " id="owner">
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group date mb-3" id="datepicker">
+                      <span class="input-group-text c_activity">วันที่นัด:</span>
+                      <input type="text" class="form-control" id="date" />
+                      <span class="input-group-append">
+                        <span class="input-group-text bg-light d-block">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group date mb-3" id="datepicker_warn">
+                      <span class="input-group-text ">วันที่แจ้งเตือน:</span>
+                      <input type="text" class="form-control" id="datewarn" />
+                      <span class="input-group-append">
+                        <span class="input-group-text bg-light d-block">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text">หมายเหตุ:</span>
+                    <textarea id="remark" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
+                  </div>
+                </div>
 
               </div>
-              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-            </div>
-
+            </section>
           </div>
 
           <div class="modal-footer">
@@ -704,17 +697,13 @@
       },
       drawCallback: function(settings) {
         var api = this.api();
-        api.rows().every(function(rowIdx, tableLoop, rowLoop)
-        {
+        api.rows().every(function(rowIdx, tableLoop, rowLoop) {
           var data = this.data();
           var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
-          var row = api.row(rowIdx).node();
 
-          if (variableT === 'A') {
+          if (variableT === 'T') {
+            var row = api.row(rowIdx).node();
             $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-          }
-          else{
-            $(row).addClass('table-danger'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
           }
         });
       },

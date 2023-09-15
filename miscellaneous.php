@@ -49,25 +49,27 @@
   // include("0_breadcrumb.php"); 
   ?>
 
-  <!-- <button id="runButton">รันข้อมูล</button>
-    <a id="downloadLink" style="display: none;">ดาวน์โหลดไฟล์ Excel</a> -->
+
   <div class="section">
     <div class="container-fluid">
 
+      <div class="row pt-3">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+          <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
+        </div>
+      </div>
 
       <div class="row  pt-3">
-
         <h1>ดาวโหลดส่วนเสริม</h1>
-
       </div>
 
       <div class="row pb-3">
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <div class="input-group input-daterange">
             <span class="input-group-text">เริ่มต้น</span>
-            <input type="text" class="form-control" id="datepickerbegin">
+            <input type="text" class="form-control" id="datepickerbegin" >
             <span class="input-group-text">จนถึง</span>
-            <input type="text" class="form-control" id="datepickerend">
+            <input type="text" class="form-control" id="datepickerend" >
           </div>
         </div>
       </div>
@@ -75,27 +77,23 @@
       <div class="row pb-3">
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <select id='slcdata' class="form-select" aria-label="Default select example">
-            <!-- <option value="0" selected>Open this select menu</option> -->
-            <option value="CUSTOMERSALE" selected>ใบเสนอราคา</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="0" selected>ใบเสนอราคา</option>
+            <option value="1">ใบสั่งขาย</option>
+            <option value="2">ใบส่งของสินค้า</option>
+            <option value="3">ใบแจ้งหนี้</option>
           </select>
         </div>
       </div>
 
       <div class="row pt-3">
         <div class="col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" id="downloadExcel">excel ฝ่ายขาย</button>
+          <button class="btn btn-success" id="downloadExcel">download excel</button>
         </div>
       </div>
 
     </div>
     <div class="loading" style="display: none;"></div>
   </div>
-  <!-- <hr> -->
-
-  <!-- <hr> -->
-
 
   <?php include("0_footer.php"); ?>
 </body>
@@ -109,6 +107,15 @@ include("0_footerjs.php");
     // $("#downloadExcel").click(function() {
     //     window.location.href = "export/excel_export_sql.php"; // ระบุ URL ของไฟล์ PHP ที่คุณต้องการให้ดาวน์โหลด
     // });
+
+    // หาวันที่ 1 ของเดือนนี้
+    var firstDayOfMonth = moment().startOf('month').format('DD/MM/YYYY');
+    // หาวันสุดท้ายของเดือนนี้
+    var lastDayOfMonth = moment().endOf('month').format('DD/MM/YYYY');
+
+    moment($('#datepickerbegin').val(firstDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
+    moment($('#datepickerend').val(lastDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
+
     $("#datepickerbegin").datepicker({
       format: "dd/mm/yyyy",
       todayHighlight: true,
@@ -131,8 +138,25 @@ include("0_footerjs.php");
       let beginDate = moment($('#datepickerbegin').val(), 'DD/MM/YYYY');
       let endDate = moment($('#datepickerend').val(), 'DD/MM/YYYY');
       let slcdata = $('#slcdata').val()
-      // console.log(beginDate)
-      // console.log(endDate)
+
+      const array_data = [{
+          name: "qout",
+          queryid: "EXCEL_CUSTOMERSALE",
+
+        },
+        {
+          name: "oreder",
+          queryid: "EXCEL_QOUT_ORDERHD",
+        },
+        {
+          name: "delivery",
+          queryid: "EXCEL_QOUT_DELYHD",
+        },
+        {
+          name: "invoice",
+          queryid: "EXCEL_QOUT_INVOICE",
+        }
+      ];
 
       if ($('#datepickerbegin').val() !== '' && $('#datepickerend').val() !== '') {
         console.log("ประมวลผลได้");
@@ -147,13 +171,13 @@ include("0_footerjs.php");
           $('.loading').show();
           databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
           dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
-          download_excel(slcdata, databegin, dateend)
+          download_excel(array_data[parseInt(slcdata)], databegin, dateend)
         } else {
           // ถ้า endDate มากกว่า beginDate
           $('.loading').show();
           databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
           dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
-          download_excel(slcdata, databegin, dateend)
+          download_excel(array_data[parseInt(slcdata)], databegin, dateend)
         }
       } else {
         Swal.fire(
@@ -163,29 +187,24 @@ include("0_footerjs.php");
         )
       }
 
-      // $('#slcdata').val();
-      // $('.loading').show();
-      // console.log($('#slcdata').val())
-      // download_excel()
-
     });
 
-
     function download_excel(slcdata, databegin, dateend) {
+      console.log(slcdata)
       $.ajax({
         type: "POST",
         url: "export/excelsql.php", // แก้ไขเป็น URL ของไฟล์ PHP ที่คุณสร้างขึ้น
         data: {
-          data: 'Excel_' + slcdata,
-          queryId: slcdata,
+          data: 'Excel_' + slcdata.name,
+          queryId: slcdata.queryid,
           params: {
             ABEGIN: databegin,
             AEND: dateend
           },
         },
         success: function(response) {
-            data_json = JSON.parse(response).download;
-            console.log(data_json)
+          data_json = JSON.parse(response).download;
+          console.log(data_json)
           window.location.href = "uploads/" + data_json;
           $('.loading').hide();
         },
@@ -197,7 +216,9 @@ include("0_footerjs.php");
     }
 
 
-
+    $('#backhis').click(function() {
+      window.location = 'main.php';
+    });
 
 
   });

@@ -47,10 +47,10 @@
               <h2 class="card-title">ฝ่ายขาย</h2>
               <p class="card-text">
               <ul>
-                <!-- <li><a href="dataqoud.php" >ใบเสนอราคา</a></li> -->
-                <!-- <li><a href="datatable_activity.php" >ตารางหนัดหมาย</a></li> -->
-                <li><a href="datatable_activity_new.php">ตารางหนัดหมาย</a></li>
-                <!-- <li><a href="dataactivity.php">เพิ่มตารางหนัดหมาย</a></li> -->
+                <li><a href="datatable_activity_new.php">ตารางนัดหมาย</a></li>
+                <li><a href="datatable_po.php">อันดับลูกค้าใบเสนอราคา</a></li>
+                <li><a href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
+                <li><a href="miscellaneous.php">รายงาน</a></li>
               </ul>
               </p>
             </div>
@@ -84,38 +84,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
-            <div class="card-body">
-             <h2 class="card-title">ผลิต</h2>
-             <p class="card-text">
-              <ul>
-                <li><a href="datatablemachine.php">เครื่องจักร(กำลังพัฒนา)</a></li>
-              </ul>
-             </p>
-            </div>
-          </div>
-        </div> -->
-
-
-
-        <!-- <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
-            <div class="card-body">
-             <h2 class="card-title">สโตร์</h2>
-             <p class="card-text">
-              <ul>
-                <li><a href="datainvent.php" >ดูสินค้า</a></li>
-                <li><a href="datastock.php" >ใบเบิกสินค้า</a></li>
-              </ul>
-             </p>
-            </div>
-          </div>
-        </div> -->
-
       </div>
     </div>
   </div>
@@ -123,41 +91,42 @@
   <div class="section">
     <div class="container pt-2">
       <h1> NEW FEATURE</h1>
-
       <h1>ผู้ใช้งาน</h1>
       <div class="row" >
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='datatable_activity_new.php';">ดูตารางนัดหมาย</button>
         </div>
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-2">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
              <button class="btn btn-primary" onclick="window.location='datatable_equipment.php';">ดูอุปรณ์</button>
         </div>
 
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='datatable_warning.php';">ดูตารางแจ้งซ่อม</button>
         </div>
 
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
         </div>
 
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='datatable_po.php';">ดูอันดับใบเสนอราคา</button>
         </div>
+      </div>
 
-        <div class="col-sm-12 col-md-4 col-lg-2">
+
+      <div class="row pt-3">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='datatable_invoice.php';">ดู Invoice</button>
         </div>
-
       </div>
 
       <h1>แอดมิน</h1>
       <div class="row" >
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='dataempl.php';">พนักงงาน </button>
         </div>
       </div>
