@@ -284,12 +284,8 @@
       var encodedURL_Delete = 'ajax/ajaxdelete.php';
 
       $(function() {
-        // select2_owner_list();
-        // select2_cust_list();
-        // select2_equipment_list()
-        // console.log(userlevel)
-        if (userlevel == "T") {
-          console.log('admin')
+        if (userlevel == "F") {
+          $("#newmodel").remove();
         }
 
         $("#date_search").datepicker({

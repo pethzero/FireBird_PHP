@@ -340,13 +340,9 @@
         var encodedURL_Modifi = 'ajax/ajaxmodifi.php';
 
         $(function() {
-            // select2_owner_list();
-            // select2_cust_list();
-            // select2_equipment_list()
-            // console.log(userlevel)
-            // if (userlevel == "T") {
-            //     console.log('admin')
-            // }
+            if (userlevel == "F") {
+                $("#newmodel").remove();
+            }
 
             $("#date_search").datepicker({
                 format: "dd/mm/yyyy",
@@ -758,15 +754,14 @@
             event.preventDefault();
             if (viewstatus == 'T') {
                 if (datasave == "save") {
-                    if ($('#drawno').val() == ''){
+                    if ($('#drawno').val() == '') {
                         Swal.fire(
                             'กรุณากรอกชื่อ Drawno',
                             'ไม่สามารถบันทึกได้',
                             'error'
                         )
                         return false
-                    }
-                    else if($('#recuser').val() == ''){
+                    } else if ($('#recuser').val() == '') {
                         Swal.fire(
                             'กรุณากรอกชื่อ ผู้บันทึก',
                             'ไม่สามารถบันทึกได้',
@@ -991,7 +986,7 @@
                 formData.append('queryIdHD', 'MOUPD_DRAWING');
                 formData.append('modifyIdHD', 'IND_DRAWING');
                 formData.append('conditionmain', 'I_DRAW');
-            } else{
+            } else {
                 // กรณีอื่น ๆ
                 // other cases
             }

@@ -52,7 +52,7 @@
   </style>
 
   <?php
-  include("connect_sql.php");
+  // include("connect_sql.php");
   ?>
 
   <section>
@@ -448,7 +448,8 @@
     var recno_nowner = "";
     var recno_edit;
 
-    var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
+    // var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
+    var encodedURL_Select = 'ajax_select_sql_mysql.php';
     var encodedURL_Insert = 'ajax/ajaxinsertnew.php';
     var encodedURL_Update = 'ajax/ajaxupdatenew.php';
 
@@ -521,7 +522,7 @@
           d.sqlprotect = encodeData;
         },
         dataSrc: function(json) {
-          // console.log(json)
+          console.log(json)
           tablejsondata = json.data;
           return json.data;
         }

@@ -48,7 +48,7 @@
               <p class="card-text">
               <ul>
                 <li><a href="datatable_activity_new.php">ตารางนัดหมาย</a></li>
-                <li><a href="datatable_po.php">อันดับลูกค้าใบเสนอราคา</a></li>
+                <li><a href="datatable_qt.php">อันดับลูกค้าใบเสนอราคา</a></li>
                 <li><a href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
                 <li><a href="miscellaneous.php">รายงาน</a></li>
               </ul>
@@ -64,14 +64,14 @@
               <h2 class="card-title">ฝ่ายจัดซื้อ</h2>
               <p class="card-text">
               <ul>
-                <li><a href="datapurc.php">ใบสั่งซื้อ</a></li>
+                <li><a href="datatable_po.php">อันดับลูกค้าใบสั่งซื้อ</a></li>
               </ul>
               </p>
             </div>
           </div>
         </div>
 
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
+        <!-- <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
           <div class="card">
             <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
             <div class="card-body">
@@ -83,7 +83,10 @@
               </p>
             </div>
           </div>
-        </div>
+        </div> -->
+
+
+        
       </div>
     </div>
   </div>
@@ -113,7 +116,7 @@
         </div>
 
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
-          <button class="btn btn-primary" onclick="window.location='datatable_po.php';">ดูอันดับใบเสนอราคา</button>
+          <button class="btn btn-primary" onclick="window.location='datatable_qt.php';">ดูอันดับใบเสนอราคา</button>
         </div>
       </div>
 
@@ -129,44 +132,30 @@
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='dataempl.php';">พนักงงาน </button>
         </div>
+
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='appointment.php';">ทดสอบ </button>
+        </div>
+
       </div>
-
-      <!-- <div class="row" id='subweb'>
-        <div class="col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='datatable_activity_new.php';">ดูตารางนัดหมาย</button>
-        </div>
-        <div class="col-sm-12 col-md-4 col-lg-2 ">
-          <button class="btn btn-primary" onclick="window.location='dataactivity.php';">สร้างตารางนัดหมาย</button>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='dataempl.php.php';">พนักงงาน </button>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-4">
-             <button class="btn btn-primary" onclick="window.location='datatable_empl.php.php';">แก้ไขอุปกรณ์</button>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='datatable_warning.php';">ดูตารางแจ้งซ่อม</button>
-        </div>
-
-        <div class="col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
-        </div>
-
-      </div> -->
     </div>
   </div>
-  <!-- <hr> -->
+  <hr>
+  <footer class="text-center mt-auto">
+    <div class="container pt-2">
+      <div class="row">
+        <div class="col-12">
+          <p>Copyright ? SAN Co.,Ltd. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
 
 
 
-  <?php include("0_footer.php"); ?>
+  <?php 
+  // include("0_footer.php");
+   ?>
 </body>
 <?php
 include("0_footerjs.php");
@@ -175,53 +164,7 @@ include("0_footerjs.php");
 
 <script>
   $(document).ready(function() {
-    //   var data = [
-    //   {
-    //     type: "ฝ่าย",
-    //     name: "ใบเสนอราคา",
-    //     link: "dataqoud.php",
-    //   },
-    //   {
-    //     type: "ผลิต",
-    //     name: "ชื่อผลิตภัณฑ์ 1",
-    //     link: "link_product_1.php",
-    //   },
-    //   {
-    //     type: "ผลิต",
-    //     name: "ชื่อผลิตภัณฑ์ 2",
-    //     link: "link_product_2.php",
-    //   },
-    //   {
-    //     type: "บริหาร",
-    //     name: "หัวหน้าบริหาร",
-    //     link: "link_management.php",
-    //   },
-    // ];
-
-    //   $(".click-me-btn").click(function() {
-    //     var number = $(this).data("number");
-    //     myFunction(number);
-    //   });
-
-    //   function myFunction(number) {
-    //     // Clear the existing cards
-    //     $("#subweb").empty();
-
-    //     // Filter the data based on the selected number
-    //     var filteredData = data.filter(function(item) {
-    //     return item.type === (number === 1 ? "ฝ่าย" : number === 2 ? "ผลิต" : number === 3 ? "บริหาร" : "สโตร์");
-    //   });
-
-    //     // Generate HTML for each item in the filtered data
-    //     $.each(filteredData, function(index, item) {
-    //       var newCardHTML = `
-    //       <div class="col-md-12 mb-4">
-    //            <a href="${item.link}" class="btn btn-custom">${item.name}</a>
-    //        </div>
-    //       `;
-    //       $("#subweb").append(newCardHTML);
-    //     });
-    //   }
+   
   });
 </script>
 

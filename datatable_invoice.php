@@ -142,11 +142,12 @@
         </div>
       </div>
 
-      <!-- <div class="chartCard">
+      <hr>
+      <div class="chartCard">
         <div class="chartBox">
           <canvas id="myChart"></canvas>
         </div>
-      </div> -->
+      </div>
 
     </div>
   </section>
@@ -210,8 +211,8 @@
     var databegin = moment().startOf('month').format('DD.MM.YYYY');
     var dateend = moment().endOf('month').format('DD.MM.YYYY');
 
-   $('#dayid').text( "ณ วันที่ " + firstDayOfMonth + " ถึง " + lastDayOfMonth )
-   
+    $('#dayid').text("ณ วันที่ " + firstDayOfMonth + " ถึง " + lastDayOfMonth)
+
     $("#datepickerbegin").datepicker({
       format: "dd/mm/yyyy",
       todayHighlight: true,
@@ -292,7 +293,7 @@
         },
         dataSrc: function(json) {
           tablejsondata = json.data;
-          totalsum(tablejsondata)
+          // totalsum(tablejsondata)
           allsum(tablejsondata)
           return json.data;
         }
@@ -423,7 +424,7 @@
           databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
           dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
           table.ajax.reload(myCallback);
-          $('#dayid').text( "ณ วันที่ " + beginDate.format('DD/MM/YYYY') + " ถึง " + endDate.format('DD/MM/YYYY') )
+          $('#dayid').text("ณ วันที่ " + beginDate.format('DD/MM/YYYY') + " ถึง " + endDate.format('DD/MM/YYYY'))
         } else {
           // ถ้า endDate มากกว่า beginDate
           $('.loading').show();
@@ -431,7 +432,7 @@
           databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
           dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
           table.ajax.reload(myCallback);
-          $('#dayid').text( "ณ วันที่ " + beginDate.format('DD/MM/YYYY') + " ถึง " + endDate.format('DD/MM/YYYY') )
+          $('#dayid').text("ณ วันที่ " + beginDate.format('DD/MM/YYYY') + " ถึง " + endDate.format('DD/MM/YYYY'))
         }
       } else {
         Swal.fire(
@@ -452,11 +453,37 @@
     // สร้างตัวแปร sum_result และกำหนดค่าเริ่มต้นเป็น 0
     var sum_result = 0;
 
-    function totalsum(data_total) {
-      // วนลูปผ่านแต่ละอิลิเมนต์และคำนวณค่า TOTALAMT * EXCHGRATE
+    // function totalsum(data_total) {
+    //   // วนลูปผ่านแต่ละอิลิเมนต์และคำนวณค่า TOTALAMT * EXCHGRATE
+    //   sum_result = 0;
+
+    //   data_total.forEach(item => {
+    //     // แปลงค่า TOTALAMT และ EXCHGRATE เป็นตัวเลข หรือใช้ 0 ถ้าเป็นค่าว่างหรือ null
+    //     const totalAmt = parseFloat(item.TOTALAMT) || 0;
+    //     const exchangeRate = parseFloat(item.EXCHGRATE) || 0;
+
+    //     // คำนวณค่า TOTALAMT * EXCHGRATE
+    //     const result = totalAmt * exchangeRate;
+    //     // เพิ่มผลลัพธ์ลงใน sum_result
+    //     sum_result += result;
+
+    //     // แสดงผลลัพธ์
+    //     // console.log(`รหัส: ${item.CODE}, ผลลัพธ์: ${result}`);
+    //   });
+
+    //   // แสดงผลรวมในคอนโซล
+    //   const formattedResult = sum_result.toFixed(2);
+    //   $('#sumtotal').val(formattedResult.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+    // }
+
+    var datatop10 = [];
+    var sum_result = 0;
+
+    function allsum(array_table) {
+
       sum_result = 0;
 
-      data_total.forEach(item => {
+      array_table.forEach(item => {
         // แปลงค่า TOTALAMT และ EXCHGRATE เป็นตัวเลข หรือใช้ 0 ถ้าเป็นค่าว่างหรือ null
         const totalAmt = parseFloat(item.TOTALAMT) || 0;
         const exchangeRate = parseFloat(item.EXCHGRATE) || 0;
@@ -473,89 +500,158 @@
       // แสดงผลรวมในคอนโซล
       const formattedResult = sum_result.toFixed(2);
       $('#sumtotal').val(formattedResult.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
-    }
 
-    function allsum(data) {
-      // สร้างตัวแปรสำหรับเก็บ CODE ที่มีค่า TOTALAMT * EXCHGRATE สูงที่สุด
-      let maxCode = "";
-      let maxTotalAmtTimesExchangeRate = -Infinity;
-      let NameCompany = "";
-      let maxSumCompanyName = "";
-      // สร้างออบเจ็กต์เพื่อเก็บผลรวมของ CODE แต่ละรายการ
-      const codeSumMap = {};
 
-      // วนลูปผ่านข้อมูลในอาร์เรย์
-      data.forEach(item => {
-        const code = item.CODE;
-        const totalAmt = parseFloat(item.TOTALAMT) || 0;
-        const exchangeRate = parseFloat(item.EXCHGRATE) || 0;
-        const company = item.NAME || "";
 
-        const result = totalAmt * exchangeRate;
+      var data_all = array_table
+        .reduce(function(acc, item) {
+          var existingItem = acc.find(function(element) {
+            return element.CODE === item.CODE;
+          });
 
-        // อัพเดทผลรวมของ CODE
-        codeSumMap[code] = (codeSumMap[code] || 0) + result;
-        // console.log(codeSumMap)
-        // เช็คว่าค่า TOTALAMT * EXCHGRATE สูงที่สุดหรือไม่
-        if (result > maxTotalAmtTimesExchangeRate) {
-          maxTotalAmtTimesExchangeRate = result;
-          maxCode = code;
-          NameCompany = company;
-        }
+          if (existingItem) {
+            // หากมีข้อมูลใน acc ที่มี CODE เดียวกันแล้ว
+            // ให้บวกค่า TOTALAMT เข้ากับข้อมูลที่มีอยู่แล้ว
+            existingItem.TOTALAMT += parseFloat(item.TOTALAMT);
+          } else {
+            // หากยังไม่มีข้อมูลใน acc สำหรับ CODE นี้
+            // ให้เพิ่มข้อมูลใหม่ลงใน acc
+            acc.push({
+              CODE: item.CODE,
+              NAME: item.NAME,
+              TOTALAMT: parseFloat(item.TOTALAMT)
+            });
+          }
+
+          return acc;
+        }, []);
+
+      data_all.sort(function(a, b) {
+        return b.TOTALAMT - a.TOTALAMT;
       });
 
-      // console.log(codeSumMap)
-      // หา CODE ที่มีผลรวมมากที่สุด
-      let maxSumCode = "";
-      let maxSumValue = -Infinity;
-      for (const code in codeSumMap) {
-        // console.log(codeSumMap)
-        if (codeSumMap[code] > maxSumValue) {
-          maxSumValue = codeSumMap[code];
-          maxSumCode = code;
-          maxSumCompanyName = data.find(item => item.CODE === code)?.NAME || "";
+      // console.log(data_all)
 
-          // console.log(maxSumValue)
-          // console.log(maxSumCode)
-        }
-      }
+      datatop10 = data_all.slice(0, 10);
 
-
+      // console.log(datatop10[0])
       let namemessage = "";
-      let formattedResultTotalCompany = maxSumValue.toFixed(2);
-      namemessage = maxSumCode + " : " + maxSumCompanyName;
-      if (formattedResultTotalCompany === "-Infinity") {
-        formattedResultTotalCompany = "0.00"; // เปลี่ยนเป็น 0.00 หรือค่าที่คุณต้องการ
-        namemessage = "";
-      }
-
+      let amtmessage = "";
+      if (datatop10.length > 0) {
+        namemessage = (datatop10[0].CODE).trim() + " : " + (datatop10[0].NAME).trim();
+        amtmessage = ((datatop10[0].TOTALAMT).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      } 
       $('#company').val(namemessage)
-      $('#sumcompany').val(formattedResultTotalCompany.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+      $('#sumcompany').val(amtmessage)
+
+      // const newData = datatop10.map(function(item) {
+      //     return item.TOTALAMT;
+      //   });
+
+      data.datasets[0].data = datatop10.map(function(item) {
+        return item.TOTALAMT;
+      });;
+      myChart.update();
+
+
+      // // แสดงข้อมูลที่มี TOTALAMT สูงสุด
+      // if (arrayMax) {
+      //   namemessage = (arrayMax.CODE).trim() + " : " + (arrayMax.NAME).trim();
+      //   amtmessage = ((arrayMax.TOTALAMT).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      // } 
+      // $('#company').val(namemessage)
+      // $('#sumcompany').val(amtmessage)
+
+
 
     }
 
-    // function FuccategorizedData(dataArray)
-    //   {
-    //     // var data = dataArray;
-    //     categorizedData = {};
-    //     dataArray.forEach(item => 
-    //     {
-    //       // const year = item["Year"];
-    //       // const month = item["Mouth"];
-    //       // const totalAmt = item["TOTALAMT"];
+    ////////////////////////////////////////////////// CHART  //////////////////////////////////////////////////
 
-    //       // if (!categorizedData[year])
-    //       // {
-    //       //   categorizedData[year] = [];
-    //       // }
+    const data = {
+      labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5', 'TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10'],
+      datasets: [{
+        label: 'ยอดขาย TOP 10',
+        data: Array(10).fill(null), // กำหนดข้อมูลเริ่มต้นให้เป็น null ในอาร์เรย์ขนาด 10 ตัว
+        backgroundColor: [
+          'rgba(0, 153, 51,0.6)',
+        ],
+        borderColor: [
+          'rgba(0, 153, 51,1)'
+        ],
+        borderWidth: 2
+      }]
+    };
 
-    //       // categorizedData[year].push({ month, totalAmt });
-    //     });
-    //     console.log(categorizedData);
-    //   }    ////////////////////////////////////////////// MISCELLANEOUS /////////////////////////////////////////////////
-    //  $('html, body').animate({
-    //       scrollTop: $('#dataoffset').offset().top
-    //   }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'จำนวนการขาย',
+              font: {
+                size: window.innerWidth <= 600 ? 14 : 16, // ขนาดตัวอักษรของหัวข้อแกน Y
+                weight: 'bold' // ความหนาของตัวอักษรของหัวข้อแกน Y
+              }
+            },
+            ticks: {
+              font: {
+                size: window.innerWidth <= 600 ? 12 : 14, // ขนาดตัวอักษรของตัวเลขบนแกน Y
+                weight: 'normal' // ความหนาของตัวเลขบนแกน Y
+              }
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'ยอดขาย TOP 10', // ข้อความหัวเรื่อง
+            font: {
+              size: 20, // ขนาดตัวอักษร
+              weight: 'bold' // ความหนา
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = '';
+                if (context.parsed.y !== null) {
+                  if (context.datasetIndex === 0) {
+                    // console.log(datatop10[context.dataIndex].NAME)
+                    label += datatop10[context.dataIndex].CODE + ":" + datatop10[context.dataIndex].NAME + ':' + ((context.parsed.y).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    // label += context.parsed.y;
+                  }
+                }
+                return label;
+              }
+            }
+          }
+        },
+      }
+    };
+
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+
+    // $("#myChart").css("height", 800);
+    if (window.innerWidth <= 600) {
+      // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
+      $("#myChart").css("height", "400px");
+    } else {
+      // ถ้าความกว้างของหน้าจอมากกว่า 600px (สำหรับคอมพิวเตอร์ PC)
+      $("#myChart").css("height", "800px");
+    }
+
+
 
     $('#backhis').click(function() {
       window.location = 'main.php';

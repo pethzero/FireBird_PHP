@@ -4,16 +4,15 @@ include("../sql_exe.php");
 
 function nameFile($fileToUpload, $autoIncrementValue, $uploadnamedb)
 {
-    $filename = pathinfo($fileToUpload["name"], PATHINFO_FILENAME); // name.jpg => name
+    // $filename = pathinfo($fileToUpload["name"], PATHINFO_FILENAME); // name.jpg => name
     $extension = strtolower(pathinfo($fileToUpload["name"], PATHINFO_EXTENSION)); // name.jpg => name
-    // $filename_db = $filename . "_" . $autoIncrementValue . "." . $extension;
     $filename_db = $uploadnamedb . "_" . $autoIncrementValue . "." . $extension;
     return $filename_db;
 }
 
 function uploadFile($fileToUpload, $targetDir, $autoIncrementValue, $uploadnamedb)
 {
-    $filename = pathinfo($fileToUpload["name"], PATHINFO_FILENAME); // name.jpg => name
+    // $filename = pathinfo($fileToUpload["name"], PATHINFO_FILENAME); // name.jpg => name
     $extension = strtolower(pathinfo($fileToUpload["name"], PATHINFO_EXTENSION)); // name.jpg => name
     $targetFile = $targetDir . $uploadnamedb . "_" . $autoIncrementValue . "." . $extension;
 
@@ -121,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmtInsert  = $pdo->prepare($sqlhd);
 
             if ($condition == "IHD") {
+                // $sqlhd = sqlmixexe($queryIdHD, $paramhd);
                 $stmtInsert->bindParam(':DOCNO', $itemrunnig);
                 $stmtInsert->bindParam(':UPLOAD', $filename_db);
             } elseif ($condition == "I_ID" || $condition == 'I_DOC') {
@@ -133,7 +133,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             /////////////
             // $stmt = true;
             if ($stmtInsert->execute()) {
-            // if ($stmtInsert) {
                 /////// UPLOAD ///////
                 if (isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]["error"] === UPLOAD_ERR_OK) {
                     $messageupload = uploadFile($_FILES["fileToUpload"], $targetDir, $autoIncrementValue, $uploadnamedb);
@@ -148,15 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     'message' => 'เพิ่มข้อมูลสำเร็จ',
                     'sqlhd' =>  $sqlhd,
                     'paramhd' =>  $paramhd,
-                    // // 'itemrunnig' => $itemrunnig,
-                    // 'sqlCheck' => $sqlCheck,
-                    // // 'resultCheck' => $resultCheck,
-                    // 'messageCheck' => $messageCheck,
-                    // 'autoIncrementValue' => $autoIncrementValue,
-                    // 'filename_db' => $filename_db,
-                    // '$itemrunnig' => $itemrunnig
-                    // // 'filename_db' => $filename_db,
-                    // // 'messageupload' => $messageupload
                 );
                 $pdo->commit();
                 // $pdo->rollBack();
@@ -173,9 +163,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $response = array(
                 'status' => 'none',
                 'message' => 'มีข้อความซ้ำกัน',
-                // 'sqlhd' =>  $sqlhd,
-                // 'paramhd' =>  $paramhd,
-                // 'messageCheck' => $messageCheck,
             );
             echo json_encode($response);
         }

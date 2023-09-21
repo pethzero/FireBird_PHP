@@ -17,9 +17,9 @@
         </a>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="datatable_activity_new.php">ตารางหนัดหมาย</a></li>
-          <li><a href="datatable_po.php">อันดับลูกค้าใบเสนอราคา</a></li>
-          <li><a href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
-          <li><a href="miscellaneous.php">รายงาน</a></li>
+          <li><a class="dropdown-item" href="datatable_qt.php">อันดับลูกค้าใบเสนอราคา</a></li>
+          <li><a class="dropdown-item" href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
+          <li><a class="dropdown-item" href="miscellaneous.php">รายงาน</a></li>
         </ul>
       </li>
       <li class="nav-item dropdown">
@@ -27,7 +27,8 @@
           ฝ่ายจัดซื้อ
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item">coming soon</a></li>
+          <!-- <li><a class="dropdown-item">coming soon</a></li> -->
+          <li><a class="dropdown-item" href="datatable_po.php">อันดับลูกค้าใบสั่งซื้อ</a></li>
         </ul>
       </li>
 

@@ -61,35 +61,21 @@
         </div>
       </div>
 
-      <!-- <button id="randomDataButton">สุ่มข้อมูล</button> -->
+      <button id="randomDataButton">สุ่มข้อมูล</button>
 
-      <h2>ใบสั่งซื้อ</h2>
-
-      <hr>
-      <h2>อันดับลูกค้า ใบสั่งซื้อ</h2>
-      <div class="row">
-        <div class="col-12">
-          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
-            <thead class="thead-light">
-              <tr>
-                <th>ลำดับ</th>
-                <th>ลูกค้า</th>
-                <th>รหัส</th>
-                <th>จำนวน</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <hr>
       <div class="chartCard">
         <div class="chartBox">
           <canvas id="myChart"></canvas>
         </div>
       </div>
+
+
+      <div class="chartCard">
+        <div class="chartBox">
+          <canvas id="myChart_Doughnut"></canvas>
+        </div>
+      </div>
+
 
     </div>
   </section>
@@ -130,169 +116,54 @@
       }
     });
 
-    var recno = null;
-    // var qid = 'COUNT_QUOTHD0';
-    var qid = 'COUNT_PURCHD0';
-    
-    var startd = null;
-    var tablejsondata;
-    var selectedRow = null;
-    var selectedRecno = null;
-    var datasave = '';
 
-    // var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
-    var encodedURL_Select = encodeURIComponent('ajax_select_sql_firdbird.php');
+    // สร้างฟังก์ชั่นสำหรับสุ่มข้อมูลใหม่
+    function randomizeData() {
+      // สุ่มค่าใหม่ในช่วง 0-200 และปรับปรุงข้อมูลใหม่ใน data.datasets[0].data
+      const newData = data.datasets[0].data.map(() => Math.floor(Math.random() * 200));
+      data.datasets[0].data = newData;
 
-    //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
-    // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
+      // สร้างอาเรย์ของชื่อที่คุณมีอยู่ (เป็นตัวอย่าง)
+      const randomNames = [
+        "Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hank", "Ivy", "Jack",
+        "Kathy", "Liam", "Megan", "Nathan", "Olivia", "Peter", "Quinn", "Rachel", "Sam", "Tina",
+        "Uma", "Victor", "Wendy", "Xander", "Yvonne", "Zane",
+        // เพิ่มรายชื่อเพิ่มเติมตรงนี้
+      ];
 
-    function secertkey() {
-      return encodeData;
-    }
+      // สร้าง labels ใหม่โดยสุ่มชื่อจากอาเรย์ของชื่อ
+      const newLabels = Array.from({
+        length: 20
+      }, () => {
+        const randomIndex = Math.floor(Math.random() * randomNames.length);
+        return randomNames[randomIndex];
+      });
 
-    var data_array = [];
-    var startingValue = 1;
-    var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
-    var data_array = [];
-    var table = $('#table_datahd').DataTable({
-      ajax: {
-        url: encodedURL,
-        data: function(d) {
-          d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
-          d.params = null;
-          d.condition = '';
-          // d.sqlprotect = encodeData;
-        },
-        dataSrc: function(json) {
-          tablejsondata = json.data;
-          // console.log(tablejsondata)
-          return json.data;
-        }
-      },
-      scrollX: true,
-      columns: [
-        {
-          data: null,
-          render: function(data, type, row, meta) {
-            return meta.row+1;
-          }
-        },
-        {
-          data: 'SUPPOMERNAME',
-          render: function(data, type, row) {
-            return data
-          }
-        },
-        {
-          data: 'CODE',
-          render: function(data, type, row) {
-            return data
-          }
-        },
-        {
-          data: 'QUAN',
-          render: function(data, type, row) {
-            return data
-          }
-        },
-      ],
-      columnDefs: [{
-          className: 'dt-right',
-          targets: [2]
-        },
-        // {
-        //   searchable: false,
-        //   orderable: false,
-        //   targets: 0
-        // }
-      ],
-      order: [
-        [3, 'desc'],
-      ],
-      dom: 'frtip',
-      initComplete: function(settings, json) {
-        // $('.loading').hide();
-        console.log('ww')
-        datachart(tablejsondata)
-      },
-      createdRow: function(row, data, dataIndex) {
-
-      },
-      drawCallback: function(settings) {
-
-      },
-      rowCallback: function(row, data) {
-
-      },
-    });
-
-    var topCode = [];
-
-    function datachart(data) {
-      console.log(data)
-      var tophigh_QUAN = data
-        .map(function(item) {
-          return {
-            CODE: item.CODE + ':' + item.SUPPOMERNAME,
-            QUAN: item.QUAN
-          };
-        })
-        .sort(function(a, b) {
-          return b.QUAN - a.QUAN;
-        })
-        .slice(0, 10)
-        .reduce(function(obj, item) {
-          obj[item.CODE] = item.QUAN;
-          return obj;
-        }, {});
-
-      // const topData = Object.values(tophigh_QUAN);
-      topCode = Object.keys(tophigh_QUAN);
-
-      console.log(topCode)
-
-      const topDataset = {
-        label: 'ยอดขาย TOP 10',
-        data: Object.values(tophigh_QUAN),
-        backgroundColor: 'rgba(0, 153, 51,0.6)',
-        borderColor: 'rgba(0, 153, 51,1)',
-        borderWidth: 1,
-        fill: true
-        // categoryPercentage: 1,
-        // barPercentage: 0.8
-      };
-
-      // ปรับปรุงข้อมูลใหม่ใน data.datasets[0].data
-      // data.datasets[0].data = topDataset;
-      myChart.data.datasets = [topDataset];
+      // กำหนด labels ใหม่ในตัวแปร data
+      data.labels = newLabels;
 
       // สร้างกราฟใหม่
       myChart.update();
     }
 
 
-    $('#seacrh').click(function() {
-      var dateValue = $('#date_search').val();
 
-      if (dateValue) {
-        startd = moment($('#date_search').val(), 'DD/MM/YYYY').format('DD/MM/YYYY')
-      } else {
-        startd = '';
-      }
+    // เพิ่ม Event Listener สำหรับปุ่ม RANDOM
+    $('#randomDataButton').click(function() {
+      // ให้การสุ่มข้อมูลและอัปเดตกราฟเริ่มทำงานทันทีเมื่อคลิกปุ่ม
+      randomizeData();
 
-      console.log(startd)
-
-
-      $('#table_datahd').DataTable().column(6).search(startd).draw();
-      $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
-    })
-
+      // จัดตั้งการเรียกใช้ฟังก์ชัน randomizeData() ทุก 1 วินาที
+      // setInterval(randomizeData, 1000);
+      // setInterval(randomizeData, 3000);
+    });
 
     const data = {
-      labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5', 'TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10'],
+      labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5', 'TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10', 'TOP11', 'TOP12', 'TOP13', 'TOP14', 'TOP15', 'TOP16', 'TOP17', 'TOP18', 'TOP19', 'TOP20'],
+      // labels:Array(10).fill(null),
       datasets: [{
-        label: 'ยอดขาย TOP 10',
-        data: Array(10).fill(null), // กำหนดข้อมูลเริ่มต้นให้เป็น null ในอาร์เรย์ขนาด 10 ตัว
+        label: 'ยอดขาย TOP 20',
+        data: Array(20).fill(null), // กำหนดข้อมูลเริ่มต้นให้เป็น null ในอาร์เรย์ขนาด 10 ตัว
         backgroundColor: [
           'rgba(0, 153, 51,0.6)',
         ],
@@ -304,10 +175,16 @@
     };
 
 
-
+    const moveChart = {
+      id:'moveChart',
+      afterDraw(chart,args,pluginOptions){
+        // const {} = chart;
+        // console.log(chart);
+      }
+    }
 
     const config = {
-      // type: 'bar',
+      // type: 'doughnut',
       type: 'bar',
       data,
       options: {
@@ -346,15 +223,18 @@
                 let label = '';
                 if (context.parsed.y !== null) {
                   if (context.datasetIndex === 0) {
-                    label += topCode[context.dataIndex] + ':' + context.parsed.y;
+                    label += context.label + ':' + context.parsed.y;
+                    // label += topCode[context.dataIndex] + ':' + context.parsed.y; //กรณี doughnut parsed ไม่มีค่า x y
+                    console.log(context)
                   }
                 }
                 return label;
               }
             }
-          }
-        },
-      }
+          },
+        }
+      },
+      plugins:[moveChart]
     };
 
     // render init block

@@ -63,10 +63,10 @@
 
       <!-- <button id="randomDataButton">สุ่มข้อมูล</button> -->
 
-      <h2>ใบสั่งซื้อ</h2>
+      <h2>ใบเสนอราคา</h2>
 
       <hr>
-      <h2>อันดับลูกค้า ใบสั่งซื้อ</h2>
+      <h2>อันดับลูกค้า ใบเสนอราคา</h2>
       <div class="row">
         <div class="col-12">
           <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
@@ -131,9 +131,7 @@
     });
 
     var recno = null;
-    // var qid = 'COUNT_QUOTHD0';
-    var qid = 'COUNT_PURCHD0';
-    
+    var qid = 'COUNT_QUOTHD0';
     var startd = null;
     var tablejsondata;
     var selectedRow = null;
@@ -178,7 +176,7 @@
           }
         },
         {
-          data: 'SUPPOMERNAME',
+          data: 'CUSTOMERNAME',
           render: function(data, type, row) {
             return data
           }
@@ -233,7 +231,7 @@
       var tophigh_QUAN = data
         .map(function(item) {
           return {
-            CODE: item.CODE + ':' + item.SUPPOMERNAME,
+            CODE: item.CODE + ':' + item.CUSTOMERNAME,
             QUAN: item.QUAN
           };
         })
@@ -287,6 +285,27 @@
       $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
     })
 
+    // สร้างฟังก์ชั่นสำหรับสุ่มข้อมูลใหม่
+    function randomizeData() {
+      const newData = data.datasets[0].data.map(() => Math.floor(Math.random() * 200)); // สุ่มค่าใหม่ในช่วง 0-200
+
+      // ปรับปรุงข้อมูลใหม่ใน data.datasets[0].data
+      data.datasets[0].data = newData;
+
+      // สร้างกราฟใหม่
+      myChart.update();
+    }
+
+    // เพิ่ม Event Listener สำหรับปุ่ม RANDOM
+    // เพิ่ม Event Listener สำหรับปุ่ม RANDOM
+    $('#randomDataButton').click(function() {
+      // ให้การสุ่มข้อมูลและอัปเดตกราฟเริ่มทำงานทันทีเมื่อคลิกปุ่ม
+      randomizeData();
+
+      // จัดตั้งการเรียกใช้ฟังก์ชัน randomizeData() ทุก 1 วินาที
+      // setInterval(randomizeData, 1000);
+    });
+
 
     const data = {
       labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5', 'TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10'],
@@ -307,7 +326,6 @@
 
 
     const config = {
-      // type: 'bar',
       type: 'bar',
       data,
       options: {

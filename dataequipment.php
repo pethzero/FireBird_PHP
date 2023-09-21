@@ -74,8 +74,7 @@ if ($size === 0) {
     </style>
 
     <?php
-    include("connect_sql.php");
-    include("sql.php");
+ 
     // include("0_fselect.php");
     ?>
 

@@ -61,7 +61,7 @@
   </style>
 
   <?php
-  include("connect_sql.php");
+  // include("connect_sql.php");
   ?>
 
   <section>
@@ -115,7 +115,7 @@
       <div class="row pb-3">
 
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-          <button id='newmodel' type="button" class="btn btn-primary">ตารางนัดหมาย</button>
+          <button id='newmodel' type="button" class="btn btn-primary">เพิ่มข้อมูล</button>
         </div>
       </div>
 
@@ -124,21 +124,21 @@
 
       <div class="row">
         <div class="col-12">
-          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
+          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
-                <th>ข้อมูล</th>
+                <th width='3%'>ข้อมูล</th>
                 <th>เลขที่นัดหมาย</th>
                 <th>สถานะ</th>
                 <th>บริษัท</th>
                 <th>ผู้ติดต่อ</th>
                 <th>วันที่นัดหมาย</th>
                 <th>ความสำคัญ</th>
-                <th>ราคาเบิก</th>
                 <th>ราคาจ่าย</th>
+                <th>ราคาเบิก</th>
                 <th>ผู้นัดหมาย</th>
-
+                <th width='3%'>ลบ</th>
               </tr>
             </thead>
             <tbody>
@@ -437,6 +437,8 @@
       }
     });
 
+    var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
+
     var recno = null;
     var qid = 'SEL_ACTIVITYHD';
     var startd = null;
@@ -454,17 +456,49 @@
     var recno_cont = 0;
     var recno_namecont = "";
 
-    var recno_edit;
+    var recno_ajax;
     var recno_equipment = 0;
     var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
     var encodedURL_Insert = 'ajax/ajaxinsertnew.php';
     var encodedURL_Update = 'ajax/ajaxupdatenew.php';
+    var encodedURL_Delete = 'ajax/ajaxdelete.php';
 
-
+    var visible_table = [0, 2];
+    // if(userlevel == "F"){
+    //     visible_table = [0, 2];
+    //   }else{
+    //     visible_table = [0,2];
+    //   }
+  
     $(function() {
 
-      select2_owner_list();
-      select2_cust_list();
+      $("#datepicker").datepicker({
+        format: "dd/mm/yyyy",
+        clearBtn: true,
+        todayHighlight: true,
+        autoclose: true
+      });
+
+      $("#datepicker_first").datepicker({
+        format: "dd/mm/yyyy",
+        clearBtn: true,
+        todayHighlight: true,
+        autoclose: true
+      });
+
+      $("#datepicker_last").datepicker({
+        format: "dd/mm/yyyy",
+        clearBtn: true,
+        todayHighlight: true,
+        autoclose: true
+      });
+
+      $("#datepicker_warn").datepicker({
+        format: "dd/mm/yyyy",
+        clearBtn: true,
+        todayHighlight: true,
+        autoclose: true
+      });
 
       var currentDate = new Date();
       currentDate.setYear(currentDate.getFullYear() + 543);
@@ -477,6 +511,9 @@
         autoclose: true
       });
 
+      select2_owner_list();
+      select2_cust_list();
+    
     });
 
 
@@ -509,11 +546,55 @@
       window.location = 'dataequipment.php';
     });
 
-    const customButtonEdit = (data, type, row, idclass, idname) => {
-      // return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}">${idname}</button>`;
-      return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}"><i class="far fa-edit"></i></button>`;
-      // return '';
+    const customModelRender = (row, istatus) => {
+      if (istatus == "T" || istatus == "S") {
+        return `<div class="button-container">` + `<button class="btn btn-primary btn-sm view" id="view_table_modal_${row['RECNO']}"><i class="far fa-eye"></i></button>` + `<button class="btn btn-danger btn-sm edit" id="edit_table_modal_${row['RECNO']}"><i class="far fa-edit"></i></button>` + `</div>`;
+      } else {
+        return `<div class="button-container">` + `<button class="btn btn-primary btn-sm view" id="view_table_modal_${row['RECNO']}"><i class="far fa-eye"></i></button>` + `</div>`;
+      }
     };
+
+    const customButtonEdit = (data, type, row, istatus) => {
+      let divele = "";
+      if (data['STATUS'] == "F") {
+        if (istatus == "S") {
+          divele = `<button class="btn btn-danger btn-sm edit" id="edit_table_modal_${row['RECNO']}"><i class="far fa-edit"></i></button>`;
+        } else {
+          divele = `<button class="btn btn-primary btn-sm view" id="view_table_modal_${row['RECNO']}"><i class="far fa-eye"></i></button>`;
+        }
+      } else {
+        // if (istatus == "T" || istatus == "S")
+        // {
+        //   divele = `<button class="btn btn-danger btn-sm edit" id="${row['RECNO']}"><i class="far fa-edit"></i></button>`;
+        // }
+        divele = `<button class="btn btn-danger btn-sm edit" id="edit_table_modal_${row['RECNO']}"><i class="far fa-edit"></i></button>`;
+      }
+      return divele;
+    };
+
+    const customModelDelete = (data, type,row, istatus) => {
+      let divele = "";
+      if (data['STATUS'] == "F") {
+        if (istatus == "S") {
+          divele =  `<button class="btn btn-danger btn-sm trash" id="trash_table_modal_${row['RECNO']}"><i class="fa fa-trash"></i></button>`;
+        } else {
+          divele =  ``;
+        }
+      } else {
+        // if (istatus == "S")
+        // {
+        //   divele =  `<button class="btn btn-danger btn-sm trash" id="trash_table_modal_${row['RECNO']}"><i class="fa fa-trash"></i></button>`;
+        // }
+        divele =  `<button class="btn btn-danger btn-sm trash" id="trash_table_modal_${row['RECNO']}"><i class="fa fa-trash"></i></button>`;
+      }
+      return divele;
+      // if (istatus == "T" || istatus == "S") {
+      //   return `<button class="btn btn-danger btn-sm trash" id="trash_table_modal_${row['RECNO']}"><i class="fa fa-trash"></i></button>`;
+      // } else {
+      //   return `<button class="btn btn-danger btn-sm trash""><i class="fa fa-trash"></i></button>` ;
+      // }
+    };
+
 
 
     const formatDate = (data) => {
@@ -568,81 +649,78 @@
         }
       },
       scrollX: true,
-      columns:
-        // dtcolumn['DATA_ACTIVITYHD'],
-        [{
-            data: 'RECNO'
-          },
-          // {data: null,render: function(data, type, row){return "";}},
-          {
-            data: null,
-            render: function(data, type, row) {
-              return customButtonEdit(data, type, row, 'edit', 'แก้ไข');
+      columns: [{
+          data: 'RECNO'
+        },
+        {
+          data: null,
+          render: function(data, type, row) {
+            return customButtonEdit(data, type, row, userlevel);
+          }
+        },
+        {
+          data: 'DOCNO'
+        },
+        {
+          data: null,
+          render: function(data) {
+            if (data.STATUS == 'A') {
+              return '<h5><span class="badge bg-secondary mt-2">ยังไม่เริ่มดำเนินการ</span></h5>'
+            } else if (data.STATUS == 'I') {
+              return '<h5><span class="badge bg-info mt-2 text-dark">อยู่ระหว่างดำเนินการ</span></h5>';
+            } else if (data.STATUS == 'W') {
+              return '<h5><span class="badge bg-warning mt-2 text-dark">รอดำเนินการ</span></h5>';
+            } else if (data.STATUS == 'D') {
+              return '<h5><span class="badge bg-danger mt-2">ถูกเลื่อนออกไป</span></h5>';
+            } else if (data.STATUS == 'F') {
+              return '<h5><span class="badge bg-success mt-2">เสร็จสิ้น</span></h5>'
+            } else {
+              return '';
             }
-          },
-          {
-            data: 'DOCNO'
-          },
-          // {data: 'STATUS'},
-          {
-            data: null,
-            render: function(data) {
-              // return getStatusTextOther(data.STATUS, 'TABLEACTIVITYHD_STATUS');
-              if (data.STATUS == 'A') {
-                return '<h5><span class="badge bg-secondary mt-2">ยังไม่เริ่มดำเนินการ</span></h5>'
-              } else if (data.STATUS == 'I') {
-                return '<h5><span class="badge bg-info mt-2 text-dark">อยู่ระหว่างดำเนินการ</span></h5>';
-              } else if (data.STATUS == 'W') {
-                return '<h5><span class="badge bg-warning mt-2 text-dark">รอดำเนินการ</span></h5>';
-              } else if (data.STATUS == 'D') {
-                return '<h5><span class="badge bg-danger mt-2">ถูกเลื่อนออกไป</span></h5>';
-              } else if (data.STATUS == 'F') {
-                return '<h5><span class="badge bg-success mt-2">เสร็จสิ้น</span></h5>'
-              } else {
-                return '';
-              }
+          }
+        },
+        {
+          data: 'CUSTNAME'
+        },
+        {
+          data: 'CONTNAME'
+        },
+        {
+          data: 'STARTD',
+          render: formatDate
+        },
+        {
+          data: null,
+          render: function(data) {
+            if (data.PRIORITY == 'H') {
+              return 'สูง';
+            } else if (data.PRIORITY == 'N') {
+              return 'ปกติ';
+            } else if (data.PRIORITY == 'L') {
+              return 'ต่ำ';
+            } else {
+              return '-';
             }
-          },
-          {
-            data: 'CUSTNAME'
-          },
-          {
-            data: 'CONTNAME'
-          },
-          // {data: 'STARTD',render: formatDate},
-          {
-            data: 'STARTD',
-            render: formatDate
-          },
-          // {data: 'STARTD',render: formatDate,"sType": "date-uk"},
-          // {data: 'PRIORITY'},
-          {
-            data: null,
-            render: function(data) {
-              // return getStatusTextOther(data.PRIORITY, 'TABLEACTIVITYHD_PRIORITY');
-              if (data.PRIORITY == 'H') {
-                return 'สูง';
-              } else if (data.PRIORITY == 'N') {
-                return 'ปกติ';
-              } else if (data.PRIORITY == 'L') {
-                return 'ต่ำ';
-              } else {
-                return '-';
-              }
-            }
-          },
-          {
-            data: 'PRICECOST',
-            render: formatCurrency
-          },
-          {
-            data: 'PRICEPWITHDRAW',
-            render: formatCurrency
-          },
-          {
-            data: 'OWNERNAME'
-          },
-        ],
+          }
+        },
+        {
+          data: 'PRICECOST',
+          render: formatCurrency
+        },
+        {
+          data: 'PRICEPWITHDRAW',
+          render: formatCurrency
+        },
+        {
+          data: 'OWNERNAME'
+        },
+        {
+          data: null,
+          render: function(data, type, row) {
+            return customModelDelete(data, type,row, userlevel);
+          }
+        },
+      ],
       columnDefs: [{
           className: 'noVis',
           targets: [0]
@@ -657,7 +735,7 @@
         },
         {
           "orderable": false,
-          "targets": 1
+          "targets": [1, 11]
         },
         {
           type: 'currency',
@@ -665,9 +743,8 @@
         },
         {
           "visible": false,
-          "targets": [0, 2]
+          "targets": visible_table,
         },
-        // { type: 'de_date', targets: 6 }
         {
           type: 'th_date',
           targets: 6
@@ -703,20 +780,20 @@
 
       },
       drawCallback: function(settings) {
-        var api = this.api();
-        api.rows().every(function(rowIdx, tableLoop, rowLoop)
-        {
-          var data = this.data();
-          var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
-          var row = api.row(rowIdx).node();
+        // var api = this.api();
+        // api.rows().every(function(rowIdx, tableLoop, rowLoop)
+        // {
+        //   var data = this.data();
+        //   var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
+        //   var row = api.row(rowIdx).node();
 
-          if (variableT === 'A') {
-            $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-          }
-          else{
-            $(row).addClass('table-danger'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-          }
-        });
+        //   if (variableT === 'A') {
+        //     $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
+        //   }
+        //   else{
+        //     $(row).addClass('table-danger'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
+        //   }
+        // });
       },
       rowCallback: function(row, data) {
         $(row).on('click', function() {
@@ -735,72 +812,31 @@
     });
 
 
-    $('#table_datahd').on('click', '.edit', function() {
-      var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
-      $('#ok').removeClass('btn-primary').addClass('btn-danger').text('บันทึกแก้ไข');
-      $('#story').removeClass('bg-secondary').addClass('bg-danger').text('แก้ไข');
-      // recno_edit = rowData.RECNO;
-      datasave = 'edit';
-      search_datalist(rowData.RECNO);
-      $("#myModal").modal("show");
+    //////////////////////////////////////////////////////  BUTTON DATA  //////////////////////////////////////////////////////
 
-    });
-
-
-
-    $("#datepicker").datepicker({
-      format: "dd/mm/yyyy",
-      clearBtn: true,
-      todayHighlight: true,
-      autoclose: true
-    });
-
-    $("#datepicker_first").datepicker({
-      format: "dd/mm/yyyy",
-      clearBtn: true,
-      todayHighlight: true,
-      autoclose: true
-    });
-
-    $("#datepicker_last").datepicker({
-      format: "dd/mm/yyyy",
-      clearBtn: true,
-      todayHighlight: true,
-      autoclose: true
-    });
-
-    $("#datepicker_warn").datepicker({
-      format: "dd/mm/yyyy",
-      clearBtn: true,
-      todayHighlight: true,
-      autoclose: true
-    });
 
 
 
     $('#seacrh').click(function() {
       var dateValue = $('#date_search').val();
-
       if (dateValue) {
         startd = moment($('#date_search').val(), 'DD/MM/YYYY').format('DD/MM/YYYY')
       } else {
         startd = '';
       }
-
       // console.log(startd)
-
-
       $('#table_datahd').DataTable().column(6).search(startd).draw();
       $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
     })
 
     $("#newmodel").click(function() {
-      $('#ok').removeClass('btn-danger').addClass('btn-primary').text('บันทึก');
-      $('#story').removeClass('bg-danger').addClass('bg-secondary').text('เพิ่ม');
+      $('#ok').removeClass('btn-danger btn-success btn-warning').addClass('btn-primary').text('บันทึก');
+      $('#story').removeClass('bg-danger bg-success').addClass('bg-secondary').text('เพิ่ม');
       // <button id="ok" type="submit" class="btn btn-primary">บันทึก</button>
 
+      message_alert = "คุณจะเปลี่ยนกลับไม่ได้!"
 
-
+      viewstatus = 'T';
       datasave = 'save';
       recno_owner = 0;
       recno_nowner = '';
@@ -845,6 +881,46 @@
 
 
       $("#myModal").modal("show"); // เปิดกล่องโมดอล
+    });
+
+
+    $('#table_datahd').on('click', '.edit', function() {
+      var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
+      $('#ok').removeClass('btn-primary btn-success btn-warning').addClass('btn-danger').text('บันทึกแก้ไข');
+      $('#story').removeClass('bg-secondary bg-success').addClass('bg-danger').text('แก้ไข');
+  
+      message_alert = "คุณจะเปลี่ยนกลับไม่ได้!"
+      viewstatus = 'T';
+      datasave = 'update';
+      search_datalist(rowData.RECNO);
+      $("#myModal").modal("show");
+    });
+
+
+    $('#table_datahd').on('click', '.trash', function() {
+      var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
+      $('#ok').removeClass('btn-primary btn-success').addClass('btn-danger').text('ลบ');
+      $('#story').removeClass('bg-secondary bg-success').addClass('bg-danger').text('!!ลบ!!');
+     
+      message_alert = "แน่ใจนะลบไปแล้ว ก็เหมือนเธอไม่มีวันหวนกลับมา!!!"
+      viewstatus = 'T';
+      datasave = 'delete';
+      // search_datalist(rowData.RECNO);
+
+      recno_ajax = rowData.RECNO
+      $("#idForm").submit();
+    });
+
+
+    $('#table_datahd').on('click', '.view', function() {
+      var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
+      $('#ok').removeClass('btn-primary btn-danger btn-warning').addClass('btn-success').text('ดูรายการ');
+      $('#story').removeClass('bg-secondary bg-danger').addClass('bg-success').text('ดูรายการ');
+   
+      viewstatus = 'F';
+      datasave = 'NONE';
+      search_datalist(rowData.RECNO);
+      $("#myModal").modal("show");
     });
 
     // คลิกที่ปุ่ม "ยกเลิก" หรือปุ่มปิดของกล่องโมดอล
@@ -1061,18 +1137,28 @@
 
 
     //////////////////////////////////////////////////////////////// SAVE ///////////////////////////////////////////////////////////////
-
+    var viewstatus = 'F';
     $("#idForm").submit(function(event) {
       event.preventDefault();
-      if (recno_cust == 0) {
-        Swal.fire(
-          'กรุณาเลือกชื่อบริษัท',
-          'ไม่สามารถบันทึกได้',
-          'error'
-        )
-        return false
+      if(datasave == 'delete')
+      {
+        // console.log('ลบ')
+        AlertSave();
+      }else{
+        if (recno_cust == 0) {
+          Swal.fire(
+            'กรุณาเลือกชื่อบริษัท',
+            'ไม่สามารถบันทึกได้',
+            'error'
+          )
+          return false
+        }
+        // AlertSave()
+        if (viewstatus == 'T') {
+          AlertSave();
+        }
       }
-      AlertSave()
+     
     });
 
     var paramhd;
@@ -1129,7 +1215,7 @@
       $.ajax({
         url: encodedURL_Update,
         type: "POST",
-        data: set_formdata('edit'),
+        data: set_formdata('update'),
         dataSrc: '',
         contentType: false,
         processData: false,
@@ -1170,6 +1256,54 @@
       });
     }
 
+     ////////////////////////////////////////////////////////////// DELETE //////////////////////////////////////////////////////////////
+     function DeleteData() {
+        $.ajax({
+          url: encodedURL_Delete,
+          type: "POST",
+          data: set_formdata('delete'),
+          dataSrc: '',
+          contentType: false,
+          processData: false,
+          cache: false,
+          beforeSend: function() {},
+          complete: function() {},
+          success: function(response) {
+            save_json = JSON.parse(response);
+            if (save_json.status == 'success') {
+              console.log(save_json)
+              table.ajax.reload();
+              Swal.fire({
+                title: "บันทึกแล้ว",
+                text: "ข้อความที่คุณต้องการแสดง",
+                icon: "success",
+                buttons: ["OK"],
+                dangerMode: true,
+              }).then(function(willRedirect) {
+                // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
+                if (willRedirect) {
+                  // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
+                  $('#myModal').modal('hide');
+                }
+              });
+              /////////////////////////////////
+            } else {
+              Swal.fire(
+                'เกิดปัญหาในการบันทึก',
+                // response.message,
+                JSON.parse(response).message,
+                'error'
+              )
+            }
+          },
+          error: function(xhr, status, error) {
+            console.log('error')
+            console.error(error);
+          }
+        });
+      }
+
+
     var modify = 'F';
     ////////////////////////////////////////////////////////////// set_formdata //////////////////////////////////////////////////////////////
     function set_formdata(conditionsformdata) {
@@ -1188,7 +1322,7 @@
       console.log()
       /// id ,param ///
       paramhd = {
-        RECNO: recno_edit,
+        RECNO: recno_ajax,
         STATUS: $('#status').val(),
         CUSTNAME: recno_namecust,
         // CUSTNAME: $('#custname').val(),
@@ -1219,18 +1353,15 @@
       // เพิ่มอาร์เรย์ paramhd เข้าไปใน FormData และแปลงเป็น JSON ก่อน
 
       if (conditionsformdata == "save") {
-        // ประมวลผลเพิ่มข้อมูล
-        // process to insert data
         formData.append('queryIdHD', 'IND_ACTIVITYHD');
-
       } else if (conditionsformdata == "delete") {
-        // ประมวลผลลบข้อมูล
-        // process to delete data
-      } else {
+        formData.append('queryIdHD', 'DLT_ACTIVITYHD');
+      } else if (conditionsformdata == "update") {
         formData.append('queryIdHD', 'UPD_ACTIVITYHD');
+      } else {
         // กรณีอื่น ๆ
         // other cases
-      }
+      } 
       formData.append('queryIdDT', '');
       formData.append('condition', 'I_DOC');
       formData.append('uploadnamedb', 'activityhd');
@@ -1242,11 +1373,12 @@
       return formData;
     }
 
+    var message_alert = "คุณจะเปลี่ยนกลับไม่ได้!";
     ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
     function AlertSave() {
       Swal.fire({
         title: 'คุณแน่ใจแล้วใช่ไหม',
-        text: "คุณจะเปลี่ยนกลับไม่ได้!",
+        text: message_alert,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'ตกลงบันทึก',
@@ -1260,10 +1392,19 @@
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
+          // if (datasave == "save") {
+          //   SaveData()
+          // } else {
+          //   UpdateData()
+          // }
           if (datasave == "save") {
-            SaveData()
+            SaveData();
+          } else if (datasave == "update") {
+            UpdateData();
+          } else if (datasave == "delete") {
+            DeleteData();
           } else {
-            UpdateData()
+            // Handle other cases or show an error message
           }
 
         } else if (
@@ -1297,7 +1438,7 @@
         success: function(response) {
           json_searchdatalist = JSON.parse(response).data;
 
-          recno_edit = json_searchdatalist[0].RECNO;
+          recno_ajax = json_searchdatalist[0].RECNO;
           recno_cust = json_searchdatalist[0].CUST;
           recno_cont = json_searchdatalist[0].CONT;
           recno_owner = json_searchdatalist[0].OWNER;
