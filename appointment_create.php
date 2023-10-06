@@ -138,45 +138,19 @@ $recno = null;
                 <div class="createdata">
                     <div class="row ">
                         <div class="col-sm-12 col-md-6 col-lg-6">
+                                <button id="backhome" type="button" class=" btn btn-primary me-3">กลับหน้า Home</button>
+                                <button id="backcontent" type="button" class="  btn btn-primary">กลับหน้านัดหมาย</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row ">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
                             <div class="mb-3">
                                 <button id="addtable" type="button" class="btn-input btn btn-primary me-3">เพิ่ม</button>
                                 <button id="canceltable" type="button" class="btn-input  btn btn-danger">ยกเลิก</button>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-6 ">
-                            <div class="mb-3">
-                                <button id="companyadd" type="button" class="btn-input btn btn-primary  float-right float-end">เพิ่มลูกค้า</button>
-                            </div>
-                        </div> -->
                     </div>
-
-
-                    <!-- <div class="dialog">
-                        <select class="select2">
-                          
-                        </select>
-                    </div> -->
-                    <!-- <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
@@ -207,7 +181,6 @@ $recno = null;
                             </div>
                         </div>
                     </div>
-
                     <div class="row d-flex justify-content-end">
                         <div class="col-sm-6 col-md-4 col-lg-2">
                             <button type="submit" id="save" name='save' value="save" class="btn-input btn btn-primary float-right float-end">save</button>
@@ -221,8 +194,7 @@ $recno = null;
                                     <th>ชื่อลูกค้า</th>
                                     <th>รายละเอียด</th>
                                     <th>หมายเหตุ</th>
-                                    <!-- <th>วันที่นัด</th>
-                                    <th>ระบบเแจ้ง</th> -->
+                                    <th>สถานที่นัดหมาย</th>
                                     <th>ลบ</th>
                                 </tr>
                             </thead>
@@ -230,27 +202,6 @@ $recno = null;
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <hr>
-                <div class="row pt-2 table-responsive">
-                    <table id="detailtable" class="nowrap table table-striped table-bordered" width='100%'>
-                        <thead class="thead-light">
-                            <tr>
-                                <th>No.</th>
-                                <th>ข้อมูล</th>
-                                <th>ชื่อลูกค้า</th>
-                                <th>รายละเอียด</th>
-                                <th>หมายเหตุ</th>
-                                <th>ผู้นัด</th>
-                                <th>วันที่นัด</th>
-                                <th>ระบบเแจ้ง</th>
-                                <th>ลบ</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </section>
@@ -299,17 +250,13 @@ $recno = null;
                 return false;
             }
         });
-
         var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
-
-
         $("#dateatc").datepicker({
             format: "dd/mm/yyyy",
             clearBtn: true,
             todayHighlight: true,
             autoclose: true
         });
-
         $("#datewarn").datepicker({
             format: "dd/mm/yyyy",
             clearBtn: true,
@@ -341,7 +288,6 @@ $recno = null;
             }
             return divele;
         };
-
         const customButtonRemove = (data, type, row, istatus) => {
             let divele = "";
             // if (data['STATUS'] == "F") {
@@ -362,123 +308,15 @@ $recno = null;
             "info": false,
             "searching": false,
             "ordering": false,
-            // "scrollX": true,
-            // order: [],
             "columnDefs": [{
                     "width": "3%",
                     "targets": [0]
                     // "targets": [0, 6]
                 },
-                // {
-                //     "width": "8%",
-                //     "targets": [4, 5]
-                // },
-                // {
-                //     "width": "12%",
-                //     "targets": [3]
-                // },
             ],
-            // rowCallback: function(row, data) {},
         });
 
         var selectedRow = null;
-        var detailtable = $('#detailtable').DataTable({
-            "info": false,
-           
-            columns: [{
-                    data: 'RECNO'
-                },
-                {
-                    data: null,
-                    render: function(data, type, row) {
-                        return customButtonEdit(data, type, row, userlevel);
-                    }
-                },
-                {
-                    data: 'CUSTNAME'
-                },
-                {
-                    data: 'DETAIL',
-                    render: function(data, type, row) {
-                        if (type === 'display' && data) {
-                            return data.replace(/\n/g, '<br>');
-                        }
-                        return data;
-                    }
-                },
-                {
-                    data: 'REMARK'
-                },
-                {
-                    data: 'OWNERNAME'
-                },
-                {
-                    data: 'STARTD',
-                    render: formatDate
-                },
-                {
-                    data: 'WARND',
-                    render: formatDate
-                },
-                {
-                    data: null,
-                    render: function(data, type, row) {
-                        return customButtonRemove(data, type, row, userlevel);
-                    }
-                },
-            ],
-            "columnDefs": [{
-                    "width": "6%",
-                    "targets": [1]
-                },
-                {
-                    "width": "8%",
-                    "targets": [6, 7]
-                },
-                {
-                    "width": "12%",
-                    "targets": [4]
-                },
-                {
-                    "width": "3%",
-                    "targets": [8]
-                },
-                {
-                    "orderable": false,
-                    "targets": [1]
-                },
-                {
-                    "visible": false,
-                    "targets": [0]
-                },
-                {
-                    type: 'th_date',
-                    targets: [6, 7]
-                },
-               
-            ],
-            order: [[6, 'desc']],
-            rowCallback: function(row, data) {
-                // var api = this.api();
-                // api.rows().every(function(rowIdx, tableLoop, rowLoop)
-                // {
-                // //   var data = this.data();
-                // //   var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
-                //   var row = api.row(rowIdx).node();
-                // //   $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                
-
-                // //   if (variableT === 'A') {
-                // //     $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                // //   }
-                // //   else{
-                // //     $(row).addClass('table-danger'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                // //   }
-                // });
-            },
-        });
-
-
         var selectdata;
         // สร้างฟังก์ชันสำหรับดึงข้อมูลจากแหล่งข้อมูล
         function getDataFromServer() {
@@ -515,17 +353,11 @@ $recno = null;
                     //     // อัพเดท Select2 เพื่อให้ข้อมูลแสดงผลให้เห็น
                     //     $(select2Input).trigger('change');
                     // });
-
-
-
-                    detailtable.clear().rows.add(data.datasql).draw();
                 })
                 .catch((error) => {
-                    // จัดการข้อผิดพลาด
                     console.error(error);
                 });
         }
-        // เรียกใช้งานฟังก์ชัน getDataFromServer เพื่อดึงข้อมูลเมื่อคุณต้องการ
         getDataFromServer();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         var counter = 0;
@@ -534,19 +366,9 @@ $recno = null;
             const newRow = createtable.row.add([
                 counter,
                 `<input type="text" class="company-input form-control" maxlength="250" />`,
-                // `<select class="company-input form-control select2" maxlength="250"></select>`,
-                ` <textarea class="form-control detail-input" maxlength="500"  rows="2" ></textarea>`,
-                ` <textarea class="form-control remark-input" maxlength="500" rows="2" ></textarea>`,
-                // `<div class="date datepicker_get" >
-                //     <input type="text" class="form-control date-input"/>
-                //     <span class="input-group-append">
-                //     </span>
-                // </div>`,
-                // `<div class="date  datepicker_get" >
-                //     <input type="text" class="form-control date-input" />
-                //     <span class="input-group-append">
-                //     </span>
-                // </div>`,
+                `<textarea class="form-control detail-input" maxlength="500"  rows="1" ></textarea>`,
+                ` <textarea class="form-control remark-input" maxlength="500" rows="1" ></textarea>`,
+                ` <textarea class="form-control location-input" maxlength="500" rows="1" ></textarea>`,
                 `<button type="button" class="btn btn-danger delete-row ">ลบ</button>`
             ]).draw(false).node();
             $(newRow).attr('id', `row${counter}`); //tr
@@ -562,35 +384,6 @@ $recno = null;
                 autoclose: true
             });
         };
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // ฟังก์ชันที่ใช้ในการดึงข้อมูล
-        // function fetchDataAndPopulateSelect2() {
-        //     // ดึงข้อมูลโดยใช้ fetch (สมมติว่า API ของคุณอยู่ที่ /api/data)
-        //     fetch('/api/data')
-        //         .then(response => response.json())
-        //         .then(data => 
-        //         {
-        //             // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-        //             const select2Inputs = $('.select2');
-
-        //             // วนลูปผ่านทุกฟิลด์ Select2 และเติมข้อมูลลงในแต่ละฟิลด์
-        //             select2Inputs.each(function(index) {
-        //                 const select2Input = select2Inputs[index];
-
-        //                 // เติมข้อมูลใน Select2
-        //                 data.forEach(item => {
-        //                     $(select2Input).append(new Option(item.text, item.id, false, false));
-        //                 });
-
-        //                 // อัพเดท Select2 เพื่อให้ข้อมูลแสดงผลให้เห็น
-        //                 $(select2Input).trigger('change');
-        //             });
-        //         });
-        // }
-        // เรียกใช้ฟังก์ชัน fetchDataAndPopulateSelect2 เมื่อต้องการดึงและเติมข้อมูล
-        // fetchDataAndPopulateSelect2();
-
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         $('#createtable').on('click', '.delete-row', function() {
             counter--;
@@ -681,33 +474,17 @@ $recno = null;
 
         $('#idForm').on('submit', function(e) {
             e.preventDefault(); // ป้องกันการส่ง form ไปยังหน้าอื่น
-            // ตรวจสอบว่าปุ่มที่ถูกคลิกคือ "save" หรือ "edit"
-            // var saveButton = $('#save');
-            // var editButton = $('#edit');
             let url = "";
             let status_sql = "";
-            console.log(e.originalEvent.submitter)
-
-            var clickedButtonName = e.originalEvent.submitter.name;
+            let clickedButtonName = e.originalEvent.submitter.name;
 
             if (clickedButtonName === 'save') {
-                let url = 'ajax/process_insert.php';
-                let status_sql = 'save';
+                 url = 'ajax/process_insert.php';
+                 status_sql = 'save';
                 datatable_generetor();
                 if (process == 'T') {
                     AlertSave(url, status_sql)
                 }
-            } else if (clickedButtonName === 'editsave') {
-                // saveRemoveButton() 
-                let url = 'ajax/process_update.php';
-                let status_sql = 'update';
-                AlertSave(url, status_sql)
-            } else if (clickedButtonName === 'removerow') {
-                // saveRemoveButton() 
-                let url = 'ajax/process_delete.php';
-                let status_sql = 'delete';
-                AlertSave(url, status_sql)
-                // console.log('remove')
             }
         });
         $('#addtable').click(function() {
@@ -721,15 +498,16 @@ $recno = null;
             process = 'T';
             if (createtable.rows().count() > 0) {
                 $('#createtable tbody tr').each(function() {
-                    let companyValue = $(this).find('td:eq(1) .company-input').val();
-                    let detailValue = $(this).find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
-                    let remarkValue = $(this).find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-                    // let dateActValue = $(this).find('td:eq(4) .date-input').val(); // คอลัมน์ที่ 4
-                    // let dateWarnValue = $(this).find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 5
-
-                    let dateActValue = $('#dateatc').val();
-                    let dateWarnValue = $('#datewarn').val();
-                    let ownername = $('#ownername').val();
+                    const companyValue = $(this).find('td:eq(1) .company-input').val();
+                    const detailValue = $(this).find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
+                    const remarkValue = $(this).find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
+                    // const locationValue = $(this).find('td:eq(4) .location-input').val();
+                    const locationValue = $(this).find('td:eq(4) .location-input').val();
+      
+                    console.log(locationValue)
+                    const dateActValue = $('#dateatc').val();
+                    const dateWarnValue = $('#datewarn').val();
+                    const ownername = $('#ownername').val();
 
                     tableData.push({
                         name: companyValue,
@@ -737,12 +515,10 @@ $recno = null;
                         remark: remarkValue,
                         dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
                         dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                        ownername: ownername
+                        ownername: ownername,
+                        location: locationValue
                     });
-                    // let statusValue = $(this).find('td:eq(4)').text();
-                    // if (statusValue.trim() === 'T') {
-                    //     process = 'F';
-                    // }
+                    console.log(tableData)
                 });
             } else {
                 process = 'F'
@@ -753,7 +529,6 @@ $recno = null;
                     icon: 'warning',
                     confirmButtonText: 'OK'
                 });
-                console.log('ตารางว่าง');
             }
         }
         //////////////////////////////////////////////////////////// CRUDSQL ////////////////////////////////////////////////////////////
@@ -876,167 +651,8 @@ $recno = null;
         }
         //////////////////////////////////////////////////////////// CLICK ////////////////////////////////////////////////////////////
         var DataEdit = [];
-        $('#detailtable').on('click', '.edit-row', function() {
-            let row = $(this).closest('tr');
-            let companyCell = row.find('td:eq(1)');
-            let detailCell = row.find('td:eq(2)');
-            let remarkCell = row.find('td:eq(3)');
-            //
-            let OwnerCell = row.find('td:eq(4)');
-
-            let dateActCell = row.find('td:eq(5)');
-            let dateWarnCell = row.find('td:eq(6)');
-            let companyValue = companyCell.text();
-            let detailValue = detailCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-            let remarkValue = remarkCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-
-            let OwnerValue = OwnerCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-
-            let dateActValue = dateActCell.text() === "00/00/0000" ? '' : dateActCell.text();
-            let dateWarnValue = dateWarnCell.text() === "00/00/0000" ? '' : dateWarnCell.text();
-            // เปลี่ยน <br> เป็น \n
-            detailValue = detailValue.replace(/<br>/g, "\n");
-            remarkValue = remarkValue.replace(/<br>/g, "\n");
-            // สร้าง input && textarea สำหรับแก้ไขข้อมูล
-            let companyInput = '<input type="text" class="company-input form-control" value="' + companyValue + '" />';
-            let detailTextarea = '<textarea class="form-control detail-input" maxlength="500" >' + detailValue + '</textarea>';
-            let remarkTextarea = '<textarea class="form-control remark-input" maxlength="500" >' + remarkValue + '</textarea>';
-
-            let OwnerInput = '<input type="text" class="owner-input form-control" value="' + OwnerValue + '" />';
-
-            let dateActInput = `<div class="date datepicker_get" >
-                    <input type="text" class="form-control date-input"  value="${dateActValue}"  />
-                    <span class="input-group-append">
-                    </span>
-                </div>`;
-            let dateWarnInput = `<div class="date datepicker_get" >
-                    <input type="text" class="form-control date-input"  value="${dateWarnValue}"  />
-                    <span class="input-group-append">
-                    </span>
-                </div>`;
-            // คำนวณความยาวของข้อความที่แสดงผล
-            let detailTextLines = detailValue.split(/\n/).length;
-            let remarkTextLines = remarkValue.split(/\n/).length;
-            // กำหนดความยาวของ textarea ให้เท่ากับจำนวนบรรทัดของข้อความ
-            detailTextarea = $(detailTextarea).attr('rows', detailTextLines);
-            remarkTextarea = $(remarkTextarea).attr('rows', remarkTextLines);
-            // แทนที่ข้อมูลใน cell ด้วย textarea
-            OwnerCell.html(OwnerInput);
-            companyCell.html(companyInput);
-            detailCell.html(detailTextarea);
-            remarkCell.html(remarkTextarea);
-            dateActCell.html(dateActInput);
-            dateWarnCell.html(dateWarnInput);
-            // ทำลายปุ่ม "แก้ไข"
-            row.find('.edit-row').remove();
-            // สร้างปุ่ม "บันทึก" และ "ยกเลิก"
-            var saveButton = '<button type="sumbit" name="editsave" class="btn btn-success btn-sm save-row me-2"><i class="fa-solid fa-check"></i></button>';
-            var cancelButton = '<button type="button" class="btn btn-danger btn-sm cancel-edit"><i class="fa-solid fa-x"></i></button>';
-            row.find('td:eq(0)').html(saveButton + ' ' + cancelButton);
-            $(row).find('.datepicker_get').datepicker({
-                format: "dd/mm/yyyy",
-                clearBtn: true,
-                todayHighlight: true,
-                autoclose: true
-            });
-        });
-
-
-        $('#detailtable').on('click', '.cancel-edit', function() {
-            let row = $(this).closest('tr');
-            let companyValue = row.find('td:eq(1) .company-input').val();
-            let detailValue = row.find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
-            let remarkValue = row.find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-
-            let OwnerValue = row.find('td:eq(4) .owner-input').val(); // คอลัมน์ที่ 3
-
-            let dateActValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 4
-            let dateWarnValue = row.find('td:eq(6) .date-input').val(); // คอลัมน์ที่ 5
-            // detailValue.replace(/<br>/g, "\n");
-            // console.log(detailValue)
-            detailValue = detailValue.replace(/\n/g, '<br>');
-            row.find('td:eq(1)').html(companyValue);
-            row.find('td:eq(2)').html(detailValue);
-            row.find('td:eq(3)').html(remarkValue);
-            row.find('td:eq(4)').html(OwnerValue);
-            row.find('td:eq(5)').html(dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
-            row.find('td:eq(6)').html(dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
-            // ทำลายปุ่ม "บันทึก" และ "ยกเลิก"
-            row.find('.save-row .cancel-edit').remove();
-            // สร้างปุ่ม "แก้ไข" 
-            let editButton = '<button type="button" class="btn btn-warning btn-sm edit-row" ><i class="far fa-edit"></i></button>'
-            row.find('td:eq(0)').html(editButton);
-        });
-
         var select_tr = null;
-        $('#detailtable').on('click', '.save-row', function() {
-            DataEdit = [];
-            let row = $(this).closest('tr');
-            let rowData = $('#detailtable').DataTable().row($(this).closest('tr')).data();
-            console.log(rowData.RECNO)
-            // console.log(row)
-            select_tr = row
-            let companyValue = row.find('td:eq(1) .company-input').val();
-            let detailValue = row.find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
-            let remarkValue = row.find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-
-            let OwnerValue = row.find('td:eq(4) .owner-input').val(); // คอลัมน์ที่ 4
-
-            let dateActValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 4
-            let dateWarnValue = row.find('td:eq(6) .date-input').val(); // คอลัมน์ที่ 5
-            DataEdit.push({
-                recno: rowData.RECNO,
-                name: companyValue,
-                detail: detailValue,
-                remark: remarkValue,
-                dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                ownername: OwnerValue
-            });
-        });
-
         var DataRemove
-        $('#detailtable').on('click', '.removerow', function() {
-            DataRemove = [];
-            let row = $(this).closest('tr');
-            let rowData = $('#detailtable').DataTable().row($(this).closest('tr')).data();
-            console.log(rowData.RECNO)
-            // console.log(row)
-            select_tr = row
-            DataRemove.push({
-                recno: rowData.RECNO,
-            });
-            // RemoveRowTable()
-        });
-
-
-        // แปลงและแสดงผลข้อมูลในคอลัมน์วันที่นัด
-        function saveRemoveButton() {
-            DataEdit[0].detail = DataEdit[0].detail.replace(/\n/g, '<br>')
-            select_tr.find('td:eq(1)').html(DataEdit[0].name);
-            select_tr.find('td:eq(2)').html(DataEdit[0].detail);
-            select_tr.find('td:eq(3)').html(DataEdit[0].remark);
-            select_tr.find('td:eq(4)').html(DataEdit[0].ownername);
-            if (DataEdit[0].dateAct === '0000-00-00') {
-                select_tr.find('td:eq(5)').html('00/00/0000');
-            } else {
-                select_tr.find('td:eq(5)').html(moment(DataEdit[0].dateAct, 'YYYY-MM-DD').format('DD/MM/YYYY'));
-            }
-            if (DataEdit[0].dateWarn === '0000-00-00') {
-                select_tr.find('td:eq(6)').html('00/00/0000');
-            } else {
-                select_tr.find('td:eq(6)').html(moment(DataEdit[0].dateWarn, 'YYYY-MM-DD').format('DD/MM/YYYY'));
-            }
-            select_tr.find('.save-row .cancel-edit').remove();
-            // สร้างปุ่ม "แก้ไข" 
-            let editButton = '<button type="button" class="btn btn-warning btn-sm edit-row" ><i class="far fa-edit"></i></button>'
-            select_tr.find('td:eq(0)').html(editButton);
-        }
-
-        function RemoveRowTable() {
-            // let row = $(this).closest('tr');
-            $('#detailtable').DataTable().row(select_tr).remove().draw();
-        }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /////////////////////////////////////////////////  SELECT 2  ////////////////////////////////////////////////////

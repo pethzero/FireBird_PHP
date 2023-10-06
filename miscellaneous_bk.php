@@ -131,37 +131,15 @@ include("0_footerjs.php");
     });
 
     
-   
-
-
-
-
-
     $("#downloadExcel").click(function() {
       // ข้อมูลที่ต้องการส่งไปยัง PHP
       // ส่งข้อมูลไปยัง PHP โดยใช้ AJAX
+
       let beginDate = moment($('#datepickerbegin').val(), 'DD/MM/YYYY');
       let endDate = moment($('#datepickerend').val(), 'DD/MM/YYYY');
       let slcdata = $('#slcdata').val()
-
-      const array_data = [{
-          name: "qout",
-          queryid: "EXCEL_CUSTOMERSALE",
-
-        },
-        {
-          name: "oreder",
-          queryid: "EXCEL_QOUT_ORDERHD",
-        },
-        {
-          name: "delivery",
-          queryid: "EXCEL_QOUT_DELYHD",
-        },
-        {
-          name: "invoice",
-          queryid: "EXCEL_QOUT_INVOICE",
-        }
-      ];
+      // console.log(beginDate)
+      // console.log(endDate)
 
       if ($('#datepickerbegin').val() !== '' && $('#datepickerend').val() !== '') {
         console.log("ประมวลผลได้");
@@ -174,15 +152,15 @@ include("0_footerjs.php");
         } else if (endDate.isSame(beginDate)) {
           // ถ้า endDate เท่ากับ beginDate
           $('.loading').show();
-          databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          download_excel(array_data[parseInt(slcdata)], databegin, dateend)
+          databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+          dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+          download_excel(slcdata, databegin, dateend)
         } else {
           // ถ้า endDate มากกว่า beginDate
           $('.loading').show();
-          databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          download_excel(array_data[parseInt(slcdata)], databegin, dateend)
+          databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+          dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+          download_excel(slcdata, databegin, dateend)
         }
       } else {
         Swal.fire(
@@ -191,9 +169,15 @@ include("0_footerjs.php");
           'error'
         )
       }
+
+      // $('#slcdata').val();
+      // $('.loading').show();
+      // console.log($('#slcdata').val())
+      // download_excel()
+
     });
 
-    
+
     function download_excel(slcdata, databegin, dateend) {
       $.ajax({
         type: "POST",
@@ -209,8 +193,8 @@ include("0_footerjs.php");
         success: function(response) {
             data_json = JSON.parse(response).download;
             console.log(data_json)
-            window.location.href = "uploads/" + data_json;
-            $('.loading').hide();
+          window.location.href = "uploads/" + data_json;
+          $('.loading').hide();
         },
         error: function(error) {
           console.log(error)
@@ -218,6 +202,64 @@ include("0_footerjs.php");
         }
       });
     }
+
+
+
+    // $("#downloadExcel").click(function() {
+    //   // ข้อมูลที่ต้องการส่งไปยัง PHP
+    //   // ส่งข้อมูลไปยัง PHP โดยใช้ AJAX
+    //   let beginDate = moment($('#datepickerbegin').val(), 'DD/MM/YYYY');
+    //   let endDate = moment($('#datepickerend').val(), 'DD/MM/YYYY');
+    //   let slcdata = $('#slcdata').val()
+
+    //   const array_data = [{
+    //       name: "qout",
+    //       queryid: "EXCEL_CUSTOMERSALE",
+
+    //     },
+    //     {
+    //       name: "oreder",
+    //       queryid: "EXCEL_QOUT_ORDERHD",
+    //     },
+    //     {
+    //       name: "delivery",
+    //       queryid: "EXCEL_QOUT_DELYHD",
+    //     },
+    //     {
+    //       name: "invoice",
+    //       queryid: "EXCEL_QOUT_INVOICE",
+    //     }
+    //   ];
+
+    //   if ($('#datepickerbegin').val() !== '' && $('#datepickerend').val() !== '') {
+    //     console.log("ประมวลผลได้");
+    //     if (endDate.isBefore(beginDate)) {
+    //       Swal.fire(
+    //         'มีการป้อนวันที่ผิดพลาด',
+    //         'ไม่สามารถประมวลผลได้',
+    //         'error'
+    //       )
+    //     } else if (endDate.isSame(beginDate)) {
+    //       // ถ้า endDate เท่ากับ beginDate
+    //       $('.loading').show();
+    //       databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
+    //       dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
+    //       download_excel(array_data[parseInt(slcdata)], databegin, dateend)
+    //     } else {
+    //       // ถ้า endDate มากกว่า beginDate
+    //       $('.loading').show();
+    //       databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
+    //       dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
+    //       download_excel(array_data[parseInt(slcdata)], databegin, dateend)
+    //     }
+    //   } else {
+    //     Swal.fire(
+    //       'มีการป้อนวันที่ผิดพลาด',
+    //       'ไม่สามารถประมวลผลได้',
+    //       'error'
+    //     )
+    //   }
+    // });
 
  
     // async function download_excel(slcdata,data_begin,date_end) {

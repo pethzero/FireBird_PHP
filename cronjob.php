@@ -21,7 +21,8 @@ try {
     // สร้างคำสั่ง SQL เพื่อดึงข้อมูล
     // สร้างคำสั่ง SQL เพื่อดึงข้อมูลโดยไม่รวมค่า '0000-00-00'
     // $sql = "SELECT * FROM activityhd WHERE STARTD = :today AND STARTD != '0000-00-00'";
-    $sql = "SELECT * FROM activityhd WHERE WARND = :today ";
+    // $sql = "SELECT * FROM activityhd WHERE WARND = :today ";
+    $sql = "SELECT * FROM appointment WHERE WARND = :today ";
 
     // เตรียมคำสั่ง SQL ด้วย PDO
     $stmt = $pdo->prepare($sql);

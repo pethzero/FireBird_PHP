@@ -1,24 +1,24 @@
 <?php
 include("database.php");
 include("sql.php");
-
-class bindParamData {
-    public static function bindParams($stmt, $data, $condition) {
-        switch ($condition) {
-            case '001':
-                $stmt->bindParam(':name', $data['name']);
-                break;
-            case '002':
-                $stmt->bindParam(':a', $data['a']);
-                $stmt->bindParam(':b', $data['b']);
-                break;
-            // เพิ่มเงื่อนไขเพิ่มเติมตามความต้องการ
-            default:
-                // ไม่มีเงื่อนไขที่ตรงกัน
-                break;
-        }
-    }
-}
+include("bpdata.php");
+// class bindParamData {
+//     public static function bindParams($stmt, $data, $condition) {
+//         switch ($condition) {
+//             case '001':
+//                 $stmt->bindParam(':name', $data['name']);
+//                 break;
+//             case '002':
+//                 $stmt->bindParam(':a', $data['a']);
+//                 $stmt->bindParam(':b', $data['b']);
+//                 break;
+//             // เพิ่มเงื่อนไขเพิ่มเติมตามความต้องการ
+//             default:
+//                 // ไม่มีเงื่อนไขที่ตรงกัน
+//                 break;
+//         }
+//     }
+// }
 
 class InsertData
 {
@@ -31,7 +31,7 @@ class InsertData
         $this->conn->setAttribute(PDO::ATTR_AUTOCOMMIT, false); // ปิด Auto Commit
     }
 
-    public function insertRecord($data,$sqlQuery, $condition)
+    public function insertRecord($data, $sqlQuery, $condition)
     {
         try {
             $this->conn->beginTransaction(); // เริ่ม Transaction
@@ -47,7 +47,7 @@ class InsertData
         }
     }
 
-    public function insertRecordMultiple($dataArray,$sqlQuery, $condition)
+    public function insertRecordMultiple($dataArray, $sqlQuery, $condition)
     {
         try {
             $this->conn->beginTransaction(); // เริ่ม Transaction
@@ -83,21 +83,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // ใช้เมทอด scanSQL() เพื่อรับคำสั่ง SQL ตาม $queryId
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
         if ($sqlQuery !== null) {
-
             $insertData = new InsertData();
-            if ($insertData->insertRecordMultiple($tableData_Json,$sqlQuery, $condition)) {
-                $response = array('message' => 'Data received successfully');
+            if ($insertData->insertRecordMultiple($tableData_Json, $sqlQuery, $condition)) {
+                $response = array(
+                    'message' => 'Data received successfully',
+                    'status' => 'success'
+                );
             } else {
-                $response = array('message' => 'Data received Error');
+                $response = array(
+                    'message' => 'Data received Error',
+                    'status' => 'error'
+                );
             }
-
-
-            header('Content-Type: application/json');
-            echo json_encode($response);
-            exit;
         } else {
             $response = array(
                 'message' => 'ไม่พบคำสั่ง SQL สำหรับ $queryId ที่ระบุ',
+                'status' => 'error',
             );
         }
 
@@ -109,14 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // );
         header('Content-Type: application/json');
         echo json_encode($response);
-    }
-
-    //catch exception
-    catch (Exception $e) {
-        // echo 'Message: ' .$e->getMessage();
+    } catch (Exception $e) {
         $response = array(
             'message' => $e->getMessage(),
-            // 'message' => 'Data received successfully'
         );
         header('Content-Type: application/json');
         echo json_encode($response);

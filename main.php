@@ -47,7 +47,7 @@
               <h2 class="card-title">ฝ่ายขาย</h2>
               <p class="card-text">
               <ul>
-                <li><a href="datatable_activity_new.php">ตารางนัดหมาย</a></li>
+                <li><a href="appointment.php">ตารางนัดหมาย</a></li>
                 <li><a href="datatable_qt.php">อันดับลูกค้าใบเสนอราคา</a></li>
                 <li><a href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
                 <li><a href="miscellaneous.php">รายงาน</a></li>
@@ -97,7 +97,7 @@
       <h1>ผู้ใช้งาน</h1>
       <div class="row" >
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
-          <button class="btn btn-primary" onclick="window.location='datatable_activity_new.php';">ดูตารางนัดหมาย</button>
+          <button class="btn btn-primary" onclick="window.location='appointment.php';">ดูตารางนัดหมาย</button>
         </div>
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
@@ -137,6 +137,11 @@
           <button class="btn btn-primary" onclick="window.location='appointment.php';">ทดสอบ </button>
         </div>
 
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='company.php';">ทดสอบ </button>
+        </div>
+
+    
       </div>
     </div>
   </div>

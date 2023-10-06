@@ -194,7 +194,7 @@
         return false;
       }
     });
-    $('.loading').show();
+    
 
 
     var recno = null;
@@ -287,28 +287,70 @@
       return formattedDec;
     };
 
+    $('.loading').show();
+    dataload(queryIdHD = 'QOUT_INVOICE_0')
+    async function dataload(queryIdHD) {
+      let Param = [];
+      data_begin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+      date_end = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+      // console.log(queryIdHD)
+      var formData = new FormData();
+      Param.push({
+        datebegin: data_begin,
+        dateend: date_end
+      })
+
+      formData.append('queryIdHD', queryIdHD);
+      formData.append('Param', JSON.stringify(Param));
+      formData.append('condition', 'DATEBE');
+      console.log('download')
+      try {
+        // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
+        const jsonResponse = await fetch('ajax/fecth_one_select.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!jsonResponse.ok) {
+          throw new Error('Error sending data to server');
+        }
+
+        const jsonData = await jsonResponse.json();
+        // console.log(jsonData.datasql)
+        tablejsondata = jsonData.datasql
+        table.clear().rows.add(jsonData.datasql).draw();
+        allsum(tablejsondata)
+
+
+        $('.loading').hide();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+
     var data_array = [];
     var startingValue = 1;
     var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
     var data_array = [];
     var table = $('#table_datahd').DataTable({
-      ajax: {
-        url: encodedURL,
-        data: function(d) {
-          d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
-          d.params = {
-            ABEGIN: databegin,
-            AEND: dateend
-          };
-          d.condition = 'mix';
-        },
-        dataSrc: function(json) {
-          tablejsondata = json.data;
-          // totalsum(tablejsondata)
-          allsum(tablejsondata)
-          return json.data;
-        }
-      },
+      // ajax: {
+      //   url: encodedURL,
+      //   data: function(d) {
+      //     d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
+      //     d.params = {
+      //       ABEGIN: databegin,
+      //       AEND: dateend
+      //     };
+      //     d.condition = 'mix';
+      //   },
+      //   dataSrc: function(json) {
+      //     tablejsondata = json.data;
+      //     // totalsum(tablejsondata)
+      //     allsum(tablejsondata)
+      //     return json.data;
+      //   }
+      // },
       scrollX: true,
       columns: [{
           data: null,
@@ -393,7 +435,7 @@
       ],
       // dom: 'frtip',
       initComplete: function(settings, json) {
-        $('.loading').hide();
+        console.log('table')
       },
       createdRow: function(row, data, dataIndex) {},
       drawCallback: function(settings) {},
@@ -500,7 +542,7 @@
 
 
     async function download_excel(data_begin, date_end) {
-      var Param = [];
+      let Param = [];
       var formData = new FormData();
       Param.push({
         datebegin: data_begin,
@@ -517,7 +559,7 @@
         unitamt: item.UNITAMT, //หน่วยละ
         totalamt: parseFloat(item.TOTALAMT), //ผลรวมเงินสุทธิ์
         curcode: curcodeex(item.CURCODE), //สกุลเงิน
-        exchangeRate:item.EXCHGRATE, //อัตราแลกเปลี่ยน
+        exchangeRate: item.EXCHGRATE, //อัตราแลกเปลี่ยน
         extotalamt: parseFloat(item.EXCHGRATE) * parseFloat(item.TOTALAMT) // ผลรวมเงินสุทธิ์บาท
       }));
       formData.append('queryIdHD', 'EXCEL_TEST');

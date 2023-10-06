@@ -143,40 +143,13 @@ $recno = null;
                                 <button id="canceltable" type="button" class="btn-input  btn btn-danger">ยกเลิก</button>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-6 ">
+                        <div class="col-sm-12 col-md-6 col-lg-6 ">
                             <div class="mb-3">
-                                <button id="companyadd" type="button" class="btn-input btn btn-primary  float-right float-end">เพิ่มลูกค้า</button>
+                                <button id="addtable" type="button" class="btn-input btn btn-primary  float-right float-end">เพิ่ม</button>
+                                <!-- <button id="canceltable" type="button" class="btn-input  btn btn-danger">ยกเลิก</button> -->
                             </div>
-                        </div> -->
+                        </div>
                     </div>
-
-
-                    <!-- <div class="dialog">
-                        <select class="select2">
-                          
-                        </select>
-                    </div> -->
-                    <!-- <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
@@ -188,10 +161,14 @@ $recno = null;
                                     </span>
                                 </span>
                             </div>
+                            <!-- <div class="input-group mb-3">
+                                <span class="input-group-text">วันที่นัด</span>
+                                <input type="text" class="form-control" id="date_act" placeholder="วันที่นัด" aria-label="วันที่นัด" aria-describedby="date_act">
+                            </div> -->
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
-                                <span class="input-group-text ">ระบบแจ้งเตือน :</span>
+                                <span class="input-group-text ">วันที่แจ้งเตือน:</span>
                                 <input type="text" class="form-control" id="datewarn" />
                                 <span class="input-group-append">
                                     <span class="input-group-text bg-light d-block">
@@ -199,6 +176,10 @@ $recno = null;
                                     </span>
                                 </span>
                             </div>
+                            <!-- <div class="input-group mb-3">
+                                <span class="input-group-text">ระบบแจ้ง</span>
+                                <input type="text" class="form-control" id="date_warn" placeholder="ระบบแจ้ง" aria-label="ระบบแจ้ง" aria-describedby="date_warn">
+                            </div> -->
                         </div>
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group mb-3">
@@ -241,7 +222,6 @@ $recno = null;
                                 <th>ชื่อลูกค้า</th>
                                 <th>รายละเอียด</th>
                                 <th>หมายเหตุ</th>
-                                <th>ผู้นัด</th>
                                 <th>วันที่นัด</th>
                                 <th>ระบบเแจ้ง</th>
                                 <th>ลบ</th>
@@ -254,27 +234,6 @@ $recno = null;
                 </div>
             </div>
         </section>
-
-
-        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-md  modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">เพิ่มลูกค้า</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- เนื้อหาของ modal ไปที่นี่ -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
-                        <button type="button" class="btn btn-primary">บันทึก</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </form>
     <hr>
     <footer class="text-center mt-auto">
@@ -384,7 +343,7 @@ $recno = null;
         var selectedRow = null;
         var detailtable = $('#detailtable').DataTable({
             "info": false,
-           
+            order: [],
             columns: [{
                     data: 'RECNO'
                 },
@@ -410,9 +369,6 @@ $recno = null;
                     data: 'REMARK'
                 },
                 {
-                    data: 'OWNERNAME'
-                },
-                {
                     data: 'STARTD',
                     render: formatDate
                 },
@@ -433,7 +389,7 @@ $recno = null;
                 },
                 {
                     "width": "8%",
-                    "targets": [6, 7]
+                    "targets": [5, 6]
                 },
                 {
                     "width": "12%",
@@ -441,7 +397,7 @@ $recno = null;
                 },
                 {
                     "width": "3%",
-                    "targets": [8]
+                    "targets": [7]
                 },
                 {
                     "orderable": false,
@@ -453,33 +409,15 @@ $recno = null;
                 },
                 {
                     type: 'th_date',
-                    targets: [6, 7]
-                },
-               
+                    targets: [5, 6]
+                }
             ],
-            order: [[6, 'desc']],
             rowCallback: function(row, data) {
-                // var api = this.api();
-                // api.rows().every(function(rowIdx, tableLoop, rowLoop)
-                // {
-                // //   var data = this.data();
-                // //   var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
-                //   var row = api.row(rowIdx).node();
-                // //   $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                
 
-                // //   if (variableT === 'A') {
-                // //     $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                // //   }
-                // //   else{
-                // //     $(row).addClass('table-danger'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                // //   }
-                // });
             },
         });
 
 
-        var selectdata;
         // สร้างฟังก์ชันสำหรับดึงข้อมูลจากแหล่งข้อมูล
         function getDataFromServer() {
             // กำหนด URL ของแหล่งข้อมูลที่ต้องการดึงข้อมูลฃ
@@ -497,27 +435,7 @@ $recno = null;
                 })
                 .then((data) => {
                     // ทำอะไรกับข้อมูลที่ได้รับหลังจาก POST สำเร็จ
-                    // console.log(data)
-                    selectdata = data.datdropdown
-                    console.log(selectdata);
-                    // // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-                    // const select2Inputs = $('.select2');
-
-                    // // วนลูปผ่านทุกฟิลด์ Select2 และเติมข้อมูลลงในแต่ละฟิลด์
-                    // select2Inputs.each(function(index) {
-                    //     const select2Input = select2Inputs[index];
-
-                    //     // เติมข้อมูลใน Select2
-                    //     datdropdown.forEach(item => {
-                    //         $(select2Input).append(new Option(item.text, item.id, false, false));
-                    //     });
-
-                    //     // อัพเดท Select2 เพื่อให้ข้อมูลแสดงผลให้เห็น
-                    //     $(select2Input).trigger('change');
-                    // });
-
-
-
+                    console.log(data)
                     detailtable.clear().rows.add(data.datasql).draw();
                 })
                 .catch((error) => {
@@ -526,71 +444,36 @@ $recno = null;
                 });
         }
         // เรียกใช้งานฟังก์ชัน getDataFromServer เพื่อดึงข้อมูลเมื่อคุณต้องการ
-        getDataFromServer();
+        // getDataFromServer();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         var counter = 0;
-        const TableAdd = () => {
-            counter++;
-            const newRow = createtable.row.add([
-                counter,
-                `<input type="text" class="company-input form-control" maxlength="250" />`,
-                // `<select class="company-input form-control select2" maxlength="250"></select>`,
-                ` <textarea class="form-control detail-input" maxlength="500"  rows="2" ></textarea>`,
-                ` <textarea class="form-control remark-input" maxlength="500" rows="2" ></textarea>`,
-                // `<div class="date datepicker_get" >
-                //     <input type="text" class="form-control date-input"/>
-                //     <span class="input-group-append">
-                //     </span>
-                // </div>`,
-                // `<div class="date  datepicker_get" >
-                //     <input type="text" class="form-control date-input" />
-                //     <span class="input-group-append">
-                //     </span>
-                // </div>`,
-                `<button type="button" class="btn btn-danger delete-row ">ลบ</button>`
-            ]).draw(false).node();
-            $(newRow).attr('id', `row${counter}`); //tr
-
-
-            // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-            $(newRow).find('.select2').select2();
-
-            $(newRow).find('.datepicker_get').datepicker({
-                format: "dd/mm/yyyy",
-                clearBtn: true,
-                todayHighlight: true,
-                autoclose: true
-            });
-        };
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // ฟังก์ชันที่ใช้ในการดึงข้อมูล
-        // function fetchDataAndPopulateSelect2() {
-        //     // ดึงข้อมูลโดยใช้ fetch (สมมติว่า API ของคุณอยู่ที่ /api/data)
-        //     fetch('/api/data')
-        //         .then(response => response.json())
-        //         .then(data => 
-        //         {
-        //             // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-        //             const select2Inputs = $('.select2');
-
-        //             // วนลูปผ่านทุกฟิลด์ Select2 และเติมข้อมูลลงในแต่ละฟิลด์
-        //             select2Inputs.each(function(index) {
-        //                 const select2Input = select2Inputs[index];
-
-        //                 // เติมข้อมูลใน Select2
-        //                 data.forEach(item => {
-        //                     $(select2Input).append(new Option(item.text, item.id, false, false));
-        //                 });
-
-        //                 // อัพเดท Select2 เพื่อให้ข้อมูลแสดงผลให้เห็น
-        //                 $(select2Input).trigger('change');
-        //             });
-        //         });
-        // }
-        // เรียกใช้ฟังก์ชัน fetchDataAndPopulateSelect2 เมื่อต้องการดึงและเติมข้อมูล
-        // fetchDataAndPopulateSelect2();
-
-
+        // const TableAdd = () => {
+        //     counter++;
+        //     const newRow = createtable.row.add([
+        //         counter,
+        //         `<input type="text" class="company-input form-control" maxlength="250" required/>`,
+        //         ` <textarea class="form-control detail-input" maxlength="500"  rows="2" ></textarea>`,
+        //         ` <textarea class="form-control remark-input" maxlength="500" rows="2" ></textarea>`,
+        //         // `<div class="date datepicker_get" >
+        //         //     <input type="text" class="form-control date-input"/>
+        //         //     <span class="input-group-append">
+        //         //     </span>
+        //         // </div>`,
+        //         // `<div class="date  datepicker_get" >
+        //         //     <input type="text" class="form-control date-input" />
+        //         //     <span class="input-group-append">
+        //         //     </span>
+        //         // </div>`,
+        //         `<button type="button" class="btn btn-danger delete-row ">ลบ</button>`
+        //     ]).draw(false).node();
+        //     $(newRow).attr('id', `row${counter}`); //tr
+        //     $(newRow).find('.datepicker_get').datepicker({
+        //         format: "dd/mm/yyyy",
+        //         clearBtn: true,
+        //         todayHighlight: true,
+        //         autoclose: true
+        //     });
+        // };
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         $('#createtable').on('click', '.delete-row', function() {
             counter--;
@@ -628,9 +511,7 @@ $recno = null;
                 formData.append('condition', 'I_DRAW');
             } else if (conditionsformdata == "select") {
                 formData.append('queryIdHD', 'SELECT_APPPOINTMENT');
-                formData.append('condition', 'NULL');
-                ////////////////////////////////////////////////////
-                formData.append('queryDropDown', 'SELECT_CUST');
+                formData.append('condition', '001');
             } else {
                 // กรณีอื่น ๆ
                 // other
@@ -652,14 +533,10 @@ $recno = null;
             }
         });
 
-
-        $('#companyadd').on('click', function() {
-            $("#myModal").modal("show");
-        });
-
-        // คลิกที่ปุ่ม "ยกเลิก" หรือปุ่มปิดของกล่องโมดอล
-        $(".modal .btn-secondary, .modal .btn-close").click(function() {
-            $("#myModal").modal("hide"); // ปิดกล่องโมดอล
+        $('#createdata').on('click', function() {
+            $('#createdata').hide();
+            $('.createdata').show();
+            TableAdd()
         });
 
 
@@ -710,51 +587,61 @@ $recno = null;
                 // console.log('remove')
             }
         });
+
         $('#addtable').click(function() {
-            TableAdd()
+            // TableAdd()
         });
-        var process = 'F';
+
+        // var process = 'F';
         var tableData = [];
 
         function datatable_generetor() {
             tableData = [];
-            process = 'T';
-            if (createtable.rows().count() > 0) {
-                $('#createtable tbody tr').each(function() {
-                    let companyValue = $(this).find('td:eq(1) .company-input').val();
-                    let detailValue = $(this).find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
-                    let remarkValue = $(this).find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-                    // let dateActValue = $(this).find('td:eq(4) .date-input').val(); // คอลัมน์ที่ 4
-                    // let dateWarnValue = $(this).find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 5
+            tableData.push({
+                name: companyValue,
+                detail: detailValue,
+                remark: remarkValue,
+                dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+                dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+                ownername: ownername
+            });
+            // process = 'T';
+            // if (createtable.rows().count() > 0) {
+            //     $('#createtable tbody tr').each(function() {
+            //         let companyValue = $(this).find('td:eq(1) .company-input').val();
+            //         let detailValue = $(this).find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
+            //         let remarkValue = $(this).find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
+            //         // let dateActValue = $(this).find('td:eq(4) .date-input').val(); // คอลัมน์ที่ 4
+            //         // let dateWarnValue = $(this).find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 5
 
-                    let dateActValue = $('#dateatc').val();
-                    let dateWarnValue = $('#datewarn').val();
-                    let ownername = $('#ownername').val();
+            //         let dateActValue = $('#dateatc').val();
+            //         let dateWarnValue = $('#datewarn').val();
+            //         let ownername = $('#ownername').val();
 
-                    tableData.push({
-                        name: companyValue,
-                        detail: detailValue,
-                        remark: remarkValue,
-                        dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                        dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                        ownername: ownername
-                    });
-                    // let statusValue = $(this).find('td:eq(4)').text();
-                    // if (statusValue.trim() === 'T') {
-                    //     process = 'F';
-                    // }
-                });
-            } else {
-                process = 'F'
-                tableData = [];
-                Swal.fire({
-                    title: 'ตารางว่าง',
-                    html: '<img src="doc/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์บันทึกข้อมูล</h4>',
-                    icon: 'warning',
-                    confirmButtonText: 'OK'
-                });
-                console.log('ตารางว่าง');
-            }
+            //         tableData.push({
+            //             name: companyValue,
+            //             detail: detailValue,
+            //             remark: remarkValue,
+            //             dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+            //             dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+            //             ownername: ownername
+            //         });
+            //         // let statusValue = $(this).find('td:eq(4)').text();
+            //         // if (statusValue.trim() === 'T') {
+            //         //     process = 'F';
+            //         // }
+            //     });
+            // } else {
+            //     process = 'F'
+            //     tableData = [];
+            //     Swal.fire({
+            //         title: 'ตารางว่าง',
+            //         html: '<img src="doc/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์บันทึกข้อมูล</h4>',
+            //         icon: 'warning',
+            //         confirmButtonText: 'OK'
+            //     });
+            //     console.log('ตารางว่าง');
+            // }
         }
         //////////////////////////////////////////////////////////// CRUDSQL ////////////////////////////////////////////////////////////
         const CRUDSQL = (url, status_sql) => {
@@ -881,17 +768,11 @@ $recno = null;
             let companyCell = row.find('td:eq(1)');
             let detailCell = row.find('td:eq(2)');
             let remarkCell = row.find('td:eq(3)');
-            //
-            let OwnerCell = row.find('td:eq(4)');
-
-            let dateActCell = row.find('td:eq(5)');
-            let dateWarnCell = row.find('td:eq(6)');
+            let dateActCell = row.find('td:eq(4)');
+            let dateWarnCell = row.find('td:eq(5)');
             let companyValue = companyCell.text();
             let detailValue = detailCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
             let remarkValue = remarkCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-
-            let OwnerValue = OwnerCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-
             let dateActValue = dateActCell.text() === "00/00/0000" ? '' : dateActCell.text();
             let dateWarnValue = dateWarnCell.text() === "00/00/0000" ? '' : dateWarnCell.text();
             // เปลี่ยน <br> เป็น \n
@@ -901,9 +782,6 @@ $recno = null;
             let companyInput = '<input type="text" class="company-input form-control" value="' + companyValue + '" />';
             let detailTextarea = '<textarea class="form-control detail-input" maxlength="500" >' + detailValue + '</textarea>';
             let remarkTextarea = '<textarea class="form-control remark-input" maxlength="500" >' + remarkValue + '</textarea>';
-
-            let OwnerInput = '<input type="text" class="owner-input form-control" value="' + OwnerValue + '" />';
-
             let dateActInput = `<div class="date datepicker_get" >
                     <input type="text" class="form-control date-input"  value="${dateActValue}"  />
                     <span class="input-group-append">
@@ -921,7 +799,6 @@ $recno = null;
             detailTextarea = $(detailTextarea).attr('rows', detailTextLines);
             remarkTextarea = $(remarkTextarea).attr('rows', remarkTextLines);
             // แทนที่ข้อมูลใน cell ด้วย textarea
-            OwnerCell.html(OwnerInput);
             companyCell.html(companyInput);
             detailCell.html(detailTextarea);
             remarkCell.html(remarkTextarea);
@@ -947,20 +824,16 @@ $recno = null;
             let companyValue = row.find('td:eq(1) .company-input').val();
             let detailValue = row.find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
             let remarkValue = row.find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-
-            let OwnerValue = row.find('td:eq(4) .owner-input').val(); // คอลัมน์ที่ 3
-
-            let dateActValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 4
-            let dateWarnValue = row.find('td:eq(6) .date-input').val(); // คอลัมน์ที่ 5
+            let dateActValue = row.find('td:eq(4) .date-input').val(); // คอลัมน์ที่ 4
+            let dateWarnValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 5
             // detailValue.replace(/<br>/g, "\n");
             // console.log(detailValue)
             detailValue = detailValue.replace(/\n/g, '<br>');
             row.find('td:eq(1)').html(companyValue);
             row.find('td:eq(2)').html(detailValue);
             row.find('td:eq(3)').html(remarkValue);
-            row.find('td:eq(4)').html(OwnerValue);
-            row.find('td:eq(5)').html(dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
-            row.find('td:eq(6)').html(dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
+            row.find('td:eq(4)').html(dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
+            row.find('td:eq(5)').html(dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
             // ทำลายปุ่ม "บันทึก" และ "ยกเลิก"
             row.find('.save-row .cancel-edit').remove();
             // สร้างปุ่ม "แก้ไข" 
@@ -979,11 +852,8 @@ $recno = null;
             let companyValue = row.find('td:eq(1) .company-input').val();
             let detailValue = row.find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
             let remarkValue = row.find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-
-            let OwnerValue = row.find('td:eq(4) .owner-input').val(); // คอลัมน์ที่ 4
-
-            let dateActValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 4
-            let dateWarnValue = row.find('td:eq(6) .date-input').val(); // คอลัมน์ที่ 5
+            let dateActValue = row.find('td:eq(4) .date-input').val(); // คอลัมน์ที่ 4
+            let dateWarnValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 5
             DataEdit.push({
                 recno: rowData.RECNO,
                 name: companyValue,
@@ -991,7 +861,6 @@ $recno = null;
                 remark: remarkValue,
                 dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
                 dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                ownername: OwnerValue
             });
         });
 
@@ -1016,16 +885,15 @@ $recno = null;
             select_tr.find('td:eq(1)').html(DataEdit[0].name);
             select_tr.find('td:eq(2)').html(DataEdit[0].detail);
             select_tr.find('td:eq(3)').html(DataEdit[0].remark);
-            select_tr.find('td:eq(4)').html(DataEdit[0].ownername);
             if (DataEdit[0].dateAct === '0000-00-00') {
-                select_tr.find('td:eq(5)').html('00/00/0000');
+                select_tr.find('td:eq(4)').html('00/00/0000');
             } else {
-                select_tr.find('td:eq(5)').html(moment(DataEdit[0].dateAct, 'YYYY-MM-DD').format('DD/MM/YYYY'));
+                select_tr.find('td:eq(4)').html(moment(DataEdit[0].dateAct, 'YYYY-MM-DD').format('DD/MM/YYYY'));
             }
             if (DataEdit[0].dateWarn === '0000-00-00') {
-                select_tr.find('td:eq(6)').html('00/00/0000');
+                select_tr.find('td:eq(5)').html('00/00/0000');
             } else {
-                select_tr.find('td:eq(6)').html(moment(DataEdit[0].dateWarn, 'YYYY-MM-DD').format('DD/MM/YYYY'));
+                select_tr.find('td:eq(5)').html(moment(DataEdit[0].dateWarn, 'YYYY-MM-DD').format('DD/MM/YYYY'));
             }
             select_tr.find('.save-row .cancel-edit').remove();
             // สร้างปุ่ม "แก้ไข" 
@@ -1040,37 +908,7 @@ $recno = null;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /////////////////////////////////////////////////  SELECT 2  ////////////////////////////////////////////////////
-        function createSelect2(selector, data, gettextselect) {
-            return $(selector).select2({
-                data: data,
-                theme: 'bootstrap-5',
-                dropdownParent: $('#myModal .modal-content'),
-                // dropdownParent: $(this).parent(),
-                matcher: matchCustom_ajax,
-                templateSelection: function(selected) {
-                    if (selected.id !== '') {
-                        if (selected.id == 0) {
-                            return gettextselect;
-                        }
-                        return selected.text;
-                    }
-                    return '';
-                },
-                templateResult: function(result) {
-                    if (!result.id) {
-                        return result.text;
-                    }
-                    var $result = $('<span></span>');
-                    $result.text("รหัส" + result.title + ":" + result.text);
-                    if (result.id == 0) {
-                        $result.text(gettextselect);
-                        return $result;
-                    } else {
-                        return $result;
-                    }
-                }
-            });
-        }
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
 </script>
