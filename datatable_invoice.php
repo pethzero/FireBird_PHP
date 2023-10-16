@@ -247,9 +247,8 @@
 
     const formatDate = (data) => {
       if (!data || data === '0000-00-00') {
-        return '00/00/0000'; // ถ้าค่าว่างหรือไม่ถูกต้อง ส่งค่าว่างกลับไป
+        return '00/00/0000'; 
       }
-
       const dateObj = new Date(data);
       const day = dateObj.getDate();
       const month = dateObj.getMonth() + 1;
@@ -507,9 +506,9 @@
         dateend: date_end
       })
       const mappedData = tablejsondata.map((item) => ({
-        recno: item.RECNO, //ลำดับที่
-        docdate: item.DOCDATE, //วันที่ที่ระบุในเอกสาร
-        duedate: item.DUEDATE, //วันที่ครบกำหนด  
+        // recno: item.RECNO, //ลำดับที่
+        docdate: formatDate(item.DOCDATE), //วันที่ที่ระบุในเอกสาร
+        duedate: formatDate(item.DUEDATE), //วันที่ครบกำหนด  
         docno: item.DOCNO, //เลขที่ใบแจ้งหนี้
         orderno: item.ORDERNO, //ใบสั่งซื้อ
         detail: item.DETAIL, //รายการ
@@ -520,10 +519,9 @@
         exchangeRate:item.EXCHGRATE, //อัตราแลกเปลี่ยน
         extotalamt: parseFloat(item.EXCHGRATE) * parseFloat(item.TOTALAMT) // ผลรวมเงินสุทธิ์บาท
       }));
-      formData.append('queryIdHD', 'EXCEL_TEST');
+      formData.append('queryIdHD', 'EXCEL_QOUT_INVOICE_SUMMARY');
       formData.append('Param', JSON.stringify(mappedData));
       formData.append('condition', 'DATEBE');
-      console.log('download')
       try {
         // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
         // const jsonResponse = await fetch('ajax/process_dataeexcel.php', {
@@ -541,7 +539,7 @@
         formData.append('blobData', JSON.stringify(mappedData));
 
 
-        const blobResponse = await fetch('ajax/excel_export.php', {
+        const blobResponse = await fetch('export/excel_export.php', {
           method: 'POST',
           body: formData,
         });
@@ -634,7 +632,7 @@
       $('#sumcompany').val(amtmessage)
       data.datasets[0].data = datatop10.map(function(item) {
         return item.TOTALAMT;
-      });;
+      });
       myChart.update();
     }
 

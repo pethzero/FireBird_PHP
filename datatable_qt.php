@@ -66,9 +66,31 @@
       <h2>ใบเสนอราคา</h2>
 
       <hr>
+      <h3>ค้นหา</h3>
+        <div class="row pb-3">
+          <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            <div class="input-group input-daterange">
+              <span class="input-group-text">เริ่มต้น</span>
+              <input type="text" class="form-control" id="datepickerbegin">
+              <span class="input-group-text">จนถึง</span>
+              <input type="text" class="form-control" id="datepickerend">
+            </div>
+          </div>
+        </div>
+
+        <div class="row pb-1">
+          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+            <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+            <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
+          </div>
+        </div>
+
       <h2>อันดับลูกค้า ใบเสนอราคา</h2>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12 table-responsive">
           <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
             <thead class="thead-light">
               <tr>
@@ -139,7 +161,7 @@
     var datasave = '';
 
     // var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
-    var encodedURL_Select = encodeURIComponent('ajax_select_sql_firdbird.php');
+    // var encodedURL_Select = encodeURIComponent('ajax_select_sql_firdbird.php');
 
     //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
     // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
@@ -149,30 +171,28 @@
     }
 
     var data_array = [];
-    var startingValue = 1;
-    var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
+    // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
     var data_array = [];
-    var table = $('#table_datahd').DataTable({
-      ajax: {
-        url: encodedURL,
-        data: function(d) {
-          d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
-          d.params = null;
-          d.condition = '';
-          // d.sqlprotect = encodeData;
-        },
-        dataSrc: function(json) {
-          tablejsondata = json.data;
-          // console.log(tablejsondata)
-          return json.data;
-        }
-      },
-      scrollX: true,
-      columns: [
-        {
+    var tabledatahd = $('#table_datahd').DataTable({
+      // ajax: {
+      //   url: encodedURL,
+      //   data: function(d) {
+      //     d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
+      //     d.params = null;
+      //     d.condition = '';
+      //     // d.sqlprotect = encodeData;
+      //   },
+      //   dataSrc: function(json) {
+      //     tablejsondata = json.data;
+      //     // console.log(tablejsondata)
+      //     return json.data;
+      //   }
+      // },
+      // scrollX: true,
+      columns: [{
           data: null,
           render: function(data, type, row, meta) {
-            return meta.row+1;
+            return meta.row + 1;
           }
         },
         {
@@ -208,30 +228,73 @@
         [3, 'desc'],
       ],
       dom: 'frtip',
-      initComplete: function(settings, json) {
-        // $('.loading').hide();
-        console.log('ww')
-        datachart(tablejsondata)
-      },
-      createdRow: function(row, data, dataIndex) {
-
-      },
-      drawCallback: function(settings) {
-
-      },
-      rowCallback: function(row, data) {
-
-      },
     });
 
+    var Param;
+    fecth_databased('data_begin', 'date_end');
+    async function fecth_databased(data_begin, date_end) {
+      Param = [];
+      Param.push({
+        datebegin: data_begin,
+        dateend: date_end
+      })
+      console.log(Param)
+      var formData = new FormData();
+      try {
+        // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
+        const jsonResponse = await fetch('ajax/post_fb_select_qt.php', {
+          method: 'POST',
+          body: set_formdata('select'),
+        });
+
+        if (!jsonResponse.ok) {
+          $('.loading').hide();
+          throw new Error('Error sending data to server');
+        }
+
+        const jsonDataQT = await jsonResponse.json();
+        await tabledatahd.clear().rows.add(jsonDataQT.datasql).draw();
+        await datachart(jsonDataQT.datasql);
+
+        $('.loading').hide();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    function set_formdata(conditionsformdata) {
+      var formData = new FormData();
+      // Param.push({})
+      if (conditionsformdata == "select") {
+        formData.append('queryIdHD', 'COUNT_QUOTHD0');
+        formData.append('condition', 'NULL');
+      } else {
+
+      }
+      formData.append('Param', JSON.stringify(Param));
+      ////////////////
+      return formData;
+    }
+
+    $('#idForm').on('submit', function(e) {
+      e.preventDefault(); // ป้องกันการส่ง form ไปยังหน้าอื่น
+      // ตรวจสอบว่าปุ่มที่ถูกคลิกคือ "save" หรือ "edit"
+      let url = "";
+      let status_sql = "";
+      var clickedButtonName = e.originalEvent.submitter.name;
+    });
+
+
+
     var topCode = [];
+    var chartdatabase;
 
     function datachart(data) {
-      console.log(data)
-      var tophigh_QUAN = data
+      chartdatabase = data
         .map(function(item) {
           return {
-            CODE: item.CODE + ':' + item.CUSTOMERNAME,
+            NAME: item.CUSTOMERNAME,
+            CODE: item.CODE,
             QUAN: item.QUAN
           };
         })
@@ -239,19 +302,19 @@
           return b.QUAN - a.QUAN;
         })
         .slice(0, 10)
-        .reduce(function(obj, item) {
-          obj[item.CODE] = item.QUAN;
-          return obj;
-        }, {});
+      // .reduce(function(obj, item) {
+      //   obj[item.CODE] = item.QUAN;
+      //   return obj;
+      // }, {});
 
-      // const topData = Object.values(tophigh_QUAN);
-      topCode = Object.keys(tophigh_QUAN);
-
-      console.log(topCode)
+      const dbase_dataset = chartdatabase.map(function(item) {
+        return item.QUAN;
+      });
+      // topCode = Object.keys(tophigh_QUAN);
 
       const topDataset = {
         label: 'ยอดขาย TOP 10',
-        data: Object.values(tophigh_QUAN),
+        data: dbase_dataset,
         backgroundColor: 'rgba(0, 153, 51,0.6)',
         borderColor: 'rgba(0, 153, 51,1)',
         borderWidth: 1,
@@ -259,11 +322,7 @@
         // categoryPercentage: 1,
         // barPercentage: 0.8
       };
-
-      // ปรับปรุงข้อมูลใหม่ใน data.datasets[0].data
-      // data.datasets[0].data = topDataset;
       myChart.data.datasets = [topDataset];
-
       // สร้างกราฟใหม่
       myChart.update();
     }
@@ -279,32 +338,9 @@
       }
 
       console.log(startd)
-
-
       $('#table_datahd').DataTable().column(6).search(startd).draw();
       $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
     })
-
-    // สร้างฟังก์ชั่นสำหรับสุ่มข้อมูลใหม่
-    function randomizeData() {
-      const newData = data.datasets[0].data.map(() => Math.floor(Math.random() * 200)); // สุ่มค่าใหม่ในช่วง 0-200
-
-      // ปรับปรุงข้อมูลใหม่ใน data.datasets[0].data
-      data.datasets[0].data = newData;
-
-      // สร้างกราฟใหม่
-      myChart.update();
-    }
-
-    // เพิ่ม Event Listener สำหรับปุ่ม RANDOM
-    // เพิ่ม Event Listener สำหรับปุ่ม RANDOM
-    $('#randomDataButton').click(function() {
-      // ให้การสุ่มข้อมูลและอัปเดตกราฟเริ่มทำงานทันทีเมื่อคลิกปุ่ม
-      randomizeData();
-
-      // จัดตั้งการเรียกใช้ฟังก์ชัน randomizeData() ทุก 1 วินาที
-      // setInterval(randomizeData, 1000);
-    });
 
 
     const data = {
@@ -323,8 +359,6 @@
     };
 
 
-
-
     const config = {
       type: 'bar',
       data,
@@ -337,14 +371,14 @@
               display: true,
               text: 'จำนวนการขาย',
               font: {
-                size: window.innerWidth <= 600 ? 14 : 16, // ขนาดตัวอักษรของหัวข้อแกน Y
-                weight: 'bold' // ความหนาของตัวอักษรของหัวข้อแกน Y
+                size: window.innerWidth <= 600 ? 14 : 16,
+                weight: 'bold'
               }
             },
             ticks: {
               font: {
-                size: window.innerWidth <= 600 ? 12 : 14, // ขนาดตัวอักษรของตัวเลขบนแกน Y
-                weight: 'normal' // ความหนาของตัวเลขบนแกน Y
+                size: window.innerWidth <= 600 ? 12 : 14,
+                weight: 'normal'
               }
             }
           }
@@ -352,25 +386,37 @@
         plugins: {
           title: {
             display: true,
-            text: 'ยอดขาย TOP 10', // ข้อความหัวเรื่อง
+            text: 'ยอดขาย TOP 10',
             font: {
-              size: 20, // ขนาดตัวอักษร
-              weight: 'bold' // ความหนา
+              size: 20,
+              weight: 'bold'
             }
           },
           tooltip: {
+            titleFont: {
+              size: window.innerWidth <= 600 ? 16 : 25,
+            },
+            bodyFont: {
+              size:  window.innerWidth <= 600 ? 14 : 20,
+            },
+            // footerFont: {
+            //   size: 20 // there is no footer by default
+            // },
             callbacks: {
+              title: function(tooltipItem) {
+                return 'ลูกค้าอันดับ: ' + tooltipItem[0].label;
+              },
               label: function(context) {
                 let label = '';
                 if (context.parsed.y !== null) {
                   if (context.datasetIndex === 0) {
-                    label += topCode[context.dataIndex] + ':' + context.parsed.y;
+                    label += chartdatabase[context.dataIndex].CODE + ':' + chartdatabase[context.dataIndex].NAME + ':' + context.parsed.y;
                   }
                 }
                 return label;
               }
             }
-          }
+          },
         },
       }
     };
@@ -380,7 +426,6 @@
       document.getElementById('myChart'),
       config
     );
-
     // $("#myChart").css("height", 800);
     if (window.innerWidth <= 600) {
       // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)

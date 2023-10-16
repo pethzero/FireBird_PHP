@@ -1,7 +1,15 @@
 <?php
 // คีย์ส่วนตัวที่ได้จากการสร้าง Token ใน LINE Notify
-    $accessToken = $_POST['accessToken'];
+    // $accessToken = $_POST['accessToken'];
+    $accessToken;
     // ตรวจสอบว่ามีการกดปุ่มส่งข้อมูลหรือไม่
+
+    if($_POST['accessToken'] == '1' )
+    {
+        $accessToken = 'Hh0ura2RMQuxyHutazonFsR4SdKT5f6ASoAGGEInuXv';
+    }
+  
+
     if (isset($_POST['message']))
     {
         $message = $_POST['message'];

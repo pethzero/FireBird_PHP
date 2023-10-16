@@ -16,7 +16,7 @@
           ฝ่ายขาย
         </a>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="appointment.php">ตารางหนัดหมาย</a></li>
+          <li><a class="dropdown-item" href="appointment_up.php">ตารางหนัดหมาย</a></li>
           <li><a class="dropdown-item" href="datatable_qt.php">อันดับลูกค้าใบเสนอราคา</a></li>
           <li><a class="dropdown-item" href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
           <li><a class="dropdown-item" href="miscellaneous.php">รายงาน</a></li>

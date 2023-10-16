@@ -1,6 +1,4 @@
 <?php
-
-// ini_set('memory_limit', '512M');
 require '../vendor/autoload.php'; // Include PhpSpreadsheet library
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -91,9 +89,6 @@ class HeadMake
 $queryIdHD = isset($_POST['queryIdHD']) ? $_POST['queryIdHD'] : '';
 $blobData = isset($_POST['blobData']) ? $_POST['blobData'] : '';
 $data = json_decode($blobData, true);
-
-// $queryId = NULL;
-// $data =  array();
 
 // Get the data from the POST request
 $filename = 'exported_data.xlsx';

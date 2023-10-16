@@ -39,29 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
                 $response = array('status' => 'warning', 'message' => $result_check['message']);
             }
-
-
-            // if ($updateData->updateRecord($DataEdit_Json[0], $sqlQuery, $condition)) {
-            //     $response = array('message' => 'Data received successfully','status' => 'success');
-            //     $updateData->data_commit->commit();
-            // } else {
-            //     $response = array('message' => 'Data received Error','status' => 'error');
-            //     $updateData->data_commit->rollBack();
-            // }
-
         } else {
             $response = array(
                 'message' => 'ไม่พบคำสั่ง SQL สำหรับ $queryId ที่ระบุ',
                 'status' => 'error',
             );
         }
-
-        // $response = array(
-        //     'message' => 'Data received successfully',
-        //     'sql' =>  $sqlQuery,
-        //     'DataEdit' =>  $DataEdit,
-        //     'DataEdit_Json ' =>  $DataEdit_Json[0] 
-        // );
         header('Content-Type: application/json');
         echo json_encode($response);
     } catch (Exception $e) {

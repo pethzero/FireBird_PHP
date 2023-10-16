@@ -143,40 +143,7 @@ $recno = null;
                                 <button id="canceltable" type="button" class="btn-input  btn btn-danger">ยกเลิก</button>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-6 ">
-                            <div class="mb-3">
-                                <button id="companyadd" type="button" class="btn-input btn btn-primary  float-right float-end">เพิ่มลูกค้า</button>
-                            </div>
-                        </div> -->
                     </div>
-
-
-                    <!-- <div class="dialog">
-                        <select class="select2">
-                          
-                        </select>
-                    </div> -->
-                    <!-- <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text c_activity">ลูกค้า:</span>
-                                <input type="text" class="form-control" id="contname" placeholder="ลูกค้า">
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="row">
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">

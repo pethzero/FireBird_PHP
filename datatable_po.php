@@ -279,10 +279,7 @@
       } else {
         startd = '';
       }
-
-      console.log(startd)
-
-
+      // console.log(startd)
       $('#table_datahd').DataTable().column(6).search(startd).draw();
       $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
     })

@@ -31,6 +31,48 @@
       object-fit: cover;
       /* This ensures the image fills the entire space while maintaining aspect ratio */
     }
+
+    /* @keyframes rainbow {
+      0% {
+        background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red);
+      }
+
+      100% {
+        background: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+      }
+    }
+
+    .blinking-rainbow-button {
+      animation: rainbow 5s linear infinite;
+      color: white;
+      border: none;
+      cursor: pointer;
+    } */
+    @keyframes blink {
+      0% {
+        background-color: green;
+      }
+
+      50% {
+        background-color: greenyellow;
+        color: black;
+      }
+
+      100% {
+        background-color: green;
+      }
+    }
+
+    .blinking-button {
+      animation: blink 1s infinite;
+      /* ใช้ keyframes green-blink ที่สร้างขึ้นในขั้นที่ 1 */
+      color: white;
+      /* สีของข้อความบนปุ่ม */
+      border: none;
+      /* ลบเส้นขอบ */
+      cursor: pointer;
+      /* เมื่อนำเมาส์มาอยู่บนปุ่มจะเป็นเคอร์เซอร์ประเภท */
+    }
   </style>
   <?php
   include("0_header.php");
@@ -47,7 +89,7 @@
               <h2 class="card-title">ฝ่ายขาย</h2>
               <p class="card-text">
               <ul>
-                <li><a href="appointment.php">ตารางนัดหมาย</a></li>
+                <li><a href="appointment_up.php">ตารางนัดหมาย</a></li>
                 <li><a href="datatable_qt.php">อันดับลูกค้าใบเสนอราคา</a></li>
                 <li><a href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
                 <li><a href="miscellaneous.php">รายงาน</a></li>
@@ -86,7 +128,7 @@
         </div> -->
 
 
-        
+
       </div>
     </div>
   </div>
@@ -95,16 +137,22 @@
     <div class="container pt-2">
       <h1> NEW FEATURE</h1>
       <h1>ผู้ใช้งาน</h1>
-      <div class="row" >
+      <div class="row">
+
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
-          <button class="btn btn-primary" onclick="window.location='appointment.php';">ดูตารางนัดหมาย</button>
+          <button class="btn btn-success blinking-button" onclick="window.location='appointment_up.php';">ตารางนัดหมาย (NEW)</button>
         </div>
+
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-secondary" onclick="window.location='appointment.php';">ตารางนัดหมาย (OLD)</button>
+        </div>
+
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
         </div>
 
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
-             <button class="btn btn-primary" onclick="window.location='datatable_equipment.php';">ดูอุปรณ์</button>
+          <button class="btn btn-primary" onclick="window.location='datatable_equipment.php';">ดูอุปรณ์</button>
         </div>
 
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
@@ -115,9 +163,6 @@
           <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
         </div>
 
-        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
-          <button class="btn btn-primary" onclick="window.location='datatable_qt.php';">ดูอันดับใบเสนอราคา</button>
-        </div>
       </div>
 
 
@@ -125,24 +170,39 @@
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='datatable_invoice.php';">ดู Invoice</button>
         </div>
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='datatable_qt.php';">ดูอันดับใบเสนอราคา</button>
+        </div>
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
+          <button class="btn btn-primary" onclick="window.location='detailpo.php';">ดูสรุปแจงสั่งซื้อ</button>
+        </div>
       </div>
 
+      <!-- <div class="row pt-3">
+       
+      </div> -->
+
       <h1>แอดมิน</h1>
-      <div class="row" >
+      <div class="row">
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='dataempl.php';">พนักงงาน </button>
         </div>
-
+      <?php 
+            if (isset($_SESSION['USERLEVEL']) && $_SESSION['USERLEVEL'] == 'S') {
+       ?>
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='appointment.php';">ทดสอบ </button>
+          <button class="btn btn-primary" onclick="window.location='appointment_create.php';">ทดสอบ</button>
         </div>
 
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='company.php';">ทดสอบ </button>
+          <button class="btn btn-primary" onclick="window.location='appointment_up.php';">ทดสอบ</button>
         </div>
-
-    
+      <?php 
+            }
+       ?>
       </div>
+
+
     </div>
   </div>
   <hr>
@@ -158,9 +218,9 @@
 
 
 
-  <?php 
+  <?php
   // include("0_footer.php");
-   ?>
+  ?>
 </body>
 <?php
 include("0_footerjs.php");
@@ -169,7 +229,7 @@ include("0_footerjs.php");
 
 <script>
   $(document).ready(function() {
-   
+
   });
 </script>
 

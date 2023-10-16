@@ -11,6 +11,9 @@
     include("0_headcss.php");
     ?>
     <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="css/flatpickr.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_red.css">
+
 </head>
 <?php
 $data_link = "";
@@ -46,9 +49,11 @@ $recno = null;
             font-size: 14px;
         }
 
-        .datepicker {
+        /* .datepicker {
             border: 1px solid black;
-        }
+        } */
+
+
 
         /* #detailtable th.no-wrap {
             white-space: normal;
@@ -135,11 +140,31 @@ $recno = null;
                     <h2>ตารางนัดหมาย</h2>
                 </div>
                 <hr>
+
+                <!-- <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="input-group date mb-3">
+                        <span class="input-group-text ">วันที่นัด :</span>
+                        <input type="text" id="datepicker" class="form-control" placeholder="เลือกวันที่">
+                            <span class="input-group-text bg-light d-block">
+                                <i class="fa fa-calendar" id="calendar-icon"></i>
+                            </span>
+                        <span class="input-group-text bg-light d-block">
+                                <i class="far fa-times-circle" style="color: #e10505;" id="clear-icon"></i>
+                            </span>
+                    </div>
+                </div> -->
+
+                <!---->
+
+                <!-- <input type="text" id="timepicker" class="form-control" placeholder="เลือกเวลา"> -->
+
                 <div class="createdata">
-                    <div class="row ">
+                    <div class="row d-flex justify-content-center">
                         <div class="col-sm-12 col-md-6 col-lg-6">
-                                <button id="backhome" type="button" class=" btn btn-primary me-3">กลับหน้า Home</button>
-                                <button id="backcontent" type="button" class="  btn btn-primary">กลับหน้านัดหมาย</button>
+                            <button id="backcontent" type="button" class="  btn btn-primary">ดูนัดหมาย</button>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <button id="backhome" type="button" class=" btn btn-success  float-end me-3">กลับหน้าหลัก</button>
                         </div>
                     </div>
                     <hr>
@@ -152,7 +177,33 @@ $recno = null;
                         </div>
                     </div>
                     <div class="row">
+
                         <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="input-group date mb-3">
+                                <span class="input-group-text ">วันที่นัด :</span>
+                                <input type="text" id="dateatc" class="form-control" placeholder="เลือกวันที่">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar" id="calendar-icon-dateatc"></i>
+                                </span>
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="far fa-times-circle" style="color: #e10505;" id="clear-icon-dateatc"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="input-group date mb-3">
+                                <span class="input-group-text ">วันที่นัด :</span>
+                                <input type="text" id="datewarn" class="form-control" placeholder="เลือกวันที่">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar" id="calendar-icon-datewarn"></i>
+                                </span>
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="far fa-times-circle" style="color: #e10505;" id="clear-icon-datewarn"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
                                 <span class="input-group-text c_activity">วันที่นัด:</span>
                                 <input type="text" class="form-control" id="dateatc" />
@@ -162,8 +213,9 @@ $recno = null;
                                     </span>
                                 </span>
                             </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
+                        </div> -->
+
+                        <!-- <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
                                 <span class="input-group-text ">ระบบแจ้งเตือน :</span>
                                 <input type="text" class="form-control" id="datewarn" />
@@ -173,7 +225,8 @@ $recno = null;
                                     </span>
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
+
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">ผู้นัด</span>
@@ -240,8 +293,9 @@ $recno = null;
     <!-- <div class="loading" ></div> -->
 </body>
 <?php include("0_footerjs_piority.php"); ?>
-
-
+<script src="js/flatpickr-4.6.13.js"></script>
+<script src="js/flatpickr-th.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.th.js"></script>
 <script>
     $(document).ready(function() {
         $(window).keydown(function(event) {
@@ -250,19 +304,91 @@ $recno = null;
                 return false;
             }
         });
+
         var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
-        $("#dateatc").datepicker({
-            format: "dd/mm/yyyy",
-            clearBtn: true,
-            todayHighlight: true,
-            autoclose: true
+
+
+        // สร้าง Flatpickr
+        const commonOptions = {
+            enableTime: false,
+            locale: "th",
+            clickOpens: true,
+            altInput: true,
+            altFormat: "d/m/Y",
+            dateFormat: "Y-m-d",
+        };
+
+        const datePicker1 = flatpickr("#dateatc", {
+            ...commonOptions,
+            onChange: function(selectedDates, dateStr, instance) {
+                // ทำสิ่งที่คุณต้องการเมื่อเลือกวันที่ใน datePicker1
+                console.log("Selected Date in datePicker1:", dateStr);
+            },
         });
-        $("#datewarn").datepicker({
-            format: "dd/mm/yyyy",
-            clearBtn: true,
-            todayHighlight: true,
-            autoclose: true
+
+        const datePicker2 = flatpickr("#datewarn", {
+            ...commonOptions,
+            onChange: function(selectedDates, dateStr, instance) {
+                // ทำสิ่งที่คุณต้องการเมื่อเลือกวันที่ใน datePicker2
+                console.log("Selected Date in datePicker2:", dateStr);
+            },
         });
+
+
+        function setupDatePicker(datePicker, calendarIconId, clearIconId) {
+            $(`#${calendarIconId}`).click(function() {
+                datePicker.open();
+            });
+
+            $(`#${clearIconId}`).click(function() {
+                datePicker.clear();
+            });
+        }
+        setupDatePicker(datePicker1, "calendar-icon-dateatc", "clear-icon-dateatc");
+        setupDatePicker(datePicker2, "calendar-icon-datewarn", "clear-icon-datewarn");
+        //  // เพิ่มการคลิกไอคอน calendar เพื่อเปิด datepicker
+        //  $("#calendar-icon-dateatc").click(function() {
+        //     datePicker1.open();
+        // });
+
+        // // เพิ่มการคลิกไอคอนเคลียร์วันที่เพื่อลบค่าใน datepicker
+        // $("#clear-icon-dateatc").click(function() {
+        //     datePicker1.clear();
+        // });
+
+        // // เพิ่มการคลิกไอคอน calendar เพื่อเปิด datepicker
+        // $("#calendar-icon-datewarn").click(function() {
+        //     datePicker2.open();
+        // });
+
+        // // เพิ่มการคลิกไอคอนเคลียร์วันที่เพื่อลบค่าใน datepicker
+        // $("#clear-icon-datewarn").click(function() {
+        //     datePicker2.clear();
+        // });
+
+
+
+        const TimePicker = flatpickr("#timepicker", {
+            enableTime: true, // เปิดใช้งานการเลือกเวลา
+            noCalendar: true, // ไม่แสดงปฏิทิน
+            dateFormat: "H:i", // รูปแบบวันที่และเวลาเฉพาะชั่วโมงและนาที
+            time_24hr: true, // ใช้รูปแบบเวลา 24 ชั่วโมง
+        });
+
+
+
+        // $("#dateatc").datepicker({
+        //     format: "dd/mm/yyyy",
+        //     clearBtn: true,
+        //     todayHighlight: true,
+        //     autoclose: true
+        // });
+        // $("#datewarn").datepicker({
+        //     format: "dd/mm/yyyy",
+        //     clearBtn: true,
+        //     todayHighlight: true,
+        //     autoclose: true
+        // });
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         const formatDate = (data) => {
             if (!data || data === '0000-00-00') {
@@ -309,11 +435,10 @@ $recno = null;
             "searching": false,
             "ordering": false,
             "columnDefs": [{
-                    "width": "3%",
-                    "targets": [0]
-                    // "targets": [0, 6]
-                },
-            ],
+                "width": "3%",
+                "targets": [0]
+                // "targets": [0, 6]
+            }, ],
         });
 
         var selectedRow = null;
@@ -334,31 +459,14 @@ $recno = null;
                     }
                 })
                 .then((data) => {
-                    // ทำอะไรกับข้อมูลที่ได้รับหลังจาก POST สำเร็จ
-                    // console.log(data)
                     selectdata = data.datdropdown
                     console.log(selectdata);
-                    // // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-                    // const select2Inputs = $('.select2');
-
-                    // // วนลูปผ่านทุกฟิลด์ Select2 และเติมข้อมูลลงในแต่ละฟิลด์
-                    // select2Inputs.each(function(index) {
-                    //     const select2Input = select2Inputs[index];
-
-                    //     // เติมข้อมูลใน Select2
-                    //     datdropdown.forEach(item => {
-                    //         $(select2Input).append(new Option(item.text, item.id, false, false));
-                    //     });
-
-                    //     // อัพเดท Select2 เพื่อให้ข้อมูลแสดงผลให้เห็น
-                    //     $(select2Input).trigger('change');
-                    // });
                 })
                 .catch((error) => {
                     console.error(error);
                 });
         }
-        getDataFromServer();
+        // getDataFromServer();
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         var counter = 0;
         const TableAdd = () => {
@@ -375,14 +483,14 @@ $recno = null;
 
 
             // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-            $(newRow).find('.select2').select2();
+            // $(newRow).find('.select2').select2();
 
-            $(newRow).find('.datepicker_get').datepicker({
-                format: "dd/mm/yyyy",
-                clearBtn: true,
-                todayHighlight: true,
-                autoclose: true
-            });
+            // $(newRow).find('.datepicker_get').datepicker({
+            //     format: "dd/mm/yyyy",
+            //     clearBtn: true,
+            //     todayHighlight: true,
+            //     autoclose: true
+            // });
         };
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         $('#createtable').on('click', '.delete-row', function() {
@@ -396,39 +504,14 @@ $recno = null;
 
         function set_formdata(conditionsformdata) {
             var formData = new FormData();
-            formData.append('name', $('#name').val());
-            /// upload ///
-            formData.append('fileToUpload', '');
-            $uploadolddb = '';
-            /////////////
-            var dateValue = $('#date').val();
             /// id ,param ///
             paramhd = {};
             // var paramhd = null;
             // เพิ่มอาร์เรย์ paramhd เข้าไปใน FormData และแปลงเป็น JSON ก่อน
             if (conditionsformdata == "save") {
-                formData.append('queryIdHD', 'IND_APPPOINTMENT');
-                formData.append('condition', '001');
-            } else if (conditionsformdata == "delete") {
-                formData.append('queryIdHD', 'DLT_APPPOINTMENT');
-                formData.append('condition', 'DT000');
-            } else if (conditionsformdata == "update") {
-                formData.append('queryIdHD', 'UPD_APPPOINTMENT');
-                formData.append('condition', '002');
-            } else if (conditionsformdata == "modified") {
-                formData.append('queryIdHD', 'MOUPD_DRAWING');
-                formData.append('modifyIdHD', 'IND_DRAWING');
-                formData.append('condition', 'I_DRAW');
-            } else if (conditionsformdata == "select") {
-                formData.append('queryIdHD', 'SELECT_APPPOINTMENT');
-                formData.append('condition', 'NULL');
-                ////////////////////////////////////////////////////
-                formData.append('queryDropDown', 'SELECT_CUST');
-            } else {
-                // กรณีอื่น ๆ
-                // other
+                formData.append('queryIdHD', 'IND_APPPOINTMENT_NEW');
+                formData.append('condition', '001_NEW');
             }
-
             formData.append('checkRecno', 'CHK_APPPOINTMENT');
             formData.append('checkCondition', 'DT000');
             formData.append('tableData', JSON.stringify(tableData));
@@ -445,9 +528,18 @@ $recno = null;
             }
         });
 
-
         $('#companyadd').on('click', function() {
             $("#myModal").modal("show");
+        });
+
+        $('#backhome').on('click', function() {
+            // $("#myModal").modal("show");
+            window.location = 'main.php';
+        });
+
+        $('#backcontent').on('click', function() {
+            // $("#myModal").modal("show");
+            window.location = 'appointment_up.php';
         });
 
         // คลิกที่ปุ่ม "ยกเลิก" หรือปุ่มปิดของกล่องโมดอล
@@ -479,8 +571,9 @@ $recno = null;
             let clickedButtonName = e.originalEvent.submitter.name;
 
             if (clickedButtonName === 'save') {
-                 url = 'ajax/process_insert.php';
-                 status_sql = 'save';
+                url = 'ajax/process_insert.php';
+                status_sql = 'save';
+                // console.log( $('#dateatc').val() ? $('#dateatc').val() : '0000-00-00')
                 datatable_generetor();
                 if (process == 'T') {
                     AlertSave(url, status_sql)
@@ -503,22 +596,23 @@ $recno = null;
                     const remarkValue = $(this).find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
                     // const locationValue = $(this).find('td:eq(4) .location-input').val();
                     const locationValue = $(this).find('td:eq(4) .location-input').val();
-      
-                    console.log(locationValue)
-                    const dateActValue = $('#dateatc').val();
-                    const dateWarnValue = $('#datewarn').val();
+
+                    const dateActValue = $('#dateatc').val() ? $('#dateatc').val() : '0000-00-00';
+                    const dateWarnValue =$('#datewarn').val() ? $('#datewarn').val() : '0000-00-00';
                     const ownername = $('#ownername').val();
 
                     tableData.push({
                         name: companyValue,
                         detail: detailValue,
                         remark: remarkValue,
-                        dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                        dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+                        // dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00' ,
+                        // dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00' ,
+                        dateAct: dateActValue,
+                        dateWarn: dateWarnValue,
                         ownername: ownername,
                         location: locationValue
                     });
-                    console.log(tableData)
+                    // console.log(tableData)
                 });
             } else {
                 process = 'F'
@@ -548,10 +642,9 @@ $recno = null;
                 })
                 .then((data) => {
                     // ทำอะไรกับข้อมูลที่ได้รับหลังจาก POST สำเร็จ
-                    console.log(data)
+                    // console.log(data)
                     if (status_sql == 'save') {
                         clearTable();
-                        getDataFromServer();
                         Swal.fire({
                             title: "บันทึกแล้ว",
                             text: "ข้อมูลถูกบันทึก",
@@ -561,55 +654,6 @@ $recno = null;
                         }).then(function(willRedirect) {
 
                         });
-                    } else if (status_sql == 'update') {
-                        if (data.status === "success") {
-                            clearTable();
-                            saveRemoveButton();
-                            Swal.fire({
-                                title: "แก้ไขแล้ว",
-                                text: "ข้อมูลถูกแก้ไขเรียบร้อย",
-                                icon: "success",
-                                buttons: ["OK"],
-                                dangerMode: true,
-                            }).then(function(willRedirect) {
-
-                            });
-                        } else if (data.status === "warning") {
-                            clearTable();
-                            getDataFromServer();
-                            Swal.fire({
-                                title: 'ตรวจพบความขัดข้อง',
-                                html: '<img src="doc/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>ข้อมูลมีคนลบไปแล้ว</h4>',
-                                icon: 'warning',
-                                confirmButtonText: 'OK'
-                            });
-                        }
-
-                    } else if (status_sql == 'delete') {
-                        // clearTable();
-                        // RemoveRowTable()
-                        if (data.status === "success") {
-                            clearTable();
-                            RemoveRowTable();
-                            Swal.fire({
-                                title: "ข้อมูลถูกลบแล้ว",
-                                text: "ข้อมูลถูกลบเรียบร้อย",
-                                icon: "success",
-                                buttons: ["OK"],
-                                dangerMode: true,
-                            }).then(function(willRedirect) {
-
-                            });
-                        } else if (data.status === "warning") {
-                            clearTable();
-                            getDataFromServer();
-                            Swal.fire({
-                                title: 'ตรวจพบความขัดข้อง',
-                                html: '<img src="doc/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>ข้อมูลมีคนลบไปแล้ว</h4>',
-                                icon: 'warning',
-                                confirmButtonText: 'OK'
-                            });
-                        }
                     }
                 })
                 .catch((error) => {
@@ -690,5 +734,7 @@ $recno = null;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
 </script>
+
+
 
 </html>

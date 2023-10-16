@@ -76,12 +76,24 @@
 
       <div class="row pb-3">
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-          <select id='slcdata' class="form-select" aria-label="Default select example">
-            <option value="0" selected>ใบเสนอราคา</option>
-            <option value="1">ใบสั่งขาย</option>
-            <option value="2">ใบส่งของสินค้า</option>
-            <option value="3">ใบแจ้งหนี้</option>
-          </select>
+          <div class="input-group ">
+            <span class="input-group-text">ประเภท</span>
+            <select id='slcdata' class="form-select" aria-label="Default select example">
+              <option value="0" selected>ใบเสนอราคา</option>
+              <option value="1">ใบสั่งขาย</option>
+              <option value="2">ใบส่งของสินค้า</option>
+              <option value="3">ใบแจ้งหนี้</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pb-3">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="input-group ">
+            <span class="input-group-text">ชื่อไฟล์</span>
+            <input type="text" class="form-control" id="namelink" value="Excel_ใบเสนอราคา"  maxlength="125" placeholder="ใส่ชื่อ">
+          </div>
         </div>
       </div>
 
@@ -104,9 +116,31 @@ include("0_footerjs.php");
 
 <script>
   $(document).ready(function() {
-    // $("#downloadExcel").click(function() {
-    //     window.location.href = "export/excel_export_sql.php"; // ระบุ URL ของไฟล์ PHP ที่คุณต้องการให้ดาวน์โหลด
-    // });
+
+
+    $("#slcdata").on("change", function() {
+      var selectedValue = $('#slcdata').val();
+      var namelink = "";
+      switch (selectedValue) {
+        case '0':
+          namelink = 'Excel_ใบเสนอราคา';
+          break;
+        case '1':
+          namelink = 'Excel_ใบสั่งขาย';
+          break;
+        case '2':
+          namelink = 'Excel_ใบส่งของสินค้า';
+          break;
+        case '3':
+          namelink = 'Excel_ใบแจ้งหนี้';
+          break;
+        default:
+          namelink = '';
+      }
+      $('#namelink').val(namelink);
+    });
+
+    //  $('#namelink').val('')
 
     // หาวันที่ 1 ของเดือนนี้
     var firstDayOfMonth = moment().startOf('month').format('DD/MM/YYYY');
@@ -115,6 +149,29 @@ include("0_footerjs.php");
 
     moment($('#datepickerbegin').val(firstDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
     moment($('#datepickerend').val(lastDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
+
+    const formatDate = (data) => {
+      if (!data || data === '0000-00-00') {
+        return '00/00/0000'; // ถ้าค่าว่างหรือไม่ถูกต้อง ส่งค่าว่างกลับไป
+      }
+      const dateObj = new Date(data);
+      const day = dateObj.getDate();
+      const month = dateObj.getMonth() + 1;
+      const year = dateObj.getFullYear();
+      const formattedDate = `${(day < 10 ? '0' + day : day)}/${(month < 10 ? '0' + month : month)}/${year}`;
+      return formattedDate;
+    };
+
+    const formatCurrency = (amount) => {
+      if (amount === '') {
+        return '';
+      }
+      let formattedAmount = parseFloat(amount).toFixed(2);
+      formattedAmount = formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      // formattedAmount += '฿';
+      return formattedAmount;
+    };
+
 
     $("#datepickerbegin").datepicker({
       format: "dd/mm/yyyy",
@@ -130,275 +187,226 @@ include("0_footerjs.php");
       clearBtn: true
     });
 
-    
-   
-
-
-
-
 
     $("#downloadExcel").click(function() {
       // ข้อมูลที่ต้องการส่งไปยัง PHP
       // ส่งข้อมูลไปยัง PHP โดยใช้ AJAX
-      let beginDate = moment($('#datepickerbegin').val(), 'DD/MM/YYYY');
-      let endDate = moment($('#datepickerend').val(), 'DD/MM/YYYY');
-      let slcdata = $('#slcdata').val()
 
-      const array_data = [{
-          name: "qout",
-          queryid: "EXCEL_CUSTOMERSALE",
+      if ($('#namelink').val() !== '') {
+        let beginDate = moment($('#datepickerbegin').val(), 'DD/MM/YYYY');
+        let endDate = moment($('#datepickerend').val(), 'DD/MM/YYYY');
+        let slcdata = $('#slcdata').val()
 
-        },
-        {
-          name: "oreder",
-          queryid: "EXCEL_QOUT_ORDERHD",
-        },
-        {
-          name: "delivery",
-          queryid: "EXCEL_QOUT_DELYHD",
-        },
-        {
-          name: "invoice",
-          queryid: "EXCEL_QOUT_INVOICE",
-        }
-      ];
-
-      if ($('#datepickerbegin').val() !== '' && $('#datepickerend').val() !== '') {
-        console.log("ประมวลผลได้");
-        if (endDate.isBefore(beginDate)) {
+        const array_data = [{
+            name: "qout",
+            queryid: "EXCEL_CUSTOMERSALE",
+          },
+          {
+            name: "oreder",
+            queryid: "EXCEL_QOUT_ORDERHD",
+          },
+          {
+            name: "delivery",
+            queryid: "EXCEL_QOUT_DELYHD",
+          },
+          {
+            name: "invoice",
+            queryid: "EXCEL_QOUT_INVOICE",
+          }
+        ];
+        if ($('#datepickerbegin').val() !== '' && $('#datepickerend').val() !== '') {
+          console.log("ประมวลผลได้");
+          if (endDate.isBefore(beginDate)) {
+            Swal.fire(
+              'มีการป้อนวันที่ผิดพลาด',
+              'ไม่สามารถประมวลผลได้',
+              'error'
+            )
+          } else if (endDate.isSame(beginDate)) {
+            // ถ้า endDate เท่ากับ beginDate
+            $('.loading').show();
+            databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+            dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+            download_excel(array_data[parseInt(slcdata)], databegin, dateend)
+          } else {
+            // ถ้า endDate มากกว่า beginDate
+            $('.loading').show();
+            databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+            dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+            download_excel(array_data[parseInt(slcdata)], databegin, dateend)
+          }
+        } else {
           Swal.fire(
             'มีการป้อนวันที่ผิดพลาด',
             'ไม่สามารถประมวลผลได้',
             'error'
           )
-        } else if (endDate.isSame(beginDate)) {
-          // ถ้า endDate เท่ากับ beginDate
-          $('.loading').show();
-          databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          download_excel(array_data[parseInt(slcdata)], databegin, dateend)
-        } else {
-          // ถ้า endDate มากกว่า beginDate
-          $('.loading').show();
-          databegin = moment($('#datepickerbegin').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          dateend = moment($('#datepickerend').val(), 'DD/MM/YYYY').format('YYYY.MM.DD');
-          download_excel(array_data[parseInt(slcdata)], databegin, dateend)
         }
       } else {
-        Swal.fire(
-          'มีการป้อนวันที่ผิดพลาด',
-          'ไม่สามารถประมวลผลได้',
-          'error'
-        )
+        Swal.fire({
+          title: 'ชื่อไฟล์ว่าง',
+          html: '<img src="images/womanyellingcat.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>ใส่ชื่อไฟล์ด้วย</h4>',
+          icon: 'warning',
+          confirmButtonText: 'OK'
+        });
       }
+
     });
 
-    
-    function download_excel(slcdata, databegin, dateend) {
-      $.ajax({
-        type: "POST",
-        url: "export/excelsql.php", // แก้ไขเป็น URL ของไฟล์ PHP ที่คุณสร้างขึ้น
-        data: {
-          data: 'Excel_' + slcdata,
-          queryId: slcdata,
-          params: {
-            ABEGIN: databegin,
-            AEND: dateend
-          },
-        },
-        success: function(response) {
-            data_json = JSON.parse(response).download;
-            console.log(data_json)
-            window.location.href = "uploads/" + data_json;
-            $('.loading').hide();
-        },
-        error: function(error) {
-          console.log(error)
+    async function download_excel(slcdata, data_begin, date_end) {
+      var Param = [];
+      var formData = new FormData();
+      Param.push({
+        datebegin: data_begin,
+        dateend: date_end
+      })
+      formData.append('queryIdHD', slcdata.queryid);
+      formData.append('queryIdExcel', slcdata.queryid);
+      formData.append('Param', JSON.stringify(Param));
+      formData.append('condition', 'DATEBE');
+
+      try {
+        // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
+        const jsonResponse = await fetch('ajax/process_dataeexcel.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!jsonResponse.ok) {
+          $('.loading').hide();
+          throw new Error('Error sending data to server');
+        }
+
+        const jsonData = await jsonResponse.json();
+
+        // เรียกใช้ฟังก์ชัน mapData สำหรับแปลงข้อมูล
+        let TureTotalAmt = 0;
+        const mappedData = mapData(jsonData.datasql, slcdata.queryid);
+        // ใช้ reduce เพื่อคำนวณผลรวมของ TureTotalAmt
+        // ใช้ forEach เพื่อคำนวณผลรวมของ TureTotalAmt
+        mappedData.forEach((item) => {
+          if (typeof item.TOTALAMT !== 'undefined') {
+            const totalAmtAsFloat = parseFloat(item.TOTALAMT);
+            if (!isNaN(totalAmtAsFloat)) {
+              TureTotalAmt += totalAmtAsFloat;
+            }
+          }
+        });
+
+        ////////////////////
+        formData.append('blobData', JSON.stringify(mappedData));
+        formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
+        formData.append('condition_footer', 'T');
+
+        const blobResponse = await fetch('export/excel_export.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!blobResponse.ok) {
+          throw new Error('Error sending data to server');
           $('.loading').hide();
         }
-      });
+
+        const namelike = $('#namelink').val();
+        // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
+        const blobData = await blobResponse.blob();
+
+        const url = window.URL.createObjectURL(blobData);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = namelike + '.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
+        document.body.appendChild(a);
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+
+        $('.loading').hide();
+      } catch (error) {
+        console.error(error);
+      }
     }
 
- 
-    // async function download_excel(slcdata,data_begin,date_end) {
-    //   var Param = [];
-    //   console.log(data_begin)
-    //   console.log(date_end)
-    //   // Create a FormData object and append data to it
-    //   var formData = new FormData();
-    //   Param.push({
-    //     // datebegin: data_begin,
-    //     // datebegin: date_end,
-    //     datebegin: data_begin,
-    //     dateend: date_end
-    //   })
-    //   formData.append('queryIdHD', slcdata.queryid);
-    //   formData.append('Param', JSON.stringify(Param));
-    //   formData.append('condition', 'DATEBE');
+    function mapData(datamapsql, conditionmap) {
+      const mappedData = datamapsql.map((item) => {
+        if (conditionmap == 'EXCEL_CUSTOMERSALE') {
+          return {
+            // RECNO: item.RECNO,
+            DOCDATE: formatDate(item.DOCDATE),
+            DOCNO: item.DOCNO,
+            REVISE: item.REVISE,
+            CODE: item.CODE,
+            SNAME: item.SNAME,
+            NAME: item.NAME,
+            CONTNAME: item.CONTNAME,
+            DETAIL: item.DETAIL,
+            EMPNAME: item.EMPNAME,
+            CREDIT: item.CREDIT,
+            REMARK: item.REMARK,
+            QUAN: item.QUAN,
+            UNITAMT: item.UNITAMT,
+            TOTALAMT: item.TOTALAMT,
+          };
+        } else if (conditionmap == 'EXCEL_QOUT_ORDERHD') {
+          return {
+            // RECNO: item.RECNO,
+            DOCDATE: formatDate(item.DOCDATE),
+            DOCNO: item.DOCNO,
+            CUSTORDERNO: item.CUSTORDERNO,
+            CODE: item.CODE,
+            SNAME: item.SNAME,
+            NAME: item.NAME,
+            CONTNAME: item.CONTNAME,
+            EMPNAME: item.EMPNAME,
+            DETAIL: item.DETAIL,
+            QUAN: item.QUANDLY,
+            UNITAMT: item.UNITAMT,
+            TOTALAMT: item.TOTALAMT,
+          };
+        } else if (conditionmap == 'EXCEL_QOUT_DELYHD') {
+          return {
+            DOCDATE: formatDate(item.DOCDATE),
+            DOCNO: item.DOCNO,
+            ORDERHD: item.ORDERHD,
+            CODE: item.CODE,
+            SNAME: item.SNAME,
+            NAME: item.NAME,
+            DETAIL: item.DETAIL,
+            QUAN: item.QUAN,
+            UNITAMT: item.UNITAMT,
+            TOTALAMT: item.TOTALAMT,
+          };
+        } else if (conditionmap == 'EXCEL_QOUT_INVOICE') {
+          return {
+            DOCDATE: formatDate(item.DOCDATE),
+            DOCNO: item.DOCNO,
+            ORDERNO: item.ORDERNO,
+            CODE: item.CODE,
+            SNAME: item.SNAME,
+            NAME: item.NAME,
+            CONTNAME: item.CONTNAME,
+            EMPNAME: item.EMPNAME,
+            DETAIL: item.DETAIL,
+            QUAN: item.QUANDLY,
+            UNITAMT: item.UNITAMT,
+            TOTALAMT: item.TOTALAMT,
+          };
+        }
 
-    //   try {
-    //     // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
-    //     const jsonResponse = await fetch('ajax/process_dataeexcel.php', {
-    //       method: 'POST',
-    //       body: formData,
-    //     });
+      });
 
-    //     if (!jsonResponse.ok) {
-    //       throw new Error('Error sending data to server');
-    //     }
-
-    //     const jsonData = await jsonResponse.json();
-    //     console.log(jsonData.datasql)
-
-    //     ////////////////////
-    //     formData.append('blobData', JSON.stringify(jsonData.datasql));
-    //     console.log( slcdata.queryid)
-
-    //     const blobResponse = await fetch('ajax/excel_export.php', {
-    //       method: 'POST',
-    //       body: formData,
-    //     });
-
-    //     if (!blobResponse.ok) {
-    //       throw new Error('Error sending data to server');
-    //     }
-
-    //     // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
-    //     const blobData = await blobResponse.blob();
-
-    //     const url = window.URL.createObjectURL(blobData);
-    //     const a = document.createElement('a');
-    //     a.style.display = 'none';
-    //     a.href = url;
-    //     a.download = slcdata.name+'.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
-    //     document.body.appendChild(a);
-    //     a.click();
-
-    //     window.URL.revokeObjectURL(url);
-     
-
-    //     ////////////////////
-    //     //   const blobResponse = await fetch('ajax/json_dataeexcel.php', {
-    //     //   method: 'POST',
-    //     //   body: formData,
-    //     // });
-
-    //     // if (!blobResponse.ok) {
-    //     //   throw new Error('Error sending data to server');
-    //     // }
-
-    //     // // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
-    //     // const blobData = await blobResponse.json();
-    //     // console.log()
-    //     // console.log(blobData)
-    //     $('.loading').hide();
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
+      return mappedData;
+    }
 
 
-    // async function download_excel() {
-    //   var tableData = [
-    //     // ['a', 'b', 'c'],
-    //     // [1, 2, 3],
-    //     // [4, 5, 6]
-    //   ];
-    //   // Create a FormData object and append data to it
-    //   var formData = new FormData();
-    //   // formData.append('queryId', 'EXCEL_CUSTOMERSALE');
-    //   formData.append('queryIdHD', 'EXCEL_CUSTOMERSALE');
-    //   formData.append('tableData', JSON.stringify(tableData));
-    //   formData.append('condition', 'NULL');
 
-    //   try {
-    //     // ดาวน์โหลดไฟล์ Excel จากเซิร์ฟเวอร์
-    //     const jsonResponse = await fetch('ajax/process_dataeexcel.php', {
-    //       method: 'POST',
-    //       body: formData,
-    //     });
-
-    //     if (!jsonResponse.ok) {
-    //       throw new Error('Error sending data to server');
-    //     }
-
-    //     const jsonData = await jsonResponse.json();
-    //     console.log(jsonData.datasql)
-
-    //     // // รับไฟล์ Excel เป็น blob
-    //     // const excelBlob = await response.blob();
-
-    //     // // สร้างลิงก์ดาวน์โหลดไฟล์ Excel
-    //     // const excelUrl = window.URL.createObjectURL(excelBlob);
-    //     // const excelLink = document.createElement('a');
-    //     // excelLink.href = excelUrl;
-    //     // excelLink.download = 'exported_data.xlsx';
-    //     // document.body.appendChild(excelLink);
-    //     // excelLink.click();
-    //     // window.URL.revokeObjectURL(excelUrl);
-
-    //     // // ต่อมา, ร้องขอข้อมูล JSON
-    //     // // const jsonResponse = await fetch('export/susccess.php');
-    //     // const jsonResponse = await fetch('export/excel_export_test.php');
-
-    //     // if (!jsonResponse.ok) {
-    //     //   throw new Error('Error fetching JSON data');
-    //     // }
-    //     // // รับข้อมูล JSON
-    //     // const jsonData = await jsonResponse.json();
-
-    //     // // ทำสิ่งที่คุณต้องการกับข้อมูล JSON
-    //     // console.log(jsonData);
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // }
-
-    // เรียกใช้ฟังก์ชันเพื่อดาวน์โหลดไฟล์ Excel และร้องขอข้อมูล JSON
-
-    // function download_excel() {
-    //   var data = [
-    //     // ['a', 'b', 'c'],
-    //     // [1, 2, 3],
-    //     // [4, 5, 6]
-    //   ];
-
-    //   // Create a FormData object and append data to it
-    //   var formData = new FormData();
-    //   formData.append('queryId', 'EXCEL_CUSTOMERSALE');
-    //   formData.append('data', JSON.stringify(data));
-
-    //   // Send data to the PHP script using Fetch API
-    //   fetch('export/excel_export_test.php', {
-    //       method: 'POST',
-    //       body: formData,
-    //     })
-    //     .then((response) => {
-    //       if (response.ok) {
-    //         return response.blob(); // Get the Excel file as a blob
-    //       } else {
-    //         throw new Error('Error sending data to server');
-    //       }
-    //     })
-    //     .then((blob) => {
-    //       // Create a download link for the Excel file
-    //       var url = window.URL.createObjectURL(blob);
-    //       var a = document.createElement('a');
-    //       a.href = url;
-    //       a.download = 'exported_data.xlsx';
-    //       document.body.appendChild(a);
-    //       a.click();
-    //       window.URL.revokeObjectURL(url);
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-
-    // }
 
     $('#backhis').click(function() {
       window.location = 'main.php';
     });
+
+
 
 
   });

@@ -3,6 +3,7 @@ include("sql.php");
 include("bpdata.php");
 include("crud_zen.php");
 
+// $selectData = new CRUDDATA('firebird','192.168.1.28', 'SAN', 'SYSDBA', 'masterkey');
 $selectData = new CRUDDATA('firebird','192.168.1.28', 'SAN', 'SYSDBA', 'masterkey');
 
 $queryIdHD = 'EXCEL_CUSTOMERSALE';

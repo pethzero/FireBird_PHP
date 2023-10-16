@@ -129,17 +129,21 @@ $recno = null;
 
         .table-custom {
             --bs-table-color: #000;
-            /* --bs-table-bg: #cfe2ff; */
             --bs-table-bg: #4caf50;
             --bs-table-border-color: #bacbe6;
-            /* --bs-table-striped-bg: #c5d7f2;
-            --bs-table-striped-color: #000;
-            --bs-table-active-bg: #bacbe6;
-            --bs-table-active-color: #000;
-            --bs-table-hover-bg: #bfd1ec;
-            --bs-table-hover-color: #000;
-            color: var(--bs-table-color);
-            border-color: var(--bs-table-border-color) */
+        }
+
+        .table-postpone {
+            --bs-table-color: #000;
+            /* สีของข้อความในตาราง */
+            --bs-table-bg: #ff980099;
+            /* สีพื้นหลังของตาราง (สีส้ม) */
+            --bs-table-border-color: #bacbe6;
+            /* สีเส้นขอบของตาราง */
+        }
+
+        .bg-postpone {
+            background-color: #ff6600;
         }
     </style>
 
@@ -149,7 +153,53 @@ $recno = null;
                 <div class="row pt-3">
                     <h2>ตารางนัดหมาย</h2>
                 </div>
+                <hr>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <button id="backcontent" type="button" class="  btn btn-primary">เพิ่มหน้านัดหมาย</button>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <button id="backhome" type="button" class=" btn btn-success  float-end me-3">กลับหน้าหลัก</button>
+                    </div>
+                </div>
 
+        <hr>
+
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                        <div class="input-group date mb-3">
+                            <span class="input-group-append">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </span>
+                            <input type="text" class="form-control" id="datesearch" readonly />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text c_activity">สถานะ:</span>
+                            <select class="form-select" id="statussearch">
+                                <option value="" selected>เลือก...</option>
+                                <option value="ยังไม่เริ่มดำเนินการ">ยังไม่เริ่มดำเนินการ</option>
+                                <option value="อยู่ระหว่างดำเนินการ">อยู่ระหว่างดำเนินการ</option>
+                                <option value="รอดำเนินการ">รอดำเนินการ</option>
+                                <option value="ถูกเลื่อนออกไป">ถูกเลื่อนออกไป</option>
+                                <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+                        <button id='search' type="button" class="btn btn-primary">ค้นหา</button>
+                        <button id="cancelsearch" type="button" class="btn btn-danger">ยกเลิก</button>
+                    </div>
+                </div>
                 <hr>
                 <div class="row pt-2 table-responsive">
                     <table id="detailtable" class="nowrap table table-striped table-bordered" width='100%'>
@@ -203,6 +253,7 @@ $recno = null;
                                         <option value="I">อยู่ระหว่างดำเนินการ</option>
                                         <option value="W">รอดำเนินการ</option>
                                         <option value="D">ถูกเลื่อนออกไป</option>
+                                        <option value="C">ยกเลิก</option>
                                         <option value="F">เสร็จสิ้น</option>
                                     </select>
                                 </div>
@@ -247,7 +298,7 @@ $recno = null;
                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="input-group date mb-3" id="datepicker">
                                     <span class="input-group-text c_activity">วันที่นัด:</span>
-                                    <input type="text" class="form-control" id="date" />
+                                    <input type="text" class="form-control" id="dateatc" />
                                     <span class="input-group-append">
                                         <span class="input-group-text bg-light d-block">
                                             <i class="fa fa-calendar"></i>
@@ -305,6 +356,14 @@ $recno = null;
         });
 
         var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
+
+        $("#datesearch").datepicker({
+            format: "dd/mm/yyyy",
+            clearBtn: true,
+            todayHighlight: true,
+            autoclose: true
+        });
+
         $("#dateatc").datepicker({
             format: "dd/mm/yyyy",
             clearBtn: true,
@@ -317,9 +376,28 @@ $recno = null;
             todayHighlight: true,
             autoclose: true
         });
+
+
+        $('#search').click(function() {
+            console.log('wow')
+            var dateValue = $('#datesearch').val();
+            if (dateValue) {
+                startd = moment($('#datesearch').val(), 'DD/MM/YYYY').format('DD/MM/YYYY')
+            } else {
+                startd = '';
+            }
+            $('#detailtable').DataTable().column(8).search(startd).draw();
+            $('#detailtable').DataTable().column(2).search($('#statussearch').val()).draw();
+        })
+
+        $('#cancelsearch').click(function() {
+            $('#detailtable').DataTable().column(8).search('').draw();
+            $('#detailtable').DataTable().column(2).search('').draw();
+        })
+
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         const formatDate = (data) => {
-            if (!data || data === '0000-00-00') {
+            if (!data || data === '0000-00-00 00:00:00' || data === '0000-00-00') {
                 return '00/00/0000'; // ถ้าค่าว่างหรือไม่ถูกต้อง ส่งค่าว่างกลับไป
             }
             const dateObj = new Date(data);
@@ -331,15 +409,16 @@ $recno = null;
         };
         const customButtonEdit = (data, type, row, istatus) => {
             let divele = "";
-            if (data['STATUS'] == "F") {
-                if (istatus == "S") {
-                    divele = `<button class="btn btn-warning btn-sm edit-row"><i class="far fa-edit"></i></button>`;
-                } else {
-                    divele = `<button class="btn btn-primary btn-sm view"><i class="far fa-eye"></i></button>`;
-                }
-            } else {
-                divele = `<button type="button" class="btn btn-warning btn-sm edit-row" ><i class="far fa-edit"></i></button>`;
-            }
+            // if (data['STATUS'] == "F") {
+            //     if (istatus == "S") {
+            //         divele = `<button class="btn btn-warning btn-sm edit-row"><i class="far fa-edit"></i></button>`;
+            //     } else {
+            //         divele = `<button class="btn btn-primary btn-sm view"><i class="far fa-eye"></i></button>`;
+            //     }
+            // } else {
+            //     divele = `<button type="button" class="btn btn-warning btn-sm edit-row" ><i class="far fa-edit"></i></button>`;
+            // }
+            divele = `<button type="button" class="btn btn-warning btn-sm edit-row" ><i class="far fa-edit"></i></button>`;
             return divele;
         };
 
@@ -375,15 +454,17 @@ $recno = null;
                     data: 'STATUS',
                     render: function(data) {
                         if (data == 'A') {
-                            return '<h5><span class="badge bg-secondary mt-2">ยังไม่เริ่มดำเนินการ</span></h5>'
+                            return '<span class="badge bg-secondary" style="font-size: 15px;">ยังไม่เริ่มดำเนินการ</span>'
                         } else if (data == 'I') {
-                            return '<h5><span class="badge bg-info mt-2 text-dark">อยู่ระหว่างดำเนินการ</span></h5>';
+                            return '<span class="badge bg-info  text-dark" style="font-size: 15px;">อยู่ระหว่างดำเนินการ</span>';
                         } else if (data == 'W') {
-                            return '<h5><span class="badge bg-warning mt-2 text-dark">รอดำเนินการ</span></h5>';
+                            return '<span class="badge bg-warning  text-dark" style="font-size: 15px;">รอดำเนินการ</span>';
                         } else if (data == 'D') {
-                            return '<h5><span class="badge bg-danger mt-2">ถูกเลื่อนออกไป</span></h5>';
+                            return '<span class="badge bg-postpone " style="font-size: 15px;">ถูกเลื่อนออกไป</span>';
+                        } else if (data == 'C') {
+                            return '<span class="badge bg-danger " style="font-size: 15px;">ยกเลิก</span>';
                         } else if (data == 'F') {
-                            return '<h5><span class="badge bg-success mt-2">เสร็จสิ้น</span></h5>'
+                            return '<span class="badge bg-success" style="font-size: 15px;">เสร็จสิ้น</span>'
                         } else {
                             return '';
                         }
@@ -433,10 +514,14 @@ $recno = null;
                     "visible": false,
                     "targets": [0]
                 },
-                // {
-                //     "width": "6%",
-                //     "targets": [1]
-                // },
+                {
+                    "width": "3%",
+                    "targets": [1]
+                },
+                {
+                    className: 'dt-center text-center align-middle',
+                    targets: [2]
+                },
                 // {
                 //     "width": "8%",
                 //     "targets": [6, 7]
@@ -455,21 +540,21 @@ $recno = null;
                 // }
             ],
             rowCallback: function(row, data) {
-                // var api = this.api();
-                // api.rows().every(function(rowIdx, tableLoop, rowLoop) {
-                //     //   var data = this.data();
-                //     //   var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
-                //     var row = api.row(rowIdx).node();
-                //     //   $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
+                var api = this.api();
+                api.rows().every(function(rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
+                    var variableT = data.STATUS; // แทน yourVariable ด้วยชื่อตัวแปรที่คุณต้องการตรวจสอบ
+                    var row = api.row(rowIdx).node();
+                    //   $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
 
-
-                //     //   if (variableT === 'A') {
-                //     //     $(row).addClass('table-secondary'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                //     //   }
-                //     //   else{
-                //     //     $(row).addClass('table-danger'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
-                //     //   }
-                // });
+                    if (variableT === 'F') {
+                        $(row).addClass('table-success'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
+                    } else if (variableT === 'C') {
+                        $(row).addClass('table-danger'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
+                    } else if (variableT === 'D') {
+                        $(row).addClass('table-postpone'); // แทน your-class ด้วยชื่อคลาสที่คุณต้องการเพิ่มให้กับแถว
+                    }
+                });
             },
         });
 
@@ -491,28 +576,8 @@ $recno = null;
                     }
                 })
                 .then((data) => {
-                    // ทำอะไรกับข้อมูลที่ได้รับหลังจาก POST สำเร็จ
-                    // console.log(data)
-                    // selectdata = data.datdropdown
-                    // console.log(selectdata);
-
-                    // // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-                    // const select2Inputs = $('.select2');
-
-                    // // วนลูปผ่านทุกฟิลด์ Select2 และเติมข้อมูลลงในแต่ละฟิลด์
-                    // select2Inputs.each(function(index) {
-                    //     const select2Input = select2Inputs[index];
-
-                    //     // เติมข้อมูลใน Select2
-                    //     datdropdown.forEach(item => {
-                    //         $(select2Input).append(new Option(item.text, item.id, false, false));
-                    //     });
-
-                    //     // อัพเดท Select2 เพื่อให้ข้อมูลแสดงผลให้เห็น
-                    //     $(select2Input).trigger('change');
-                    // });
-
                     detailtable.clear().rows.add(data.datasql).draw();
+                    $('.loading').hide();
                 })
                 .catch((error) => {
                     // จัดการข้อผิดพลาด
@@ -538,37 +603,19 @@ $recno = null;
 
         function set_formdata(conditionsformdata) {
             var formData = new FormData();
-            formData.append('name', $('#name').val());
-            /// upload ///
-            formData.append('fileToUpload', '');
-            $uploadolddb = '';
-            /////////////
-            var dateValue = $('#date').val();
             /// id ,param ///
             paramhd = {};
-            // var paramhd = null;
-            // เพิ่มอาร์เรย์ paramhd เข้าไปใน FormData และแปลงเป็น JSON ก่อน
-            if (conditionsformdata == "save") {
-                formData.append('queryIdHD', 'IND_APPPOINTMENT');
-                formData.append('condition', '001');
+            if (conditionsformdata == "update") {
+                formData.append('queryIdHD', 'UPD_APPPOINTMENT_NEW');
+                formData.append('condition', '002_NEW');
             } else if (conditionsformdata == "delete") {
                 formData.append('queryIdHD', 'DLT_APPPOINTMENT');
                 formData.append('condition', 'DT000');
-            } else if (conditionsformdata == "update") {
-                formData.append('queryIdHD', 'UPD_APPPOINTMENT');
-                formData.append('condition', '002');
-            } else if (conditionsformdata == "modified") {
-                formData.append('queryIdHD', 'MOUPD_DRAWING');
-                formData.append('modifyIdHD', 'IND_DRAWING');
-                formData.append('condition', 'I_DRAW');
             } else if (conditionsformdata == "select") {
                 formData.append('queryIdHD', 'SELECT_APPPOINTMENT');
                 formData.append('condition', 'NULL');
                 ////////////////////////////////////////////////////
                 formData.append('queryDropDown', 'SELECT_CUST');
-            } else {
-                // กรณีอื่น ๆ
-                // other
             }
 
             formData.append('checkRecno', 'CHK_APPPOINTMENT');
@@ -597,19 +644,20 @@ $recno = null;
 
             var clickedButtonName = e.originalEvent.submitter.name;
             if (clickedButtonName === 'editmodal') {
+
                 let url = 'ajax/process_update.php';
                 let status_sql = 'update';
-                console.log('save modal');
-                // AlertSave(url, status_sql)
+                DataEditValue()
+                console.log(DataEdit)
+                AlertSave(url, status_sql)
+
             } else if (clickedButtonName === 'removerow') {
                 let url = 'ajax/process_delete.php';
                 let status_sql = 'delete';
                 AlertSave(url, status_sql)
             }
         });
-        // $('#addtable').click(function() {
-        //     TableAdd()
-        // });
+
         var process = 'T';
         var tableData = [];
 
@@ -631,9 +679,11 @@ $recno = null;
                 })
                 .then((data) => {
                     // ทำอะไรกับข้อมูลที่ได้รับหลังจาก POST สำเร็จ
+                    console.log(data)
                     if (status_sql == 'update') {
                         if (data.status === "success") {
-                            saveRemoveButton();
+                            getDataFromServer();
+
                             Swal.fire({
                                 title: "แก้ไขแล้ว",
                                 text: "ข้อมูลถูกแก้ไขเรียบร้อย",
@@ -641,8 +691,10 @@ $recno = null;
                                 buttons: ["OK"],
                                 dangerMode: true,
                             }).then(function(willRedirect) {
-
+                                $("#myModal").modal("hide"); // ปิดกล่องโมดอล
                             });
+
+
                         } else if (data.status === "warning") {
                             getDataFromServer();
                             Swal.fire({
@@ -651,11 +703,13 @@ $recno = null;
                                 icon: 'warning',
                                 confirmButtonText: 'OK'
                             });
+                            $("#myModal").modal("hide"); // ปิดกล่องโมดอล
                         }
 
                     } else if (status_sql == 'delete') {
                         if (data.status === "success") {
-                            RemoveRowTable();
+                            // RemoveRowTable();
+                            getDataFromServer();
                             Swal.fire({
                                 title: "ข้อมูลถูกลบแล้ว",
                                 text: "ข้อมูลถูกลบเรียบร้อย",
@@ -673,6 +727,7 @@ $recno = null;
                                 icon: 'warning',
                                 confirmButtonText: 'OK'
                             });
+                            $("#myModal").modal("hide"); // ปิดกล่องโมดอล
                         }
                     }
                 })
@@ -700,6 +755,7 @@ $recno = null;
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
+                    $('.loading').show();
                     CRUDSQL(url, status_sql);
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     Swal.fire(
@@ -712,175 +768,49 @@ $recno = null;
         }
         //////////////////////////////////////////////////////////// CLICK ////////////////////////////////////////////////////////////
         var DataEdit = [];
-
+        var recno_data;
         $('#detailtable').on('click', '.edit-row', function() {
             let rowData = $('#detailtable').DataTable().row($(this).closest('tr')).data();
-
+            recno_data = rowData.RECNO
             $('#cust').val(rowData.CUSTNAME);
             $('#status').val(rowData.STATUS);
             $('#detail').val(rowData.DETAIL);
             $('#addr').val(rowData.ADDR);
             $('#remark').val(rowData.REMARK);
-            $('#owner').val(rowData.OWNERNAME); 
+            $('#owner').val(rowData.OWNERNAME);
+            $('#dateatc').val(moment(rowData.STARTD, 'YYYY-MM-DD').isValid() ? moment(rowData.STARTD, 'YYYY-MM-DD').format('DD/MM/YYYY') : '');
+            $('#datewarn').val(moment(rowData.WARND, 'YYYY-MM-DD').isValid() ? moment(rowData.WARND, 'YYYY-MM-DD').format('DD/MM/YYYY') : '');
             $("#myModal").modal("show");
         });
-         
-        function DataEditValue()
-        {
-            let companyValue =  $('#cust').val();
+
+        function DataEditValue() {
+            DataEdit = [];
+            let companyValue = $('#cust').val();
+            let statusValue = $('#status').val();
+            let detailValue = $('#detail').val();
+            let addrValue = $('#addr').val();
+            let remarkValue = $('#remark').val();
+            let OwnerValue = $('#owner').val();
+            let dateActValue = $('#dateatc').val();
+            let dateWarnValue = $('#datewarn').val();
+
             DataEdit.push({
-                recno: rowData.RECNO,
+                recno: recno_data,
                 name: companyValue,
+                status: statusValue,
                 detail: detailValue,
+                address: addrValue,
                 remark: remarkValue,
-                // dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                // dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+                dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+                dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
                 ownername: OwnerValue
             });
+            console.log(dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00')
         }
-        
-        // async function fetchData() {
-        //     try {
-
-        //         // const jsonResponse = await fetch('ajax/.php', {
-        //         //     method: 'POST',
-        //         //     body: formData,
-        //         //     });
 
 
-        //         // if (!response.ok) {
-        //         //     throw new Error('ไม่สามารถดึงข้อมูลได้');
-        //         // }
-
-        //         // const data = await jsonResponse.json();
-        //         // console.log(data); // แสดงข้อมูลที่ได้รับในคอนโซล
-        //     } catch (error) {
-        //         console.error('เกิดข้อผิดพลาด: ', error);
-        //     }
-        // }
-
-        // fetchData();
-
-
-        // $('#detailtable').on('click', '.edit-row', function() {
-        //     let row = $(this).closest('tr');
-        //     let companyCell = row.find('td:eq(1)');
-        //     let detailCell = row.find('td:eq(2)');
-        //     let remarkCell = row.find('td:eq(3)');
-        //     //
-        //     let OwnerCell = row.find('td:eq(4)');
-
-        //     let dateActCell = row.find('td:eq(5)');
-        //     let dateWarnCell = row.find('td:eq(6)');
-        //     let companyValue = companyCell.text();
-        //     let detailValue = detailCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-        //     let remarkValue = remarkCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-
-        //     let OwnerValue = OwnerCell.html(); // เราใช้ .html() เพื่อรับ HTML แบบที่มี <br>
-
-        //     let dateActValue = dateActCell.text() === "00/00/0000" ? '' : dateActCell.text();
-        //     let dateWarnValue = dateWarnCell.text() === "00/00/0000" ? '' : dateWarnCell.text();
-        //     // เปลี่ยน <br> เป็น \n
-        //     detailValue = detailValue.replace(/<br>/g, "\n");
-        //     remarkValue = remarkValue.replace(/<br>/g, "\n");
-        //     // สร้าง input && textarea สำหรับแก้ไขข้อมูล
-        //     let companyInput = '<input type="text" class="company-input form-control" value="' + companyValue + '" />';
-        //     let detailTextarea = '<textarea class="form-control detail-input" maxlength="500" >' + detailValue + '</textarea>';
-        //     let remarkTextarea = '<textarea class="form-control remark-input" maxlength="500" >' + remarkValue + '</textarea>';
-
-        //     let OwnerInput = '<input type="text" class="owner-input form-control" value="' + OwnerValue + '" />';
-
-        //     let dateActInput = `<div class="date datepicker_get" >
-        //             <input type="text" class="form-control date-input"  value="${dateActValue}"  />
-        //             <span class="input-group-append">
-        //             </span>
-        //         </div>`;
-        //     let dateWarnInput = `<div class="date datepicker_get" >
-        //             <input type="text" class="form-control date-input"  value="${dateWarnValue}"  />
-        //             <span class="input-group-append">
-        //             </span>
-        //         </div>`;
-        //     // คำนวณความยาวของข้อความที่แสดงผล
-        //     let detailTextLines = detailValue.split(/\n/).length;
-        //     let remarkTextLines = remarkValue.split(/\n/).length;
-        //     // กำหนดความยาวของ textarea ให้เท่ากับจำนวนบรรทัดของข้อความ
-        //     detailTextarea = $(detailTextarea).attr('rows', detailTextLines);
-        //     remarkTextarea = $(remarkTextarea).attr('rows', remarkTextLines);
-        //     // แทนที่ข้อมูลใน cell ด้วย textarea
-        //     OwnerCell.html(OwnerInput);
-        //     companyCell.html(companyInput);
-        //     detailCell.html(detailTextarea);
-        //     remarkCell.html(remarkTextarea);
-        //     dateActCell.html(dateActInput);
-        //     dateWarnCell.html(dateWarnInput);
-        //     // ทำลายปุ่ม "แก้ไข"
-        //     row.find('.edit-row').remove();
-        //     // สร้างปุ่ม "บันทึก" และ "ยกเลิก"
-        //     var saveButton = '<button type="sumbit" name="editsave" class="btn btn-success btn-sm save-row me-2"><i class="fa-solid fa-check"></i></button>';
-        //     var cancelButton = '<button type="button" class="btn btn-danger btn-sm cancel-edit"><i class="fa-solid fa-x"></i></button>';
-        //     row.find('td:eq(0)').html(saveButton + ' ' + cancelButton);
-        //     $(row).find('.datepicker_get').datepicker({
-        //         format: "dd/mm/yyyy",
-        //         clearBtn: true,
-        //         todayHighlight: true,
-        //         autoclose: true
-        //     });
-        // });
-
-        // $('#detailtable').on('click', '.cancel-edit', function() {
-        //     let row = $(this).closest('tr');
-        //     let companyValue = row.find('td:eq(1) .company-input').val();
-        //     let detailValue = row.find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
-        //     let remarkValue = row.find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-
-        //     let OwnerValue = row.find('td:eq(4) .owner-input').val(); // คอลัมน์ที่ 3
-
-        //     let dateActValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 4
-        //     let dateWarnValue = row.find('td:eq(6) .date-input').val(); // คอลัมน์ที่ 5
-        //     // detailValue.replace(/<br>/g, "\n");
-        //     // console.log(detailValue)
-        //     detailValue = detailValue.replace(/\n/g, '<br>');
-        //     row.find('td:eq(1)').html(companyValue);
-        //     row.find('td:eq(2)').html(detailValue);
-        //     row.find('td:eq(3)').html(remarkValue);
-        //     row.find('td:eq(4)').html(OwnerValue);
-        //     row.find('td:eq(5)').html(dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
-        //     row.find('td:eq(6)').html(dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('DD/MM/YYYY') : '00/00/0000');
-        //     // ทำลายปุ่ม "บันทึก" และ "ยกเลิก"
-        //     row.find('.save-row .cancel-edit').remove();
-        //     // สร้างปุ่ม "แก้ไข" 
-        //     let editButton = '<button type="button" class="btn btn-warning btn-sm edit-row" ><i class="far fa-edit"></i></button>'
-        //     row.find('td:eq(0)').html(editButton);
-        //     // row.addClass('table-custom');
-        // });
 
         var select_tr = null;
-        // $('#detailtable').on('click', '.save-row', function() {
-        //     DataEdit = [];
-        //     let row = $(this).closest('tr');
-        //     let rowData = $('#detailtable').DataTable().row($(this).closest('tr')).data();
-        //     console.log(rowData.RECNO)
-        //     select_tr = row
-        //     let companyValue = row.find('td:eq(1) .company-input').val();
-        //     let detailValue = row.find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
-        //     let remarkValue = row.find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-
-        //     let OwnerValue = row.find('td:eq(4) .owner-input').val(); // คอลัมน์ที่ 4
-
-        //     let dateActValue = row.find('td:eq(5) .date-input').val(); // คอลัมน์ที่ 4
-        //     let dateWarnValue = row.find('td:eq(6) .date-input').val(); // คอลัมน์ที่ 5
-        //     DataEdit.push({
-        //         recno: rowData.RECNO,
-        //         name: companyValue,
-        //         detail: detailValue,
-        //         remark: remarkValue,
-        //         dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        //         dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        //         ownername: OwnerValue
-        //     });
-        //     saveRemoveButton()
-        // });
-
         var DataRemove
         $('#detailtable').on('click', '.removerow', function() {
             DataRemove = [];
@@ -895,30 +825,7 @@ $recno = null;
 
 
         // แปลงและแสดงผลข้อมูลในคอลัมน์วันที่นัด
-        function saveRemoveButton() {
-            DataEdit[0].detail = DataEdit[0].detail.replace(/\n/g, '<br>')
-            select_tr.find('td:eq(1)').html(DataEdit[0].name);
-            select_tr.find('td:eq(2)').html(DataEdit[0].detail);
-            select_tr.find('td:eq(3)').html(DataEdit[0].remark);
-            select_tr.find('td:eq(4)').html(DataEdit[0].ownername);
-            if (DataEdit[0].dateAct === '0000-00-00') {
-                select_tr.find('td:eq(5)').html('00/00/0000');
-            } else {
-                select_tr.find('td:eq(5)').html(moment(DataEdit[0].dateAct, 'YYYY-MM-DD').format('DD/MM/YYYY'));
-            }
-            if (DataEdit[0].dateWarn === '0000-00-00') {
-                select_tr.find('td:eq(6)').html('00/00/0000');
-            } else {
-                select_tr.find('td:eq(6)').html(moment(DataEdit[0].dateWarn, 'YYYY-MM-DD').format('DD/MM/YYYY'));
-            }
-            select_tr.find('.save-row .cancel-edit').remove();
-            // สร้างปุ่ม "แก้ไข" 
-            let editButton = '<button type="button" class="btn btn-warning btn-sm edit-row" ><i class="far fa-edit"></i></button>'
-            select_tr.find('td:eq(0)').html(editButton);
-        }
-
         function RemoveRowTable() {
-            // let row = $(this).closest('tr');
             $('#detailtable').DataTable().row(select_tr).remove().draw();
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -955,6 +862,16 @@ $recno = null;
                 }
             });
         }
+
+        $('#backhome').on('click', function() {
+            // $("#myModal").modal("show");
+            window.location = 'main.php';
+        });
+
+        $('#backcontent').on('click', function() {
+            // $("#myModal").modal("show");
+            window.location = 'appointment_create.php';
+        });
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
 </script>

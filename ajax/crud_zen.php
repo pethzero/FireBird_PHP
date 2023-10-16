@@ -10,7 +10,7 @@ class Database
     private $conn;
     public $message_log;
 
-    public function __construct($engine,$host, $db_name, $username, $password)
+    public function __construct($engine, $host, $db_name, $username, $password)
     {
         $this->engine =  $engine;
         $this->host =  $host;
@@ -26,11 +26,8 @@ class Database
             if ($this->engine === 'mysql') {
                 $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db_name", $this->username, $this->password);
             } elseif ($this->engine === 'firebird') {
-                $this->conn = new PDO("firebird:host=$this->host;dbname=$this->db_name;charset=NONE", $this->username, $this->password);
+                $this->conn = new PDO("firebird:dbname={$this->host}:{$this->db_name};charset=NONE", $this->username, $this->password);
             }
-            // $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db_name", $this->username, $this->password);
-            // $this->conn = new PDO("firebird:host=$this->host;dbname=$this->db_name;charset=NONE", $this->username, $this->password);
-            // // $this->conn = new PDO("$this->engine:host=$this->host;dbname=$this->db_name", $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->message_log = 'Connection success';
         } catch (PDOException $e) {
@@ -56,7 +53,7 @@ class CRUDDATA
 
     /////////////////////////////////////////////////////////  __construct  //////////////////////////////////////////////////////////////
     // __construct คือเมื่อ class CRUDDATA เรียกใช้งาน จะถูกใช้เลย
-    public function __construct($engine,$host, $db_name, $username, $password)
+    public function __construct($engine, $host, $db_name, $username, $password)
     {
         $this->engine =  $engine;
         $this->host =  $host;
@@ -65,23 +62,22 @@ class CRUDDATA
         $this->password =  $password;
 
         // $db = new Database('mysql', 'localhost', 'SAN', 'root', '1234');
-        $db = new Database($engine,$host, $db_name, $username, $password);
+        $db = new Database($engine, $host, $db_name, $username, $password);
         $this->conn = $db->connect();
         $this->message_log = $db->message_log;
         $this->conn->setAttribute(PDO::ATTR_AUTOCOMMIT, false); // ปิด Auto Commit
         $this->data_commit = $this->conn;
     }
     /////////////////////////////////////////////////////////  SELECT  //////////////////////////////////////////////////////////////
-   
+
     public function SelectRecordFireBird($sqlQuery)
     {
         try {
             $data = array();
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                foreach ($row as $key => $value)
-                {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                foreach ($row as $key => $value) {
                     if (is_string($value)) {
                         // ข้อมูลเป็น string
                         $row[$key] = iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $value);
@@ -107,9 +103,8 @@ class CRUDDATA
             $stmt = $this->conn->prepare($sqlQuery);
             bindParamData::bindParams($stmt, $dataArray, $condition); // เรียกใช้งาน bindParamData
             $stmt->execute();
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                foreach ($row as $key => $value)
-                {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                foreach ($row as $key => $value) {
                     if (is_string($value)) {
                         // ข้อมูลเป็น string
                         $row[$key] = iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $value);
@@ -124,7 +119,7 @@ class CRUDDATA
             // return false;
         }
     }
-   
+
     public function SelectRecord($sqlQuery)
     {
         try {
@@ -133,7 +128,7 @@ class CRUDDATA
             $stmt->execute();
 
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
             // ส่งค่าผลลัพธ์กลับ
             // return $result;
             return array('result' => $result, 'status' => true,  'db_connect' => $this->message_log, 'fecth_select' => 'select success');

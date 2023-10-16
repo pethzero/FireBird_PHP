@@ -1,5 +1,4 @@
 <?php
-ini_set('memory_limit', '512M');
 include("sql.php");
 include("bpdata.php");
 include("crud_zen.php");
@@ -21,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $selectData = new CRUDDATA('firebird','192.168.1.28', 'SAN', 'SYSDBA', 'masterkey');
             $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             
-            // $result = $selectData->SelectRecordFireBird($sqlQuery); // ส่งค่า $message_db มาด้วย
+
             $result = $selectData->SelectRecordFireBirdCodition($Param_Json[0],$sqlQuery,$condition); 
 
             if ($result['status'] !== false ) {
-                $response = array('status' => 'success', 'datasql' => $result['result'], 'dbconnect' =>  $selectData->message_log);
+                $response = array('status' => 'success', 'datasql' => $result['result'],'sql'=>$sqlQuery, 'dbconnect' =>  $selectData->message_log);
                 // $selectData->data_commit->commit();
             } else {
                 $response = array('status' => 'error', 'datasql' => $result['result'], 'message' => 'An error occurred');
