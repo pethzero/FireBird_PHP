@@ -73,6 +73,10 @@
       cursor: pointer;
       /* เมื่อนำเมาส์มาอยู่บนปุ่มจะเป็นเคอร์เซอร์ประเภท */
     }
+    .custom-img {
+    width: 100%; /* ทำให้ภาพขยายเต็มกว้างของ Carousel */
+    height: 300px; /* ครอบครองสัดส่วนเพื่อป้องกันการเพี้ยนรูปภาพ */
+  }
   </style>
   <?php
   include("0_header.php");
@@ -81,6 +85,50 @@
 
   <div class="section">
     <div class="container-fluid">
+      <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-6 col-lg-6">
+          <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <!-- <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button> -->
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <img src="doc/22829.jpg" class="custom-img" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h1> 3 ก๊วน </h1>
+                  <p >คาปู ลาเต้ ซูโม่</p>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <img src="doc/banner_intermecrh.jpg" class="custom-img" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <!-- <h5>Second slide label</h5>
+                  <p>Some representative placeholder content for the second slide.</p> -->
+                </div>
+              </div>
+              <!-- <div class="carousel-item">
+                <img src="doc/22829.jpg" class="custom-img" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>Third slide label</h5>
+                  <p>Some representative placeholder content for the third slide.</p>
+                </div>
+              </div> -->
+            </div>
+            <button class="carousel-control-prev btn-white" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next btn-white" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
       <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
           <div class="card">
@@ -106,37 +154,23 @@
               <h2 class="card-title">ฝ่ายจัดซื้อ</h2>
               <p class="card-text">
               <ul>
-                <li><a href="datatable_po.php">อันดับลูกค้าใบสั่งซื้อ</a></li>
+                <li><a href="datatable_po.php">อันดับผู้จำหน่ายใบสั่งซื้อ</a></li>
+                <li><a href="detailpo.php">สรุปแจงซื้อ ใบแจ้งหนี้</a></li>
               </ul>
               </p>
             </div>
           </div>
         </div>
-
-        <!-- <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h2 class="card-title">ฝ่ายจัดซื้อ</h2>
-              <p class="card-text">
-              <ul>
-                <li><a href="datapurc.php">ใบสั่งซื้อ</a></li>
-              </ul>
-              </p>
-            </div>
-          </div>
-        </div> -->
-
-
-
       </div>
     </div>
+
+
+
   </div>
   <hr>
   <div class="section">
-    <div class="container pt-2">
-      <h1> NEW FEATURE</h1>
-      <h1>ผู้ใช้งาน</h1>
+    <div class="container pt-2 ">
+      <h1> FEATURE ใช้งาน</h1>
       <div class="row">
 
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
@@ -148,6 +182,25 @@
         </div>
 
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='datatable_qt.php';">ดูอันดับใบเสนอราคา</button>
+        </div>
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='datatable_invoice.php';">ใบแจ้งหนี้(ขาย)</button>
+        </div>
+
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='detailpo.php';">ดูอันดับใบสั่งซื้อ</button>
+        </div>
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='detailpo.php';">ดูสรุปแจงสั่งซื้อ(ซื้อ)</button>
+        </div>
+
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='summaryinvoice.php';">สรุปยอดขายลูกค้า</button>
+        </div>
+
+
+        <!-- <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
         </div>
 
@@ -161,13 +214,33 @@
 
         <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
           <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
-        </div>
+        </div> -->
 
       </div>
 
+      <h1>รอการทดสอบ</h1>
+      <div class="row">
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
+        </div>
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='datatable_equipment.php';">ดูอุปรณ์</button>
+        </div>
+
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='datatable_warning.php';">ดูตารางแจ้งซ่อม</button>
+        </div>
+
+        <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+          <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
+        </div>
+
+
+
+      </div>
 
       <div class="row pt-3">
-        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
+        <!-- <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='datatable_invoice.php';">ดู Invoice</button>
         </div>
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
@@ -175,7 +248,7 @@
         </div>
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='detailpo.php';">ดูสรุปแจงสั่งซื้อ</button>
-        </div>
+        </div> -->
       </div>
 
       <!-- <div class="row pt-3">
@@ -187,19 +260,19 @@
         <div class="d-grid col-sm-12 col-md-4 col-lg-2">
           <button class="btn btn-primary" onclick="window.location='dataempl.php';">พนักงงาน </button>
         </div>
-      <?php 
-            if (isset($_SESSION['USERLEVEL']) && $_SESSION['USERLEVEL'] == 'S') {
-       ?>
-        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='appointment_create.php';">ทดสอบ</button>
-        </div>
+        <?php
+        if (isset($_SESSION['USERLEVEL']) && $_SESSION['USERLEVEL'] == 'S') {
+        ?>
+          <div class="d-grid col-sm-12 col-md-4 col-lg-2">
+            <button class="btn btn-primary" onclick="window.location='appointment_create.php';">ทดสอบ</button>
+          </div>
 
-        <div class="d-grid col-sm-12 col-md-4 col-lg-2">
-          <button class="btn btn-primary" onclick="window.location='appointment_up.php';">ทดสอบ</button>
-        </div>
-      <?php 
-            }
-       ?>
+          <div class="d-grid col-sm-12 col-md-4 col-lg-2">
+            <button class="btn btn-primary" onclick="window.location='appointment_up.php';">ทดสอบ</button>
+          </div>
+        <?php
+        }
+        ?>
       </div>
 
 

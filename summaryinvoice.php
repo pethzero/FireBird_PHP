@@ -56,7 +56,7 @@
             <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-            <button id='detailhis' type="button" class="btn btn-primary">สรุปยอดลูกค้า</button>
+            <button id='detailhis' type="button" class="btn btn-primary">สรุปยอดขายรายละเอียด(ใบแจ้งหนี้)</button>
           </div>
         </div>
 
@@ -82,23 +82,7 @@
             <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
           </div>
         </div>
-
-
-
-        <span id="excelmessage"></span>
-
-        <div class="row pb-3">
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <button id="downloadExcel" type="button" class="btn btn-success">โหลด Excel <i class="fas fa-file-excel"></i></button>
-          </div>
-        </div>
-
-
-
-
-
-        <h2>สมุดรายวันขาย (เกี่ยวกับส่วนลด ราคาจึงไม่ตรงกับ สรุปยอดลูกค้า)</h2>
-
+        <h2>สรุปยอดลูกค้า</h2>
         <hr>
         <h2>ใบเแจ้งหนี้</h2>
         <div class="row">
@@ -107,9 +91,13 @@
               <thead class="thead-light">
                 <tr>
                   <th>ลำดับ</th>
-                  <th>ว.ด.ป.</th>
-                  <th>INV. No.</th>
+                  <!-- <th>ว.ด.ป.</th> -->
+                  <!-- <th>INV. No.</th> -->
                   <th>Cus. Code</th>
+                  <th>Customer</th>
+                  <th>สุทธิเงินบาท</th>
+                  <th>จำนวนใบแจ้งหนี้</th>
+                  <!--  <th>Cus. Code</th>
                   <th>Customer</th>
                   <th>ใบสั่งซื้อ</th>
                   <th>รายการ</th>
@@ -119,6 +107,7 @@
                   <th>สกุล</th>
                   <th>อัตราแลก</th>
                   <th>สุทธิเงินบาท</th>
+                  <th>Vat</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -127,9 +116,9 @@
           </div>
         </div>
 
-        <!-- <hr> -->
-        <!-- <h4><span id='dayid'></span> </h4> -->
-        <!-- <h4> ยอดขายประมาณการทั้งหมด </h4>
+        <hr>
+        <h4><span id='dayid'></span> </h4>
+        <h4> ยอดขายประมาณการทั้งหมด </h4>
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="input-group mb-3">
@@ -138,9 +127,9 @@
               <span class="input-group-text" style="background-color: #d6d6d6;">บาท</span>
             </div>
           </div>
-        </div> -->
+        </div>
 
-        <!-- <h4> ยอดขายประมาณการบริษัทเยอะที่สุด </h4>
+        <h4> ยอดขายประมาณการบริษัทเยอะที่สุด </h4>
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
             <div class="input-group mb-3">
@@ -156,14 +145,14 @@
               <span class="input-group-text" style="background-color: #d6d6d6;">บาท</span>
             </div>
           </div>
-        </div> -->
+        </div>
 
-        <!-- <hr> -->
-        <!-- <div class="chartCard">
+        <hr>
+        <div class="chartCard">
           <div class="chartBox">
             <canvas id="myChart"></canvas>
           </div>
-        </div> -->
+        </div>
 
       </div>
     </section>
@@ -200,12 +189,10 @@
     $('.loading').show();
 
 
-    // var qid = 'QOUT_INVOICE_0'; //QOUT_INVOICE_DATEBE
-    // var condotion_id = 'NULL';  //DATEBE
-    var qid = 'QOUT_INVOICE_DATEBE'; //
+    // var qid = 'QOUT_INVOICE_SUMMARY0'; //
+    // var condotion_id = 'NULL'; //
+    var qid = 'QOUT_INVOICE_SUMMARYDATEBE'; //
     var condotion_id = 'DATEBE'; //
-
-    // var tablejsondata;
     var datasave = '';
 
     // หาวันที่ 1 ของเดือนนี้
@@ -216,7 +203,6 @@
     var databegin = moment().startOf('month').format('DD.MM.YYYY');
     var dateend = moment().endOf('month').format('DD.MM.YYYY');
     $('#dayid').text("ณ วันที่ " + firstDayOfMonth + " ถึง " + lastDayOfMonth)
-    $('#excelmessage').html("<h3>ข้อมูลโหลด ณ วันที่ " + firstDayOfMonth + " ถึง " + lastDayOfMonth)
     $("#datepickerbegin").datepicker({
       format: "dd/mm/yyyy",
       todayHighlight: true,
@@ -230,12 +216,7 @@
       autoclose: true,
       clearBtn: true
     });
-
-
-
     //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
-    // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
-
     const formatDate = (data) => {
       if (!data || data === '0000-00-00') {
         return '00/00/0000';
@@ -257,8 +238,6 @@
       formattedAmount = formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       return formattedAmount;
     };
-
-
     const formatCurrency = (amount) => {
       if (amount === '') {
         return '';
@@ -268,7 +247,6 @@
       formattedAmount += '฿';
       return formattedAmount;
     };
-
     const formatDec = (amount) => {
       if (amount === '') {
         return '';
@@ -277,9 +255,6 @@
       return formattedDec;
     };
 
-    // var data_array = [];
-    // var startingValue = 1;
-    // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
     var tabledatahd = $('#table_datahd').DataTable({
       scrollX: true,
       columns: [{
@@ -289,96 +264,46 @@
           }
         },
         {
-          data: 'DOCDATE',
-          render: formatDate
-        },
-        {
-          data: 'DOCNO'
-        },
-        {
           data: 'CODE'
         },
         {
           data: 'NAME'
         },
         {
-          data: 'ORDERNO'
-        },
-        {
-          data: 'DETAIL'
-        },
-        {
-          data: 'QUAN',
-          render: function(data, type, row, meta) {
-            return formatDec(data);
-          }
-        },
-        {
-          data: 'UNITAMT',
-          render: formatValue
-        },
-        {
-          data: 'TOTALAMT',
-          render: formatValue
-        },
-        {
-          data: 'CURCODE',
-          render: function(data, type, row, meta) {
-            if (data == "764") {
-              return "TH"
-            } else if (data == "840") {
-              return "US"
-            } else {
-              return 'TH'
-            }
-          }
-        },
-        {
-          data: 'EXCHGRATE'
-        },
-        {
           data: null,
           render: function(data, type, row, meta) {
-            return formatCurrency((data.EXCHGRATE * data.TOTALAMT) * (1 + (data.VATRATE / 100)))
+            return formatCurrency((data.EXCHGRATE * data.NETAMT))
           }
         },
-        // {
-        //   data: null,
-        //   render: function(data, type, row, meta) {
-        //     return data.VATRATE / 100;
-        //   }
-        // }
+        {
+          data: 'DOCNO',
+        },
       ],
       columnDefs: [{
           className: 'dt-right',
-          targets: [8, 9, 11, 12]
+          targets: [3,4]
         },
         {
           type: 'th_date',
-          targets: 2
+          targets: 1
         },
         {
           type: 'currency',
-          targets: 12
+          targets: 3
         },
         {
           "visible": false,
           "targets": [0]
-        }
+        },
+        { "width": "5%", "targets": [1,4] },
+        { "width": "12%", "targets": [3] }
+
       ],
       order: [
-        [2, 'desc'],
+        [3, 'desc'],
       ],
-      // dom: 'frtip',
-      // initComplete: function(settings, json) {
-      // },
-      // createdRow: function(row, data, dataIndex) {},
-      // drawCallback: function(settings) {},
-      // rowCallback: function(row, data) {},
     });
-
-    var TureTotalAmt;
-    var excel_data;
+    
     fecth_databased(databegin, dateend);
     async function fecth_databased(data_begin, date_end) {
       Param = [];
@@ -386,7 +311,6 @@
         datebegin: data_begin,
         dateend: date_end
       })
-      // console.log(Param)
       var formData = new FormData();
       try {
         // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
@@ -400,60 +324,54 @@
           throw new Error('Error sending data to server');
         }
 
+        jsonPush = []
 
         const jsonDataHD = await jsonResponse.json();
-        await tabledatahd.clear().rows.add(jsonDataHD.datasql).draw();
-        excel_data = data_map(jsonDataHD.datasql)
 
-        TureTotalAmt = 0
-        excel_data.forEach((item) => {
-          if (typeof item.TOTALAMT !== 'undefined') {
-            const totalAmtAsFloat = parseFloat(item.TOTALAMT);
-            if (!isNaN(totalAmtAsFloat)) {
-              TureTotalAmt += totalAmtAsFloat;
-            }
-          }
-        });
-        // console.log(data_map(jsonDataHD.datasql))
-        console.log(excel_data)
-        $('.loading').hide();
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function download_excel() {
-      try {
-
-        const blobResponse = await fetch('export/excel_export.php', {
-          method: 'POST',
-          body: set_formdata('excel'),
-        });
-
-        if (!blobResponse.ok) {
-          throw new Error('Error sending data to server');
-          $('.loading').hide();
-        }
-
-        // const namelike = $('#namelink').val();
-        const blobData = await blobResponse.blob();
-        const url = window.URL.createObjectURL(blobData);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'ใบแจ้งหนี้' + '.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-
+        await allsum(jsonDataHD.datasql)
+        // await datachart(jsondata_organize);
 
         $('.loading').hide();
       } catch (error) {
         console.error(error);
       }
     }
+
     var topCode = [];
     var chartdatabase;
+    // function datachart(data) {
+    //   chartdatabase = data
+    //     .map(function(item) {
+    //       return {
+    //         NAME: item.NAME,
+    //         CODE: item.CODE,
+    //         QUAN: item.QUAN,
+    //       };
+    //     })
+    //     .sort(function(a, b) {
+    //       return b.QUAN - a.QUAN;
+    //     })
+    //     .slice(0, 10)
+    //   const dbase_dataset = chartdatabase.map(function(item) {
+    //     return item.extotalamt;
+    //   });
+    //   // topCode = Object.keys(tophigh_QUAN);
+
+    //   const topDataset = {
+    //     label: 'ยอดขาย TOP 10',
+    //     data: dbase_dataset,
+    //     backgroundColor: 'rgba(0, 153, 51,0.6)',
+    //     borderColor: 'rgba(0, 153, 51,1)',
+    //     borderWidth: 1,
+    //     fill: true
+    //     // categoryPercentage: 1,
+    //     // barPercentage: 0.8
+    //   };
+    //   myChart.data.datasets = [topDataset];
+    //   // สร้างกราฟใหม่
+    //   myChart.update();
+    // }
+
 
     function set_formdata(conditionsformdata) {
       var formData = new FormData();
@@ -461,15 +379,8 @@
       if (conditionsformdata == "select") {
         formData.append('queryIdHD', qid);
         formData.append('condition', condotion_id);
-        formData.append('Param', JSON.stringify(Param));
-      } else {
-        formData.append('queryIdExcel', 'EXCEL_QOUT_INVOICE');
-        formData.append('blobData', JSON.stringify(excel_data));
-        formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
-        formData.append('condition_footer', 'T');
-      }
-
-
+      } else {}
+      formData.append('Param', JSON.stringify(Param));
       ////////////////
       return formData;
     }
@@ -481,32 +392,35 @@
       let status_sql = "";
       var clickedButtonName = e.originalEvent.submitter.name;
     });
+
+
+
     var Param;
     $('#refresh').click(function() {
       const result = checkdate(false);
       if (result.status) {
         $('.loading').show();
-        qid = 'QOUT_INVOICE_DATEBE';
+        qid = 'QOUT_INVOICE_SUMMARYDATEBE';
         condotion_id = 'DATEBE';
         fecth_databased(result.databegin, result.dateend);
-        $('#excelmessage').html("<h3>ข้อมูลโหลด ณ วันที่ " + moment(result.databegin, 'DD/MM/YYYY').format('DD/MM/YYYY') + " ถึง " + moment(result.dateend, 'DD/MM/YYYY').format('DD/MM/YYYY') + "</h3>")
       }
     });
 
     $('#refreshall').click(function() {
       const result = checkdate(true);
       $('.loading').show();
-      qid = 'QOUT_INVOICE_0';
+      qid = 'QOUT_INVOICE_SUMMARY0';
       condotion_id = 'NULL';
       fecth_databased(result.databegin, result.dateend);
-      $('#excelmessage').html("<h3>ข้อมูลทั้งหมด ณ ปัจจุบัน</h3>")
     });
 
     const checkdate = (daystatus) => {
       const beginDateInput = $('#datepickerbegin').val();
       const endDateInput = $('#datepickerend').val();
+
       const beginDate = moment(beginDateInput, 'DD/MM/YYYY');
       const endDate = moment(endDateInput, 'DD/MM/YYYY');
+
       const result = {
         status: false,
         databegin: '',
@@ -540,41 +454,98 @@
 
     var chartdatabase;
 
-    function netcal(total, exchgate, vat) {
-      console.log(vat)
-      if (vat === 0) {
-        return total * exchgate;
-      } else {
-        return (total * exchgate) * (1 + (vat / 100));
+
+    var doccount;
+    var json_alldata;
+
+    function allsum(json_data) {
+      doccount = 1;
+
+      json_alldata = json_data.reduce(function(acc, item) {
+        var existingItem = acc.find(function(element) {
+          return element.CODE === item.CODE;
+        });
+
+        if (existingItem) {
+          existingItem.NETAMT += parseFloat(item.NETAMT);
+          if (item.DOCNO) {
+            if (!existingItem.DOCNO) {
+              existingItem.DOCNO = 1;
+            } else {
+              existingItem.DOCNO++;
+            }
+          }
+        } else {
+          var newItem = {
+            CODE: item.CODE,
+            DOCDATE: item.DOCDATE,
+            NAME: item.NAME,
+            EXCHGRATE: item.EXCHGRATE,
+            NETAMT: parseFloat(item.NETAMT),
+          };
+          if (item.DOCNO) {
+            newItem.DOCNO = 1;
+          }
+          acc.push(newItem);
+        }
+
+        return acc;
+      }, []);
+
+
+      // console.log(json_data)
+      // json_alldata = json_data.reduce(function(acc, item) {
+      //   var existingItem = acc.find(function(element) {
+      //     return element.CODE === item.CODE;
+      //   });
+      //   // console.log(item.DOCNO+ '|' + item.CODE +':'+doccount);
+      //   console.log(existingItem)
+      //   if (existingItem) {
+      //     existingItem.NETAMT += parseFloat(item.NETAMT);
+      //   } else {
+      //     acc.push({
+      //       CODE: item.CODE,
+      //       DOCDATE: item.DOCDATE,
+      //       NAME: item.NAME,
+      //       EXCHGRATE: item.EXCHGRATE,
+      //       NETAMT: parseFloat(item.NETAMT),
+      //       DOCNO: doccount
+      //     });
+      //   }
+
+      //   return acc;
+      // }, []);
+
+      console.log(json_alldata)
+      sum_result = 0;
+      json_alldata.forEach(item => {
+        sum_result += item.NETAMT;
+      });
+
+
+      json_alldata.sort(function(a, b) {
+        return b.NETAMT - a.NETAMT;
+      });
+
+      tabledatahd.clear().rows.add(json_alldata).draw();
+      chartdatabase = json_alldata.slice(0, 10);
+      const formattedResult = sum_result.toFixed(2);
+      $('#sumtotal').val(formattedResult.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
+      let namemessage = "";
+      let amtmessage = "";
+      if (chartdatabase.length > 0) {
+        namemessage = (chartdatabase[0].CODE).trim() + " : " + (chartdatabase[0].NAME).trim();
+        amtmessage = ((chartdatabase[0].NETAMT).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       }
+      $('#company').val(namemessage)
+      $('#sumcompany').val(amtmessage)
+
+      data.datasets[0].data = chartdatabase.map(function(item) {
+        return item.NETAMT;
+      });
+      myChart.update();
+
     }
-
-    function data_map(data_json) {
-      data_organize = data_json.map((item) => ({
-        DOCDATE: formatDate(item.DOCDATE),
-        DOCNO: item.DOCNO,
-        ORDERNO: item.ORDERNO,
-        CODE: item.CODE,
-        SNAME: item.SNAME,
-        NAME: item.NAME,
-        CONTNAME: item.CONTNAME,
-        EMPNAME: item.EMPNAME,
-        DETAIL: item.DETAIL,
-        QUAN: item.QUANDLY,
-        UNITAMT: item.UNITAMT,
-        TOTALAMT: item.TOTALAMT,
-      }));
-      return data_organize;
-    }
-
-
-    $("#downloadExcel").click(function() {
-      console.log(qid)
-      console.log(condotion_id)
-
-      download_excel()
-
-    });
 
     const curcodeex = (amount) => {
       if (amount == "764") {
@@ -586,8 +557,6 @@
       }
       return formattedCurCode;
     };
-
-
 
     ////////////////////////////////////////////////// CHART  //////////////////////////////////////////////////
 
@@ -664,29 +633,31 @@
     };
 
 
-    // // render init block
-    // const myChart = new Chart(
-    //   document.getElementById('myChart'),
-    //   config
-    // );
-
-    // // $("#myChart").css("height", 800);
-    // if (window.innerWidth <= 600) {
-    //   // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
-    //   $("#myChart").css("height", "400px");
-    // } else {
-    //   // ถ้าความกว้างของหน้าจอมากกว่า 600px (สำหรับคอมพิวเตอร์ PC)
-    //   $("#myChart").css("height", "800px");
-    // }
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+    // $("#myChart").css("height", 800);
+    if (window.innerWidth <= 600) {
+      // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
+      $("#myChart").css("height", "400px");
+    } else {
+      // ถ้าความกว้างของหน้าจอมากกว่า 600px (สำหรับคอมพิวเตอร์ PC)
+      $("#myChart").css("height", "800px");
+    }
 
 
 
     $('#backhis').click(function() {
       window.location = 'main.php';
     });
+
     $('#detailhis').click(function() {
-      window.location = 'summaryinvoice.php';
+      window.location = 'datatable_invoice.php';
     });
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

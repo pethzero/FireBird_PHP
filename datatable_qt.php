@@ -51,6 +51,7 @@
   <?php
   // include("connect_sql.php");
   ?>
+  <form id="idForm" method="POST">
 
   <section>
     <div class="container-fluid pt-3">
@@ -67,26 +68,28 @@
 
       <hr>
       <h3>ค้นหา</h3>
-        <div class="row pb-3">
-          <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            <div class="input-group input-daterange">
-              <span class="input-group-text">เริ่มต้น</span>
-              <input type="text" class="form-control" id="datepickerbegin">
-              <span class="input-group-text">จนถึง</span>
-              <input type="text" class="form-control" id="datepickerend">
-            </div>
+      <div class="row pb-3">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="input-group input-daterange">
+            <span class="input-group-text">เริ่มต้น</span>
+            <input type="text" class="form-control" id="datepickerbegin">
+            <span class="input-group-text">จนถึง</span>
+            <input type="text" class="form-control" id="datepickerend">
           </div>
         </div>
+      </div>
 
-        <div class="row pb-1">
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-            <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-            <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
-          </div>
+      <div class="row pb-1">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+          <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
         </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+          <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
+        </div>
+      </div>
+
+      <span id="excelmessage"></span>
 
       <h2>อันดับลูกค้า ใบเสนอราคา</h2>
       <div class="row">
@@ -132,8 +135,8 @@
   <?php
   //  include("0_footer.php");
   ?>
-  <form id="idForm" method="POST">
 
+<div class="loading"></div>
   </form>
 
 
@@ -152,42 +155,46 @@
       }
     });
 
-    var recno = null;
     var qid = 'COUNT_QUOTHD0';
+    var condotion_id = 'NULL';
     var startd = null;
     var tablejsondata;
-    var selectedRow = null;
-    var selectedRecno = null;
     var datasave = '';
 
-    // var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
-    // var encodedURL_Select = encodeURIComponent('ajax_select_sql_firdbird.php');
 
-    //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
-    // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
+    $("#datepickerbegin").datepicker({
+      format: "dd/mm/yyyy",
+      todayHighlight: true,
+      autoclose: true,
+      clearBtn: true
+    });
+
+    $("#datepickerend").datepicker({
+      format: "dd/mm/yyyy",
+      todayHighlight: true,
+      autoclose: true,
+      clearBtn: true
+    });
+
+    // หาวันที่ 1 ของเดือนนี้
+    var firstDayOfMonth = moment().startOf('month').format('DD/MM/YYYY');
+    // หาวันสุดท้ายของเดือนนี้
+    var lastDayOfMonth = moment().endOf('month').format('DD/MM/YYYY');
+
+    moment($('#datepickerbegin').val(firstDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
+    moment($('#datepickerend').val(lastDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
+
+    var databegin = moment().startOf('month').format('DD.MM.YYYY');
+    var dateend = moment().endOf('month').format('DD.MM.YYYY');
+
+
+    $('#excelmessage').html("<h3> ข้อมูลทั้งหมด ณ ปัจจุบัน</h3>")
 
     function secertkey() {
       return encodeData;
     }
 
-    var data_array = [];
-    // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
-    var data_array = [];
     var tabledatahd = $('#table_datahd').DataTable({
-      // ajax: {
-      //   url: encodedURL,
-      //   data: function(d) {
-      //     d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
-      //     d.params = null;
-      //     d.condition = '';
-      //     // d.sqlprotect = encodeData;
-      //   },
-      //   dataSrc: function(json) {
-      //     tablejsondata = json.data;
-      //     // console.log(tablejsondata)
-      //     return json.data;
-      //   }
-      // },
       // scrollX: true,
       columns: [{
           data: null,
@@ -216,7 +223,7 @@
       ],
       columnDefs: [{
           className: 'dt-right',
-          targets: [2]
+          targets: [2,3]
         },
         // {
         //   searchable: false,
@@ -231,7 +238,64 @@
     });
 
     var Param;
-    fecth_databased('data_begin', 'date_end');
+    $('#refresh').click(function() {
+      const result = checkdate();
+      if (result.status) {
+        $('.loading').show();
+        qid = 'COUNT_QUOTHD_DATEBE';
+        condotion_id = 'DATEBE';
+        fecth_databased(result.databegin, result.dateend);
+      }
+      $('#excelmessage').html("<h3>ข้อมูลโหลด ณ วันที่ " + moment(result.databegin, 'DD/MM/YYYY').format('DD/MM/YYYY') + " ถึง " + moment(result.dateend, 'DD/MM/YYYY').format('DD/MM/YYYY') + "</h3>")
+    });
+
+    $('#refreshall').click(function() {
+      const result = checkdate();
+      if (result.status) {
+        $('.loading').show();
+        qid = 'COUNT_QUOTHD0';
+        condotion_id = 'NULL';
+        fecth_databased(result.databegin, result.dateend);
+      }
+      $('#excelmessage').html("<h3>ข้อมูลทั้งหมด ณ ปัจจุบัน</h3>")
+    });
+
+    const checkdate = () => {
+      const beginDateInput = $('#datepickerbegin').val();
+      const endDateInput = $('#datepickerend').val();
+      const result = {
+        status: false,
+        databegin: '',
+        dateend: ''
+      };
+      if (beginDateInput === '' || endDateInput === '') {
+        Swal.fire(
+          'มีการป้อนวันที่ผิดพลาด',
+          'ไม่สามารถประมวลผลได้',
+          'error'
+        );
+        return result;
+      }
+      const beginDate = moment(beginDateInput, 'DD/MM/YYYY');
+      const endDate = moment(endDateInput, 'DD/MM/YYYY');
+
+      if (endDate.isBefore(beginDate)) 
+      {
+        Swal.fire(
+          'มีการป้อนวันที่ผิดพลาด',
+          'ไม่สามารถประมวลผลได้',
+          'error'
+        );
+        return result;
+      }
+      result.status = true;
+      result.databegin = beginDate.format('DD.MM.YYYY');
+      result.dateend = endDate.format('DD.MM.YYYY');
+      return result;
+    };
+
+
+    fecth_databased('', '');
     async function fecth_databased(data_begin, date_end) {
       Param = [];
       Param.push({
@@ -266,8 +330,8 @@
       var formData = new FormData();
       // Param.push({})
       if (conditionsformdata == "select") {
-        formData.append('queryIdHD', 'COUNT_QUOTHD0');
-        formData.append('condition', 'NULL');
+        formData.append('queryIdHD', qid);
+        formData.append('condition', condotion_id);
       } else {
 
       }
@@ -397,11 +461,8 @@
               size: window.innerWidth <= 600 ? 16 : 25,
             },
             bodyFont: {
-              size:  window.innerWidth <= 600 ? 14 : 20,
+              size: window.innerWidth <= 600 ? 14 : 20,
             },
-            // footerFont: {
-            //   size: 20 // there is no footer by default
-            // },
             callbacks: {
               title: function(tooltipItem) {
                 return 'ลูกค้าอันดับ: ' + tooltipItem[0].label;

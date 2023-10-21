@@ -64,7 +64,7 @@
 
       <!-- <button id="randomDataButton">สุ่มข้อมูล</button> -->
 
-      <h2>ใบสั่งซื้อ</h2>
+      <h2>ใบเสนอราคา</h2>
 
       <hr>
       <h3>ค้นหา</h3>
@@ -91,14 +91,14 @@
 
       <span id="excelmessage"></span>
 
-      <h2>อันดับลูกค้า ใบสั่งซื้อ</h2>
+      <h2>อันดับลูกค้า ใบเสนอราคา</h2>
       <div class="row">
         <div class="col-12 table-responsive">
           <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
             <thead class="thead-light">
               <tr>
                 <th>ลำดับ</th>
-                <th>ผู้จำหน่าย</th>
+                <th>ลูกค้า</th>
                 <th>รหัส</th>
                 <th>จำนวน</th>
               </tr>
@@ -155,7 +155,7 @@
       }
     });
 
-    var qid = 'COUNT_PURCHD0';
+    var qid = 'COUNT_QUOTHD0';
     var condotion_id = 'NULL';
     var startd = null;
     var tablejsondata;
@@ -195,6 +195,20 @@
     }
 
     var tabledatahd = $('#table_datahd').DataTable({
+      // ajax: {
+      //   url: encodedURL,
+      //   data: function(d) {
+      //     d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
+      //     d.params = null;
+      //     d.condition = '';
+      //     // d.sqlprotect = encodeData;
+      //   },
+      //   dataSrc: function(json) {
+      //     tablejsondata = json.data;
+      //     // console.log(tablejsondata)
+      //     return json.data;
+      //   }
+      // },
       // scrollX: true,
       columns: [{
           data: null,
@@ -203,7 +217,7 @@
           }
         },
         {
-          data: 'SUPPOMERNAME',
+          data: 'CUSTOMERNAME',
           render: function(data, type, row) {
             return data
           }
@@ -243,7 +257,8 @@
       const result = checkdate();
       if (result.status) {
         $('.loading').show();
-        qid = 'COUNT_PURCHD_DATEBE';
+        // getDataFromServer('select', result.databegin, result.dateend)
+        qid = 'COUNT_QUOTHD_DATEBE';
         condotion_id = 'DATEBE';
         fecth_databased(result.databegin, result.dateend);
       }
@@ -254,7 +269,8 @@
       const result = checkdate();
       if (result.status) {
         $('.loading').show();
-        qid = 'COUNT_PURCHD0';
+        // getDataFromServer('NULL', result.databegin, result.dateend)
+        qid = 'COUNT_QUOTHD0';
         condotion_id = 'NULL';
         fecth_databased(result.databegin, result.dateend);
       }
@@ -358,7 +374,7 @@
       chartdatabase = data
         .map(function(item) {
           return {
-            NAME: item.SUPPOMERNAME,
+            NAME: item.CUSTOMERNAME,
             CODE: item.CODE,
             QUAN: item.QUAN
           };
@@ -434,7 +450,7 @@
             beginAtZero: true,
             title: {
               display: true,
-              text: 'จำนวนการสั่งซื้อ',
+              text: 'จำนวนการขาย',
               font: {
                 size: window.innerWidth <= 600 ? 14 : 16,
                 weight: 'bold'

@@ -28,7 +28,7 @@
         </a>
         <ul class="dropdown-menu">
           <!-- <li><a class="dropdown-item">coming soon</a></li> -->
-          <li><a class="dropdown-item" href="datatable_po.php">อันดับลูกค้าใบสั่งซื้อ</a></li>
+          <li><a class="dropdown-item" href="datatable_po.php">อันดับผู้จำหน่ายใบสั่งซื้อ</a></li>
         </ul>
       </li>
 
