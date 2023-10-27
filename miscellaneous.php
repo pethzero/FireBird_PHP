@@ -282,8 +282,6 @@ include("0_footerjs.php");
         // เรียกใช้ฟังก์ชัน mapData สำหรับแปลงข้อมูล
         let TureTotalAmt = 0;
         const mappedData = mapData(jsonData.datasql, slcdata.queryid);
-        // ใช้ reduce เพื่อคำนวณผลรวมของ TureTotalAmt
-        // ใช้ forEach เพื่อคำนวณผลรวมของ TureTotalAmt
         mappedData.forEach((item) => {
           if (typeof item.TOTALAMT !== 'undefined') {
             const totalAmtAsFloat = parseFloat(item.TOTALAMT);
@@ -297,7 +295,7 @@ include("0_footerjs.php");
         formData.append('blobData', JSON.stringify(mappedData));
         formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
         formData.append('condition_footer', 'T');
-
+        console.log(mappedData)
         const blobResponse = await fetch('export/excel_export.php', {
           method: 'POST',
           body: formData,
@@ -388,7 +386,8 @@ include("0_footerjs.php");
             CONTNAME: item.CONTNAME,
             EMPNAME: item.EMPNAME,
             DETAIL: item.DETAIL,
-            QUAN: item.QUANDLY,
+            QUAN: item.QUAN,
+            QUANDLY:item.QUANDLY,
             UNITAMT: item.UNITAMT,
             TOTALAMT: item.TOTALAMT,
           };

@@ -1,5 +1,5 @@
 <script src="js/jquery-3.7.0.min.js" rel="preload" as="script"></script>
-<script src="js/bootstrap.bundle.min.js" rel="preload" as="script"></script>
+<script src="js/bootstrap-5.3.1.bundle.min.js" rel="preload" as="script"></script>
 <script src="js/select2-4.1.0.min.js" rel="preload" as="script"></script>
 <!-- END -->
 <script src="js/jquery.dataTables-1.13.4.min.js" rel="preload" as="script"></script>

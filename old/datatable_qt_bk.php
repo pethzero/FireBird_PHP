@@ -337,13 +337,13 @@
               display: true,
               text: 'จำนวนการขาย',
               font: {
-                size: window.innerWidth <= 600 ? 14 : 16, // ขนาดตัวอักษรของหัวข้อแกน Y
+                size: window.innerWidth <= 768 ? 14 : 16, // ขนาดตัวอักษรของหัวข้อแกน Y
                 weight: 'bold' // ความหนาของตัวอักษรของหัวข้อแกน Y
               }
             },
             ticks: {
               font: {
-                size: window.innerWidth <= 600 ? 12 : 14, // ขนาดตัวอักษรของตัวเลขบนแกน Y
+                size: window.innerWidth <= 768 ? 12 : 14, // ขนาดตัวอักษรของตัวเลขบนแกน Y
                 weight: 'normal' // ความหนาของตัวเลขบนแกน Y
               }
             }
@@ -382,7 +382,7 @@
     );
 
     // $("#myChart").css("height", 800);
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 768) {
       // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
       $("#myChart").css("height", "400px");
     } else {

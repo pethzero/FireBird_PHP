@@ -349,13 +349,13 @@
               display: true,
               text: 'จำนวนการขาย',
               font: {
-                size: window.innerWidth <= 600 ? 14 : 16,
+                size: window.innerWidth <= 768 ? 14 : 16,
                 weight: 'bold'
               }
             },
             ticks: {
               font: {
-                size: window.innerWidth <= 600 ? 12 : 14,
+                size: window.innerWidth <= 768 ? 12 : 14,
                 weight: 'normal'
               }
             }
@@ -372,10 +372,10 @@
           },
           tooltip: {
             titleFont: {
-              size: window.innerWidth <= 600 ? 16 : 25,
+              size: window.innerWidth <= 768 ? 16 : 25,
             },
             bodyFont: {
-              size:  window.innerWidth <= 600 ? 14 : 20,
+              size:  window.innerWidth <= 768 ? 14 : 20,
             },
             // footerFont: {
             //   size: 20 // there is no footer by default
@@ -405,7 +405,7 @@
       config
     );
     // $("#myChart").css("height", 800);
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 768) {
       // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
       $("#myChart").css("height", "400px");
     } else {

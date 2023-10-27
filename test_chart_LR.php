@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <?php
   session_start();
   //  echo $_SESSION["RECNO"];
   if (!isset($_SESSION["RECNO"])) {
@@ -15,9 +16,9 @@
   // $_SESSION['csrf_token'] = $csrfToken;
   // $_SESSION['csrf_token'] = keyse();
   ?>
-    <title>Getting Started with Chart JS with www.chartjs3.com</title>
-    <style>
-      /* * {
+  <title>Getting Started with Chart JS with www.chartjs3.com</title>
+  <style>
+    /* * {
         margin: 0;
         padding: 0;
         font-family: sans-serif;
@@ -47,27 +48,27 @@
         border: solid 3px rgba(54, 162, 235, 1);
         background: white;
       } */
-    </style>
-  </head>
-  <body>
-    <div class="chartMenu">
-      <p>WWW.CHARTJS3.COM (Chart JS <span id="chartVersion"></span>)</p>
+  </style>
+</head>
+
+<body>
+  <div class="chartMenu">
+    <p>WWW.CHARTJS3.COM (Chart JS <span id="chartVersion"></span>)</p>
+  </div>
+  <div class="chartCard">
+    <div class="chartBox">
+      <canvas id="myChart"></canvas>
     </div>
-    <div class="chartCard">
-      <div class="chartBox">
-        <canvas id="myChart"></canvas>
-      </div>
-    </div>
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script> -->
-    <?php include("0_footerjs.php"); ?>
-    <script>
+  </div>
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script> -->
+  <?php include("0_footerjs.php"); ?>
+  <script>
     // setup 
     const data = {
-      labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5', 'TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10', 'TOP11', 'TOP12', 'TOP13', 'TOP14'
-      , 'TOP15', 'TOP16', 'TOP17', 'TOP18', 'TOP19', 'TOP20'],      
-        datasets: [{
+      labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5', 'TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10', 'TOP11', 'TOP12', 'TOP13', 'TOP14', 'TOP15', 'TOP16', 'TOP17', 'TOP18', 'TOP19', 'TOP20','TOP21','TOP22'],
+      datasets: [{
         label: 'Get',
-        data: [18, 12, 6, 9, 12, 3, 9,18, 12, 6, 9, 12, 3, 9,18, 12, 6, 9, 12, 3],
+        data: [18, 12, 6, 9, 12, 3, 9, 18, 12, 6, 9, 12, 3, 9, 18, 12, 6, 9, 12, 3,16,17],
         backgroundColor: [
           'rgba(255, 26, 104, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -91,36 +92,81 @@
     };
 
     const moveChart = {
-      id:'moveChart',
-      afterDraw(chart,args,pluginOptions){
-        const {ctx,chartArea:{left,right,top,bottm,width,height}} = chart;
+      id: 'moveChart',
+      afterEvent(chart, args) {
+        const {
+          ctx,
+          canvas,
+          chartArea: {
+            left,
+            right,
+            top,
+            bottm,
+            width,
+            height
+          }
+        } = chart;
+
+        canvas.addEventListener('mousemove', (event) => {
+          const x = args.event.x;
+          const y = args.event.y;
 
 
-        class CircleChevron{
-          
+          if (x >= left - 15 && x <= left + 15 && y >= height / 2 + top - 15 && y <= height / 2 + top + 15) {
+            canvas.style.cursor = 'pointer';
+          } else if (x >= right - 15 && x <= right + 15 && y >= height / 2 + top - 15 && y <= height / 2 + top + 15) {
+            canvas.style.cursor = 'pointer';
+          } else {
+            canvas.style.cursor = 'default';
+          }
+        })
+      },
+      afterDraw(chart, args, pluginOptions) {
+        const {
+          ctx,
+          chartArea: {
+            left,
+            right,
+            top,
+            bottm,
+            width,
+            height
+          }
+        } = chart;
+        class CircleChevron {
+          draw(ctx, x1, pixel) {
+            const angle = Math.PI / 180;
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'rgba(102,102,102,0.5)';
+            ctx.fillStyle = 'white';
+            ctx.arc(x1, height / 2 + top, 20, angle * 0, angle * 360, false);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+            // console.log(chart);
+
+            // chevron Arrow Left
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'rgba(225,26,104,1)';
+            ctx.moveTo(x1 + pixel, height / 2 + top - 7.5);
+            ctx.lineTo(x1 - pixel, height / 2 + top);
+            ctx.lineTo(x1 + pixel, height / 2 + top + 7.5);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+          }
         }
-        const angle = Math.PI / 180;
 
-        ctx.beginPath();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = 'rgba(102,102,102,0.5)';
-        ctx.fillStyle = 'white';
-        ctx.arc(left,height / 2 + top,15,angle*0,angle*360,false);
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
-        // console.log(chart);
+        let drawCircleLeft = new CircleChevron();
+        drawCircleLeft.draw(ctx, left, 5);
 
-        // chevron Arrow Left
-        ctx.beginPath();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = 'rgba(225,26,104,1)';
-        ctx.moveTo(left + 5,height / 2 + top - 7.5);
-        ctx.lineTo(left - 5,height / 2 + top);
-        ctx.lineTo(left + 5,height / 2 + top + 7.5);
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
+        let drawCircleRight = new CircleChevron();
+        drawCircleRight.draw(ctx, right, -5);
+
+
+
       }
     }
 
@@ -130,16 +176,21 @@
       data,
       options: {
         scales: {
-          x:{
-            min:0,
-            max:6
+          x: {
+            min:  0,
+            max:  6,
           },
           y: {
             beginAtZero: true
           }
+        },
+        layout: {
+          padding: {
+            right: 25
+          }
         }
       },
-      plugins:[moveChart]
+      plugins: [moveChart]
     };
 
     // render init block
@@ -148,10 +199,57 @@
       config
     );
 
-    // Instantly assign Chart.js version
+    function moveScroll() {
+      // console.log('ok')
+      const {
+        ctx,
+        canvas,
+        chartArea: {
+          left,
+          right,
+          top,
+          bottm,
+          width,
+          height
+        }
+      } = myChart;
+
+      
+      canvas.addEventListener('click', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        if (x >= left - 15 && x <= left + 15 && y >= height / 2 + top - 15 && y <= height / 2 + top + 15) {
+          myChart.options.scales.x.min = myChart.options.scales.x.min - 7;
+          myChart.options.scales.x.max = myChart.options.scales.x.max - 7;
+
+          if (myChart.options.scales.x.max <= 0) {
+            myChart.options.scales.x.min = 0;
+            myChart.options.scales.x.max = 6;
+            console.log('pervoius');
+          }
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        if (x >= right - 15 && x <= right + 15 && y >= height / 2 + top - 15 && y <= height / 2 + top + 15) {
+
+          myChart.options.scales.x.min = myChart.options.scales.x.min + 7;
+          myChart.options.scales.x.max = myChart.options.scales.x.max + 7;
+
+          if (myChart.options.scales.x.max >= data.datasets[0].data.length) {
+            myChart.options.scales.x.min = data.datasets[0].data.length - 7;
+            myChart.options.scales.x.max = data.datasets[0].data.length;
+          }
+        }
+        myChart.update();
+      })
+    }
+
+    myChart.ctx.onclick = moveScroll();
     const chartVersion = document.getElementById('chartVersion');
     chartVersion.innerText = Chart.version;
-    </script>
+  </script>
 
-  </body>
+</body>
+
 </html>

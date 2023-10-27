@@ -1,26 +1,22 @@
-<!-- <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Web App</title> -->
-<!-- <meta charset="UTF-8"> -->
 <meta http-equiv="Content-Type" content="text/html; charset=tis-620" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Web App</title>
 <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
 <link rel='shortcut icon' href='favicon-16x16.png' type='image/x-icon'>
-<!-- <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"> -->
-<!-- หากคุณต้องการระบุไฟล์รูปภาพสำหรับ Apple Touch Icon (สำหรับ iOS) ด้วย -->
-<!-- <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"> -->
 <!-- Preload CSS -->
-<link rel="preload" href="css/bootstrap-5.3.0.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="css/bootstrap-5.3.1.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="css/bootstrap-icons-1.10.3.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/dataTables.bootstrap5-1.13.4.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/font.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/sweetalert2.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/bootstrap-datepicker-1.10.0.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/mypcu.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
 <!-- Fallback stylesheets for users without JavaScript -->
 <noscript>
-  <link rel="stylesheet" href="css/bootstrap-5.3.0.min.css">
+  <link rel="stylesheet" href="css/bootstrap-5.3.1.min.css">
+  <link rel="stylesheet" href="css/bootstrap-icons-1.10.3.css">
   <link rel="stylesheet" href="css/dataTables.bootstrap5-1.13.4.min.css">
   <link rel="stylesheet" href="css/font.css">
   <link rel="stylesheet" href="css/sweetalert2.min.css">

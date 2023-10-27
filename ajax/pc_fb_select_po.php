@@ -38,6 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 'status' => 'error',
             );
         }
+        // $response = array(
+        //             'message' => 'TEST',
+        //             'sqlQuery' => $sqlQuery,
+        //             'status' => 'TEST',
+        //         );
         header('Content-Type: application/json');
         echo json_encode($response);
     } catch (Exception $e) {

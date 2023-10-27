@@ -2,18 +2,7 @@
 <html lang="en">
 
 <head>
-  <?php
-  session_start();
-  //  echo $_SESSION["RECNO"];
-  if (!isset($_SESSION["RECNO"])) {
-    header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
-    exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
-  }
-  include("0_headcss.php");
-  // $csrfToken = bin2hex(random_bytes(32)); // สร้าง token สุ่ม
-  // $_SESSION['csrf_token'] = $csrfToken;
-  // $_SESSION['csrf_token'] = keyse();
-  ?>
+
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 </head>
 
@@ -694,13 +683,13 @@
               display: true,
               text: 'จำนวนการขาย',
               font: {
-                size: window.innerWidth <= 600 ? 14 : 16, // ขนาดตัวอักษรของหัวข้อแกน Y
+                size: window.innerWidth <= 768 ? 14 : 16, // ขนาดตัวอักษรของหัวข้อแกน Y
                 weight: 'bold' // ความหนาของตัวอักษรของหัวข้อแกน Y
               }
             },
             ticks: {
               font: {
-                size: window.innerWidth <= 600 ? 12 : 14, // ขนาดตัวอักษรของตัวเลขบนแกน Y
+                size: window.innerWidth <= 768 ? 12 : 14, // ขนาดตัวอักษรของตัวเลขบนแกน Y
                 weight: 'normal' // ความหนาของตัวเลขบนแกน Y
               }
             }
@@ -718,10 +707,10 @@
 
           tooltip: {
             titleFont: {
-              size: window.innerWidth <= 600 ? 16 : 25,
+              size: window.innerWidth <= 768 ? 16 : 25,
             },
             bodyFont: {
-              size: window.innerWidth <= 600 ? 14 : 20,
+              size: window.innerWidth <= 768 ? 14 : 20,
             },
             callbacks: {
               label: function(context) {
@@ -747,7 +736,7 @@
     );
 
     // $("#myChart").css("height", 800);
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 768) {
       // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
       $("#myChart").css("height", "400px");
     } else {
