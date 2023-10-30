@@ -1,7 +1,7 @@
 <?php 
 header('Content-Type: application/json');
 try {
-  include("../connect.php"); 
+  include("../connect_sql.php"); 
   include("../sql_exe.php"); 
   include("../0_functions.php"); // เพิ่ม include เข้ามาเพื่อเรียกใช้งานฟังก์ชั่นที่สร้างไว้ใน functions.php
   include("../0_fucinchd.php");

@@ -1,193 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <?php 
-          session_start(); 
-          if (!isset($_SESSION["RECNO"])) 
-            {
-              header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
-              exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
-            } 
-    include("0_headcss.php"); 
-    ?>
-    <!--
-    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="css/bootstrap-5.3.0.min.css">
-    <link rel="stylesheet" href="css/font.css">
-    <link rel="stylesheet" href="css/mypcu.css"> 
-    -->
-  </head>
-  <body>
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+  <script src="assets/js/color-modes.js"></script>
+
+  <?php
+  session_start();
+  if (!isset($_SESSION["RECNO"])) {
+    header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
+    exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
+  }
+  include("0_headcss.php");
+  ?>
+
   <style>
-    .btn-custom {
-    background: linear-gradient(to right, #e8e8e8, #f1f1f1);
-    color: #000000;
-  }
-  .card-img-top {
-    height: 200px; /* Adjust the height to your desired value */
-    object-fit: cover; /* This ensures the image fills the entire space while maintaining aspect ratio */
-  }
-</style>
-  <?php 
-      include("0_header.php"); 
-      // include("0_breadcrumb.php"); 
-  ?>
-    
-    <div class="section">
-      <div class="container">
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    /* Media query สำหรับโทรศัพท์ (หน้าจอขนาดเล็ก) */
+    @media (min-width: 768px) {
+      .sidebar {
+        height: 94.2vh;
+        overflow-y: auto;
+      }
+    }
+
+
+
+    .b-example-divider {
+      width: 100%;
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
+
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .btn-bd-primary {
+      --bd-violet-bg: #712cf9;
+      --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+      --bs-btn-font-weight: 600;
+      --bs-btn-color: var(--bs-white);
+      --bs-btn-bg: var(--bd-violet-bg);
+      --bs-btn-border-color: var(--bd-violet-bg);
+      --bs-btn-hover-color: var(--bs-white);
+      --bs-btn-hover-bg: #6528e0;
+      --bs-btn-hover-border-color: #6528e0;
+      --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+      --bs-btn-active-color: var(--bs-btn-hover-color);
+      --bs-btn-active-bg: #5a23c8;
+      --bs-btn-active-border-color: #5a23c8;
+    }
+
+    .bd-mode-toggle {
+      z-index: 1500;
+    }
+  </style>
+  <link href="dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+  <?php include("0_dbheader.php"); ?>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- SIDE -->
+      <?php include("0_sidebar.php"); ?>
+      <!-- CONTENT -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">HOME (Test ปรับเว็บไซต์)</h1>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">
+                  <h3>ฝ่ายขาย</h3>
+                </strong>
+                <ul>
+                  <li><a href="appointment_up.php">ตารางนัดหมาย</a></li>
+                  <li><a href="datatable_qt.php">อันดับลูกค้าใบเสนอราคา</a></li>
+                  <li><a href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
+                  <li><a href="summaryinvoiceqt.php">สรุปยอดขายลูกค้า</a></li>
+                  <li><a href="miscellaneous.php">รายงาน</a></li>
+                </ul>
+              </div>
+              <div class="col-auto d-none d-lg-block">
+                <img src="images/22829.jpg" alt="Thumbnail" width="200" height="250">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">
+                  <h3>จัดซื้อ</h3>
+                </strong>
+                <ul>
+                  <li><a href="datatable_po.php">อันดับผู้จำหน่ายใบสั่งซื้อ</a></li>
+                  <li><a href="detailpo.php">สรุปแจงซื้อ ใบแจ้งหนี้</a></li>
+                  <li><a href="summaryinvoicepo.php">สรุปยอดซื้อผู้จำหน่าย</a></li>
+                  <li><a href="dataquancontrol.php">ประเมินคุณภาพสินค้า</a></li>
+                </ul>
+              </div>
+              <div class="col-auto d-none d-lg-block">
+                <img src="images/22829.jpg" alt="Thumbnail" width="200" height="250">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END -->
+        <hr>
+        <h3>รอการทดสอบ</h3>
         <div class="row">
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
-            <div class="card-body">
-             <h2 class="card-title">ฝ่ายขาย</h2>
-             <p class="card-text">
-             <ul>
-              <!-- <li><a href="dataqoud.php" >ใบเสนอราคา</a></li> -->
-              <li><a href="datatable_activity.php" >ตารางหนัดหมาย</a></li>
-              <li><a href="dataactivity.php" >เพิ่มตารางหนัดหมาย</a></li>
-            </ul>
-             </p>
-            </div>
+          <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+            <button class="btn btn-primary" onclick="window.location='summaryinvoicepo.php';">สรุปยอดผู้จำหน่าย</button>
+          </div>
+          <div class="d-grid col-sm-12 col-md-4 col-lg-2 pt-3">
+            <button class="btn btn-primary" onclick="window.location='summaryinvoicepo_old.php';">สรุปยอดผู้จำหน่าย (เก่า)</button>
           </div>
         </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
-            <div class="card-body">
-             <h2 class="card-title">ฝ่ายจัดซื้อ</h2>
-             <p class="card-text">
-                  <ul>
-                     <li><a href="datapurc.php" >ใบสั่งซื้อ</a></li>
-                  </ul>
-             </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
-            <div class="card-body">
-             <h2 class="card-title">ผลิต</h2>
-             <p class="card-text">
-              <ul>
-                <li><a href="datatablemachine.php">เครื่องจักร(กำลังพัฒนา)</a></li>
-              </ul>
-             </p>
-            </div>
-          </div>
-        </div>
-
-    
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-          <div class="card">
-            <img class="card-img-top img-thumbnail" src="doc/pr.jpg" alt="Card image cap">
-            <div class="card-body">
-             <h2 class="card-title">สโตร์</h2>
-             <p class="card-text">
-              <ul>
-                <li><a href="datainvent.php" >ดูสินค้า</a></li>
-                <li><a href="datastock.php" >ใบเบิกสินค้า</a></li>
-              </ul>
-             </p>
-            </div>
-          </div>
-        </div>
-          
-        </div>
-      </div>
+      </main>
     </div>
- <hr>
-    <div class="section">
-      <div class="container pt-2">
-        <h1> NEW FEATURE</h1>
-        <div class="row" id='subweb'>
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-             <button class="btn btn-primary" onclick="window.location='datatable_activity.php';">ดูตารางนัดหมาย</button>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-             <button class="btn btn-primary" onclick="window.location='datatable_activity.php';">สร้างตารางนัดหมาย</button>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-             <button class="btn btn-primary" onclick="window.location='datargdrawing.php';">ลงทะเบียน DRAWING</button>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-3 pt-2">
-             <button class="btn btn-primary" onclick="window.location='dataline.php';">แจ้งเตือน LINE</button>
-        </div>
- 
-        
-
-        </div>
-      </div>
-    </div>
- <!-- <hr> -->
-    
-
-
-    <?php include("0_footer.php"); ?>
-  </body>
-  <?php 
-  include("0_footerjs.php"); 
-  ?>
-
-
-<script>
-    $(document).ready(function() {
-    //   var data = [
-    //   {
-    //     type: "ฝ่าย",
-    //     name: "ใบเสนอราคา",
-    //     link: "dataqoud.php",
-    //   },
-    //   {
-    //     type: "ผลิต",
-    //     name: "ชื่อผลิตภัณฑ์ 1",
-    //     link: "link_product_1.php",
-    //   },
-    //   {
-    //     type: "ผลิต",
-    //     name: "ชื่อผลิตภัณฑ์ 2",
-    //     link: "link_product_2.php",
-    //   },
-    //   {
-    //     type: "บริหาร",
-    //     name: "หัวหน้าบริหาร",
-    //     link: "link_management.php",
-    //   },
-    // ];
-
-    //   $(".click-me-btn").click(function() {
-    //     var number = $(this).data("number");
-    //     myFunction(number);
-    //   });
-
-    //   function myFunction(number) {
-    //     // Clear the existing cards
-    //     $("#subweb").empty();
-
-    //     // Filter the data based on the selected number
-    //     var filteredData = data.filter(function(item) {
-    //     return item.type === (number === 1 ? "ฝ่าย" : number === 2 ? "ผลิต" : number === 3 ? "บริหาร" : "สโตร์");
-    //   });
-
-    //     // Generate HTML for each item in the filtered data
-    //     $.each(filteredData, function(index, item) {
-    //       var newCardHTML = `
-    //       <div class="col-md-12 mb-4">
-    //            <a href="${item.link}" class="btn btn-custom">${item.name}</a>
-    //        </div>
-    //       `;
-    //       $("#subweb").append(newCardHTML);
-    //     });
-    //   }
-    });
-  </script>
+  </div>
+  <script src="js/bootstrap-5.3.1.bundle.min.js"></script>
+</body>
 
 </html>

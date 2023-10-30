@@ -1,20 +1,9 @@
 .selected {
 	background-color: #e6f0ff;
   }
-  /* CSS for DataTables Pagination */
-/* .paginate_button {
-  padding: 5px 10px;
-  margin: 2px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.paginate_button.current {
-  background-color: #007bff;
-  color: #fff;
-  border-color: #007bff;
-} */
+  /* body {
+    background-image: linear-gradient(180deg, #eee, #fff 100px, #fff);
+  } */
 .page-link {
   padding: 5px 10px;
   margin: 2px;
@@ -28,6 +17,24 @@
   background-color: #0c13d8 !important;
 } */
 
+
+@media (min-width: 576px) {
+.container-layout {
+max-width: 540px;
+}
+}
+
+@media (min-width: 768px) {
+.container-layout {
+max-width: 720px;
+}
+}
+
+@media (min-width: 992px) {
+.container {
+max-width: 960px;
+}
+}
 
 
 @media (max-width: 576px) {
@@ -87,4 +94,18 @@ th {
 
 .datepicker {
   border: 1px solid black;
+}
+
+
+    
+.container-fluid {
+  transition: padding 0.3s ease;  /* เพิ่มเอฟเฟกต์การเปลี่ยนขนาดอย่างนุ่มนวล */
+
+  /* ใช้ media query เพื่อปรับแต่งสไตล์เมื่อหน้าจอมีความกว้างเกิน 1000px */
+  @media (min-width: 960px) {
+    margin-left: auto;  /* จัดตำแหน่งกล่องส่วนข้างซ้าย */
+    margin-right: auto; /* จัดตำแหน่งกล่องส่วนข้างขวา */
+    padding-left: 40px; /* ปรับขอบซ้ายเล็กน้อย */
+    padding-right: 40px; /* ปรับขอบขวาเล็กน้อย */
+  }
 }

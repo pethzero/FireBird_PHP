@@ -49,11 +49,6 @@
     }
   </style>
 
-  <?php
-  include("connect.php");
-  include("sql.php");
-  include("0_fselect.php");
-  ?>
   <section>
     <div class="container pt-3">
       <h2>ส่งข้อความแจ้งเตือนผ่าน LINE Notify</h2>
@@ -121,32 +116,60 @@
 
 </body>
 <?php include("0_footerjs.php"); ?>
-<script src="js/dtcolumn.js"></script>
-
 
 <script>
+  // $(document).ready(function() {
+  //   $("#ok").click(function() {
+  //     var message =  $('#team').val().trim() + '\n' +'รายงานเรื่อง:'+ $('#message').val().trim();
+  //     // console.log(message)
+  //     $.ajax({
+  //       url: 'ajax_line.php',
+  //       method: 'POST',
+  //       data: {
+  //         accessToken: 'Hh0ura2RMQuxyHutazonFsR4SdKT5f6ASoAGGEInuXv',
+  //         // accessToken: 'UWQeqRDaeOqyhYkzdtkFqKrsMarFL6aIWxz9Z5kDYgO',
+  //         message: message,
+  //       },
+  //       success: function(response) {
+  //         $('#result').text('ส่งข้อความแจ้งเตือนผ่าน LINE Notify สำเร็จ!');
+  //         $('#message').val(''); // ล้างค่าใน textarea
+  //       },
+  //       error: function(xhr, status, error) {
+  //         $('#result').text('เกิดข้อผิดพลาดในการส่งข้อความแจ้งเตือนผ่าน LINE Notify');
+  //       }
+  //     });
+  //   });
+  // });
   $(document).ready(function() {
-    $("#ok").click(function() {
+  $("#ok").click(function() {
+    var message = $('#team').val().trim() + '\n' + 'รายงานเรื่อง:' + $('#message').val().trim();
+    
+    // กำหนดข้อมูลที่จะส่งผ่าน Fetch
+    var data = new URLSearchParams();
+    data.append('accessToken', '1');
+    data.append('message', message);
 
-      var message =  $('#team').val().trim() + '\n' +'รายงานเรื่อง:'+ $('#message').val().trim();
-      // console.log(message)
-      $.ajax({
-        url: 'ajax_line.php',
-        method: 'POST',
-        data: {
-          accessToken: 'Hh0ura2RMQuxyHutazonFsR4SdKT5f6ASoAGGEInuXv',
-          message: message,
-        },
-        success: function(response) {
-          $('#result').text('ส่งข้อความแจ้งเตือนผ่าน LINE Notify สำเร็จ!');
-          $('#message').val(''); // ล้างค่าใน textarea
-        },
-        error: function(xhr, status, error) {
-          $('#result').text('เกิดข้อผิดพลาดในการส่งข้อความแจ้งเตือนผ่าน LINE Notify');
-        }
-      });
+    fetch('ajax_line.php', {
+      method: 'POST',
+      body: data
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.text();
+      } else {
+        throw new Error('เกิดข้อผิดพลาดในการส่งข้อความแจ้งเตือนผ่าน LINE Notify');
+      }
+    })
+    .then(responseText => {
+      $('#result').text('ส่งข้อความแจ้งเตือนผ่าน LINE Notify สำเร็จ!');
+      $('#message').val(''); // ล้างค่าใน textarea
+    })
+    .catch(error => {
+      $('#result').text(error.message);
     });
   });
+});
+
 </script>
 
 </html>

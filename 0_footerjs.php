@@ -14,6 +14,9 @@
 <script src="js/bootstrap-datepicker-1.10.0.min.js" rel="preload" as="script"></script>
 <script src="js/moment-2.29.4.js" rel="preload" as="script"></script>
 
+<script src="js/date-de.js" rel="preload" as="script"></script>
+<script src="js/date-th.js" rel="preload" as="script"></script>
+<!-- <script src="js/date-uk.js" rel="preload" as="script"></script> -->
 
 <!-- ADD -->
 <script src="js/popper-2.11.6.min.js"></script>

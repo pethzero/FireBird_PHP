@@ -88,16 +88,21 @@
   form .content{
     display: flex;
     width: 100%;
-    height: 50px;
     font-size: 16px;
-    align-items: center;
-    justify-content: space-around;
+    padding-left: 15px;
+    /* align-items: center; */
+    /* justify-content: space-around; */
   }
   
   form .content .checkbox{
     display: flex;
     align-items: center;
-    justify-content: center;
+    height: 50px;
+    /* justify-content: center; */
+  }
+
+  form .content .link{
+    height: 35px;
   }
   
   form .content input{
@@ -214,19 +219,24 @@ html,body{
   form .content{
     display: flex;
     width: 100%;
-    height: 90px;
     font-size: 30px;
     padding-top: 25px;
-    align-items: center;
-    justify-content: space-around;
+    /* align-items: center;
+    justify-content: space-around; */
   }
   
   form .content .checkbox{
     display: flex;
     align-items: center;
-    justify-content: center;
+    height: 30px;
+    /* justify-content: center; */
   }
   
+  form .content .link{
+    height: 50px;
+  }
+  
+
   form .content input{
     width: 32px;
     height: 30px;
