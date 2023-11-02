@@ -11,6 +11,9 @@
     include("0_headcss.php");
     ?>
     <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link href="css/flatpickr.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_red.css">
+
 </head>
 <?php
 $data_link = "";
@@ -46,9 +49,11 @@ $recno = null;
             font-size: 14px;
         }
 
-        .datepicker {
+        /* .datepicker {
             border: 1px solid black;
-        }
+        } */
+
+
 
         /* #detailtable th.no-wrap {
             white-space: normal;
@@ -135,6 +140,24 @@ $recno = null;
                     <h2>ตารางนัดหมาย</h2>
                 </div>
                 <hr>
+
+                <!-- <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="input-group date mb-3">
+                        <span class="input-group-text ">วันที่นัด :</span>
+                        <input type="text" id="datepicker" class="form-control" placeholder="เลือกวันที่">
+                            <span class="input-group-text bg-light d-block">
+                                <i class="fa fa-calendar" id="calendar-icon"></i>
+                            </span>
+                        <span class="input-group-text bg-light d-block">
+                                <i class="far fa-times-circle" style="color: #e10505;" id="clear-icon"></i>
+                            </span>
+                    </div>
+                </div> -->
+
+                <!---->
+
+                <!-- <input type="text" id="timepicker" class="form-control" placeholder="เลือกเวลา"> -->
+
                 <div class="createdata">
                     <div class="row d-flex justify-content-center">
                         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -144,7 +167,6 @@ $recno = null;
                             <button id="backhome" type="button" class=" btn btn-success  float-end me-3">กลับหน้าหลัก</button>
                         </div>
                     </div>
-
                     <hr>
                     <div class="row ">
                         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -155,7 +177,33 @@ $recno = null;
                         </div>
                     </div>
                     <div class="row">
+
                         <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="input-group date mb-3">
+                                <span class="input-group-text ">วันที่นัด :</span>
+                                <input type="text" id="dateatc" class="form-control" placeholder="เลือกวันที่">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar" id="calendar-icon-dateatc"></i>
+                                </span>
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="far fa-times-circle" style="color: #e10505;" id="clear-icon-dateatc"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="input-group date mb-3">
+                                <span class="input-group-text ">วันที่นัด :</span>
+                                <input type="text" id="datewarn" class="form-control" placeholder="เลือกวันที่">
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="fa fa-calendar" id="calendar-icon-datewarn"></i>
+                                </span>
+                                <span class="input-group-text bg-light d-block">
+                                    <i class="far fa-times-circle" style="color: #e10505;" id="clear-icon-datewarn"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
                                 <span class="input-group-text c_activity">วันที่นัด:</span>
                                 <input type="text" class="form-control" id="dateatc" />
@@ -165,8 +213,9 @@ $recno = null;
                                     </span>
                                 </span>
                             </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4">
+                        </div> -->
+
+                        <!-- <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
                                 <span class="input-group-text ">ระบบแจ้งเตือน :</span>
                                 <input type="text" class="form-control" id="datewarn" />
@@ -176,7 +225,8 @@ $recno = null;
                                     </span>
                                 </span>
                             </div>
-                        </div>
+                        </div> -->
+
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">ผู้นัด</span>
@@ -243,6 +293,9 @@ $recno = null;
     <!-- <div class="loading" ></div> -->
 </body>
 <?php include("0_footerjs_piority.php"); ?>
+<script src="js/flatpickr-4.6.13.js"></script>
+<script src="js/flatpickr-th.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker.th.js"></script>
 <script>
     $(document).ready(function() {
         $(window).keydown(function(event) {
@@ -251,19 +304,91 @@ $recno = null;
                 return false;
             }
         });
+
         var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
-        $("#dateatc").datepicker({
-            format: "dd/mm/yyyy",
-            clearBtn: true,
-            todayHighlight: true,
-            autoclose: true
+
+
+        // สร้าง Flatpickr
+        const commonOptions = {
+            enableTime: false,
+            locale: "th",
+            clickOpens: true,
+            altInput: true,
+            altFormat: "d/m/Y",
+            dateFormat: "Y-m-d",
+        };
+
+        const datePicker1 = flatpickr("#dateatc", {
+            ...commonOptions,
+            onChange: function(selectedDates, dateStr, instance) {
+                // ทำสิ่งที่คุณต้องการเมื่อเลือกวันที่ใน datePicker1
+                console.log("Selected Date in datePicker1:", dateStr);
+            },
         });
-        $("#datewarn").datepicker({
-            format: "dd/mm/yyyy",
-            clearBtn: true,
-            todayHighlight: true,
-            autoclose: true
+
+        const datePicker2 = flatpickr("#datewarn", {
+            ...commonOptions,
+            onChange: function(selectedDates, dateStr, instance) {
+                // ทำสิ่งที่คุณต้องการเมื่อเลือกวันที่ใน datePicker2
+                console.log("Selected Date in datePicker2:", dateStr);
+            },
         });
+
+
+        function setupDatePicker(datePicker, calendarIconId, clearIconId) {
+            $(`#${calendarIconId}`).click(function() {
+                datePicker.open();
+            });
+
+            $(`#${clearIconId}`).click(function() {
+                datePicker.clear();
+            });
+        }
+        setupDatePicker(datePicker1, "calendar-icon-dateatc", "clear-icon-dateatc");
+        setupDatePicker(datePicker2, "calendar-icon-datewarn", "clear-icon-datewarn");
+        //  // เพิ่มการคลิกไอคอน calendar เพื่อเปิด datepicker
+        //  $("#calendar-icon-dateatc").click(function() {
+        //     datePicker1.open();
+        // });
+
+        // // เพิ่มการคลิกไอคอนเคลียร์วันที่เพื่อลบค่าใน datepicker
+        // $("#clear-icon-dateatc").click(function() {
+        //     datePicker1.clear();
+        // });
+
+        // // เพิ่มการคลิกไอคอน calendar เพื่อเปิด datepicker
+        // $("#calendar-icon-datewarn").click(function() {
+        //     datePicker2.open();
+        // });
+
+        // // เพิ่มการคลิกไอคอนเคลียร์วันที่เพื่อลบค่าใน datepicker
+        // $("#clear-icon-datewarn").click(function() {
+        //     datePicker2.clear();
+        // });
+
+
+
+        const TimePicker = flatpickr("#timepicker", {
+            enableTime: true, // เปิดใช้งานการเลือกเวลา
+            noCalendar: true, // ไม่แสดงปฏิทิน
+            dateFormat: "H:i", // รูปแบบวันที่และเวลาเฉพาะชั่วโมงและนาที
+            time_24hr: true, // ใช้รูปแบบเวลา 24 ชั่วโมง
+        });
+
+
+
+        // $("#dateatc").datepicker({
+        //     format: "dd/mm/yyyy",
+        //     clearBtn: true,
+        //     todayHighlight: true,
+        //     autoclose: true
+        // });
+        // $("#datewarn").datepicker({
+        //     format: "dd/mm/yyyy",
+        //     clearBtn: true,
+        //     todayHighlight: true,
+        //     autoclose: true
+        // });
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         const formatDate = (data) => {
             if (!data || data === '0000-00-00') {
@@ -358,14 +483,14 @@ $recno = null;
 
 
             // เรียกใช้ Select2 บนฟิลด์ที่มีคลาส 'select2'
-            $(newRow).find('.select2').select2();
+            // $(newRow).find('.select2').select2();
 
-            $(newRow).find('.datepicker_get').datepicker({
-                format: "dd/mm/yyyy",
-                clearBtn: true,
-                todayHighlight: true,
-                autoclose: true
-            });
+            // $(newRow).find('.datepicker_get').datepicker({
+            //     format: "dd/mm/yyyy",
+            //     clearBtn: true,
+            //     todayHighlight: true,
+            //     autoclose: true
+            // });
         };
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         $('#createtable').on('click', '.delete-row', function() {
@@ -448,6 +573,7 @@ $recno = null;
             if (clickedButtonName === 'save') {
                 url = 'ajax/process_insert.php';
                 status_sql = 'save';
+                // console.log( $('#dateatc').val() ? $('#dateatc').val() : '0000-00-00')
                 datatable_generetor();
                 if (process == 'T') {
                     AlertSave(url, status_sql)
@@ -471,21 +597,22 @@ $recno = null;
                     // const locationValue = $(this).find('td:eq(4) .location-input').val();
                     const locationValue = $(this).find('td:eq(4) .location-input').val();
 
-                    console.log(locationValue)
-                    const dateActValue = $('#dateatc').val();
-                    const dateWarnValue = $('#datewarn').val();
+                    const dateActValue = $('#dateatc').val() ? $('#dateatc').val() : '0000-00-00';
+                    const dateWarnValue =$('#datewarn').val() ? $('#datewarn').val() : '0000-00-00';
                     const ownername = $('#ownername').val();
 
                     tableData.push({
                         name: companyValue,
                         detail: detailValue,
                         remark: remarkValue,
-                        dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                        dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+                        // dateAct: dateActValue ? moment(dateActValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00' ,
+                        // dateWarn: dateWarnValue ? moment(dateWarnValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00' ,
+                        dateAct: dateActValue,
+                        dateWarn: dateWarnValue,
                         ownername: ownername,
                         location: locationValue
                     });
-                    console.log(tableData)
+                    // console.log(tableData)
                 });
             } else {
                 process = 'F'
@@ -607,5 +734,7 @@ $recno = null;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
     });
 </script>
+
+
 
 </html>
