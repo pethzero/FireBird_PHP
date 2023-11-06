@@ -1,73 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
 <head>
+  <script src="assets/js/color-modes.js"></script>
   <?php
   session_start();
-  //  echo $_SESSION["RECNO"];
   if (!isset($_SESSION["RECNO"])) {
     header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
     exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
   }
   include("0_headcss.php");
-  // $csrfToken = bin2hex(random_bytes(32)); // สร้าง token สุ่ม
-  // $_SESSION['csrf_token'] = $csrfToken;
-  // $_SESSION['csrf_token'] = keyse();
   ?>
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-</head>
-
-<body>
-  <?php
-  include("0_header.php");
-  // include("0_breadcrumb.php");
-  ?>
-  <link rel="stylesheet" href="css/mycustomize.css">
   <style>
-    .c_activity {
-      width: 100px;
-    }
 
-    .h_textarea {
-      height: 110px;
-    }
-
-    textarea {
-      overflow-y: scroll;
-    }
-
-    .datepicker td,
-    th {
-      text-align: center;
-      padding: 8px 12px;
-      font-size: 14px;
-    }
-
-    .datepicker {
-      border: 1px solid black;
-    }
   </style>
+  <link href="dashboard.css" rel="stylesheet">
+</head>
+<body>
+  <?php include("0_dbheader.php"); ?>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- SIDE -->
+      <?php include("0_sidebar.php"); ?>
+      <!-- CONTENT -->
+      <div class="loading" style="display: none;"></div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <form id="idForm" method="POST">
+      <section>
 
-  <?php
-  // include("connect_sql.php");
-  ?>
-  <form id="idForm" method="POST">
-
-  <section>
-    <div class="container-fluid pt-3">
+      <div class="row pt-2 mb-2">
+  <div class="col-md-12">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
 
       <div class="row pb-3">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+           <h2>อันดับผู้จำหน่ายใบสั่งซื้อ</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
           <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
         </div>
       </div>
 
-      <!-- <button id="randomDataButton">สุ่มข้อมูล</button> -->
-
-      <h2>ใบสั่งซื้อ</h2>
-
-      <hr>
-      <h3>ค้นหา</h3>
       <div class="row pb-3">
         <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
           <div class="input-group input-daterange">
@@ -80,18 +55,25 @@
       </div>
 
       <div class="row pb-1">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
           <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
-        </div>
+          <button id="refreshall" type="button" class="btn btn-primary" style="margin-left: 50px;">ค้นหาทั้งหมด</button>
 
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
+        </div>
+      </div>
+      <span id="excelmessage"></span>
+
+        </div>
+    </div>
+  </div>
+</div>
+      <div class="chartCard">
+        <div class="chartBox">
+          <canvas id="myChart"></canvas>
         </div>
       </div>
 
-      <span id="excelmessage"></span>
-
-      <h2>อันดับลูกค้า ใบสั่งซื้อ</h2>
+      
       <div class="row">
         <div class="col-12 table-responsive">
           <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
@@ -110,43 +92,17 @@
       </div>
 
       <hr>
-      <div class="chartCard">
-        <div class="chartBox">
-          <canvas id="myChart"></canvas>
-        </div>
-      </div>
-
-    </div>
+  
   </section>
 
-
-
-
-  <hr>
-  <footer class="text-center mt-auto">
-    <div class="container pt-2">
-      <div class="row">
-        <div class="col-12">
-          <p>Copyright ? SAN Co.,Ltd. All rights reserved.</p>
-        </div>
-      </div>
+      </form>
+      </main>
     </div>
-  </footer>
-  <?php
-  //  include("0_footer.php");
-  ?>
-
-<div class="loading"></div>
-  </form>
-
-
+  </div>
 </body>
-<?php include("0_footerjs.php"); ?>
-<!-- <script src="js/dtcolumn.js"></script> -->
-
+<?php include("0_footerjs_piority.php"); ?>
 <script>
   $(document).ready(function() {
-
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
     $(window).keydown(function(event) {
       if (event.keyCode == 13 && !$(event.target).is('textarea')) {
@@ -154,7 +110,6 @@
         return false;
       }
     });
-
     var qid = 'COUNT_PURCHD0';
     var condotion_id = 'NULL';
     var startd = null;
@@ -450,7 +405,7 @@
         },
         plugins: {
           title: {
-            display: true,
+            display: false,
             text: 'ยอดขาย TOP 10',
             font: {
               size: 20,
@@ -494,10 +449,10 @@
     // $("#myChart").css("height", 800);
     if (window.innerWidth <= 768) {
       // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
-      $("#myChart").css("height", "400px");
+      $("#myChart").css("height", "300px");
     } else {
       // ถ้าความกว้างของหน้าจอมากกว่า 600px (สำหรับคอมพิวเตอร์ PC)
-      $("#myChart").css("height", "800px");
+      $("#myChart").css("height", "620px");
     }
 
 
@@ -514,5 +469,4 @@
 
   });
 </script>
-
 </html>

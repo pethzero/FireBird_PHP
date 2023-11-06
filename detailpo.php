@@ -1,250 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
 <head>
-    <?php
-    session_start();
-    if (!isset($_SESSION["RECNO"])) {
-        header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
-        exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
-    }
-    include("0_headcss.php");
-    ?>
-    <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <script src="assets/js/color-modes.js"></script>
+  <?php
+  session_start();
+  if (!isset($_SESSION["RECNO"])) {
+    header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
+    exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
+  }
+  include("0_headcss.php");
+  ?>
+  <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <style>
+
+  </style>
+  <link href="dashboard.css" rel="stylesheet">
 </head>
-<?php
-$data_link = "";
-$data_message = "";
-$size = count($_GET);
-$recno = null;
-?>
-
 <body>
-    <?php
-    include("0_header.php");
-    ?>
-    <link rel="stylesheet" href="css/mycustomize.css">
-    <style>
-        .c_activity {
-            width: 100px;
-        }
+  <?php include("0_dbheader.php"); ?>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- SIDE -->
+      <?php include("0_sidebar.php"); ?>
+      <!-- CONTENT -->
+      <div class="loading" style="display: none;"></div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <form id="idForm" method="POST">
+      <div class="row pt-2 mb-2">
+  <div class="col-md-12">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+<div class="row">
+    <h1>สรุปแจงซื้อ(ใบแจ้งหนี้)</h1>
+</div>
 
-        .h_textarea {
-            height: 110px;
-        }
-
-        textarea {
-            /* overflow-x: scroll; */
-            white-space: nowrap;
-            /* overflow-y: scroll; */
-        }
-
-        .datepicker td,
-        th {
-            text-align: center;
-            padding: 8px 12px;
-            font-size: 14px;
-        }
-
-        .datepicker {
-            border: 1px solid black;
-        }
-
-        /* #detailtable th.no-wrap {
-            white-space: normal;
-            width: auto;
-        } */
-
-
-        /* th.detail-tr {
-            width: 3000px;
-        } */
-
-        @media (min-width: 768px) {
-            .custom-input-pc {
-                width: 450px;
-            }
-
-            .btn-input {
-                width: 120px;
-            }
-
-            /* .company-input {
-                width: 400px;
-            }
-            .detail-input {
-                width: 500px;
-            } */
-            /* .remark-input {
-                width: 200px;
-            } */
-
-            /* .detail-input {
-                width: 700px;
-            }
-            .remark-input {
-                width: 500px;
-            } */
-
-            /* th.detail-tr {
-                width: 10000px;
-            }
-
-            th.date-tr {
-                width: 10000px;
-            } */
-            .date-input {
-                width: 140px;
-            }
-        }
-
-        @media (max-width: 767px) {
-            .custom-input-phone {
-                width: 300px;
-            }
-
-            /* th.detail-tr {
-                width: 3000px !important;
-            } */
-            .company-input {
-                width: 250px;
-            }
-
-            .detail-input {
-                width: 300px;
-            }
-
-            .remark-input {
-                width: 200px;
-            }
-
-            /*
-            tr th.date-input {
-                width: 200px !important;
-            } */
-            .date-input {
-                width: 120px;
-            }
-        }
-
-        .table-custom {
-            --bs-table-color: #000;
-            /* --bs-table-bg: #cfe2ff; */
-            --bs-table-bg: #4caf50;
-            --bs-table-border-color: #bacbe6;
-            /* --bs-table-striped-bg: #c5d7f2;
-            --bs-table-striped-color: #000;
-            --bs-table-active-bg: #bacbe6;
-            --bs-table-active-color: #000;
-            --bs-table-hover-bg: #bfd1ec;
-            --bs-table-hover-color: #000;
-            color: var(--bs-table-color);
-            border-color: var(--bs-table-border-color) */
-        }
-    </style>
-
-    <form id="idForm" method="POST">
-        <section>
-            <div class="container-fluid">
-
-
-                <div class="row  pt-3">
-                    <h1>สรุปแจงซื้อ(ใบแจ้งหนี้)</h1>
-                </div>
-
-                <div class="row pb-3">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                        <div class="input-group input-daterange">
-                            <span class="input-group-text">เริ่มต้น</span>
-                            <input type="text" class="form-control" id="datepickerbegin">
-                            <span class="input-group-text">จนถึง</span>
-                            <input type="text" class="form-control" id="datepickerend">
-                        </div>
-                    </div>
-                </div>
-                <div class="row pb-1">
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-                        <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
-                    </div>
-
-                    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-                        <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
-                    </div>
-                </div>
-
-                <div class="row d-flex justify-content-between">
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <span id="excelmessage"></span>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <button type="button" id="downloadExcel" name='downloadExcel'  class=" btn btn-success float-right float-end">Download  <i class="fas fa-file-excel"></i></button>
-                    </div>
-                </div>
-                <!-- <div class="row ">
-                    <div class="col-sm-12 col-md-4 col-lg-2">
-                        <button class="btn btn-success" id="downloadExcel">download excel</button>
-                    </div>
-                </div> -->
-
-                <hr>
-                <div class="row pt-2 table-responsive">
-                    <table id="detailtable" class="nowrap table table-striped table-bordered" width='100%'>
-                        <thead class="thead-light">
-                            <tr>
-                                <!-- <th>No.</th> -->
-                                <th>รหัส</th>
-                                <th>ผู้จำหน่าย</th>
-                                <th>ใบแจ้งหนี้</th>
-                                <th>เลขที่ใบส่งสินค้าผู้ขาย</th>
-                                <th>วันที่</th>
-                                <th>รายละเอียด</th>
-                                <th>จำนวนแจ้งหนี้</th>
-                                <th>จำนวนรับเข้า</th>
-                                <th>หน่วย</th>
-                                <th>หน่วละ</th>
-                                <th>ผลรวม</th>
-                                <th>เลขที่ใบสั่งขาย</th>
-                                <th>สั่งขายรายละเอียด</th>
-                                <th>จำนวน</th>
-                                <th>หน่วย</th>
-                                <th>หน่วละ</th>
-                                <th>ผลรวม</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-    </form>
-    <hr>
-    <footer class="text-center mt-auto">
-        <div class="container pt-2">
-            <div class="row">
-                <div class="col-12">
-                    <p>Copyright ? SAN Co.,Ltd. All rights reserved.</p>
-                </div>
-            </div>
+<div class="row pb-3">
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="input-group input-daterange">
+            <span class="input-group-text">เริ่มต้น</span>
+            <input type="text" class="form-control" id="datepickerbegin">
+            <span class="input-group-text">จนถึง</span>
+            <input type="text" class="form-control" id="datepickerend">
         </div>
-    </footer>
-    <div class="loading"></div>
+    </div>
+</div>
+<div class="row pb-1">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+        <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
+    </div>
+
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+        <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
+    </div>
+</div>
+
+<div class="row d-flex justify-content-between">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <span id="excelmessage"></span>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <button type="button" id="downloadExcel" name='downloadExcel'  class=" btn btn-success float-right float-end">Download  <i class="fas fa-file-excel"></i></button>
+    </div>
+</div>
+
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pt-1 table-responsive">
+    <table id="detailtable" class="nowrap table table-striped table-bordered" width='100%'>
+        <thead class="thead-light">
+            <tr>
+                <!-- <th>No.</th> -->
+                <th>รหัส</th>
+                <th>ผู้จำหน่าย</th>
+                <th>ใบแจ้งหนี้</th>
+                <th>เลขที่ใบส่งสินค้าผู้ขาย</th>
+                <th>วันที่</th>
+                <th>รายละเอียด</th>
+                <th>จำนวนแจ้งหนี้</th>
+                <th>จำนวนรับเข้า</th>
+                <th>หน่วย</th>
+                <th>หน่วละ</th>
+                <th>ผลรวม</th>
+                <th>เลขที่ใบสั่งขาย</th>
+                <th>สั่งขายรายละเอียด</th>
+                <th>จำนวน</th>
+                <th>หน่วย</th>
+                <th>หน่วละ</th>
+                <th>ผลรวม</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+
+      </form>
+      </main>
+    </div>
+  </div>
 </body>
 <?php include("0_footerjs_piority.php"); ?>
-
-
 <script>
-    $(document).ready(function() {
-        $(window).keydown(function(event) {
-            if (event.keyCode == 13 && !$(event.target).is('textarea')) {
-                event.preventDefault();
-                return false;
-            }
-        });
+  $(document).ready(function() {
+    /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
+    $(window).keydown(function(event) {
+      if (event.keyCode == 13 && !$(event.target).is('textarea')) {
+        event.preventDefault();
+        return false;
+      }
+    });
+ 
 
-
-        var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
+    var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
         var firstDayOfMonth = moment().startOf('month').format('DD/MM/YYYY');
         let lastDayOfMonth = moment().endOf('month').format('DD/MM/YYYY');
 
@@ -631,7 +502,7 @@ $recno = null;
             });
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-    });
-</script>
 
+  });
+</script>
 </html>

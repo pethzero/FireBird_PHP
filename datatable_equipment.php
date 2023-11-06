@@ -65,62 +65,14 @@
       </div>
 
       <h2>อุปกรณ์และเครื่องจักร</h2>
-      <!-- <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-          <div class="input-group date mb-3" id="datepicker_search">
-            <span class="input-group-append">
-              <span class="input-group-text bg-light d-block">
-                <i class="fa fa-calendar"></i>
-              </span>
-            </span>
-            <input type="text" class="form-control" id="date_search" readonly />
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-          <div class="input-group mb-3">
-            <span class="input-group-text c_activity">สถานะ:</span>
-            <select class="form-select" id="statusseacrh">
-              <option value="" selected>เลือก...</option>
-              <option value="ยังไม่เริ่มดำเนินการ">ยังไม่เริ่มดำเนินการ</option>
-              <option value="อยู่ระหว่างดำเนินการ">อยู่ระหว่างดำเนินการ</option>
-              <option value="รอดำเนินการ">รอดำเนินการ</option>
-              <option value="ถูกเลื่อนออกไป">ถูกเลื่อนออกไป</option>
-              <option value="เสร็จสิ้น">เสร็จสิ้น</option>
-            </select>
-          </div>
-        </div>
-      </div> -->
-
-
-      <!-- <div class="row">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <button id='seacrh' type="button" class="btn btn-primary">ค้นหา</button>
-        </div>
-      </div> -->
-
       <hr>
 
       <div class="row pb-3">
-        <!-- <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <button id='new' type="button" class="btn btn-primary">เพิ่มอุปกรณ์</button>
-        </div> -->
+   
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
           <button id='newmodel' type="button" class="btn btn-primary">เพิ่มอุปกรณ์และเครื่องจักร</button>
         </div>
       </div>
-
-      <!-- <div class="row mb-3">
-        <div class="col-sm-12 col-md-6 col-lg-6">
-          <label for="searchInput" class="form-label">ค้นหารายการรหัสลูกค้า แบบกรอง</label>
-          <div class="input-group">
-            <select class="form-control select2" id="searchInput"></select>
-            <button class="btn btn-primary" id="searchClear">ล้าง</button>
-          </div>
-        </div>
-      </div> -->
 
 
       <div class="row">
@@ -131,15 +83,6 @@
                 <th>ลำดับ</th>
                 <th>ข้อมูล</th>
                 <th>เลขที่</th>
-                <!-- <th>สถานะ</th>
-                <th>บริษัท</th>
-                <th>ผู้ติดต่อ</th>
-                <th>วันที่นัดหมาย</th>
-                <th>ความสำคัญ</th>
-                <th>ราคาเบิก</th>
-                <th>ราคาจ่าย</th>
-                <th>ผู้นัดหมาย</th> -->
-
               </tr>
             </thead>
             <tbody>
@@ -147,13 +90,8 @@
           </table>
         </div>
       </div>
-
     </div>
   </section>
-
-
-
-
   <hr>
   <footer class="text-center mt-auto">
     <div class="container pt-2">
@@ -180,14 +118,6 @@
             <!-- ส่วนที่เพิ่มเนื้อหาภายในกล่องโมดอลได้ที่นี่ -->
             <section>
               <div class="container-fluid">
-                <!-- <div class="row pb-3">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-                  <button id='backhis' type="button" class="btn btn-primary">กลับดูอุปกรณ์</button>
-                </div>
-              </div> -->
-
-                <!-- <h2 id="dataoffset">อุปกรณ์ <span id='story' class="badge"></span></h2>
-              <hr> -->
                 <div class="row">
                   <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
@@ -375,8 +305,6 @@
                 <div class="row">
                   <div class="">
                     <label for="fileLabel" class="form-label" id="fileLabel"> </label>
-                    <!-- <label for="formFile" class="form-label">แนบเอกสาร</label>
-                    <input class="form-control" type="file" id="fileToUpload"> -->
                   </div>
                 </div>
 
@@ -392,9 +320,6 @@
       </div>
     </div>
   </form>
-
-    <!-- <div class="loading"> -->
-
 </body>
 <?php include("0_footerjs.php"); ?>
 <script src="js/dtcolumn.js"></script>
@@ -456,8 +381,6 @@
 
     $(function() {
       select2_owner_list();
-
-
       $("#date_search").datepicker({
         format: "dd/mm/yyyy",
         clearBtn: true,
@@ -465,10 +388,6 @@
         autoclose: true
       });
     });
-
-    // function Operation(optdata) {
-    //   select2_owner_list()
-    // }
 
     function matchCustom_ajax(params, data) {
       if ($.trim(params.term) === '') {
@@ -509,24 +428,24 @@
     var encodedURL = encodeURIComponent('ajax_select_sql_mysql.php');
     var data_array = [];
     var table = $('#table_datahd').DataTable({
-      ajax: {
-        url: encodedURL,
-        data: function(d) {
-          d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
-          d.params = null;
-          // d.params = {
-          //   // RECNO:recno,
-          //   STARTD: startd,
-          // };
-          d.condition = '';
-          d.sqlprotect = encodeData;
-        },
-        dataSrc: function(json) {
-          console.log(json)
-          tablejsondata = json.data;
-          return json.data;
-        }
-      },
+      // ajax: {
+      //   url: encodedURL,
+      //   data: function(d) {
+      //     d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
+      //     d.params = null;
+      //     // d.params = {
+      //     //   // RECNO:recno,
+      //     //   STARTD: startd,
+      //     // };
+      //     d.condition = '';
+      //     d.sqlprotect = encodeData;
+      //   },
+      //   dataSrc: function(json) {
+      //     console.log(json)
+      //     tablejsondata = json.data;
+      //     return json.data;
+      //   }
+      // },
       scrollX: true,
       columns: dtcolumn['DATA_EQUIPMENT'],
       columnDefs: [{
@@ -545,26 +464,20 @@
       order: [
         [0, 'desc'],
       ],
-      dom: 'Bfrtip',
-      buttons: [{
-          extend: 'colvis',
-          text: 'Show/Hide',
-          columns: ':not(.noVis)',
-          // columnText: function ( dt, idx, title ) {
-          // return (idx+1)+': '+title;
-          // }
-        },
-        //  'csv', 
-        {
-          extend: 'excelHtml5',
-          title: 'Data export',
-          exportOptions: {
-            // columns: [ 2, 3,4,5,6,7,8,9,10 ]
-            columns: [1, 2]
-          }
-        }
-      ],
-
+      dom: 'frtip',
+      // buttons: [{
+      //     extend: 'colvis',
+      //     text: 'Show/Hide',
+      //     columns: ':not(.noVis)',
+      //   },
+      //   {
+      //     extend: 'excelHtml5',
+      //     title: 'Data export',
+      //     exportOptions: {
+      //       columns: [1, 2]
+      //     }
+      //   }
+      // ],
       initComplete: function(settings, json) {
         // $('.loading').hide();
       },
@@ -590,6 +503,77 @@
       },
     });
 
+    async function download_excel(slcdata, data_begin, date_end) {
+      var Param = [];
+      var formData = new FormData();
+      Param.push({
+        datebegin: data_begin,
+        dateend: date_end
+      })
+      formData.append('queryIdHD', slcdata.queryid);
+      formData.append('queryIdExcel', slcdata.queryid);
+      formData.append('Param', JSON.stringify(Param));
+      formData.append('condition', 'DATEBE');
+      try {
+        // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
+        const jsonResponse = await fetch('ajax/process_dataeexcel.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!jsonResponse.ok) {
+          $('.loading').hide();
+          throw new Error('Error sending data to server');
+        }
+
+        const jsonData = await jsonResponse.json();
+        console.log(jsonData)
+        // เรียกใช้ฟังก์ชัน mapData สำหรับแปลงข้อมูล
+        let TureTotalAmt = 0;
+        const mappedData = mapData(jsonData.datasql, slcdata.queryid);
+        mappedData.forEach((item) => {
+          if (typeof item.TOTALAMT !== 'undefined') {
+            const totalAmtAsFloat = parseFloat(item.TOTALAMT);
+            if (!isNaN(totalAmtAsFloat)) {
+              TureTotalAmt += totalAmtAsFloat;
+            }
+          }
+        });
+
+        ////////////////////
+        formData.append('blobData', JSON.stringify(mappedData));
+        formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
+        formData.append('condition_footer', 'T');
+        console.log(mappedData)
+        const blobResponse = await fetch('export/excel_export.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!blobResponse.ok) {
+          throw new Error('Error sending data to server');
+          $('.loading').hide();
+        }
+
+        const namelike = $('#namelink').val();
+        // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
+        const blobData = await blobResponse.blob();
+
+        const url = window.URL.createObjectURL(blobData);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = namelike + '.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
+        document.body.appendChild(a);
+        a.click();
+
+        window.URL.revokeObjectURL(url);
+
+        $('.loading').hide();
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     $('#table_datahd').on('click', '.edit', function() {
       var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
@@ -628,11 +612,7 @@
 
 
     $('#seacrh').click(function() {
-      // var dateValue = $('#date_search').val();
-      // $('#date_search').val('');
-      // $('#date').val('');
-      // $('#date_first').val('');
-      // $('#date_last').val('');
+    
     })
 
 
@@ -642,7 +622,6 @@
     $("#newmodel").click(function() {
       $('#ok').removeClass('btn-danger').addClass('btn-primary').text('บันทึก');
       $('#story').removeClass('bg-danger').addClass('bg-secondary').text('เพิ่ม');
-      // <button id="ok" type="submit" class="btn btn-primary">บันทึก</button>
 
       datasave = 'save';
       recno_owner = 0;
@@ -707,6 +686,7 @@
       return $(selector).select2({
         data: data,
         theme: 'bootstrap-5',
+        dropdownParent: $('#myModal .modal-content'),
         matcher: matchCustom_ajax,
         templateSelection: function(selected) {
           if (selected.id !== '') {
@@ -907,11 +887,7 @@
       } else {
         modify = 'F';
       }
-      // else
-      // {
-      // }
-      /////////////
-
+   
       var purchaseValue = $('#date').val();
       var firstUsageValue = $('#date_first').val();
       var lastUsageValue = $('#date_last').val();
@@ -919,7 +895,6 @@
       /// id ,param ///
       paramhd = {
         RECNO: recno_edit,
-        // IDEDIT: '5555',
         NAME: $('#name').val(),
         TYPE: $('#type').val(),
         CODE: $('#code').val(),
@@ -939,13 +914,10 @@
         PURCHASEDATE: purchaseValue ? moment(purchaseValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
         FIRSTUSAGE: firstUsageValue ? moment(firstUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
         LASTUSAGE: lastUsageValue ? moment(lastUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        // FIRSTUSAGE: moment($('#date_first').val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
         RECORDERNO: recno_owner,
         RECORDERNAME: recno_nowner,
       };
-      // console.log(paramhd);
-      // var paramhd = null;
-      // เพิ่มอาร์เรย์ paramhd เข้าไปใน FormData และแปลงเป็น JSON ก่อน
+
 
       if (conditionsformdata == "save") {
         // ประมวลผลเพิ่มข้อมูล
@@ -1021,10 +993,7 @@
         },
         dataSrc: '',
         success: function(response) {
-          // console.log(response)
           json_equipment = JSON.parse(response).data;
-          // console.log(json_equipment)
-          // console.log(json_equipment[0].NAME)
           recno_edit = json_equipment[0].RECNO;
           $('#name').val(json_equipment[0].NAME);
           $('#type').val(json_equipment[0].TYPE);

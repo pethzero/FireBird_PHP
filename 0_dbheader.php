@@ -62,7 +62,7 @@
 
   <header class="navbar navbar-expand-lg navbar-dark bg-custom sticky-top p-0 shadow ">
     <!-- <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#" >X Companname</a> -->
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3">SAN</a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 "><b>SAN ENGINEERING</b></a>
 
     <ul class="navbar-nav flex-row d-md-none">
       <li class="nav-item text-nowrap">
@@ -77,15 +77,30 @@
         <li class="nav-item active">
           <a class="nav-link text-white" href="main.php">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">Contact</a>
-        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          ฝ่ายขาย
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="appointment_up.php">ตารางหนัดหมาย</a></li>
+          <li><a class="dropdown-item" href="datatable_qt.php">อันดับลูกค้าใบเสนอราคา</a></li>
+          <li><a class="dropdown-item" href="datatable_invoice.php">สรุปยอดขาย (ใบแจ้งหนี้)</a></li>
+          <li><a class="dropdown-item" href="summaryinvoiceqt.php">สรุปยอดขายลูกค้า</a></li>
+          <li><a class="dropdown-item" href="miscellaneous.php">รายงาน</a></li>
+        </ul>
+      </li>
+
+   <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          ฝ่ายจัดซื้อ
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="datatable_po.php">อันดับผู้จำหน่ายใบสั่งซื้อ</a></li>
+          <li><a class="dropdown-item" href="detailpo.php">ดูสรุปแจงสั่งซื้อ(ซื้อ)</a></li>
+          <li><a class="dropdown-item" href="summaryinvoicepo.php">สรุปยอดซื้อผู้จำหน่าย</a></li>
+          <li><a class="dropdown-item" href="dataquancontrol.php">ประเมินคุณภาพสินค้า</a></li>
+        </ul>
+      </li>
       </ul>
 
       <ul class="navbar-nav ms-auto "> <!-- เพิ่มคลาส ms-md-0 เพื่อปรับการจัดตำแหน่งในหน้าจอขนาดเล็ก -->

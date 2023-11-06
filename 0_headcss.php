@@ -6,7 +6,7 @@
 <link rel='shortcut icon' href='favicon-16x16.png' type='image/x-icon'>
 <!-- Preload CSS -->
 <link rel="preload" href="css/bootstrap-5.3.1.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="css/bootstrap-icons-1.10.3.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="icon/bootstrap-icons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/dataTables.bootstrap5-1.13.4.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/font.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" href="css/sweetalert2.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -16,7 +16,7 @@
 <!-- Fallback stylesheets for users without JavaScript -->
 <noscript>
   <link rel="stylesheet" href="css/bootstrap-5.3.1.min.css">
-  <link rel="stylesheet" href="css/bootstrap-icons-1.10.3.css">
+  <link rel="stylesheet" href="icon/bootstrap-icons.min.css">
   <link rel="stylesheet" href="css/dataTables.bootstrap5-1.13.4.min.css">
   <link rel="stylesheet" href="css/font.css">
   <link rel="stylesheet" href="css/sweetalert2.min.css">

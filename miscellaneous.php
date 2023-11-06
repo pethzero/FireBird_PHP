@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
 
 <head>
+  <script src="assets/js/color-modes.js"></script>
   <?php
   session_start();
   if (!isset($_SESSION["RECNO"])) {
@@ -11,26 +12,18 @@
   include("0_headcss.php");
   ?>
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <!--
-    <link rel="stylesheet" href="css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="css/bootstrap-5.3.0.min.css">
-    <link rel="stylesheet" href="css/font.css">
-    <link rel="stylesheet" href="css/mypcu.css"> 
-    -->
-</head>
-
-<body>
   <style>
-    .btn-custom {
-      background: linear-gradient(to right, #e8e8e8, #f1f1f1);
-      color: #000000;
+
+    .c_activity {
+      width: 100px;
     }
 
-    .card-img-top {
-      height: 200px;
-      /* Adjust the height to your desired value */
-      object-fit: cover;
-      /* This ensures the image fills the entire space while maintaining aspect ratio */
+    .h_textarea {
+      height: 110px;
+    }
+
+    textarea {
+      overflow-y: scroll;
     }
 
     .datepicker td,
@@ -43,39 +36,96 @@
     .datepicker {
       border: 1px solid black;
     }
+    @media (min-width: 768px) {
+            .custom-input-pc {
+                width: 450px;
+            }
+
+            .btn-input {
+                width: 120px;
+            }
+            .date-input {
+                width: 140px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .custom-input-phone {
+                width: 300px;
+            }
+            .company-input {
+                width: 250px;
+            }
+
+            .detail-input {
+                width: 300px;
+            }
+
+            .remark-input {
+                width: 200px;
+            }
+
+            .date-input {
+                width: 120px;
+            }
+        }
+
+        .table-custom {
+            --bs-table-color: #000;
+            --bs-table-bg: #4caf50;
+            --bs-table-border-color: #bacbe6;
+        }
+
+        .table-postpone {
+            --bs-table-color: #000;
+            --bs-table-bg: #ff980099;
+            --bs-table-border-color: #bacbe6;
+        }
+
+        .bg-postpone {
+            background-color: #ff6600;
+        }
   </style>
-  <?php
-  include("0_header.php");
-  // include("0_breadcrumb.php"); 
-  ?>
+  <link href="dashboard.css" rel="stylesheet">
+</head>
 
-
-  <div class="section">
+<body>
+  <?php include("0_dbheader.php"); ?>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- SIDE -->
+      <?php include("0_sidebar.php"); ?>
+      <!-- CONTENT -->
+      <div class="loading" style="display: none;"></div>
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <form id="idForm" method="POST">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2">ดาวโหลดส่วนเสริม</h1>
+        </div>
+        <div class="section">
     <div class="container-fluid">
 
-      <div class="row pt-3">
+    <div class="row pb-3">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
         </div>
       </div>
 
-      <div class="row  pt-3">
-        <h1>ดาวโหลดส่วนเสริม</h1>
-      </div>
-
-      <div class="row pb-3">
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-          <div class="input-group input-daterange">
-            <span class="input-group-text">เริ่มต้น</span>
-            <input type="text" class="form-control" id="datepickerbegin">
-            <span class="input-group-text">จนถึง</span>
-            <input type="text" class="form-control" id="datepickerend">
-          </div>
+    <div class="row mb-2">
+    <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+        <h3 class="mb-0">รายงานฝ่ายขาย</h3>
+        <div class="row pt-3">
+            <div class="input-group input-daterange">
+              <span class="input-group-text">เริ่มต้น</span>
+              <input type="text" class="form-control" id="datepickerbegin">
+              <span class="input-group-text">จนถึง</span>
+              <input type="text" class="form-control" id="datepickerend">
+            </div>
         </div>
-      </div>
 
-      <div class="row pb-3">
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="row pt-3">
           <div class="input-group ">
             <span class="input-group-text">ประเภท</span>
             <select id='slcdata' class="form-select" aria-label="Default select example">
@@ -85,39 +135,57 @@
               <option value="3">ใบแจ้งหนี้</option>
             </select>
           </div>
-        </div>
       </div>
 
-      <div class="row pb-3">
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <div class="row pt-3">
           <div class="input-group ">
             <span class="input-group-text">ชื่อไฟล์</span>
             <input type="text" class="form-control" id="namelink" value="Excel_ใบเสนอราคา"  maxlength="125" placeholder="ใส่ชื่อ">
           </div>
-        </div>
       </div>
 
       <div class="row pt-3">
-        <div class="col-sm-12 col-md-4 col-lg-2">
+        <div class="col-sm-12 col-md-6 col-lg-6">
           <button class="btn btn-success" id="downloadExcel">download excel</button>
         </div>
       </div>
-
+        </div>
+      </div>
     </div>
-    <div class="loading" style="display: none;"></div>
+
   </div>
 
-  <?php include("0_footer.php"); ?>
+  
+
+    </div>
+  </div>
+        </form>
+      </main>
+    </div>
+  </div>
 </body>
-<?php
-include("0_footerjs.php");
-?>
-
-
+<?php include("0_footerjs_piority.php"); ?>
 <script>
+
   $(document).ready(function() {
+    /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
+    $(window).keydown(function(event) {
+      if (event.keyCode == 13 && !$(event.target).is('textarea')) {
+        event.preventDefault();
+        return false;
+      }
+    });
 
-
+    $('#idForm').on('submit', function(e) {
+      e.preventDefault(); // ป้องกันการส่ง form ไปยังหน้าอื่น
+      // ตรวจสอบว่าปุ่มที่ถูกคลิกคือ "save" หรือ "edit"
+      let url = "";
+      let status_sql = "";
+      var clickedButtonName = e.originalEvent.submitter.name;
+    });
+    
+    // $('.loading').hide();
+    
     $("#slcdata").on("change", function() {
       var selectedValue = $('#slcdata').val();
       var namelink = "";
@@ -139,9 +207,6 @@ include("0_footerjs.php");
       }
       $('#namelink').val(namelink);
     });
-
-    //  $('#namelink').val('')
-
     // หาวันที่ 1 ของเดือนนี้
     var firstDayOfMonth = moment().startOf('month').format('DD/MM/YYYY');
     // หาวันสุดท้ายของเดือนนี้
@@ -264,7 +329,6 @@ include("0_footerjs.php");
       formData.append('queryIdExcel', slcdata.queryid);
       formData.append('Param', JSON.stringify(Param));
       formData.append('condition', 'DATEBE');
-
       try {
         // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
         const jsonResponse = await fetch('ajax/process_dataeexcel.php', {
@@ -278,7 +342,7 @@ include("0_footerjs.php");
         }
 
         const jsonData = await jsonResponse.json();
-
+        console.log(jsonData)
         // เรียกใช้ฟังก์ชัน mapData สำหรับแปลงข้อมูล
         let TureTotalAmt = 0;
         const mappedData = mapData(jsonData.datasql, slcdata.queryid);
@@ -406,9 +470,9 @@ include("0_footerjs.php");
     });
 
 
-
-
   });
 </script>
+
+
 
 </html>

@@ -404,31 +404,7 @@
 
 <script>
   $(document).ready(function() {
-    // // รับ element input จาก DOM
-    // var fileInput = document.getElementById('fileToUpload');
-
-    // // เพิ่ม event listener เมื่อมีการเลือกไฟล์
-    // fileInput.addEventListener('change', function(event) {
-    //   var file = event.target.files[0]; // ไฟล์ที่ถูกเลือก
-
-    //   // ตรวจสอบขนาดไฟล์ (10MB)
-    //   if (file.size > 10 * 1024 * 1024) {
-    //     alert('ไฟล์ขนาดเกิน 10MB ไม่ได้รับอนุญาต');
-    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-    //     return;
-    //   }
-
-    //   // ตรวจสอบประเภทไฟล์ (pdf, png)
-    //   var allowedTypes = ['application/pdf', 'image/jpg', 'image/png', 'image/jpeg', 'image/gif'];
-    //   if (!allowedTypes.includes(file.type)) {
-    //     alert('รูปแบบไฟล์ไม่ได้รับอนุญาต (รองรับเฉพาะ PDF , JPG, PNG , และ GIF)');
-    //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
-    //     return;
-    //   }
-    //   // ทำสิ่งที่ต้องการเมื่อไฟล์ผ่านการตรวจสอบ
-    //   // ตัวอย่างเช่น ส่งไฟล์ไปยังเซิร์ฟเวอร์ หรือประมวลผล
-    // });
-
+ 
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
     $(window).keydown(function(event) {
       if (event.keyCode == 13 && !$(event.target).is('textarea')) {

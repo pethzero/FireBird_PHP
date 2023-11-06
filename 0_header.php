@@ -27,8 +27,10 @@
           ฝ่ายจัดซื้อ
         </a>
         <ul class="dropdown-menu">
-          <!-- <li><a class="dropdown-item">coming soon</a></li> -->
           <li><a class="dropdown-item" href="datatable_po.php">อันดับผู้จำหน่ายใบสั่งซื้อ</a></li>
+          <li><a class="dropdown-item" href="detailpo.php">ดูสรุปแจงสั่งซื้อ(ซื้อ)</a></li>
+          <li><a class="dropdown-item" href="summaryinvoicepo.php">สรุปยอดซื้อผู้จำหน่าย</a></li>
+          <li><a class="dropdown-item" href="dataquancontrol.php">ประเมินคุณภาพสินค้า</a></li>
         </ul>
       </li>
 

@@ -122,25 +122,17 @@
       <!-- CONTENT -->
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">สรุปยอดผู้จำหน่าย</h1>
-        </div>
         <form id="idForm" method="POST">
           <section>
-            <div class="container-fluid">
-              <h3>ค้นหา</h3>
-              <div class="row pb-3">
 
-                <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                  <div class="input-group input-daterange">
-                    <span class="input-group-text">เริ่มต้น</span>
-                    <input type="text" class="form-control" id="datepickerbegin">
-                    <span class="input-group-text">จนถึง</span>
-                    <input type="text" class="form-control" id="datepickerend">
-                  </div>
-                </div> -->
+          <div class="row pt-2">
+  <div class="col-md-12">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
 
-                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <h4> สรุปยอดผู้จำหน่าย </h4>
 
                 <div class="row pb-3">
                   <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -153,27 +145,26 @@
                   </div>
                 </div>
 
-                  <div class="row pb-3">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
-                    </div>
-
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
-                    </div>
-                  </div>
-
-                  <div class="input-group mb-3">
+                <div class="input-group mb-3">
                         <span class="input-group-text" style="background-color: #d6d6d6;">บริษัท</span>
-                        <input type="text" class="form-control " id="dayid" readonly>
+                        <input type="text" class="form-control" id="dayid" readonly>
                   </div>
-                  <h4><span id='dayid'></span> </h4>
+                  
+                  <div class="row">
+                    
+                  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                      <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
+                      <button id="refreshall" type="button" class="btn btn-primary" style="margin-left: 50px;">ค้นหาทั้งหมด</button>
+                    </div>
+
+                  </div>
+
+                
 
 
                 </div>
 
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                
                   <h4> ยอดซื้อประมาณการทั้งหมด </h4>
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -206,6 +197,13 @@
 
               </div>
 
+
+        </div>
+    </div>
+  </div>
+</div>
+
+        
 
               <div class="chartCard">
                 <div class="chartBox">
@@ -241,7 +239,6 @@
               <hr>
 
 
-            </div>
           </section>
           <div class="loading" style="display: none;"></div>
         </form>
@@ -622,7 +619,7 @@
         },
         plugins: {
           title: {
-            display: true,
+            display: false,
             text: 'ยอดซื้อ TOP 10', // ข้อความหัวเรื่อง
             font: {
               size: 20, // ขนาดตัวอักษร
@@ -662,10 +659,10 @@
     // $("#myChart").css("height", 800);
     if (window.innerWidth <= 768) {
       // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
-      $("#myChart").css("height", "400px");
+      $("#myChart").css("height", "300px");
     } else {
       // ถ้าความกว้างของหน้าจอมากกว่า 600px (สำหรับคอมพิวเตอร์ PC)
-      $("#myChart").css("height", "800px");
+      $("#myChart").css("height", "620px");
     }
 
     $('#backhis').click(function() {

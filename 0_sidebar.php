@@ -11,15 +11,15 @@
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="main.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#house-fill" />
+                    <use xlink:href="0_image.svg#house-fill" />
                   </svg>
                   หนัาหลัก
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="summaryinvoicepo.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#cart" />
+                    <use xlink:href="0_image.svg#cart" />
                   </svg>
                   สรุปยอดผู้จำหน่าย
                 </a>
@@ -27,76 +27,100 @@
               <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="summaryinvoicepo_old.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#cart" />
+                    <use xlink:href="0_image.svg#cart" />
                   </svg>
                   สรุปยอดผู้จำหน่าย (เก่า)
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="appointment_up.php">
+                 <i class="bi bi-people-fill"></i>
+                  เพิ่มตารางหนัดหมาย
+                </a>
+              </li>
+
+            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+              <span><h4>ฝ่ายขาย</h4></span>
+              <!-- <a class="link-secondary" href="#" aria-label="Add a new report">
+                <svg class="bi">
+                  <use xlink:href="0_image.svg#plus-circle" />
+                </svg>
+              </a> -->
+            </h6>
+            <ul class="nav flex-column mb-auto">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="appointment_up.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#people" />
+                    <use xlink:href="0_image.svg#appointment" />
                   </svg>
                   ตารางหนัดหมาย
                 </a>
               </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="datatable_qt.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#graph-up" />
+                    <use xlink:href="0_image.svg#cuprank" />
                   </svg>
-                  Reports
-                </a>
-              </li> -->
-              <!-- <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                  <svg class="bi">
-                    <use xlink:href="a_image.svg#puzzle" />
-                  </svg>
-                  Integrations
+                  อันดับลูกค้าใบเสนอราคา
                 </a>
               </li>
-            </ul> -->
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="datatable_invoice.php">
+                  <i class="bi bi-book"></i>
+                  สรุปยอดขาย (ใบแจ้งหนี้)
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="summaryinvoiceqt.php">
+                <i class="bi bi-people-fill"></i>
+                  สรุปยอดขายลูกค้า
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="miscellaneous.php">
+                  <svg class="bi">
+                    <use xlink:href="0_image.svg#file-earmark-text" />
+                  </svg>
+                  รายงาน
+                </a>
+              </li>
+            </ul>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-              <span><h4>ฝ่ายขาย</h4></span>
-              <a class="link-secondary" href="#" aria-label="Add a new report">
+              <span><h4>จัดซื้อ</h4></span>
+              <!-- <a class="link-secondary" href="#" aria-label="Add a new report">
                 <svg class="bi">
-                  <use xlink:href="a_image.svg#plus-circle" />
+                  <use xlink:href="0_image.svg#plus-circle" />
                 </svg>
-              </a>
+              </a> -->
             </h6>
             <ul class="nav flex-column mb-auto">
-              <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center gap-2" href="datatable_po.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#file-earmark-text" />
+                    <use xlink:href="0_image.svg#cuprank" />
                   </svg>
-                  Current month
+                  อันดับผู้จำหน่ายใบสั่งซื้อ
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                  <svg class="bi">
-                    <use xlink:href="a_image.svg#file-earmark-text" />
-                  </svg>
-                  Last quarter
+                <a class="nav-link d-flex align-items-center gap-2" href="detailpo.php">
+                  <i class="bi bi-book"></i>
+                  สรุปแจงซื้อ (ใบแจ้งหนี้แบบรายละเอียด)
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                  <svg class="bi">
-                    <use xlink:href="a_image.svg#file-earmark-text" />
-                  </svg>
-                  Social engagement
+                <a class="nav-link d-flex align-items-center gap-2" href="summaryinvoicepo.php">
+                <i class="bi bi-people-fill"></i>
+                สรุปยอดซื้อผู้จำหน่าย
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
+                <a class="nav-link d-flex align-items-center gap-2" href="dataquancontrol.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#file-earmark-text" />
+                    <use xlink:href="0_image.svg#file-earmark-text" />
                   </svg>
-                  Year-end sale
+                  ประเมินคุณภาพสินค้า
                 </a>
               </li>
             </ul>
@@ -105,17 +129,9 @@
 
             <ul class="nav flex-column mb-auto">
               <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                  <svg class="bi">
-                    <use xlink:href="a_image.svg#gear-wide-connected" />
-                  </svg>
-                  Settings
-                </a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link d-flex align-items-center gap-2" href="logout.php">
                   <svg class="bi">
-                    <use xlink:href="a_image.svg#door-closed" />
+                    <use xlink:href="0_image.svg#door-closed" />
                   </svg>
                   Sign out
                 </a>

@@ -1,9 +1,7 @@
-.selected {
+/* .selected {
 	background-color: #e6f0ff;
   }
-  /* body {
-    background-image: linear-gradient(180deg, #eee, #fff 100px, #fff);
-  } */
+
 .page-link {
   padding: 5px 10px;
   margin: 2px;
@@ -13,9 +11,6 @@
   background-color: #fff;
 }
 
-/* .page-link:hover {
-  background-color: #0c13d8 !important;
-} */
 
 
 @media (min-width: 576px) {
@@ -51,7 +46,6 @@ max-width: 960px;
 
 .table-custom  {
   --bs-table-color: #000;
-  /* --bs-table-bg: #cfe2ff; */
   --bs-table-bg:#98b7ef;
   --bs-table-border-color: #bacbe6;
   --bs-table-striped-bg: #c5d7f2;
@@ -64,19 +58,14 @@ max-width: 960px;
   border-color: var(--bs-table-border-color)
 }
 
-/* .bg-custom {
-  background-color: #ff9800; 
-  color: #fff;
-} */
+
 .bg-oragne {
-  background-color: #ff9800; /* เปลี่ยนสีตามที่คุณต้องการ */
-  /* color: #fff; */
+  background-color: #ff9800; 
 }
 
 
 .bg-pink {
-  background-color: #ef98d3; /* เปลี่ยนสีตามที่คุณต้องการ */
-  /* color: #fff; */
+  background-color: #ef98d3; 
 }
 
 @media (min-width: 1200px) {
@@ -96,16 +85,12 @@ th {
   border: 1px solid black;
 }
 
-
-    
-.container-fluid {
-  transition: padding 0.3s ease;  /* เพิ่มเอฟเฟกต์การเปลี่ยนขนาดอย่างนุ่มนวล */
-
-  /* ใช้ media query เพื่อปรับแต่งสไตล์เมื่อหน้าจอมีความกว้างเกิน 1000px */
+  .container-fluid {
+  transition: padding 0.3s ease;  
   @media (min-width: 960px) {
-    margin-left: auto;  /* จัดตำแหน่งกล่องส่วนข้างซ้าย */
-    margin-right: auto; /* จัดตำแหน่งกล่องส่วนข้างขวา */
-    padding-left: 40px; /* ปรับขอบซ้ายเล็กน้อย */
-    padding-right: 40px; /* ปรับขอบขวาเล็กน้อย */
+    margin-left: auto; 
+    margin-right: auto; 
+    padding-left: 40px; 
+    padding-right: 40px; 
   }
-}
+} */

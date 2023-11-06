@@ -126,33 +126,81 @@
       <!-- CONTENT -->
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">สรุปยอดสั่งซื้อรายละเอียด(ใบแจ้งหนี้)</h1>
-        </div>
         <form id="idForm" method="POST">
+
           <section>
-            <div class="container-fluid">
-              <h3>ค้นหา</h3>
+
+          <div class="row pt-2 mb-2">
+  <div class="col-md-12">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+
+
+        <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <h3>สรุปยอดขายลูกค้า(ใบแจ้งหนี้)</h3>
               <div class="row pb-3">
-                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                   <div class="input-group input-daterange">
                     <span class="input-group-text">เริ่มต้น</span>
                     <input type="text" class="form-control" id="datepickerbegin">
                     <span class="input-group-text">จนถึง</span>
                     <input type="text" class="form-control" id="datepickerend">
                   </div>
-                </div>
               </div>
 
+              
               <div class="row pb-1">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                   <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
                 </div>
 
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
                   <button id="refreshall" type="button" class="btn btn-primary">ค้นหาทั้งหมด</button>
                 </div>
               </div>
+
+              <h4 class="pt-3"><span  id='dayid'></span></h4>
+
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+              <h4> ยอดขายประมาณการทั้งหมด </h4>
+              <div class="row">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" style="background-color: #d6d6d6;">ยอดรวมสุทธิทั้งหมด</span>
+                    <input type="text" class="form-control  text-end" id="sumtotal" readonly>
+                    <span class="input-group-text" style="background-color: #d6d6d6;">บาท</span>
+                  </div>
+              </div>
+
+              <h4> ยอดขายประมาณการบริษัทเยอะที่สุด </h4>
+              <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" style="background-color: #d6d6d6;">บริษัท</span>
+                    <input type="text" class="form-control " id="company" readonly>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" style="background-color: #d6d6d6;">ยอดรวม</span>
+                    <input type="text" class="form-control  text-end" id="sumcompany" readonly>
+                    <span class="input-group-text" style="background-color: #d6d6d6;">บาท</span>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+        </div>
+
+        </div>
+    </div>
+  </div>
+</div>
+
+         
+
    
               <div class="chartCard">
                 <div class="chartBox">
@@ -167,8 +215,6 @@
                     <thead class="thead-light">
                       <tr>
                         <th>ลำดับ</th>
-                        <!-- <th>ว.ด.ป.</th> -->
-                        <!-- <th>INV. No.</th> -->
                         <th>Cus. Code</th>
                         <th>Customer</th>
                         <th>สุทธิเงินบาท</th>
@@ -183,37 +229,7 @@
               </div>
 
               <hr>
-              <h4><span id='dayid'></span> </h4>
-              <h4> ยอดซื้อประมาณการทั้งหมด </h4>
-              <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" style="background-color: #d6d6d6;">ยอดรวมสุทธิทั้งหมด</span>
-                    <input type="text" class="form-control  text-end" id="sumtotal" readonly>
-                    <span class="input-group-text" style="background-color: #d6d6d6;">บาท</span>
-                  </div>
-                </div>
-              </div>
-
-              <h4> ยอดซื้อประมาณการบริษัทเยอะที่สุด </h4>
-              <div class="row">
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" style="background-color: #d6d6d6;">บริษัท</span>
-                    <input type="text" class="form-control " id="company" readonly>
-                  </div>
-                </div>
-
-                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" style="background-color: #d6d6d6;">ยอดรวม</span>
-                    <input type="text" class="form-control  text-end" id="sumcompany" readonly>
-                    <span class="input-group-text" style="background-color: #d6d6d6;">บาท</span>
-                  </div>
-                </div>
-              </div>
-
-              <hr>
+          
            
 
             </div>
@@ -553,12 +569,12 @@
         label: 'ยอดซื้อ TOP 10',
         data: Array(10).fill(null), // กำหนดข้อมูลเริ่มต้นให้เป็น null ในอาร์เรย์ขนาด 10 ตัว
         backgroundColor: [
-          'rgba(0, 153, 51,0.2)',
+          'rgba(0, 153, 51,0.5)',
         ],
         borderColor: [
           'rgba(0, 153, 51,1)'
         ],
-        borderWidth: 2
+        borderWidth: 1
       }]
     };
 
@@ -588,8 +604,8 @@
         },
         plugins: {
           title: {
-            display: true,
-            text: 'ยอดซื้อ TOP 10', // ข้อความหัวเรื่อง
+            display: false,
+            text: 'ยอดขาย 10 อันดับ', // ข้อความหัวเรื่อง
             font: {
               size: 20, // ขนาดตัวอักษร
               weight: 'bold' // ความหนา
@@ -628,10 +644,10 @@
     // $("#myChart").css("height", 800);
     if (window.innerWidth <= 768) {
       // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
-      $("#myChart").css("height", "400px");
+      $("#myChart").css("height", "300px");
     } else {
       // ถ้าความกว้างของหน้าจอมากกว่า 600px (สำหรับคอมพิวเตอร์ PC)
-      $("#myChart").css("height", "800px");
+      $("#myChart").css("height", "620px");
     }
 
     $('#backhis').click(function() {
