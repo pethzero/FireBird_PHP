@@ -254,4 +254,20 @@ class CRUDDATA
             return false;
         }
     }
+
+
+    public function autoincrement_sql($databasename,$tablename)
+    {
+        try {
+            $query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '".$databasename."' AND TABLE_NAME = '" . $tablename . "'"; // SERVER
+            $stmt  =  $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return array('result' =>  $row['AUTO_INCREMENT'], 'status' => true);
+        } catch (PDOException $e) {
+            // $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
+            return array('result' => '', 'status' => false);
+            // return false;
+        }
+    }
 }

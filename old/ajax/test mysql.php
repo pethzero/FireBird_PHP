@@ -28,7 +28,7 @@ echo $dataArray["0"]["recno"]; // แสดงค่า RECNO คือ 866
 //     'datebegin' => '2023.08.01',
 //     'dateend' => '2023.08.03'
 // );
-$condition = 'DT000';
+$condition = 'RECNO000';
 
 $sqlQueries = new SQLQueries();
 $sqlQuery = $sqlQueries->scanSQL($queryIdHD);

@@ -419,7 +419,7 @@ $recno = null;
                 formData.append('condition', '001_NEW');
             }
             formData.append('checkRecno', 'CHK_APPPOINTMENT');
-            formData.append('checkCondition', 'DT000');
+            formData.append('checkCondition', 'RECNO000');
             formData.append('tableData', JSON.stringify(tableData));
             formData.append('DataEdit', JSON.stringify(DataEdit));
             formData.append('DataRemove', JSON.stringify(DataRemove));

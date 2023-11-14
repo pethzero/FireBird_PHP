@@ -55,7 +55,6 @@
 
   <section>
     <div class="container-fluid pt-3">
-
       <div class="row pb-3">
         <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
           <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
@@ -192,7 +191,7 @@
                   </div>
 
 
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <!-- <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="input-group mb-3">
                       <span class="input-group-text c_activity">โทรศัทพ์:</span>
                       <input type="text" class="form-control" id="phone" placeholder="โทรศัทพ์" maxlength="150">
@@ -204,87 +203,87 @@
                       <input type="text" class="form-control" id="email" placeholder="อีเมล" maxlength="150">
                     </div>
                   </div>
-                </div>
+                </div> -->
 
-                <div class="row">
-                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                          <div class="input-group mb-3">
+                            <span class="input-group-text c_activity">สถานะ:</span>
+                            <select class="form-select" id="status">
+                              <option value="I" selected>รับแจ้ง</option>
+                              <option value="P">ดูแล</option>
+                              <option value="R">ซ่อม</option>
+                              <option value="A">ปกติ</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                          <div class="input-group mb-3">
+                            <span class="input-group-text c_activity">ความสำคัญ:</span>
+                            <select class="form-select" id="priority">
+                              <option value="N" selected>ทั่วไป</option>
+                              <option value="H">เร่งด่วน</option>
+                              <option value="D">ฉุกเฉิน</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <div class="input-group">
+                        <span class="input-group-text">อาการ:</span>
+                        <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
+                      </div>
+                    </div>
+
                     <div class="row">
                       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">สถานะ:</span>
-                          <select class="form-select" id="status">
-                            <option value="A" selected>ปกติ</option>
-                            <option value="P">ดูแล</option>
-                            <option value="E">เสียหาย</option>
-                          </select>
+                          <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
+                          <input id="pcost" type="number" min=0 class="form-control">
                         </div>
                       </div>
 
                       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">ความสำคัญ:</span>
-                          <select class="form-select" id="priority">
-                            <option value="0" selected>เลือก...</option>
-                            <option value="H">สูง</option>
-                            <option value="N">ปกติ</option>
-                            <option value="L">ต่ำ</option>
+                          <span class="input-group-text c_activity">ค่าเบิก:</span>
+                          <input id="pwithdraw" type="number" min=0 class="form-control">
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="input-group date mb-3" id="datepicker">
+                          <span class="input-group-text c_activity">วันที่นัด:</span>
+                          <input type="text" class="form-control" id="date" placeholder="วันที่นัดดูแลอุปกรณ์" />
+                          <span class="input-group-append">
+                            <span class="input-group-text bg-light d-block">
+                              <i class="fa fa-calendar"></i>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+
+
+                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">ผู้บันทึก:</span>
+                          <select class="form-select" id="owner">
                           </select>
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="row mb-3">
-                    <div class="input-group">
-                      <span class="input-group-text">รายละเอียด:</span>
-                      <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <div class="input-group mb-3">
-                        <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
-                        <input id="pcost" type="number" min=0 class="form-control">
+                    <div class="row">
+                      <div class="">
+                        <label for="fileLabel" class="form-label" id="fileLabel"> </label>
                       </div>
                     </div>
 
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <div class="input-group mb-3">
-                        <span class="input-group-text c_activity">ค่าเบิก:</span>
-                        <input id="pwithdraw" type="number" min=0 class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <div class="input-group date mb-3" id="datepicker">
-                        <span class="input-group-text c_activity">วันที่นัด:</span>
-                        <input type="text" class="form-control" id="date" placeholder="วันที่นัดดูแลอุปกรณ์" />
-                        <span class="input-group-append">
-                          <span class="input-group-text bg-light d-block">
-                            <i class="fa fa-calendar"></i>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-
-
-                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                      <div class="input-group mb-3">
-                        <span class="input-group-text ">ผู้บันทึก:</span>
-                        <select class="form-select" id="owner">
-                        </select>
-                      </div>
-                    </div>
                   </div>
-
-                  <div class="row">
-                    <div class="">
-                      <label for="fileLabel" class="form-label" id="fileLabel"> </label>
-                    </div>
-                  </div>
-
-                </div>
             </section>
           </div>
 
@@ -296,13 +295,10 @@
       </div>
     </div>
     </div>
-
-    <!-- <div class="loading"> -->
-
 </body>
-<?php include("0_footerjs.php"); ?>
-<script src="js/dtcolumn.js"></script>
-
+<?php include("0_footerjs_piority.php"); ?>
+<script src="js/systemdtcolum.js"></script>
+<script src="js/systemzero.js"></script>
 
 <script>
   $(document).ready(function() {
@@ -315,7 +311,6 @@
     });
 
     var recno = null;
-    var qid = 'SEL_NOTIMAINTEN';
     var startd = null;
     var tablejsondata;
     var selectedRow = null;
@@ -326,87 +321,61 @@
     var recno_nowner = "";
     var recno_edit;
     var recno_equipment = 0;
-    var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
-    var encodedURL_Insert = 'ajax/ajaxinsertnew.php';
-    var encodedURL_Update = 'ajax/ajaxupdatenew.php';
 
+    var onprocess = true;
+    database_server()
+    async function database_server() {
+      try {
+        const jsonResponse = await fetch('ajax/fecth_get_allwarning.php', {
+          method: 'POST',
+          body: set_formdata('select_equpiment'),
+        });
 
-    $(function() {
-      select2_owner_list();
-      select2_equipment_list();
-
-      $("#date_search").datepicker({
-        format: "dd/mm/yyyy",
-        clearBtn: true,
-        todayHighlight: true,
-        autoclose: true
-      });
-    });
-
-
-    function matchCustom_ajax(params, data) {
-      if ($.trim(params.term) === '') {
-        return data;
-      }
-      var inputText = params.term.toLowerCase().replace(/\s/g, '');
-      var optionText = data.text.toLowerCase().replace(/\s/g, '');
-
-      var optionTitle = data.title.toLowerCase().replace(/\s/g, '');
-      if (typeof data.value === 'string') {
-        // ทำสิ่งที่คุณต้องการเมื่อ data.value เป็น string
-        var optionValue = data.value.toLowerCase().replace(/\s/g, '');
-        if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1 || optionTitle.indexOf(inputText) > -1) {
-          return data;
+        if (!jsonResponse.ok) {
+          $('.loading').hide();
+          throw new Error('Error sending data to server');
         }
-      } else {
-        if (optionText.indexOf(inputText) > -1 || optionTitle.indexOf(inputText) > -1) {
-          return data;
+
+        const jsonDataMain = await jsonResponse.json();
+        console.log(jsonDataMain)
+        await detailtable.clear().rows.add(jsonDataMain.datamain).draw();
+
+        if (onprocess) {
+          empl_list = jsonDataMain.dataempl;
+          euqip_list = jsonDataMain.dataeuip;
+          const dataProcessor = new DataProcessor();
+          const processedDataEmpl = await dataProcessor.process(empl_list, 'RECNO', 'EMPNO', 'EMPNAME');
+          const processedDataEquip = await dataProcessor.process(euqip_list, 'RECNO', 'CODE', 'NAME');
+          const select2Creator = new Select2Creator();
+          await select2Creator.createSelect2('#owner', processedDataEmpl, 'เลือก', true);
+          await select2Creator.createSelect2('#equipment', processedDataEquip, 'เลือก', true);
         }
-        // ทำสิ่งที่คุณต้องการเมื่อ data.value ไม่ใช่ string
+        onprocess = false;
+        $('.loading').hide();
+      } catch (error) {
+        console.error(error);
       }
-      return null;
     }
+
+
+
+
+
 
     //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
     $('#new').click(function() {
-      // window.location = 'dataactivity.php';
       window.location = 'dataequipment.php';
     });
 
-    // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
-    var encodeData = "<?php echo $csrfToken; ?>";
-
-    function secertkey() {
-      return encodeData;
-    }
-
-    var encodedURL = encodeURIComponent('ajax_select_sql_mysql.php');
     var data_array = [];
-    var table = $('#table_datahd').DataTable({
-      ajax: {
-        url: encodedURL,
-        data: function(d) {
-          d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
-          d.params = null;
-          // d.params = {
-          //   // RECNO:recno,
-          //   STARTD: startd,
-          // };
-          d.condition = '';
-          d.sqlprotect = encodeData;
-        },
-        dataSrc: function(json) {
-          // console.log(json)
-          tablejsondata = json.data;
-          return json.data;
-        }
-      },
+    var detailtable = $('#table_datahd').DataTable({
       scrollX: true,
-      columns: dtcolumn['DATA_NOTIMAINTEN'],
-      columnDefs: [{
-          className: 'noVis',
-          targets: [0]
-        },
+      columns: dtcolumn('DATA_NOTIMAINTEN', null),
+      columnDefs: [
+        // {
+        //   className: 'noVis',
+        //   targets: [0]
+        // },
         // {
         //   className:'dt-center',
         //   targets: [2]
@@ -419,32 +388,29 @@
       order: [
         [0, 'desc'],
       ],
-      dom: 'Bfrtip',
-      buttons: [{
-          extend: 'colvis',
-          text: 'Show/Hide',
-          columns: ':not(.noVis)',
-          // columnText: function ( dt, idx, title ) {
-          // return (idx+1)+': '+title;
-          // }
-        },
-        //  'csv', 
-        {
-          extend: 'excelHtml5',
-          title: 'Data export',
-          exportOptions: {
-            // columns: [ 2, 3,4,5,6,7,8,9,10 ]
-            columns: [1, 2]
-          }
-        }
+      dom: 'frtip',
+      buttons: [
+        // {
+        //   extend: 'colvis',
+        //   text: 'Show/Hide',
+        //   columns: ':not(.noVis)',
+        //   // columnText: function ( dt, idx, title ) {
+        //   // return (idx+1)+': '+title;
+        //   // }
+        // },
+        // //  'csv', 
+        // {
+        //   extend: 'excelHtml5',
+        //   title: 'Data export',
+        //   exportOptions: {
+        //     // columns: [ 2, 3,4,5,6,7,8,9,10 ]
+        //     columns: [1, 2]
+        //   }
+        // }
       ],
 
-      initComplete: function(settings, json) {
-        // $('.loading').hide();
-      },
-      createdRow: function(row, data, dataIndex) {
-
-      },
+      initComplete: function(settings, json) {},
+      createdRow: function(row, data, dataIndex) {},
       drawCallback: function(settings) {
 
       },
@@ -469,10 +435,17 @@
       var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
       $('#ok').removeClass('btn-primary').addClass('btn-danger').text('บันทึกแก้ไข');
       $('#story').removeClass('bg-secondary').addClass('bg-danger').text('แก้ไข');
-      // recno_edit = rowData.RECNO;
-      datasave = 'edit';
-      search_equipment(rowData.RECNO);
-      $("#myModal").modal("show");
+      //
+      datasave = 'update';
+      recno_edit = rowData.RECNO;
+      CRUDSQL('ajax/fecth_item.php', 'select')
+        .then(() => {
+          console.log('end')
+          $("#myModal").modal("show");
+        })
+        .catch(error => {
+          console.error('เกิดข้อผิดพลาดใน CRUDSQL:', error);
+        });
 
     });
 
@@ -519,30 +492,25 @@
       // <button id="ok" type="submit" class="btn btn-primary">บันทึก</button>
 
       datasave = 'save';
+      recno_edit = null;
+
       recno_owner = 0;
       recno_nowner = '';
       recno_equipment = 0;
       $uploadolddb = '';
       $('#name').val('');
       $('#equipment').val(0).trigger('change');
-      // $('#type').val('');
-      // $('#code').val('');
-      // $('#model').val('');
-      // $('#cust').val('');
       $('#cont').val('');
       $('#phone').val('');
       $('#email').val('');
-      // $('#area').val('');
-      // $('#docno').val('');
-      $('#status').val('A');
-      $('#priority').val('0');
+      $('#status').val('I');
+      $('#priority').val('N');
       $('#pcost').val(0);
       $('#pwithdraw').val(0);
       $('#detail').val('');
       $('#owner').val(0).trigger('change');
       $('#date').val('');
-      // $('#date_first').val('');
-      // $('#date_last').val('');
+
       // $('#fileToUpload').val('');
       $("#myModal").modal("show"); // เปิดกล่องโมดอล
     });
@@ -557,111 +525,10 @@
 
 
     ///////////////////////////////////////////////////////////////// SELECT DATA //////////////////////////////////////////////////////////////////////////////////////////
-    function select2_owner_list() {
-      $.ajax({
-        url: encodedURL_Select,
-        data: {
-          queryId: 'EMPL_LIST',
-          params: null,
-          condition: 'mix',
-        },
-        dataSrc: '',
-        success: function(response) {
-          // console.log(response)
-          owner_list = JSON.parse(response).data;
-          data_owner_name = data_json(owner_list, 'RECNO', 'EMPNO', 'EMPNAME', 'เลือกชื่อผู้รับผิดชอบงาน...'); // กำหนดค่าใหม่ให้กับ data_owner_name
-          console.log(data_owner_name)
-          createSelect2('#owner', data_owner_name, 'เลือกชื่อผู้รับผิดชอบงาน...')
-          owner_process = 1;
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
-      });
-    }
 
-    function select2_equipment_list() {
-      $.ajax({
-        url: encodedURL_Select,
-        data: {
-          queryId: 'EQUIPMENT_LIST',
-          params: null,
-          condition: 'mix',
-        },
-        dataSrc: '',
-        success: function(response) {
-          // console.log(response)
-          equipment_list = JSON.parse(response).data;
-          data_equipment_name = data_json(equipment_list, 'RECNO', 'CODE', 'NAME', 'เลือกอุปกรณ์...'); // กำหนดค่าใหม่ให้กับ data_owner_name
-          console.log(data_equipment_name)
-          createSelect2('#equipment', data_equipment_name, 'เลือกอุปกรณ์...')
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
-        }
-      });
-    }
-
-    function createSelect2(selector, data, gettextselect) {
-      return $(selector).select2({
-        data: data,
-        theme: 'bootstrap-5',
-        dropdownParent: $('#myModal'),
-        matcher: matchCustom_ajax,
-        templateSelection: function(selected) {
-          if (selected.id !== '') {
-            if (selected.id == 0) {
-              return gettextselect;
-            }
-            return selected.text;
-          }
-          return '';
-        },
-        templateResult: function(result) {
-          if (!result.id) {
-            return result.text;
-          }
-          var $result = $('<span></span>');
-          $result.text("รหัส" + result.title + ":" + result.text);
-          if (result.id == 0) {
-            $result.text(gettextselect);
-            return $result;
-          } else {
-            return $result;
-          }
-        }
-      });
-    }
-
-    function data_json(data_list, recno_key, code_key, name_key, gettextselect) {
-      var target_list = [{
-        "id": 0,
-        "text": gettextselect,
-        "value": "0",
-        "title": ""
-      }];
-      var existingCodes = {};
-      for (var i = 0; i < data_list.length; i++) {
-        var select2_recno = data_list[i][recno_key];
-        var select2_code = data_list[i][code_key];
-        var select2_name = data_list[i][name_key];
-        if (select2_name != '') {
-          if (!existingCodes[select2_code]) {
-            target_list.push({
-              "id": parseInt(select2_recno),
-              "text": select2_name,
-              "value": select2_recno,
-              "title": select2_code,
-            });
-            existingCodes[select2_code] = true;
-          }
-        }
-      }
-      return target_list; // คืนค่า target_list กลับไป
-    }
 
     //////////////////////////////////////////////////////////////// CHANGE //////////////////////////////////////////////////////////////// 
-    var owner_process = 0;
+
     $("#owner").change(function() {
       recno_owner = $(this).select2('data')[0].id;
       if (recno_owner == 0) {
@@ -669,24 +536,22 @@
       } else {
         recno_nowner = $(this).select2('data')[0].text;
       }
+      console.log(recno_owner)
     });
 
-
     $("#equipment").change(function() {
-      // console.log($(this).select2('data')[0].value);
-      // recno_equipment = $(this).select2('data')[0].id;
-      // if (recno_owner == -1) {
-      //   recno_nowner = '';
-      // } else {
-      //   recno_nowner = $(this).select2('data')[0].text;
-      // }
+      recno_equipment = $(this).select2('data')[0].id;
+      if (recno_equipment == 0) {
+        recno_equipment = '';
+      } else {
+        recno_equipment = $(this).select2('data')[0].text;
+      }
     });
 
     //////////////////////////////////////////////////////////////// SAVE ///////////////////////////////////////////////////////////////
 
     $("#idForm").submit(function(event) {
       event.preventDefault();
-      // console.log('xx')
       // if ($('#name').val().trim() == '') {
       //   Swal.fire(
       //     'กรุณาเลือกชื่อใส่ชื่ออุปกรณ์',
@@ -701,119 +566,47 @@
     var paramhd;
     /////////////////////////////////////////////////////////////// INSERT AND UPDATE ///////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////// SAVE //////////////////////////////////////////////////////////////
-    function SaveData() {
-      $.ajax({
-        url: encodedURL_Insert,
-        type: "POST",
-        data: set_formdata('save'),
-        dataSrc: '',
-        contentType: false,
-        processData: false,
-        cache: false,
-        beforeSend: function() {},
-        complete: function() {},
-        success: function(response) {
-          // console.log(response);
-          // save_json = JSON.parse(response);
-          save_json = JSON.parse(response);
-          console.log(save_json);
-          table.ajax.reload();
-          if (save_json.status == 'success') {
-            Swal.fire({
-              title: "บันทึกแล้ว",
-              text: "ข้อความที่คุณต้องการแสดง",
-              icon: "success",
-              buttons: ["OK"],
-              dangerMode: true,
-            }).then(function(willRedirect) {
-              // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
-              // var newData = {
-              //   RECNO: save_json.autoIncrementValue, // หรือค่า recno ที่คุณต้องการกำหน
-              //   DOCNO: String((new Date().getFullYear() + 543) % 100) + '/' + String(3).padStart(4, '0'),
-              //   NAME: '',
-              //   CONTNAME:'',
-              //   STATUS:'',
-              //   PRIORITY:'',
-              //   WARNINGDATE:''
-              // }
-              // table.row.add(newData).draw(); // เพิ่มแถวใหม่ใน DataTable และวาดใหม่
-              // ซ่อน Modal หลังจากบันทึก
-              if (willRedirect) {
-                $('#myModal').modal('hide');
-              }
-            });
-            setTimeout(function() {
-              swal.close(); // ปิด SweetAlert
-              $('#myModal').modal('hide');
-            }, 2000);
-            /////////////////////////////////
-          } else {
-            Swal.fire(
-              'เกิดปัญหาในการบันทึก',
-              JSON.parse(response).message,
-              'error'
-            )
-          }
-        },
-        error: function(xhr, status, error) {
-          console.log('error')
-          console.error(error);
+    const CRUDSQL = async (url, status_sql) => {
+      const apiUrl = url;
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          body: set_formdata(status_sql), // ใช้ FormData เป็นข้อมูลที่จะส่ง
+        });
+
+        if (!response.ok) {
+          throw new Error('เกิดข้อผิดพลาดในการส่งข้อมูล');
         }
-      });
-    }
-    ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
 
-    function UpdateData() {
-      $.ajax({
-        url: encodedURL_Update,
-        type: "POST",
-        data: set_formdata('edit'),
-        dataSrc: '',
-        contentType: false,
-        processData: false,
-        cache: false,
-        beforeSend: function() {},
-        complete: function() {},
-        success: function(response) {
-          // console.log(response);
-          // save_json = JSON.parse(response);
-          save_json = JSON.parse(response);
-          console.log(save_json);
-          table.ajax.reload();
-          if (save_json.status == 'success') {
-            // console.log(paramhd)
-            console.log('success')
-
-            Swal.fire({
-              title: "บันทึกแล้ว",
-              text: "ข้อความที่คุณต้องการแสดง",
-              icon: "success",
-              buttons: ["OK"],
-              dangerMode: true,
-            }).then(function(willRedirect) {
-              // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
-              if (willRedirect) {
-                // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
-                $('#myModal').modal('hide');
-              }
-            });
-            /////////////////////////////////
-          } else {
-            Swal.fire(
-              'เกิดปัญหาในการบันทึก',
-              // response.message,
-              JSON.parse(response).message,
-              'error'
-            )
-          }
-        },
-        error: function(xhr, status, error) {
-          console.log('error')
-          console.error(error);
+        const data = await response.json();
+        console.log(data)
+        if (status_sql === 'save') {
+          await Swal.fire({
+            title: "บันทึกแล้ว",
+            text: "ข้อมูลถูกบันทึก",
+            icon: "success",
+            buttons: ["OK"],
+            dangerMode: true,
+          });
+          await database_server();
+        } else if (status_sql === 'select') {
+          await search_equipment(data.datamain);
+        } else if (status_sql === 'update') {
+          await Swal.fire({
+            title: "แก้ไขแล้ว",
+            text: "ข้อมูลถูกแก้ไข",
+            icon: "success",
+            buttons: ["OK"],
+            dangerMode: true,
+          });
+          await database_server();
         }
-      });
-    }
-
+      } catch (error) {
+        // จัดการข้อผิดพลาด
+        console.error(error);
+      }
+    };
+    // ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
     var modify = 'F';
     ////////////////////////////////////////////////////////////// set_formdata //////////////////////////////////////////////////////////////
     function set_formdata(conditionsformdata) {
@@ -827,73 +620,85 @@
       //   modify = 'T';
       // } else {
       //   modify = 'F';
+      //   formData.append('fileToUpload', undefined);
       // }
-      formData.append('fileToUpload', '');
-      $uploadolddb = '';
-      // else
-      // {
-      // }
-      /////////////
 
       var warningValue = $('#date').val();
-      // var firstUsageValue = $('#date_first').val();
-      // var lastUsageValue = $('#date_last').val();
+      // var purchaseValue = $('#date').val();
+      var firstUsageValue = $('#date_first').val();
+      var lastUsageValue = $('#date_last').val();
 
       /// id ,param ///
       paramhd = {
-        RECNO: recno_edit,
-        NAME: $('#name').val(),
-        EQUIPMENT: $('#equipment').val(),
-        // CODE: $('#code').val(),
-        // MODEL: $('#model').val(),
-        // CUSTNAME: $('#cust').val(),
-        CONTNAME: $('#cont').val(),
-        PHONE: $('#phone').val(),
-        EMAIL: $('#email').val(),
-        // AREA: $('#area').val(),
-        // DOCINFO: $('#docno').val(),
-        STATUS: $('#status').val(),
-        PRIORITY: $('#priority').val(),
-        PRICECOST: $('#pcost').val(),
-        PRICEPWITHDRAW: $('#pwithdraw').val(),
-        // BROKENTIMES: '',
-        DETAILS: $('#detail').val(),
-        WARNINGDATE: warningValue ? moment(warningValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        // FIRSTUSAGE: firstUsageValue ? moment(firstUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        // LASTUSAGE: lastUsageValue ? moment(lastUsageValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-        // FIRSTUSAGE: moment($('#date_first').val(), 'DD/MM/YYYY').format('YYYY-MM-DD'),
-        RECORDERNO: recno_owner,
-        RECORDERNAME: recno_nowner,
+        recno: recno_edit,
+        name: $('#name').val(),
+        equipment: $('#equipment').val(),
+        contname: $('#cont').val(),
+        phone: $('#phone').val(),
+        email: $('#email').val(),
+        status: $('#status').val(),
+        priority: $('#priority').val(),
+        pricecost: $('#pcost').val(),
+        pricepwithdraw: $('#pwithdraw').val(),
+        details: $('#detail').val(),
+        warningdate: warningValue ? moment(warningValue, 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+        recorderno: recno_owner,
+        recordername: recno_nowner,
       };
-      // console.log(paramhd);
-      // var paramhd = null;
-      // เพิ่มอาร์เรย์ paramhd เข้าไปใน FormData และแปลงเป็น JSON ก่อน
 
-      if (conditionsformdata == "save") {
-        // ประมวลผลเพิ่มข้อมูล
-        // process to insert data
-        formData.append('queryIdHD', 'IND_NOTIMAINTEN');
-
-      } else if (conditionsformdata == "delete") {
-        // ประมวลผลลบข้อมูล
-        // process to delete data
+      if (conditionsformdata == "select_equpiment") {
+        formData.append('queryId001', 'SEL_NOTIMAINTEN');
+        formData.append('queryId002', 'SEL_EQUIPMENT_DR');
+        formData.append('queryId003', 'EMPL_LIST');
+        formData.append('condition', '000');
+        formData.append('tableData', JSON.stringify([]));
+      } else if (conditionsformdata == "save") {
+        formData.append('queryId001', 'IND_NOTIMAINTEN');
+        formData.append('condition', '003_INNOTIMATANCE');
+        formData.append('tableData', JSON.stringify([paramhd]));
+      } else if (conditionsformdata == "select") {
+        formData.append('queryIdHD', 'EDSEL_NOTIMAINTEN');
+        formData.append('condition', 'RECNO000');
+        formData.append('tableData', JSON.stringify([paramhd]));
+      } else if (conditionsformdata == "update") {
+        formData.append('queryIdHD', 'UPD_NOTIMAINTEN');
+        formData.append('condition', '003_UPNOTIMATANCE');
+        // formData.append('modify', modify);
+        formData.append('tableData', JSON.stringify([paramhd]));
+        // formData.append('uploadolddb', uploadolddb);
       } else {
         formData.append('queryIdHD', 'UPD_NOTIMAINTEN');
-        // กรณีอื่น ๆ
-        // other cases
       }
-      formData.append('queryIdDT', '');
-      formData.append('condition', 'I_ID');
-      formData.append('uploadnamedb', 'notimainten');
-      formData.append('uploadolddb', $uploadolddb);
-      formData.append('modify', modify);
 
-      formData.append('paramhd', JSON.stringify(paramhd));
+
+      // formData.append('queryIdDT', '');
+      // formData.append('condition', 'I_ID');
+      // formData.append('uploadnamedb', 'notimainten');
+      // formData.append('uploadolddb', $uploadolddb);
+      // formData.append('modify', modify);
+
+      // formData.append('paramhd', JSON.stringify(paramhd));
       ////////////////
       return formData;
     }
 
     ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
+    class CRUDManager {
+      constructor(url, action) {
+        this.url = url;
+        this.action = action;
+      }
+
+      async performCRUD() {
+        try {
+          await CRUDSQL(this.url, this.action);
+          $("#myModal").modal("hide");
+        } catch (error) {
+          console.error('เกิดข้อผิดพลาดใน CRUDSQL:', error);
+        }
+      }
+    }
+
     function AlertSave() {
       Swal.fire({
         title: 'คุณแน่ใจแล้วใช่ไหม',
@@ -911,82 +716,36 @@
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
-          if (datasave == "save") {
-            SaveData()
-          } else {
-            UpdateData()
-          }
-
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
+          const crudManager = new CRUDManager(
+            datasave === "save" ? 'ajax/fecth_post_innotimainten.php' : 'ajax/fecth_post_upnotimainten.php', datasave === "save" ? 'save' : 'update'
+          );
+          crudManager.performCRUD();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire(
             'ยกเลิก',
             'ยังไม่มีการบันทึก',
             'error'
-          )
-        }
-      })
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    function search_equipment(data_equipment) {
-      $.ajax({
-        url: encodedURL_Select,
-        data: {
-          queryId: 'EDSEL_NOTIMAINTEN',
-          params: {
-            RECNO: data_equipment
-          },
-          condition: 'mix',
-        },
-        dataSrc: '',
-        success: function(response) {
-          // console.log(response)
-          json_equipment = JSON.parse(response).data;
-          // console.log(json_equipment)
-          // console.log(json_equipment[0].NAME)
-          recno_edit = json_equipment[0].RECNO;
-          $('#name').val(json_equipment[0].NAME);
-          // $('#type').val(json_equipment[0].TYPE);
-          // $('#code').val(json_equipment[0].CODE);
-          // $('#model').val(json_equipment[0].MODEL);
-          $('#cust').val(json_equipment[0].CUSTNAME);
-          $('#cont').val(json_equipment[0].CONTNAME);
-          $('#phone').val(json_equipment[0].PHONE);
-          $('#email').val(json_equipment[0].EMAIL);
-          // $('#area').val(json_equipment[0].AREA);
-          // $('#docno').val(json_equipment[0].DOCINFO);
-          $('#status').val(json_equipment[0].STATUS);
-          $('#priority').val(json_equipment[0].PRIORITY);
-          $('#pcost').val(json_equipment[0].PRICECOST);
-          $('#pwithdraw').val(json_equipment[0].PRICEPWITHDRAW);
-          $('#detail').val(json_equipment[0].DETAILS);
-          $('#owner').val(json_equipment[0].RECORDERNO).trigger('change');
-          $('#equipment').val(json_equipment[0].EQUIPMENT).trigger('change');
-
-          // console.log(json_equipment[0].RECORDERNO)
-          // console.log(json_equipment[0].EQUIPMENT)
-          // $('#fileToUpload').val('');
-          $('#date').val(moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') : '');
-          // $('#date_first').val(moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].FIRSTUSAGE).format('DD/MM/YYYY') : '');
-          // $('#date_last').val(moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].LASTUSAGE).format('DD/MM/YYYY') : '');
-
-
-          // owner_process = 1;
-          // if (json_equipment[0].UPLOAD) {
-          //   $uploadolddb = json_equipment[0].UPLOAD;
-          //   $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: <a id="downloadLink" href="uploads/' + json_equipment[0].UPLOAD + '" download>Download Here</a>');
-          // } else {
-          //   $uploadolddb = '';
-          //   $("#fileLabel").html('โหลดไฟล์แนบเอกสาร: ไม่มี');
-          // }
-
-        },
-        error: function(xhr, status, error) {
-          console.error(error);
+          );
         }
       });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function search_equipment(json_equipment) {
+      // console.log(json_equipment)
+      recno_edit = json_equipment[0].RECNO;
+      $('#name').val(json_equipment[0].NAME);
+      $('#cust').val(json_equipment[0].CUSTNAME);
+      $('#cont').val(json_equipment[0].CONTNAME);
+      $('#phone').val(json_equipment[0].PHONE);
+      $('#email').val(json_equipment[0].EMAIL);
+      $('#status').val(json_equipment[0].STATUS);
+      $('#priority').val(json_equipment[0].PRIORITY);
+      $('#pcost').val(json_equipment[0].PRICECOST);
+      $('#pwithdraw').val(json_equipment[0].PRICEPWITHDRAW);
+      $('#detail').val(json_equipment[0].DETAILS);
+      $('#owner').val(json_equipment[0].RECORDERNO).trigger('change');
+      $('#equipment').val(json_equipment[0].EQUIPMENT).trigger('change');
+      $('#date').val(moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_equipment[0].WARNINGDATE).format('DD/MM/YYYY') : '');
     }
 
 

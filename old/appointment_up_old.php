@@ -607,10 +607,10 @@ $recno = null;
             paramhd = {};
             if (conditionsformdata == "update") {
                 formData.append('queryIdHD', 'UPD_APPPOINTMENT_NEW');
-                formData.append('condition', '002_NEW');
+                formData.append('condition', '002_UPAPP');
             } else if (conditionsformdata == "delete") {
                 formData.append('queryIdHD', 'DLT_APPPOINTMENT');
-                formData.append('condition', 'DT000');
+                formData.append('condition', 'RECNO000');
             } else if (conditionsformdata == "select") {
                 formData.append('queryIdHD', 'SELECT_APPPOINTMENT');
                 formData.append('condition', 'NULL');
@@ -619,7 +619,7 @@ $recno = null;
             }
 
             formData.append('checkRecno', 'CHK_APPPOINTMENT');
-            formData.append('checkCondition', 'DT000');
+            formData.append('checkCondition', 'RECNO000');
             formData.append('tableData', JSON.stringify(tableData));
             formData.append('DataEdit', JSON.stringify(DataEdit));
             formData.append('DataRemove', JSON.stringify(DataRemove));

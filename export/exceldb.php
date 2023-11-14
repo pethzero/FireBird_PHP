@@ -71,7 +71,7 @@ class CRUDDATAEXCELFIREBIRD
     public function checkExists($data, $sqlQuery, $condition)
     {
         $sqlQuery = "SELECT COUNT(*) as count FROM appointment WHERE RECNO = :recno";
-        // $condition = 'DT000';
+        // $condition = 'RECNO000';
         try {
             $stmt = $this->conn->prepare($sqlQuery);
             bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData

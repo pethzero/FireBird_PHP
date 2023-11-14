@@ -2,7 +2,7 @@
 class bindParamData {
     public static function bindParams($stmt, $data, $condition) {
         switch ($condition) {
-            case 'DT000':
+            case 'RECNO000':
                 $stmt->bindParam(':recno', $data['recno']);
                 break;
             case '001':

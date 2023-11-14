@@ -117,9 +117,7 @@ const customModelRender = (data, type, row,idmodel,istatus) => {
 };
 
 const customButtonEdit = (data, type,row,idclass,idname) => {
-  // return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}">${idname}</button>`;
   return `<button class="btn btn-danger btn-sm ${idclass}" id="${row['RECNO']}"><i class="far fa-edit"></i></button>`;
-  // return '';
 };
 
 
