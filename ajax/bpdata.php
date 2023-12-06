@@ -78,27 +78,45 @@ class bindParamData
                 break;
             case '003_INNOTIMATANCE':
             case '003_UPNOTIMATANCE':
-                $stmt->bindParam(':name',$data['name']); 
-                $stmt->bindParam(':contname',$data['contname']); 
-                $stmt->bindParam(':equipment',$data['equipment']); 
-                $stmt->bindParam(':status',$data['status']); 
-                $stmt->bindParam(':priority',$data['priority']); 
-                $stmt->bindParam(':pricecost',$data['pricecost']); 
-                $stmt->bindParam(':pricepwithdraw',$data['pricepwithdraw']); 
-                $stmt->bindParam(':warningdate',$data['warningdate']); 
-                $stmt->bindParam(':details',$data['details']); 
-                $stmt->bindParam(':recorderno',$data['recorderno']); 
-                $stmt->bindParam(':recordername',$data['recordername']);
+                $stmt->bindParam(':name', $data['name']);
+                $stmt->bindParam(':contname', $data['contname']);
+                $stmt->bindParam(':equipment', $data['equipment']);
+                $stmt->bindParam(':status', $data['status']);
+                $stmt->bindParam(':priority', $data['priority']);
+                $stmt->bindParam(':pricecost', $data['pricecost']);
+                $stmt->bindParam(':pricepwithdraw', $data['pricepwithdraw']);
+                $stmt->bindParam(':warningdate', $data['warningdate']);
+                $stmt->bindParam(':details', $data['details']);
+                $stmt->bindParam(':recorderno', $data['recorderno']);
+                $stmt->bindParam(':recordername', $data['recordername']);
                 if ($condition === '003_UPNOTIMATANCE') {
                     $stmt->bindParam(':recno', $data['recno']);
                 } else {
-                    $stmt->bindParam(':docno',$data['docno']); 
+                    $stmt->bindParam(':docno', $data['docno']);
                 }
+                break;
+            case '003_INDRAWING':
+                $stmt->bindParam(':customer', $data['customer']);
+                $stmt->bindParam(':drawno', $data['drawno']);
+                $stmt->bindParam(':revno', $data['revno']);
+                $stmt->bindParam(':partname', $data['partname']);
+                $stmt->bindParam(':recdate', $data['recdate']);
+                $stmt->bindParam(':remark', $data['remark']);
+                // $stmt->bindParam(':modifiedby',$data['modifiedby']);
+                $stmt->bindParam(':modifiedby', $data['modifiedby']);
                 break;
             case 'DATEBE':
                 $stmt->bindParam(':ABEGIN', $data['datebegin']);
                 $stmt->bindParam(':AEND', $data['dateend']);
                 break;
+            case 'DATEPERIOD':
+                $stmt->bindParam(':DATEPERIOD', $data['dateperiod']);
+                break;
+            case 'TYPE':
+                $stmt->bindParam(':type', $data['type']);
+                break;
+
+
                 // เพิ่มเงื่อนไขเพิ่มเติมตามความต้องการ
             default:
                 // ไม่มีเงื่อนไขที่ตรงกัน

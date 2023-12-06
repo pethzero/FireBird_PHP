@@ -281,6 +281,32 @@
 <script>
     $(document).ready(function() {
         var userlevel = "<?php echo isset($_SESSION['USERLEVEL']) ? $_SESSION['USERLEVEL'] : ''; ?>";
+
+        // // รับ element input จาก DOM
+        // var fileInput = document.getElementById('fileToUpload');
+
+        // // เพิ่ม event listener เมื่อมีการเลือกไฟล์
+        // fileInput.addEventListener('change', function(event) {
+        //   var file = event.target.files[0]; // ไฟล์ที่ถูกเลือก
+
+        //   // ตรวจสอบขนาดไฟล์ (10MB)
+        //   if (file.size > 10 * 1024 * 1024) {
+        //     alert('ไฟล์ขนาดเกิน 10MB ไม่ได้รับอนุญาต');
+        //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
+        //     return;
+        //   }
+
+        //   // ตรวจสอบประเภทไฟล์ (pdf, png)
+        //   var allowedTypes = ['application/pdf', 'image/jpg', 'image/png', 'image/jpeg', 'image/gif'];
+        //   if (!allowedTypes.includes(file.type)) {
+        //     alert('รูปแบบไฟล์ไม่ได้รับอนุญาต (รองรับเฉพาะ PDF , JPG, PNG , และ GIF)');
+        //     fileInput.value = ''; // ล้างค่า input ให้สามารถเลือกไฟล์ใหม่ได้
+        //     return;
+        //   }
+        //   // ทำสิ่งที่ต้องการเมื่อไฟล์ผ่านการตรวจสอบ
+        //   // ตัวอย่างเช่น ส่งไฟล์ไปยังเซิร์ฟเวอร์ หรือประมวลผล
+        // });
+
         /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
         $(window).keydown(function(event) {
             if (event.keyCode == 13 && !$(event.target).is('textarea')) {
@@ -290,23 +316,25 @@
         });
 
         var recno = null;
-        // var qid = 'SEL_DRAWING';
+        var qid = 'SEL_DRAWING';
+        var startd = null;
+        var tablejsondata;
         var selectedRow = null;
         var selectedRecno = null;
         var datasave = '';
 
-        // var recno_owner = 0;
-        // var recno_nowner = "";
+        var recno_owner = 0;
+        var recno_nowner = "";
 
-        // var recno_cust = 0;
-        // var recno_namecust = "";
+        var recno_cust = 0;
+        var recno_namecust = "";
 
-        // var recno_cont = 0;
-        // var recno_namecont = "";
+        var recno_cont = 0;
+        var recno_namecont = "";
 
         var recno_edit;
-        // var recno_equipment = 0;
-        // var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
+        var recno_equipment = 0;
+        var encodedURL_Select = encodeURIComponent('ajax_select_sql_mysql.php');
         var encodedURL_Insert = 'ajax/ajaxinsertnew.php';
         var encodedURL_Update = 'ajax/ajaxupdatenew.php';
         var encodedURL_Modifi = 'ajax/ajaxmodifi.php';
@@ -324,6 +352,29 @@
             });
         });
 
+
+        function matchCustom_ajax(params, data) {
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+            var inputText = params.term.toLowerCase().replace(/\s/g, '');
+            var optionText = data.text.toLowerCase().replace(/\s/g, '');
+
+            var optionTitle = data.title.toLowerCase().replace(/\s/g, '');
+            if (typeof data.value === 'string') {
+                // ทำสิ่งที่คุณต้องการเมื่อ data.value เป็น string
+                var optionValue = data.value.toLowerCase().replace(/\s/g, '');
+                if (optionText.indexOf(inputText) > -1 || optionValue.indexOf(inputText) > -1 || optionTitle.indexOf(inputText) > -1) {
+                    return data;
+                }
+            } else {
+                if (optionText.indexOf(inputText) > -1 || optionTitle.indexOf(inputText) > -1) {
+                    return data;
+                }
+                // ทำสิ่งที่คุณต้องการเมื่อ data.value ไม่ใช่ string
+            }
+            return null;
+        }
 
         //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
         // console.log(userlevel)
@@ -343,32 +394,32 @@
 
 
         // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
-        // var encodeData = "<?php echo $csrfToken; ?>";
+        var encodeData = "<?php echo $csrfToken; ?>";
 
-        // function secertkey() {
-        //     return encodeData;
-        // }
+        function secertkey() {
+            return encodeData;
+        }
 
         var encodedURL = encodeURIComponent('ajax_select_sql_mysql.php');
         var data_array = [];
-        var detailtable = $('#table_datahd').DataTable({
-            // ajax: {
-            //     url: encodedURL,
-            //     data: function(d) {
-            //         d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
-            //         d.params = null;
-            //         // d.params = {
-            //         //   // RECNO:recno,
-            //         //   STARTD: startd,
-            //         // };
-            //         d.condition = '';
-            //         d.sqlprotect = encodeData;
-            //     },
-            //     dataSrc: function(json) {
-            //         tablejsondata = json.data;
-            //         return json.data;
-            //     }
-            // },
+        var table = $('#table_datahd').DataTable({
+            ajax: {
+                url: encodedURL,
+                data: function(d) {
+                    d.queryId = qid; // ส่งค่าเป็นพารามิเตอร์ queryId
+                    d.params = null;
+                    // d.params = {
+                    //   // RECNO:recno,
+                    //   STARTD: startd,
+                    // };
+                    d.condition = '';
+                    d.sqlprotect = encodeData;
+                },
+                dataSrc: function(json) {
+                    tablejsondata = json.data;
+                    return json.data;
+                }
+            },
             scrollX: true,
             columns: [{
                     data: 'RECNO'
@@ -418,10 +469,28 @@
                     className: 'dt-center',
                     targets: [3]
                 }
+                //   {
+                //     className: 'dt-right',
+                //     targets: [8, 9]
+                //   },
+                //   {
+                //     "orderable": false,
+                //     "targets": 1
+                //   },
+                //   {
+                //     type: 'currency',
+                //     targets: 8
+                //   },
+
+                //   // { type: 'de_date', targets: 6 }
+                //   {
+                //     type: 'th_date',
+                //     targets: 6
+                //   }
             ],
-            order: [
-                [0, 'desc'],
-            ],
+            // order: [
+            //   [0, 'desc'],
+            // ],
             dom: 'Bfrtip',
             buttons: [{
                     extend: 'colvis',
@@ -493,9 +562,16 @@
         });
 
 
-        $('#seacrh').click(function() {
 
+        $('#seacrh').click(function() {
+            // var dateValue = $('#date_search').val();
+            // $('#date_search').val('');
+            // $('#date').val('');
+            // $('#date_first').val('');
+            // $('#date_last').val('');
         })
+
+
 
         $('#date_search').val(moment(new Date()).format('DD/MM/YYYY'));
 
@@ -546,58 +622,49 @@
             $('#remark').prop('readonly', false);
             $('#recuser').prop('readonly', false);
 
-            // search_datalist(rowData.RECNO);
-            // $("#myModal").modal("show");
-            recno_edit = rowData.RECNO;
-            console.log(recno_edit)
-            CRUDSQL('ajax/fecth_item.php', 'select')
-                .then(() => {
-                    // console.log('end')
-                    $("#myModal").modal("show");
-                })
-                .catch(error => {
-                    console.error('เกิดข้อผิดพลาดใน CRUDSQL:', error);
-                });
-
+            search_datalist(rowData.RECNO);
+            $("#myModal").modal("show");
         });
 
-        // $('#table_datahd').on('click', '.modified', function() {
-        //     var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
-        //     $('#ok').removeClass('btn-primary btn-success btn-danger').addClass('btn-warning').text('บันทึกแก้ไข RevNO');
-        //     $('#story').removeClass('bg-secondary bg-success').addClass('bg-danger').text('แก้ไข');
-        //     // recno_edit = rowData.RECNO;
-        //     viewstatus = 'T';
-        //     datasave = 'modified';
+        $('#table_datahd').on('click', '.modified', function() {
+            var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
+            $('#ok').removeClass('btn-primary btn-success btn-danger').addClass('btn-warning').text('บันทึกแก้ไข RevNO');
+            $('#story').removeClass('bg-secondary bg-success').addClass('bg-danger').text('แก้ไข');
+            // recno_edit = rowData.RECNO;
+            viewstatus = 'T';
+            datasave = 'modified';
 
-        //     // $("#btnmodified").show();
+            // $("#btnmodified").show();
 
-        //     $('#custname').prop('readonly', true);
-        //     $('#drawno').prop('readonly', true);
-        //     $('#partname').prop('readonly', false);
-        //     $('#date').prop('readonly', false);
-        //     $('#remark').prop('readonly', false);
-        //     $('#recuser').prop('readonly', false);
+            $('#custname').prop('readonly', true);
+            $('#drawno').prop('readonly', true);
+            $('#partname').prop('readonly', false);
+            $('#date').prop('readonly', false);
+            $('#remark').prop('readonly', false);
+            $('#recuser').prop('readonly', false);
 
-        //     search_datalist(rowData.RECNO);
-        //     $("#myModal").modal("show");
-        // });
+            search_datalist(rowData.RECNO);
+            $("#myModal").modal("show");
+        });
 
 
-        // $('#table_datahd').on('click', '.view', function() {
-        //     var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
-        //     $('#ok').removeClass('btn-primary btn-danger btn-warning').addClass('btn-success').text('ดูรายการ');
-        //     $('#story').removeClass('bg-secondary bg-danger').addClass('bg-success').text('ดูรายการ');
-        //     viewstatus = 'F';
-        //     $('#custname').prop('readonly', true);
-        //     $('#drawno').prop('readonly', true);
-        //     $('#partname').prop('readonly', true);
-        //     $('#date').prop('readonly', true);
-        //     $('#remark').prop('readonly', true);
-        //     $('#recuser').prop('readonly', true);
+        $('#table_datahd').on('click', '.view', function() {
+            var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
+            $('#ok').removeClass('btn-primary btn-danger btn-warning').addClass('btn-success').text('ดูรายการ');
+            $('#story').removeClass('bg-secondary bg-danger').addClass('bg-success').text('ดูรายการ');
 
-        //     search_datalist(rowData.RECNO);
-        //     $("#myModal").modal("show");
-        // });
+            viewstatus = 'F';
+
+            $('#custname').prop('readonly', true);
+            $('#drawno').prop('readonly', true);
+            $('#partname').prop('readonly', true);
+            $('#date').prop('readonly', true);
+            $('#remark').prop('readonly', true);
+            $('#recuser').prop('readonly', true);
+
+            search_datalist(rowData.RECNO);
+            $("#myModal").modal("show");
+        });
 
         // คลิกที่ปุ่ม "ยกเลิก" หรือปุ่มปิดของกล่องโมดอล
         $(".modal .btn-secondary, .modal .btn-close").click(function() {
@@ -609,6 +676,79 @@
 
 
         ///////////////////////////////////////////////////////////////// SELECT DATA //////////////////////////////////////////////////////////////////////////////////////////
+        var process_select_cust;
+        ///////////////////////////////
+        function createSelect2(selector, data, gettextselect) {
+            return $(selector).select2({
+                data: data,
+                theme: 'bootstrap-5',
+                dropdownParent: $('#myModal'),
+                matcher: matchCustom_ajax,
+                templateSelection: function(selected) {
+                    if (selected.id !== '') {
+                        if (selected.id == 0) {
+                            return gettextselect;
+                        }
+                        return selected.text;
+                    }
+                    return '';
+                },
+                templateResult: function(result) {
+                    if (!result.id) {
+                        return result.text;
+                    }
+                    var $result = $('<span></span>');
+                    $result.text("รหัส" + result.title + ":" + result.text);
+                    if (result.id == 0) {
+                        $result.text(gettextselect);
+                        return $result;
+                    } else {
+                        return $result;
+                    }
+                }
+            });
+        }
+
+        function data_json(data_list, recno_key, code_key, name_key, gettextselect) {
+            var target_list = [{
+                "id": 0,
+                "text": gettextselect,
+                "value": "0",
+                "title": ""
+            }];
+            var existingCodes = {};
+            for (var i = 0; i < data_list.length; i++) {
+                var select2_recno = data_list[i][recno_key];
+                var select2_code = data_list[i][code_key];
+                var select2_name = data_list[i][name_key];
+                if (select2_code === null) {
+                    select2_code = '';
+                }
+                if (select2_name != '') {
+                    if (!existingCodes[select2_code]) {
+                        target_list.push({
+                            "id": parseInt(select2_recno),
+                            "text": select2_name,
+                            "value": select2_recno,
+                            "title": select2_code,
+                        });
+                        existingCodes[select2_code] = true;
+                    }
+                }
+            }
+            return target_list; // คืนค่า target_list กลับไป
+        }
+
+        //////////////////////////////////////////////////////////////// CHANGE //////////////////////////////////////////////////////////////// 
+        var owner_process = 0;
+
+
+
+        //////////////////////////////////////////////////////////////// CHANGE //////////////////////////////////////////////////////////////// 
+        var owner_process = 0;
+
+        //////////////////////////////////////////////////////////////// SAVE ///////////////////////////////////////////////////////////////
+
         var viewstatus = 'F';
         $("#idForm").submit(function(event) {
             event.preventDefault();
@@ -636,227 +776,213 @@
         });
 
         var paramhd;
-        database_server()
-        async function database_server() {
-            try {
-                const jsonResponse = await fetch('ajax/fecth_getoneitem_mysql.php', {
-                    method: 'POST',
-                    body: set_formdata('select_draw'),
-                });
-
-                if (!jsonResponse.ok) {
-                    $('.loading').hide();
-                    throw new Error('Error sending data to server');
-                }
-                const jsonDataMain = await jsonResponse.json();
-                console.log(jsonDataMain.datamain)
-                await detailtable.clear().rows.add(jsonDataMain.datamain).draw();
-                onprocess = false;
-                $('.loading').hide();
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-
         /////////////////////////////////////////////////////////////// INSERT AND UPDATE ///////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////// SAVE //////////////////////////////////////////////////////////////
-        // function SaveData() {
-        //     $.ajax({
-        //         url: encodedURL_Insert,
-        //         type: "POST",
-        //         data: set_formdata('save'),
-        //         dataSrc: '',
-        //         contentType: false,
-        //         processData: false,
-        //         cache: false,
-        //         beforeSend: function() {},
-        //         complete: function() {},
-        //         success: function(response) {
-        //             save_json = JSON.parse(response);
-        //             // console.log(save_json)
-        //             // console.log( save_json.status  )
-        //             table.ajax.reload();
-        //             if (save_json.status == 'success') {
-        //                 Swal.fire({
-        //                     title: "บันทึกแล้ว",
-        //                     text: "ข้อความที่คุณต้องการแสดง",
-        //                     icon: "success",
-        //                     buttons: ["OK"],
-        //                     dangerMode: true,
-        //                 }).then(function(willRedirect) {
-        //                     if (willRedirect) {
-        //                         $('#myModal').modal('hide');
-        //                     }
-        //                 });
-        //                 setTimeout(function() {
-        //                     swal.close(); // ปิด SweetAlert
-        //                     $('#myModal').modal('hide');
-        //                 }, 2000);
-        //                 /////////////////////////////////
-        //             } else if (save_json.status == 'none') {
-        //                 // console.log('ซ้ำ')
-        //                 Swal.fire(
-        //                     'เกิดปัญหาในการบันทึก',
-        //                     JSON.parse(response).message,
-        //                     'error'
-        //                 )
-        //             } else {
-        //                 Swal.fire(
-        //                     'เกิดปัญหาในการบันทึก',
-        //                     JSON.parse(response).message,
-        //                     'error'
-        //                 )
-        //             }
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.log('error')
-        //             console.error(error);
-        //         }
-        //     });
-        // }
-        // ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
-        // function UpdateData() {
-        //     $.ajax({
-        //         url: encodedURL_Update,
-        //         type: "POST",
-        //         data: set_formdata('update'),
-        //         dataSrc: '',
-        //         contentType: false,
-        //         processData: false,
-        //         cache: false,
-        //         beforeSend: function() {},
-        //         complete: function() {},
-        //         success: function(response) {
-        //             save_json = JSON.parse(response);
-        //             if (save_json.status == 'success') {
-        //                 // console.log(save_json)
-        //                 table.ajax.reload();
-        //                 Swal.fire({
-        //                     title: "บันทึกแล้ว",
-        //                     text: "ข้อความที่คุณต้องการแสดง",
-        //                     icon: "success",
-        //                     buttons: ["OK"],
-        //                     dangerMode: true,
-        //                 }).then(function(willRedirect) {
-        //                     // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
-        //                     if (willRedirect) {
-        //                         // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
-        //                         $('#myModal').modal('hide');
-        //                     }
-        //                 });
-        //                 /////////////////////////////////
-        //             } else if (save_json.status == 'none') {
-        //                 // console.log('ซ้ำ')
-        //                 Swal.fire(
-        //                     'เกิดปัญหาในการบันทึก',
-        //                     JSON.parse(response).message,
-        //                     'error'
-        //                 )
-        //             } else {
-        //                 Swal.fire(
-        //                     'เกิดปัญหาในการบันทึก',
-        //                     // response.message,
-        //                     JSON.parse(response).message,
-        //                     'error'
-        //                 )
-        //             }
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.log('error')
-        //             console.error(error);
-        //         }
-        //     });
-        // }
+        function SaveData() {
+            $.ajax({
+                url: encodedURL_Insert,
+                type: "POST",
+                data: set_formdata('save'),
+                dataSrc: '',
+                contentType: false,
+                processData: false,
+                cache: false,
+                beforeSend: function() {},
+                complete: function() {},
+                success: function(response) {
+                    save_json = JSON.parse(response);
+                    // console.log(save_json)
+                    // console.log( save_json.status  )
+                    table.ajax.reload();
+                    if (save_json.status == 'success') {
+                        Swal.fire({
+                            title: "บันทึกแล้ว",
+                            text: "ข้อความที่คุณต้องการแสดง",
+                            icon: "success",
+                            buttons: ["OK"],
+                            dangerMode: true,
+                        }).then(function(willRedirect) {
+                            if (willRedirect) {
+                                $('#myModal').modal('hide');
+                            }
+                        });
+                        setTimeout(function() {
+                            swal.close(); // ปิด SweetAlert
+                            $('#myModal').modal('hide');
+                        }, 2000);
+                        /////////////////////////////////
+                    } else if (save_json.status == 'none') {
+                        // console.log('ซ้ำ')
+                        Swal.fire(
+                            'เกิดปัญหาในการบันทึก',
+                            JSON.parse(response).message,
+                            'error'
+                        )
+                    } else {
+                        Swal.fire(
+                            'เกิดปัญหาในการบันทึก',
+                            JSON.parse(response).message,
+                            'error'
+                        )
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('error')
+                    console.error(error);
+                }
+            });
+        }
+        ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
+        function UpdateData() {
+            $.ajax({
+                url: encodedURL_Update,
+                type: "POST",
+                data: set_formdata('update'),
+                dataSrc: '',
+                contentType: false,
+                processData: false,
+                cache: false,
+                beforeSend: function() {},
+                complete: function() {},
+                success: function(response) {
+                    save_json = JSON.parse(response);
+                    if (save_json.status == 'success') {
+                        // console.log(save_json)
+                        table.ajax.reload();
+                        Swal.fire({
+                            title: "บันทึกแล้ว",
+                            text: "ข้อความที่คุณต้องการแสดง",
+                            icon: "success",
+                            buttons: ["OK"],
+                            dangerMode: true,
+                        }).then(function(willRedirect) {
+                            // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
+                            if (willRedirect) {
+                                // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
+                                $('#myModal').modal('hide');
+                            }
+                        });
+                        /////////////////////////////////
+                    } else if (save_json.status == 'none') {
+                        // console.log('ซ้ำ')
+                        Swal.fire(
+                            'เกิดปัญหาในการบันทึก',
+                            JSON.parse(response).message,
+                            'error'
+                        )
+                    } else {
+                        Swal.fire(
+                            'เกิดปัญหาในการบันทึก',
+                            // response.message,
+                            JSON.parse(response).message,
+                            'error'
+                        )
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('error')
+                    console.error(error);
+                }
+            });
+        }
 
-        // ////////////////////////////////////////////////////////////// Modified //////////////////////////////////////////////////////////////
-        // function ModifiedData() {
-        //     $.ajax({
-        //         url: encodedURL_Modifi,
-        //         type: "POST",
-        //         data: set_formdata('modified'),
-        //         dataSrc: '',
-        //         contentType: false,
-        //         processData: false,
-        //         cache: false,
-        //         beforeSend: function() {},
-        //         complete: function() {},
-        //         success: function(response) {
-        //             save_json = JSON.parse(response);
-        //             if (save_json.status == 'success') {
-        //                 console.log(save_json)
-        //                 table.ajax.reload();
-        //                 Swal.fire({
-        //                     title: "บันทึกแล้ว",
-        //                     text: "ข้อความที่คุณต้องการแสดง",
-        //                     icon: "success",
-        //                     buttons: ["OK"],
-        //                     dangerMode: true,
-        //                 }).then(function(willRedirect) {
-        //                     // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
-        //                     if (willRedirect) {
-        //                         // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
-        //                         $('#myModal').modal('hide');
-        //                     }
-        //                 });
-        //                 /////////////////////////////////
-        //             } else if (save_json.status == 'none') {
-        //                 // console.log('ซ้ำ')
-        //                 Swal.fire(
-        //                     'เกิดปัญหาในการบันทึก',
-        //                     JSON.parse(response).message,
-        //                     'error'
-        //                 )
-        //             } else {
-        //                 Swal.fire(
-        //                     'เกิดปัญหาในการบันทึก',
-        //                     // response.message,
-        //                     JSON.parse(response).message,
-        //                     'error'
-        //                 )
-        //             }
-        //         },
-        //         error: function(xhr, status, error) {
-        //             console.log('error')
-        //             console.error(error);
-        //         }
-        //     });
-        // }
+        ////////////////////////////////////////////////////////////// Modified //////////////////////////////////////////////////////////////
+        function ModifiedData() {
+            $.ajax({
+                url: encodedURL_Modifi,
+                type: "POST",
+                data: set_formdata('modified'),
+                dataSrc: '',
+                contentType: false,
+                processData: false,
+                cache: false,
+                beforeSend: function() {},
+                complete: function() {},
+                success: function(response) {
+                    save_json = JSON.parse(response);
+                    if (save_json.status == 'success') {
+                        console.log(save_json)
+                        table.ajax.reload();
+                        Swal.fire({
+                            title: "บันทึกแล้ว",
+                            text: "ข้อความที่คุณต้องการแสดง",
+                            icon: "success",
+                            buttons: ["OK"],
+                            dangerMode: true,
+                        }).then(function(willRedirect) {
+                            // willRedirect คือค่า boolean ที่บอกว่าผู้ใช้เลือก OK (true) หรือยกเลิก (false)
+                            if (willRedirect) {
+                                // ถ้าผู้ใช้เลือก OK ให้เปลี่ยนหน้าไปยัง "datatable_activity.php"
+                                $('#myModal').modal('hide');
+                            }
+                        });
+                        /////////////////////////////////
+                    } else if (save_json.status == 'none') {
+                        // console.log('ซ้ำ')
+                        Swal.fire(
+                            'เกิดปัญหาในการบันทึก',
+                            JSON.parse(response).message,
+                            'error'
+                        )
+                    } else {
+                        Swal.fire(
+                            'เกิดปัญหาในการบันทึก',
+                            // response.message,
+                            JSON.parse(response).message,
+                            'error'
+                        )
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('error')
+                    console.error(error);
+                }
+            });
+        }
 
-        // var modify = 'F';
-        // var checknewvalue = '';
+        var modify = 'F';
+        var checknewvalue = '';
         ////////////////////////////////////////////////////////////// set_formdata //////////////////////////////////////////////////////////////
         function set_formdata(conditionsformdata) {
             var formData = new FormData();
-            // var dateValue = $('#date').val();
+            /// upload ///
+
+            formData.append('fileToUpload', '');
+            $uploadolddb = '';
+
+            /////////////
+
+            var dateValue = $('#date').val();
             /// id ,param ///
             paramhd = {
-                recno: recno_edit,
-                customer: $('#custname').val(),
-                drawno: $('#drawno').val(),
-                revno: $('#revno').val(),
-                partname: $('#partname').val(),
-                recdate: $('#date').val() ? moment($('#date').val(), 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
-                remark: $('#remark').val(),
-                createdby: $('#createuser').val(),
-                modifiedby: $('#recuser').val(),
+                RECNO: recno_edit,
+                CUSTOMER: $('#custname').val(),
+                DRAWNO: $('#drawno').val(),
+                REVNO: $('#revno').val(),
+                PARTNAME: $('#partname').val(),
+                RECDATE: $('#date').val() ? moment($('#date').val(), 'DD/MM/YYYY').format('YYYY-MM-DD') : '0000-00-00',
+                REMARK: $('#remark').val(),
+                CREATEDBY: $('#createuser').val(),
+                MODIFIEDBY: $('#recuser').val(),
             };
+            // var paramhd = null;
+            // เพิ่มอาร์เรย์ paramhd เข้าไปใน FormData และแปลงเป็น JSON ก่อน
 
-            if (conditionsformdata == "select_draw") {
-                formData.append('queryId001', 'SEL_DRAWING');
-                formData.append('condition', '000');
-                formData.append('tableData', JSON.stringify([]));
-            } else if (conditionsformdata == "select") {
-                formData.append('queryIdHD', 'EDSEL_DRAWING');
-                formData.append('condition', 'RECNO000');
-                formData.append('tableData', JSON.stringify([paramhd]));
-            } else if (conditionsformdata == "save") {
-                formData.append('queryId001', 'IND_DRAWING');
-                formData.append('condition', '003_INDRAWING');
-                formData.append('tableData', JSON.stringify([paramhd]));
+            if (conditionsformdata == "save") {
+                // ประมวลผลเพิ่มข้อมูล
+                // process to insert data
+                formData.append('queryIdHD', 'IND_DRAWING');
+            } else if (conditionsformdata == "delete") {
+                // ประมวลผลลบข้อมูล
+                // process to delete data
+                formData.append('queryIdHD', 'XXXXX');
             } else if (conditionsformdata == "update") {
+                // ประมวลผลอัพเดทข้อมูล
+                // process to update data
                 formData.append('queryIdHD', 'UPD_DRAWING');
             } else if (conditionsformdata == "modified") {
+                // ประมวลผลอัพเดทข้อมูล
+                // process to update data
                 formData.append('queryIdHD', 'MOUPD_DRAWING');
                 formData.append('modifyIdHD', 'IND_DRAWING');
                 formData.append('conditionmain', 'I_DRAW');
@@ -865,39 +991,23 @@
                 // other cases
             }
 
-            // formData.append('checkname', 'CHECK_DRAWING');
-            // formData.append('checkvalue', 'T');
-            // formData.append('checknewvalue', $('#drawno').val());
-            // formData.append('checkoldvalue', checkoldvalue);
-            // formData.append('queryIdDT', '');
-            // formData.append('condition', 'NONE');
-            // formData.append('uploadnamedb', 'drawing');
-            // formData.append('uploadolddb', $uploadolddb);
-            // formData.append('modify', modify);
-            // formData.append('modifycondition', 'draw');
-            // formData.append('paramhd', JSON.stringify(paramhd));
+            formData.append('checkname', 'CHECK_DRAWING');
+            formData.append('checkvalue', 'T');
+            formData.append('checknewvalue', $('#drawno').val());
+            formData.append('checkoldvalue', checkoldvalue);
+            formData.append('queryIdDT', '');
+            formData.append('condition', 'NONE');
+            formData.append('uploadnamedb', 'drawing');
+            formData.append('uploadolddb', $uploadolddb);
+            formData.append('modify', modify);
+            formData.append('modifycondition', 'draw');
+
+            formData.append('paramhd', JSON.stringify(paramhd));
             ////////////////
             return formData;
         }
 
         ////////////////////////////////////////////////////////////// UPDATE //////////////////////////////////////////////////////////////
-        class CRUDManager {
-            constructor(url, action) {
-                this.url = url;
-                this.action = action;
-            }
-
-            async performCRUD() {
-                try {
-                    console.log('save')
-                    await CRUDSQL(this.url, this.action);
-                    $("#myModal").modal("hide");
-                } catch (error) {
-                    console.error('เกิดข้อผิดพลาดใน CRUDSQL:', error);
-                }
-            }
-        }
-
         function AlertSave() {
             Swal.fire({
                 title: 'คุณแน่ใจแล้วใช่ไหม',
@@ -915,12 +1025,8 @@
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url_data
-                    let action_data
                     if (datasave == "save") {
-                        // SaveData();
-                        url_data = "ajax/fecth_post_indrawing.php";
-                        action_data = "save"
+                        SaveData();
                     } else if (datasave == "update") {
                         UpdateData();
                     } else if (datasave == "delete") {
@@ -930,8 +1036,6 @@
                     } else {
                         // Handle other cases or show an error message
                     }
-                    const crudManager = new CRUDManager(url_data, action_data)
-                    crudManager.performCRUD();
 
                 } else if (
                     /* Read more about handling dismissals below */
@@ -950,105 +1054,45 @@
         var checkoldvalue = '';
 
         function search_datalist(search_senddata) {
-            console.log(search_senddata)
-            $('#custname').val(search_senddata[0].CUSTOMER);
-            $('#drawno').val(search_senddata[0].DRAWNO);
-            checkoldvalue = search_senddata[0].DRAWNO;
-            $('#revno').val(search_senddata[0].REVNO);
-            $('#partname').val(search_senddata[0].PARTNAME);
-            $('#date').val(moment(search_senddata[0].RECDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(search_senddata[0].RECDATE).format('DD/MM/YYYY') : '');
-            $('#remark').val(search_senddata[0].REMARK);
+            $.ajax({
+                url: encodedURL_Select,
+                data: {
+                    queryId: 'EDSEL_DRAWING',
+                    params: {
+                        RECNO: search_senddata
+                    },
+                    condition: 'mix',
+                },
+                dataSrc: '',
+                success: function(response) {
+                    json_searchdatalist = JSON.parse(response).data;
 
-            $('#createuser').val(search_senddata[0].CREATEDBY);
-            $('#recuser').val(search_senddata[0].MODIFIEDBY);
-            // console.log(json_searchdatalist)
-            // recno_edit = json_searchdatalist[0].RECNO
-            // $('#code').val(json_searchdatalist[0].EMPNO)
-            // $('#namereal').val(json_searchdatalist[0].EMPNAME)
-            // $('#namenick').val(json_searchdatalist[0].EMPNICK)
-            // $('#login').val(json_searchdatalist[0].LOGIN)
-            // $('#password').val(json_searchdatalist[0].PASS)
-            // $.ajax({
-            //     url: encodedURL_Select,
-            //     data: {
-            //         queryId: 'EDSEL_DRAWING',
-            //         params: {
-            //             RECNO: search_senddata
-            //         },
-            //         condition: 'mix',
-            //     },
-            //     dataSrc: '',
-            //     success: function(response) {
-            //         json_searchdatalist = JSON.parse(response).data;
+                    recno_edit = json_searchdatalist[0].RECNO
+                    $('#custname').val(json_searchdatalist[0].CUSTOMER);
+                    $('#drawno').val(json_searchdatalist[0].DRAWNO);
+                    checkoldvalue = json_searchdatalist[0].DRAWNO;
+                    $('#revno').val(json_searchdatalist[0].REVNO);
+                    $('#partname').val(json_searchdatalist[0].PARTNAME);
+                    $('#date').val(moment(json_searchdatalist[0].RECDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_searchdatalist[0].RECDATE).format('DD/MM/YYYY') : '');
+                    $('#remark').val(json_searchdatalist[0].REMARK);
 
-            //         recno_edit = json_searchdatalist[0].RECNO
-            //         $('#custname').val(json_searchdatalist[0].CUSTOMER);
-            //         $('#drawno').val(json_searchdatalist[0].DRAWNO);
-            //         checkoldvalue = json_searchdatalist[0].DRAWNO;
-            //         $('#revno').val(json_searchdatalist[0].REVNO);
-            //         $('#partname').val(json_searchdatalist[0].PARTNAME);
-            //         $('#date').val(moment(json_searchdatalist[0].RECDATE).format('DD/MM/YYYY') !== 'Invalid date' ? moment(json_searchdatalist[0].RECDATE).format('DD/MM/YYYY') : '');
-            //         $('#remark').val(json_searchdatalist[0].REMARK);
+                    $('#createuser').val(json_searchdatalist[0].CREATEDBY);
+                    $('#recuser').val(json_searchdatalist[0].MODIFIEDBY);
+                    // console.log(json_searchdatalist)
+                    // recno_edit = json_searchdatalist[0].RECNO
+                    // $('#code').val(json_searchdatalist[0].EMPNO)
+                    // $('#namereal').val(json_searchdatalist[0].EMPNAME)
+                    // $('#namenick').val(json_searchdatalist[0].EMPNICK)
+                    // $('#login').val(json_searchdatalist[0].LOGIN)
+                    // $('#password').val(json_searchdatalist[0].PASS)
 
-            //         $('#createuser').val(json_searchdatalist[0].CREATEDBY);
-            //         $('#recuser').val(json_searchdatalist[0].MODIFIEDBY);
-            //         // console.log(json_searchdatalist)
-            //         // recno_edit = json_searchdatalist[0].RECNO
-            //         // $('#code').val(json_searchdatalist[0].EMPNO)
-            //         // $('#namereal').val(json_searchdatalist[0].EMPNAME)
-            //         // $('#namenick').val(json_searchdatalist[0].EMPNICK)
-            //         // $('#login').val(json_searchdatalist[0].LOGIN)
-            //         // $('#password').val(json_searchdatalist[0].PASS)
-
-            //     },
-            //     error: function(xhr, status, error) {
-            //         console.error(error);
-            //     }
-            // });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
         }
 
-
-        const CRUDSQL = async (url, status_sql) => {
-            const apiUrl = url;
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    body: set_formdata(status_sql), // ใช้ FormData เป็นข้อมูลที่จะส่ง
-                });
-
-                if (!response.ok) {
-                    throw new Error('เกิดข้อผิดพลาดในการส่งข้อมูล');
-                }
-
-                const data = await response.json();
-                console.log(data)
-                if (status_sql === 'save') {
-                    console.log('save')
-                    await Swal.fire({
-                        title: "บันทึกแล้ว",
-                        text: "ข้อมูลถูกบันทึก",
-                        icon: "success",
-                        buttons: ["OK"],
-                        dangerMode: true,
-                    });
-                    await database_server();
-                } else if (status_sql === 'select') {
-                    await search_datalist(data.datamain);
-                } else if (status_sql === 'update') {
-                    await Swal.fire({
-                        title: "แก้ไขแล้ว",
-                        text: "ข้อมูลถูกแก้ไข",
-                        icon: "success",
-                        buttons: ["OK"],
-                        dangerMode: true,
-                    });
-                    await database_server();
-                }
-            } catch (error) {
-                // จัดการข้อผิดพลาด
-                console.error(error);
-            }
-        };
 
         ////////////////////////////////////////////// MISCELLANEOUS /////////////////////////////////////////////////
         //  $('html, body').animate({

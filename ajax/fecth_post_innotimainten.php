@@ -23,19 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // $filename_db = '';
 
         //UPLOAD CHECK
-        // if (isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]["error"] === UPLOAD_ERR_OK) {
-        //     $statusupload = true;
-        //     $messageupload = $_FILES["fileToUpload"]['name'];
-        // } elseif (isset($_FILES["fileToUpload"]) && $_FILES["fileToUpload"]["error"] === UPLOAD_ERR_NO_FILE) {
-        //     // $Dataupload = array('result' =>  "No file was uploaded.");
-        //     $statusupload = false;
-        //     $messageupload = '';
-        // } else {
-        //     $statusupload = false;
-        //     $messageupload = '';
-        //     // $Dataupload = array('result' =>  "File upload error.");
-        // }
-        // // // ใช้เมทอด scanSQL() เพื่อรับคำสั่ง SQL ตาม $queryId
         $sqlQueries = new SQLQueries();
         $SqlID001 = $sqlQueries->scanSQL($queryId001);
 
@@ -46,11 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $tableData_Json[0]['docno'] =  substr(date("Y") + 543, -2) . '/' . sprintf("%04d", $run_number['result']);
             if ($insertData->insertRecord($tableData_Json[0], $SqlID001, $condition))
             {
-              
-                // if($statusupload){
-                //     $fileUploader = new FileUploader($targetDir);
-                //     $Dataupload = $fileUploader->uploadFile($_FILES["fileToUpload"]);
-                // }
                 $response = array(
                     'message' => 'Data received successfully',
                     'status' => 'success'
@@ -63,12 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 );
                 $insertData->data_commit->rollBack();
             }
-            // $response = array(
-            //     'message' => 'TEST',
-            //     'sqlQuery' => $SqlID001,
-            //     'tableData_Json' => $tableData_Json,
-            //     'status' => 'test',
-            //     );
         } else {
             $response = array(
                 'message' => 'ไม่พบคำสั่ง SQL สำหรับ $queryId ที่ระบุ',

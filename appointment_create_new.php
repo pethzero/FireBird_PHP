@@ -37,9 +37,7 @@ $recno = null;
         }
 
         textarea {
-            /* overflow-x: scroll; */
             white-space: nowrap;
-            /* overflow-y: scroll; */
         }
 
         .datepicker td,
@@ -48,23 +46,6 @@ $recno = null;
             padding: 8px 12px;
             font-size: 14px;
         }
-
-        /* .datepicker {
-            border: 1px solid black;
-        } */
-
-
-
-        /* #detailtable th.no-wrap {
-            white-space: normal;
-            width: auto;
-        } */
-
-
-        /* th.detail-tr {
-            width: 3000px;
-        } */
-
         @media (min-width: 768px) {
             .custom-input-pc {
                 width: 450px;
@@ -74,30 +55,6 @@ $recno = null;
                 width: 120px;
             }
 
-            /* .company-input {
-                width: 400px;
-            }
-            .detail-input {
-                width: 500px;
-            } */
-            /* .remark-input {
-                width: 200px;
-            } */
-
-            /* .detail-input {
-                width: 700px;
-            }
-            .remark-input {
-                width: 500px;
-            } */
-
-            /* th.detail-tr {
-                width: 10000px;
-            }
-
-            th.date-tr {
-                width: 10000px;
-            } */
             .date-input {
                 width: 140px;
             }
@@ -107,10 +64,6 @@ $recno = null;
             .custom-input-phone {
                 width: 300px;
             }
-
-            /* th.detail-tr {
-                width: 3000px !important;
-            } */
             .company-input {
                 width: 250px;
             }
@@ -122,11 +75,6 @@ $recno = null;
             .remark-input {
                 width: 200px;
             }
-
-            /*
-            tr th.date-input {
-                width: 200px !important;
-            } */
             .date-input {
                 width: 120px;
             }
@@ -140,24 +88,6 @@ $recno = null;
                     <h2>ตารางนัดหมาย</h2>
                 </div>
                 <hr>
-
-                <!-- <div class="col-sm-12 col-md-6 col-lg-4">
-                    <div class="input-group date mb-3">
-                        <span class="input-group-text ">วันที่นัด :</span>
-                        <input type="text" id="datepicker" class="form-control" placeholder="เลือกวันที่">
-                            <span class="input-group-text bg-light d-block">
-                                <i class="fa fa-calendar" id="calendar-icon"></i>
-                            </span>
-                        <span class="input-group-text bg-light d-block">
-                                <i class="far fa-times-circle" style="color: #e10505;" id="clear-icon"></i>
-                            </span>
-                    </div>
-                </div> -->
-
-                <!---->
-
-                <!-- <input type="text" id="timepicker" class="form-control" placeholder="เลือกเวลา"> -->
-
                 <div class="createdata">
                     <div class="row d-flex justify-content-center">
                         <div class="col-sm-12 col-md-6 col-lg-6">
@@ -177,7 +107,6 @@ $recno = null;
                         </div>
                     </div>
                     <div class="row">
-
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group date mb-3">
                                 <span class="input-group-text ">วันที่นัด :</span>
@@ -203,30 +132,6 @@ $recno = null;
                                 </span>
                             </div>
                         </div>
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group date mb-3">
-                                <span class="input-group-text c_activity">วันที่นัด:</span>
-                                <input type="text" class="form-control" id="dateatc" />
-                                <span class="input-group-append">
-                                    <span class="input-group-text bg-light d-block">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </span>
-                            </div>
-                        </div> -->
-
-                        <!-- <div class="col-sm-12 col-md-6 col-lg-4">
-                            <div class="input-group date mb-3">
-                                <span class="input-group-text ">ระบบแจ้งเตือน :</span>
-                                <input type="text" class="form-control" id="datewarn" />
-                                <span class="input-group-append">
-                                    <span class="input-group-text bg-light d-block">
-                                        <i class="fa fa-calendar"></i>
-                                    </span>
-                                </span>
-                            </div>
-                        </div> -->
-
                         <div class="col-sm-12 col-md-6 col-lg-4">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">ผู้นัด</span>
@@ -258,8 +163,6 @@ $recno = null;
                 </div>
             </div>
         </section>
-
-
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-md  modal-lg">
                 <div class="modal-content">
@@ -277,8 +180,6 @@ $recno = null;
                 </div>
             </div>
         </div>
-
-
     </form>
     <hr>
     <footer class="text-center mt-auto">
@@ -365,9 +266,6 @@ $recno = null;
         // $("#clear-icon-datewarn").click(function() {
         //     datePicker2.clear();
         // });
-
-
-
         const TimePicker = flatpickr("#timepicker", {
             enableTime: true, // เปิดใช้งานการเลือกเวลา
             noCalendar: true, // ไม่แสดงปฏิทิน

@@ -359,7 +359,7 @@
         formData.append('blobData', JSON.stringify(mappedData));
         formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
         formData.append('condition_footer', 'T');
-        console.log(mappedData)
+        // console.log(mappedData)
         const blobResponse = await fetch('export/excel_export.php', {
           method: 'POST',
           body: formData,

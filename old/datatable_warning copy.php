@@ -1,18 +1,42 @@
-<!doctype html>
-<html lang="en" data-bs-theme="auto">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <script src="assets/js/color-modes.js"></script>
   <?php
   session_start();
+  //  echo $_SESSION["RECNO"];
   if (!isset($_SESSION["RECNO"])) {
     header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
     exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
   }
   include("0_headcss.php");
+  $csrfToken = bin2hex(random_bytes(32)); // สร้าง token สุ่ม
+  $_SESSION['csrf_token'] = $csrfToken;
+  // $_SESSION['csrf_token'] = keyse();
   ?>
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+</head>
+
+<body>
+  <?php
+  include("0_header.php");
+  include("0_breadcrumb.php");
+
+  ?>
+  <link rel="stylesheet" href="css/mycustomize.css">
   <style>
+    .c_activity {
+      width: 100px;
+    }
+
+    .h_textarea {
+      height: 110px;
+    }
+
+    textarea {
+      overflow-y: scroll;
+    }
+
     .datepicker td,
     th {
       text-align: center;
@@ -24,247 +48,244 @@
       border: 1px solid black;
     }
   </style>
-  <link href="dashboard.css" rel="stylesheet">
-</head>
 
-<body>
-  <?php include("0_dbheader.php"); ?>
-  <div class="container-fluid">
-    <div class="row">
-      <!-- SIDE -->
-      <?php include("0_sidebar.php"); ?>
-      <!-- CONTENT -->
-      <div class="loading" style="display: none;"></div>
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <form id="idForm" method="POST">
-          <div class="row mb-2 pt-2">
-            <div class="col-md-12">
-              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                  <section>
-                    <div class="row pb-3">
-                      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-                        <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
-                      </div>
+  <?php
+  include("connect_sql.php");
+  ?>
+
+  <section>
+    <div class="container-fluid pt-3">
+      <div class="row pb-3">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+          <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
+        </div>
+      </div>
+
+      <h2>แจ้งซ่อม</h2>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="input-group date mb-3" id="datepicker_search">
+            <span class="input-group-append">
+              <span class="input-group-text bg-light d-block">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </span>
+            <input type="text" class="form-control" id="date_search" readonly />
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div class="input-group mb-3">
+            <span class="input-group-text c_activity">สถานะ:</span>
+            <select class="form-select" id="statusseacrh">
+              <option value="" selected>เลือก...</option>
+              <option value="ยังไม่เริ่มดำเนินการ">ยังไม่เริ่มดำเนินการ</option>
+              <option value="อยู่ระหว่างดำเนินการ">อยู่ระหว่างดำเนินการ</option>
+              <option value="รอดำเนินการ">รอดำเนินการ</option>
+              <option value="ถูกเลื่อนออกไป">ถูกเลื่อนออกไป</option>
+              <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+          <button id='seacrh' type="button" class="btn btn-primary">ค้นหา</button>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row pb-3">
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <button id='newmodel' type="button" class="btn btn-primary">ทำการแจ้งซ่อม</button>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-12">
+          <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
+            <thead class="thead-light">
+              <tr>
+                <th>ลำดับ</th>
+                <th>ข้อมูล</th>
+                <th>สถานะ</th>
+                <th>เลขที่</th>
+                <th>หัวข้อเรื่อง</th>
+                <th>ชื่ออุปกรณ์</th>
+                <th>บุคคลติดต่อ</th>
+                <th>ความสำคัญ</th>
+                <th>วันที่นัด</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  <hr>
+  <footer class="text-center mt-auto">
+    <div class="container pt-2">
+      <div class="row">
+        <div class="col-12">
+          <p>Copyright ? SAN Co.,Ltd. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <?php
+  //  include("0_footer.php");
+  ?>
+  <form id="idForm" method="POST">
+    <div class="modal fade" id="myModal" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">บันทึกแจ้งซ่อม <span id='story' class="badge"></span></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <!-- ส่วนที่เพิ่มเนื้อหาภายในกล่องโมดอลได้ที่นี่ -->
+            <section>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">หัวข้อเรื่อง:</span>
+                      <input type="text" class="form-control" id="name" placeholder="หัวข้อเรื่อง" maxlength="255">
                     </div>
+                  </div>
+                </div>
 
-                    <h2>แจ้งซ่อม</h2>
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                        <div class="input-group date mb-3" id="datepicker_search">
-                          <span class="input-group-append">
-                            <span class="input-group-text  d-block">
-                              <i class="fa fa-calendar"></i>
-                            </span>
-                          </span>
-                          <input type="text" class="form-control" id="date_search" readonly />
+
+
+                <div class="row">
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">ชื่ออุปกรณ์:</span>
+                      <select class="form-select" id="equipment">
+                      </select>
+                    </div>
+                  </div>
+
+
+                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text c_activity">บุคคล:</span>
+                      <input type="text" class="form-control" id="cont" placeholder="ติดต่อบุคคล" maxlength="255">
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                      <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                          <div class="input-group mb-3">
+                            <span class="input-group-text c_activity">สถานะ:</span>
+                            <select class="form-select" id="status">
+                              <option value="I" selected>รับแจ้ง</option>
+                              <option value="P">ดูแล</option>
+                              <option value="R">ซ่อม</option>
+                              <option value="A">ปกติ</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                          <div class="input-group mb-3">
+                            <span class="input-group-text c_activity">ความสำคัญ:</span>
+                            <select class="form-select" id="priority">
+                              <option value="N" selected>ทั่วไป</option>
+                              <option value="H">เร่งด่วน</option>
+                              <option value="D">ฉุกเฉิน</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
 
+                    <div class="row mb-3">
+                      <div class="input-group">
+                        <span class="input-group-text">อาการ:</span>
+                        <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
+                      </div>
+                    </div>
+
                     <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="input-group mb-3">
-                          <span class="input-group-text c_activity">สถานะ:</span>
-                          <select class="form-select" id="statusseacrh">
-                            <option value="" selected>เลือก...</option>
-                            <option value="ยังไม่เริ่มดำเนินการ">ยังไม่เริ่มดำเนินการ</option>
-                            <option value="อยู่ระหว่างดำเนินการ">อยู่ระหว่างดำเนินการ</option>
-                            <option value="รอดำเนินการ">รอดำเนินการ</option>
-                            <option value="ถูกเลื่อนออกไป">ถูกเลื่อนออกไป</option>
-                            <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+                          <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
+                          <input id="pcost" type="number" min=0 class="form-control">
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text c_activity">ค่าเบิก:</span>
+                          <input id="pwithdraw" type="number" min=0 class="form-control">
+                        </div>
+                      </div>
+
+                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="input-group date mb-3" id="datepicker">
+                          <span class="input-group-text c_activity">วันที่นัด:</span>
+                          <input type="text" class="form-control" id="date" placeholder="วันที่นัดดูแลอุปกรณ์" />
+                          <span class="input-group-append">
+                            <span class="input-group-text bg-light d-block">
+                              <i class="fa fa-calendar"></i>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+
+
+                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text ">ผู้บันทึก:</span>
+                          <select class="form-select" id="owner">
                           </select>
                         </div>
                       </div>
                     </div>
 
-
                     <div class="row">
-                      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                        <button id='seacrh' type="button" class="btn btn-primary">ค้นหา</button>
-                        <button id="newdetail" type="button" class="btn btn-primary" style="margin-left: 50px;">เพิ่มอุปกรณ์</button>
+                      <div class="">
+                        <label for="fileLabel" class="form-label" id="fileLabel"> </label>
                       </div>
                     </div>
 
-                    <hr>
-
-                    <div class="row pb-3">
-                      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
-                        <button id='newmodel' type="button" class="btn btn-primary">ทำการแจ้งซ่อม</button>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-12">
-                        <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle " width='100%'>
-                          <thead class="thead-light">
-                            <tr>
-                              <th>ลำดับ</th>
-                              <th>ข้อมูล</th>
-                              <th>สถานะ</th>
-                              <th>เลขที่</th>
-                              <th>หัวข้อเรื่อง</th>
-                              <th>ชื่ออุปกรณ์</th>
-                              <th>บุคคลติดต่อ</th>
-                              <th>ความสำคัญ</th>
-                              <th>วันที่นัด</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-
-                  </section>
-
-
-                  <section>
-                    <div class="modal fade" id="myModal" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-sm modal-md modal-lg modal-xl">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="myModalLabel">บันทึกแจ้งซ่อม <span id='story' class="badge"></span></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-
-                          <div class="modal-body">
-                            <!-- ส่วนที่เพิ่มเนื้อหาภายในกล่องโมดอลได้ที่นี่ -->
-                            <section>
-                              <div class="container-fluid">
-                                <div class="row">
-                                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="input-group mb-3">
-                                      <span class="input-group-text c_activity">หัวข้อเรื่อง:</span>
-                                      <input type="text" class="form-control" id="name" placeholder="หัวข้อเรื่อง" maxlength="255">
-                                    </div>
-                                  </div>
-                                </div>
-
-
-
-                                <div class="row">
-                                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="input-group mb-3">
-                                      <span class="input-group-text c_activity">ชื่ออุปกรณ์:</span>
-                                      <select class="form-select" id="equipment">
-                                      </select>
-                                    </div>
-                                  </div>
-
-
-                                  <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                    <div class="input-group mb-3">
-                                      <span class="input-group-text c_activity">บุคคล:</span>
-                                      <input type="text" class="form-control" id="cont" placeholder="ติดต่อบุคคล" maxlength="255">
-                                    </div>
-                                  </div>
-
-
-                                  <div class="row">
-                                    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                      <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                          <div class="input-group mb-3">
-                                            <span class="input-group-text c_activity">สถานะ:</span>
-                                            <select class="form-select" id="status">
-                                              <option value="I" selected>รับแจ้ง</option>
-                                              <option value="P">ดูแล</option>
-                                              <option value="R">ซ่อม</option>
-                                              <option value="A">ปกติ</option>
-                                            </select>
-                                          </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                          <div class="input-group mb-3">
-                                            <span class="input-group-text c_activity">ความสำคัญ:</span>
-                                            <select class="form-select" id="priority">
-                                              <option value="N" selected>ทั่วไป</option>
-                                              <option value="H">เร่งด่วน</option>
-                                              <option value="D">ฉุกเฉิน</option>
-                                            </select>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                      <div class="input-group">
-                                        <span class="input-group-text">อาการ:</span>
-                                        <textarea id="detail" class="form-control h_textarea" rows="3" aria-label="textarea a"></textarea>
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="input-group mb-3">
-                                          <span class="input-group-text c_activity">ค่าใช้จ่าย:</span>
-                                          <input id="pcost" type="number" min=0 class="form-control">
-                                        </div>
-                                      </div>
-
-                                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="input-group mb-3">
-                                          <span class="input-group-text c_activity">ค่าเบิก:</span>
-                                          <input id="pwithdraw" type="number" min=0 class="form-control">
-                                        </div>
-                                      </div>
-
-                                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="input-group date mb-3" id="datepicker">
-                                          <span class="input-group-text c_activity">วันที่นัด:</span>
-                                          <input type="text" class="form-control" id="date" placeholder="วันที่นัดดูแลอุปกรณ์" />
-                                          <span class="input-group-append">
-                                            <span class="input-group-text d-block">
-                                              <i class="fa fa-calendar"></i>
-                                            </span>
-                                          </span>
-                                        </div>
-                                      </div>
-
-
-                                      <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                        <div class="input-group mb-3">
-                                          <span class="input-group-text ">ผู้บันทึก:</span>
-                                          <select class="form-select" id="owner">
-                                          </select>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div class="row">
-                                      <div class="">
-                                        <label for="fileLabel" class="form-label" id="fileLabel"> </label>
-                                      </div>
-                                    </div>
-
-                                  </div>
-                            </section>
-                          </div>
-
-                          <div class="modal-footer">
-                            <button id="ok" type="submit" class="btn btn-primary">บันทึก</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
-              </section>
-            </div>
+                  </div>
+            </section>
           </div>
+
+          <div class="modal-footer">
+            <button id="ok" type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  </form>
-  </main>
-  </div>
-  </div>
+    </div>
 </body>
 <?php include("0_footerjs_piority.php"); ?>
 <script src="js/systemdtcolum.js"></script>
 <script src="js/systemzero.js"></script>
+
 <script>
   $(document).ready(function() {
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
@@ -445,9 +466,8 @@
       }
 
       // console.log(startd)
-      console.log(startd)
-      $('#table_datahd').DataTable().column(8).search(startd).draw();
-      // $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
+      $('#table_datahd').DataTable().column(6).search(startd).draw();
+      $('#table_datahd').DataTable().column(3).search($('#statusseacrh').val()).draw();
     })
 
 
@@ -714,13 +734,6 @@
     $('#backhis').click(function() {
       window.location = 'main.php';
     });
-    
-    $('#newdetail').click(function() {
-      window.location = 'datatable_equipment.php';
-    });
-
-
-    
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

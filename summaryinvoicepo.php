@@ -152,9 +152,14 @@
                   
                   <div class="row">
                     
-                  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                       <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button>
                       <button id="refreshall" type="button" class="btn btn-primary" style="margin-left: 50px;">ค้นหาทั้งหมด</button>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                      <button type="button" id="downloadExcel" name='downloadExcel'  class=" btn btn-success float-right float-end">Download  <i class="fas fa-file-excel"></i></button>
+                      <!-- <button id="refresh" type="button" class="btn btn-primary">ค้นหา</button> -->
                     </div>
 
                   </div>
@@ -266,14 +271,17 @@
     var qid = 'PO_INVOICE_SUMMARYDATEBE'; //
     var condotion_id = 'DATEBE'; //
     var datasave = '';
+    var exceldate = '';
 
     // หาวันที่ 1 ของเดือนนี้
     var firstDayOfMonth = moment().startOf('month').format('DD/MM/YYYY');
     var lastDayOfMonth = moment().endOf('month').format('DD/MM/YYYY');
+
     moment($('#datepickerbegin').val(firstDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
     moment($('#datepickerend').val(lastDayOfMonth), 'DD/MM/YYYY').format('MM/DD/YYYY')
     var databegin = moment().startOf('month').format('DD.MM.YYYY');
     var dateend = moment().endOf('month').format('DD.MM.YYYY');
+    exceldate =  moment().startOf('month').format('DD_MM_YYYY') + "ถึง" +  moment().endOf('month').format('DD_MM_YYYY') ;
     $('#dayid').val("ณ วันที่ " + firstDayOfMonth + " ถึง " + lastDayOfMonth)
     $("#datepickerbegin").datepicker({
       format: "dd/mm/yyyy",
@@ -415,14 +423,16 @@
 
     function set_formdata(conditionsformdata) {
       var formData = new FormData();
-      // Param.push({})
-      console.log(qid)
-      console.log(condotion_id)
+
       if (conditionsformdata == "select") {
         formData.append('queryIdHD', qid);
         formData.append('condition', condotion_id);
       } else {}
+
+      formData.append('queryIdExcel', 'EXCEL_SUMMARY_PO_RANK');
+      formData.append('condition_footer', 'F');
       formData.append('Param', JSON.stringify(Param));
+      formData.append('blobData', JSON.stringify(json_alldata));
       ////////////////
       return formData;
     }
@@ -443,6 +453,7 @@
       if (result.status) {
         $('.loading').show();
         $('#dayid').val("ณ วันที่ " + moment(result.databegin, 'DD.MM.YYYY').format('DD/MM/YYYY') + " ถึง " + moment(result.dateend, 'DD.MM.YYYY').format('DD/MM/YYYY'))
+        exceldate = moment(result.databegin, 'DD_MM_YYYY').format('DD_MM_YYYY')+ " ถึง " + moment(result.dateend, 'DD.MM.YYYY').format('DD_MM_YYYY')
         qid = 'PO_INVOICE_SUMMARYDATEBE';
         condotion_id = 'DATEBE';
         fecth_databased(result.databegin, result.dateend);
@@ -453,6 +464,7 @@
       const result = checkdate(true);
       $('.loading').show();
       $('#dayid').val("ข้อมูลทั้งหมด ณ ปัจจุบัน");
+      exceldate = "All";
       qid = 'PO_INVOICE_SUMMARY0';
       condotion_id = 'NULL';
       fecth_databased(result.databegin, result.dateend);
@@ -497,13 +509,9 @@
     };
 
     var chartdatabase;
-
-
-    var doccount;
     var json_alldata;
 
     function allsum(json_data) {
-      doccount = 1;
 
       json_alldata = json_data.reduce(function(acc, item) {
         var existingItem = acc.find(function(element) {
@@ -522,9 +530,8 @@
         } else {
           var newItem = {
             CODE: item.CODE,
-            DOCDATE: item.DOCDATE,
             NAME: item.NAME,
-            EXCHGRATE: item.EXCHGRATE,
+            // EXCHGRATE: item.EXCHGRATE,
             NETAMT: parseFloat(item.NETAMT),
           };
           if (item.DOCNO) {
@@ -544,6 +551,7 @@
       json_alldata.sort(function(a, b) {
         return b.NETAMT - a.NETAMT;
       });
+
 
       tabledatahd.clear().rows.add(json_alldata).draw();
       chartdatabase = json_alldata.slice(0, 10);
@@ -650,7 +658,44 @@
       }
     };
 
+    ////////////////////////////////////////////// EXPORT ////////////////////////////////////////////////////////////////////
+    $("#downloadExcel").click(function() {
+            const result = checkdate();
+            if (result.status) {
+                download_excel(result.databegin, result.dateend)
+            }
+        });
 
+    async function download_excel(data_begin, date_end) {
+            console.log(json_alldata)
+            try {
+                const blobResponse = await fetch('export/excel_export.php', {
+                    method: 'POST',
+                    body: set_formdata('excel'),
+                });
+
+                if (!blobResponse.ok) {
+                    throw new Error('Error sending data to server');
+                    $('.loading').hide();
+                }
+                const namelike = 'Excel_สรุปยอดผู้จำหน่าย_'+exceldate;
+            // console.log(namelike);
+                // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
+                const blobData = await blobResponse.blob();
+                const url = window.URL.createObjectURL(blobData);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = namelike + '.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                $('.loading').hide();
+            } catch (error) {
+                console.error(error);
+            }
+        }
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // render init block
     const myChart = new Chart(
       document.getElementById('myChart'),

@@ -180,15 +180,11 @@
                             </tbody>
                         </table>
                     </div>
-
-
                             </div>
                         </div>
                     </div>
             </div>
         </section>
-
-
         <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm modal-md  modal-lg">
                 <div class="modal-content">
@@ -206,15 +202,8 @@
                 </div>
             </div>
         </div>
-
-        
         </form>
-      
-   
     </main>
-
-  
-    
     </div>
   </div>
   
@@ -401,9 +390,6 @@
         $(".modal .btn-secondary, .modal .btn-close").click(function() {
             $("#myModal").modal("hide"); // ปิดกล่องโมดอล
         });
-
-
-
         const clearTable = () => {
             createtable.clear().draw();
             counter = 0; // รีเซ็ตค่า counter
@@ -417,8 +403,6 @@
                 counter--;
             }
         };
-
-
         $('#idForm').on('submit', function(e) {
             e.preventDefault(); // ป้องกันการส่ง form ไปยังหน้าอื่น
             let url = "";
@@ -448,14 +432,10 @@
                     const companyValue = $(this).find('td:eq(1) .company-input').val();
                     const detailValue = $(this).find('td:eq(2) .detail-input').val(); // คอลัมน์ที่ 2
                     const remarkValue = $(this).find('td:eq(3) .remark-input').val(); // คอลัมน์ที่ 3
-                    // const locationValue = $(this).find('td:eq(4) .location-input').val();
                     const locationValue = $(this).find('td:eq(4) .location-input').val();
-
-                    console.log(locationValue)
                     const dateActValue = $('#dateatc').val();
                     const dateWarnValue = $('#datewarn').val();
                     const ownername = $('#ownername').val();
-
                     tableData.push({
                         name: companyValue,
                         detail: detailValue,
@@ -465,7 +445,6 @@
                         ownername: ownername,
                         location: locationValue
                     });
-                    console.log(tableData)
                 });
             } else {
                 process = 'F'

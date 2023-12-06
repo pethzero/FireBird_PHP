@@ -156,6 +156,12 @@ class HeadMake
                     'งวดเดือน'
                 ];
                 break;
+            case "EXCEL_SUMMARY_PO_RANK":
+                    return ['รหัส'
+                            , 'ชื่อผู้จำหน่าย'
+                            , 'ราคารวม'
+                            , 'จำนวนใบแจ้งหนี้'];
+                    break;
             case "EXCEL_TEST":
                 return ['ลำดับ', 'ราคารวม'];
                 break;

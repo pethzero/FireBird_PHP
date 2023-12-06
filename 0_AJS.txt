@@ -1,0 +1,11 @@
+   $response = array(
+                'message' => 'SQL',
+                'datasql' => $SqlID001,
+                'status' => 'error',
+            );
+
+               $response = array(
+                'message' => 'SQL',
+                'datasql' => $SqlID001,
+                'status' => 'finish',
+            );
