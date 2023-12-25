@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $result_check = $deleteData->checkExists($DataRemove_Json[0], $sqlQueryCheck, $checkCondition); // ส่งค่า $message_db มาด้วย
 
             if ($result_check['status'] !== false) {
-                // $response = array('status' => 'success', 'message' => $result_check['message'] );
                 if ($deleteData->deleteRecord($DataRemove_Json[0], $sqlQuery, $condition)) {
                     $response = array('message' => 'Data received successfully', 'status' => 'success');
                     $deleteData->data_commit->commit();
@@ -34,29 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else {
                 $response = array('status' => 'warning', 'message' => $result_check['message']);
             }
-
-
-            // if ($deleteData->deleteRecord($DataRemove_Json[0], $sqlQuery, $condition)) {
-            //     $response = array('message' => 'Data received successfully','status' => 'success');
-            //     $deleteData->data_commit->commit();
-            // } else {
-            //     $response = array('message' => 'Data received Error','status' => 'error');
-            //     $deleteData->data_commit->rollBack();
-            // }
-
         } else {
             $response = array(
                 'message' => 'ไม่พบคำสั่ง SQL สำหรับ $queryId ที่ระบุ',
                 'status' => 'error',
             );
         }
-
-        // $response = array(
-        //     'message' => 'Data received successfully',
-        //     'sql' =>  $sqlQuery,
-        //     'DataRemove' =>  $DataRemove,
-        //     'DataRemove ' =>  $DataRemove_Json[0] 
-        // );
         header('Content-Type: application/json');
         echo json_encode($response);
     } catch (Exception $e) {

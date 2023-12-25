@@ -22,9 +22,10 @@
   <div class="container text-center">
     <h1 class="display-1">404</h1>
     <h2 class="display-5">Page Not Found</h2>
-    <img src="doc/nopermission.jpg" alt="Image Alt Text">
-    <p class="lead">คุณไม่มีสิทธ์ใช้งาน</p>
-    <a href="main.php" class="btn btn-primary">Back to Home</a>
+    <img src="path/to/your/image.jpg" alt="Image Alt Text">
+    <p class="lead">The page you are looking for might have been removed, had its name changed, or is temporarily
+      unavailable.</p>
+    <a href="/" class="btn btn-primary">Back to Home</a>
   </div>
 
   <!-- นำเข้าสคริปต์ของ Bootstrap 5 และ Popper.js (จำเป็นถ้าต้องใช้ dropdowns, tooltips, หรือ popovers) -->

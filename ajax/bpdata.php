@@ -7,6 +7,10 @@ class bindParamData
             case 'RECNO000':
                 $stmt->bindParam(':recno', $data['recno']);
                 break;
+            case 'RECNO000_STATUS':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':status', $data['status']);
+                break;
             case '001':
                 $stmt->bindParam(':name', $data['name']);
                 $stmt->bindParam(':detail', $data['detail']);
@@ -67,9 +71,7 @@ class bindParamData
                 $stmt->bindParam(':lastusage', $data['lastusage']);
                 $stmt->bindParam(':recorderno', $data['recorderno']);
                 $stmt->bindParam(':recordername', $data['recordername']);
-
                 $stmt->bindParam(':upload', $data['upload']);
-
                 if ($condition === '003_UPDEQUIP') {
                     $stmt->bindParam(':recno', $data['recno']);
                 } else {
@@ -102,7 +104,6 @@ class bindParamData
                 $stmt->bindParam(':partname', $data['partname']);
                 $stmt->bindParam(':recdate', $data['recdate']);
                 $stmt->bindParam(':remark', $data['remark']);
-                // $stmt->bindParam(':modifiedby',$data['modifiedby']);
                 $stmt->bindParam(':modifiedby', $data['modifiedby']);
                 break;
             case 'DATEBE':
@@ -112,15 +113,36 @@ class bindParamData
             case 'DATEPERIOD':
                 $stmt->bindParam(':DATEPERIOD', $data['dateperiod']);
                 break;
+            case 'EMPNOCHECK':
+                $stmt->bindParam(':empno', $data['empno']);
+                $stmt->bindParam(':login', $data['login']);
+                break;
+            case 'EMPNOIND':
+            case 'EMPNOUPD':
+                $stmt->bindParam(':empno', $data['empno']);
+                $stmt->bindParam(':userlevel', $data['userlevel']);
+                $stmt->bindParam(':empname', $data['empname']);
+                $stmt->bindParam(':empnick', $data['empnick']);
+                $stmt->bindParam(':login', $data['login']);
+                $stmt->bindParam(':pass', $data['pass']);
+                if ($condition === 'EMPNOUPD') {
+                    $stmt->bindParam(':recno', $data['recno']);
+                }
+                break;
             case 'TYPE':
                 $stmt->bindParam(':type', $data['type']);
                 break;
-
-
+            case 'ADDAMT':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':addamt', $data['addamt']);
+                break;
                 // เพิ่มเงื่อนไขเพิ่มเติมตามความต้องการ
+
             default:
                 // ไม่มีเงื่อนไขที่ตรงกัน
                 break;
         }
     }
 }
+
+//        $stmt->bindParam(':img', ''); ห้ามว่าง

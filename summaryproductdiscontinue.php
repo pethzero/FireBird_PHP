@@ -134,9 +134,9 @@
               <div class="col-md-12">
                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                   <div class="col p-4 d-flex flex-column position-static">
-
-                    <h3>รายงานใบสั่งผลิตที่ยังไม่เริ่มการผลิต 3 วัน</h3>
-
+                    <div>
+                      <h3>รายงานใบสั่งผลิตที่ยังไม่เริ่มการผลิต<span id="headname"> 3 วัน</span></h3>
+                    </div>
                     <div class="row">
                       <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3">
                         <select class="form-select" id="peroid">
@@ -154,8 +154,17 @@
                         <button class="btn btn-success" id="downloadExcel">download excel</button>
                       </div>
                     </div>
+           
 
-                    <h4> ยอดซื้อประมาณการบริษัทเยอะที่สุด </h4>
+                    <hr>
+                    <div class="chartCard">
+                      <div class="chartBox">
+                        <canvas id="myChart"></canvas>
+                      </div>
+                    </div>
+                    <hr>
+            
+                    <h4> ยอดสั่งขายประมาณการบริษัทเยอะที่สุด </h4>
                     <div class="row">
                       <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                         <div class="input-group mb-3">
@@ -173,7 +182,7 @@
                       </div>
                     </div>
 
-                    <h4> ยอดซื้อประมาณการทั้งหมด </h4>
+                    <h4> ยอดสั่งขายประมาณการทั้งหมด </h4>
                     <div class="row">
                       <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
                         <div class="input-group mb-3">
@@ -183,9 +192,7 @@
                         </div>
                       </div>
                     </div>
-
                     <hr>
-
                     <div class="row">
                       <div class="col-12">
                         <table id="table_datahd" class="nowrap table table-striped table-bordered    align-middle " width='100%'>
@@ -251,15 +258,19 @@
     var qid = 'JOBDISCON'; //
     var condotion_id = 'DATEBE'; //
     var datasave = '';
-
     const firstDay = '30.12.1899';
     const currentDate = moment().format('DD.MM.YYYY');
+    var headname = " 3 วัน";
     $("#peroid").change("select", function() {
       $('.loading').show();
 
+      headname = $("select#peroid option:selected").text();
+      
       if ($("#peroid").val() == '0') {
+        // headname = "ทุกรายการ"
         fecth_databased(firstDay, currentDate);
       } else {
+        headname =" "+headname
         const startDate = moment().subtract(parseInt($("#peroid").val()), 'days').format('DD.MM.YYYY');
         fecth_databased(startDate, currentDate);
       }
@@ -315,7 +326,7 @@
         {
           data: null,
           render: function(data, type, row, meta) {
-            return formatCurrency(data.TOTALAMT)
+            return formatCurrencyFix(data.TOTALAMT, 'thb')
           }
         },
       ],
@@ -363,6 +374,8 @@
         const jsonDataHD = await jsonResponse.json();
         data_main = jsonDataHD.datasql;
         // data_main = [];
+        console.log(headname)
+       $("#headname").text(headname)
         ProcessCalcula(data_main);
         tabledatahd.clear().rows.add(data_main).draw();
 
@@ -379,9 +392,10 @@
         formData.append('queryIdHD', qid);
         formData.append('condition', condotion_id);
       } else if (conditionsformdata == "excel") {
-        formData.append('queryIdExcel', 'EXCEL_TEST');
-        formData.append('condition_footer', 'F');
-        formData.append('blobData', JSON.stringify([{}]));
+        formData.append('queryIdExcel', 'EXCEL_PRUDUCT_DISCON');
+        formData.append('TureTotalAmt', exceltolal);
+        formData.append('condition_footer', 'T');
+        formData.append('blobData', JSON.stringify(excel_data));
       }
       formData.append('Param', JSON.stringify(Param));
 
@@ -403,41 +417,100 @@
       download_excel()
     });
 
-    function ProcessCalcula(data) {
-      let caldata = data;
-      sum_result = 0;
+    function ProcessCalcula(datacal) {
 
-      caldata.forEach(item => {
-        sum_result += parseFloat(item.TOTALAMT);
+      json_alldata = datacal.reduce(function(acc, item) {
+        var existingItem = acc.find(function(element) {
+          return element.CODE === item.CODE;
+        });
+        let money = 0;
+        if (item.TOTALAMT !== null) {
+          money = item.TOTALAMT;
+        }
+
+        if (existingItem) {
+          existingItem.TOTALAMT += parseFloat(money);
+          if (item.DOCNO) {
+            if (!existingItem.DOCNO) {
+              existingItem.DOCNO = 1;
+            } else {
+              existingItem.DOCNO++;
+            }
+          }
+        } else {
+          var newItem = {
+            CODE: item.CODE,
+            NAME: item.CUSTNAME,
+            TOTALAMT: parseFloat(money),
+          };
+          if (item.DOCNO) {
+            newItem.DOCNO = 1;
+          }
+          acc.push(newItem);
+        }
+
+        return acc;
+      }, []);
+      // console.log(json_alldata)
+
+      sum_result = 0;
+      json_alldata.forEach(item => {
+        sum_result += item.TOTALAMT;
       });
 
+      json_alldata.sort(function(a, b) {
+        return b.TOTALAMT - a.TOTALAMT;
+      });
+
+
+
+      chartdatabase = json_alldata.slice(0, 10);
       const formattedResult = sum_result.toFixed(2);
       $('#sumtotal').val(formattedResult.replace(/\B(?=(\d{3})+(?!\d))/g, ','))
-      if (sum_result !== 0) {
-        // namemessage = (chartdatabase[0].CODE).trim() + " : " + (chartdatabase[0].NAME).trim();
-        // amtmessage = ((sum_result).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      }
-      // $('#company').val(namemessage)
-      // $('#sumcompany').val(amtmessage)
-
-
       let namemessage = "";
       let amtmessage = "";
+      if (chartdatabase.length > 0) {
+        namemessage = (chartdatabase[0].CODE).trim() + " : " + (chartdatabase[0].NAME).trim();
+        amtmessage = ((chartdatabase[0].TOTALAMT).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+      $('#company').val(namemessage)
+      $('#sumcompany').val(amtmessage)
+
+      data.datasets[0].data = chartdatabase.map(function(item) {
+        return item.TOTALAMT;
+      });
+      myChart.update();
     }
 
-    function ProcesssMatchData(data) {
-      const mappedData = data.map((item) => {
+    function ProcesssMatchData(datamap) {
+      const mappedData = datamap.map((item) => {
+        let money = 0;
+        if (item.TOTALAMT !== null) {
+          money = item.TOTALAMT;
+        }
+
         return {
-          id: item.RECNO,
+          DOCNO: item.DOCNO,
+          DOCDATE:formatDate(item.DOCDATE),
+          COMPDATE:formatDate(item.COMPDATE),
+          DAYLEFT:item.DAYLEFT,
+          CUSTNAME:item.CUSTNAME,
+          PRODNAME:item.PRODNAME,
+          QUANORDER:convertToIntegerFix(item.QUANORDER, 'none'),
+          TOTALAMT:money,
         };
       });
       return mappedData;
     }
 
+    var excel_data;
+    var exceltolal;
     async function download_excel() {
       try {
         // ดึงข้อมูล Excel จากเซิร์ฟเวอร์
         $('.loading').show();
+        exceltolal =  $('#sumtotal').val();
+        excel_data = ProcesssMatchData(data_main)
         const blobResponse = await fetch('export/excel_export.php', {
           method: 'POST',
           body: set_formdata('excel'),
@@ -448,10 +521,9 @@
           $('.loading').hide();
         }
 
-        const namelike = $('#namelink').val();
-        // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
+        let namelike;
+        namelike = 'ใบสั่งผลิตยังไม่เริ่ม_'+$("select#peroid option:selected").text().replace(/\s/g, '_');
         const blobData = await blobResponse.blob();
-
         const url = window.URL.createObjectURL(blobData);
         const a = document.createElement('a');
         a.style.display = 'none';
@@ -459,9 +531,7 @@
         a.download = namelike + '.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
         document.body.appendChild(a);
         a.click();
-
         window.URL.revokeObjectURL(url);
-
         $('.loading').hide();
       } catch (error) {
         console.error(error);
@@ -469,6 +539,89 @@
     }
 
     ////////////////////////////////////////////////// CHART  //////////////////////////////////////////////////
+    const data = {
+      labels: ['TOP1', 'TOP2', 'TOP3', 'TOP4', 'TOP5', 'TOP6', 'TOP7', 'TOP8', 'TOP9', 'TOP10'],
+      datasets: [{
+        label: 'ยอดซื้อ TOP 10',
+        data: Array(10).fill(null), // กำหนดข้อมูลเริ่มต้นให้เป็น null ในอาร์เรย์ขนาด 10 ตัว
+        backgroundColor: [
+          'rgba(0, 153, 51,0.2)',
+        ],
+        borderColor: [
+          'rgba(0, 153, 51,1)'
+        ],
+        borderWidth: 2
+      }]
+    };
+
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'จำนวนการขาย',
+              font: {
+                size: window.innerWidth <= 768 ? 14 : 16, // ขนาดตัวอักษรของหัวข้อแกน Y
+                weight: 'bold' // ความหนาของตัวอักษรของหัวข้อแกน Y
+              }
+            },
+            ticks: {
+              font: {
+                size: window.innerWidth <= 768 ? 12 : 14, // ขนาดตัวอักษรของตัวเลขบนแกน Y
+                weight: 'normal' // ความหนาของตัวเลขบนแกน Y
+              }
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: false,
+            text: 'ยอดซื้อ TOP 10', // ข้อความหัวเรื่อง
+            font: {
+              size: 20, // ขนาดตัวอักษร
+              weight: 'bold' // ความหนา
+            }
+          },
+
+          tooltip: {
+            titleFont: {
+              size: window.innerWidth <= 768 ? 16 : 25,
+            },
+            bodyFont: {
+              size: window.innerWidth <= 768 ? 14 : 20,
+            },
+            callbacks: {
+              label: function(context) {
+                let label = '';
+                if (context.parsed.y !== null) {
+                  if (context.datasetIndex === 0) {
+                    label += chartdatabase[context.dataIndex].CODE + ':' + chartdatabase[context.dataIndex].NAME + ':' + formatCurrency(context.parsed.y);
+                  }
+                }
+                return label;
+              }
+            }
+          }
+        },
+      }
+    };
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+    if (window.innerWidth <= 768) {
+      // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 600px (สำหรับโทรศัพท์)
+      $("#myChart").css("height", "300px");
+    } else {
+      $("#myChart").css("height", "620px");
+    }
     $('#backhis').click(function() {
       window.location = 'main.php';
     });

@@ -6,7 +6,6 @@ include("crud_zen.php");
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $queryIdHD = isset($_POST['queryIdHD']) ? $_POST['queryIdHD'] : '';
     $condition = isset($_POST['condition']) ? $_POST['condition'] : '';
-
     $tableData = isset($_POST['tableData']) ? $_POST['tableData'] : null;
     $tableData_Json = json_decode($tableData, true);
     // ดำเนินการกับข้อมูลตามที่คุณต้องการ

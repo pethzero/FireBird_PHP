@@ -3,6 +3,7 @@
 include("sql.php");
 include("bpdata.php");
 include("crud_zen.php");
+include("systemfuc.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ส่งค่ามาจาก หน้าบ้าน
@@ -16,28 +17,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQueries = new SQLQueries();
         $SqlID001 = $sqlQueries->scanSQL($queryId001);
 
-        
         if ($SqlID001 !== null) {
-            $selectData = new CRUDDATA('firebird','192.168.1.28', 'SAN', 'SYSDBA', 'masterkey');
-            $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
-            
-            
-            $result = $selectData->SelectRecordFireBirdCodition($tableData_Json[0],$SqlID001,$condition); 
+            $config_setting = database_config('fbserver');
+            // $config_setting = database_config('fbtest');
+            $selectData = new CRUDDATA(...$config_setting);
 
-            if ($result['status'] !== false ) {
+            $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
+            $result = $selectData->SelectRecordFireBirdCodition($tableData_Json[0], $SqlID001, $condition);
+
+            if ($result['status'] !== false) {
                 $response = array('status' => 'success', 'datasql' => $result['result'], 'dbconnect' =>  $selectData->message_log);
-                // $selectData->data_commit->commit();
+                $selectData->data_commit->commit();
             } else {
                 $response = array('status' => 'error', 'datasql' => $result['result'], 'message' => 'An error occurred');
                 $selectData->data_commit->rollBack();
             }
-            
-            // $response = array(
-            //     'message' => 'SQL',
-            //     'datasql' => $tableData_Json[0],
-            //     'status' => 'finish',
-            // );
-
         } else {
             $response = array(
                 'message' => 'ไม่พบคำสั่ง SQL สำหรับ $queryId ที่ระบุ',
@@ -45,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 'status' => 'error',
             );
         }
-     
+
         header('Content-Type: application/json');
         echo json_encode($response);
     } catch (Exception $e) {

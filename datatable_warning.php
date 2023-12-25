@@ -520,14 +520,6 @@
 
     $("#idForm").submit(function(event) {
       event.preventDefault();
-      // if ($('#name').val().trim() == '') {
-      //   Swal.fire(
-      //     'กรุณาเลือกชื่อใส่ชื่ออุปกรณ์',
-      //     'ไม่สามารถบันทึกได้',
-      //     'error'
-      //   )
-      //   return false
-      // }
       AlertSave()
     });
 
@@ -580,23 +572,7 @@
     function set_formdata(conditionsformdata) {
       var formData = new FormData();
       formData.append('name', $('#name').val());
-
-      /// upload ///
-      // var selectedFile = $('#fileToUpload')[0].files[0];
-      // if (selectedFile) {
-      //   formData.append('fileToUpload', selectedFile);
-      //   modify = 'T';
-      // } else {
-      //   modify = 'F';
-      //   formData.append('fileToUpload', undefined);
-      // }
-
       var warningValue = $('#date').val();
-      // var purchaseValue = $('#date').val();
-      // var firstUsageValue = $('#date_first').val();
-      // var lastUsageValue = $('#date_last').val();
-
-      /// id ,param ///
       paramhd = {
         recno: recno_edit,
         name: $('#name').val(),
@@ -674,7 +650,7 @@
       }).then((result) => {
         if (result.isConfirmed) {
           const crudManager = new CRUDManager(
-            datasave === "save" ? 'ajax/fecth_post_innotimainten.php' : 'ajax/fecth_post_upnotimainten.php', datasave === "save" ? 'save' : 'update'
+            datasave === "save" ? 'ajax/fecth_post_innotimainten.php' : 'ajax/fecth_update_standard.php', datasave === "save" ? 'save' : 'update'
           );
           crudManager.performCRUD();
         } else if (result.dismiss === Swal.DismissReason.cancel) {

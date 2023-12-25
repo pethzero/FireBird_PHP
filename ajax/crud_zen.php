@@ -46,7 +46,6 @@ class CRUDDATA
     private $db_name;
     private $username;
     private $password;
-
     private $conn;
     public $data_commit;
     public $message_log;
@@ -126,11 +125,8 @@ class CRUDDATA
             // $this->conn->beginTransaction(); // เริ่ม Transaction
             $stmt = $this->conn->prepare($sqlQuery);
             $stmt->execute();
-
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
             // ส่งค่าผลลัพธ์กลับ
-            // return $result;
             return array('result' => $result, 'status' => true,  'db_connect' => $this->message_log, 'fecth_select' => 'select success');
         } catch (PDOException $e) {
             // $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
@@ -161,16 +157,28 @@ class CRUDDATA
             $stmt = $this->conn->prepare($sqlQuery);
             bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
             $stmt->execute();
-            // $this->conn->commit(); // Commit การ Transaction
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($result['count'] > 0) {
-                return array('status' => true, 'message' => 'RECNO exists');
+                return array('status' => true, 'message' => 'Item exists');
             } else {
-                return array('status' => false, 'message' => 'RECNO does not exist');
+                return array('status' => false, 'message' => 'Item does not exist');
             }
         } catch (PDOException $e) {
             $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
             return array('status' => false, 'message' => $e->getMessage());
+        }
+    }
+    public function checkExistsNEW($data, $sqlQuery, $condition)
+    {
+        try {
+            $stmt = $this->conn->prepare($sqlQuery);
+            bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return array('result' => $result, 'status' => true, 'message' => 'Item exists');
+        } catch (PDOException $e) {
+            $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
+            return array('result' => [], 'status' => false, 'message' => $e->getMessage());
         }
     }
     /////////////////////////////////////////////////////////  INSERT  //////////////////////////////////////////////////////////////
@@ -256,10 +264,10 @@ class CRUDDATA
     }
 
 
-    public function autoincrement_sql($databasename,$tablename)
+    public function autoincrement_sql($databasename, $tablename)
     {
         try {
-            $query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '".$databasename."' AND TABLE_NAME = '" . $tablename . "'"; // SERVER
+            $query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '" . $databasename . "' AND TABLE_NAME = '" . $tablename . "'"; // SERVER
             $stmt  =  $this->conn->prepare($query);
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -268,6 +276,93 @@ class CRUDDATA
             // $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
             return array('result' => '', 'status' => false);
             // return false;
+        }
+    }
+
+
+    //////////////////////////////////////////////////////// NEW ////////////////////////////////////////////////////////////
+    public function SelectRecordConditionNEW($data, $sqlQuery, $condition)
+    {
+        try {
+            $stmt = $this->conn->prepare($sqlQuery);
+            bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            // // ส่งค่าผลลัพธ์กลับ
+            return array('result' => $result, 'status' => true,  'db_connect' => $this->message_log, 'message' => 'select success');
+        } catch (PDOException $e) {
+            // $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
+            return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());
+            // return false;
+        }
+    }
+
+    public function SelectRecordConditionMultipleNew($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            $results = []; // สร้าง array เพื่อเก็บผลลัพธ์ทั้งหมด
+
+            foreach ($dataArray as $data) {
+                $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition);
+                $stmt->execute();
+
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $results[] = $result; // เพิ่มผลลัพธ์ของแต่ละรอบลงใน array
+            }
+
+            return array('result' => $results, 'status' => true, 'db_connect' => $this->message_log, 'message' => 'select success');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function SelectRecordFireBirdConditionMultipleNew($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            $results = []; // สร้าง array เพื่อเก็บผลลัพธ์ทั้งหมด
+            foreach ($dataArray as $data) {
+                $dataRows = [];
+                $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition);
+                $stmt->execute();
+    
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($row as $key => $value) {
+                        if (is_string($value)) {
+                            // ข้อมูลเป็น string
+                            $row[$key] = iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $value);
+                        }
+                    }
+                    $dataRows[] = $row;
+                }
+                $results[] = $dataRows;
+            }
+    
+            return array('result' => $results, 'status' => true, 'db_connect' => $this->message_log, 'fecth_select' => 'select success');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'fecth_select' => $e->getMessage());
+        }
+    }
+    
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function insertRecordMultipleNew($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            foreach ($dataArray as $data) {
+                $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+                $stmt->execute();
+            }
+            return true;
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return false;
         }
     }
 }

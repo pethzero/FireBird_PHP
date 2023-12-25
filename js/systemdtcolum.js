@@ -124,6 +124,25 @@ const formatCurrency = (amount) => {
   return formattedAmount;
 };
 
+const formatCurrencyFix = (amount,type) => {
+  if (amount === '' || amount === null) {
+    if(type === "none")
+    {
+      return '';
+    }
+    else if(type === "zero"){
+      return "0.00";
+    }
+    else{
+      return "0.00฿";
+    }
+  }
+  let formattedAmount = parseFloat(amount).toFixed(2);
+  formattedAmount = formattedAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  formattedAmount += '฿';
+  return formattedAmount;
+};
+
 const formatValue = (amount) => {
   if (amount === '') {
     return '';

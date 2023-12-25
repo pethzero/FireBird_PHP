@@ -694,7 +694,7 @@
       }).then((result) => {
         if (result.isConfirmed) {
           const crudManager = new CRUDManager(
-            datasave === "save" ? 'ajax/fecth_post_innotimainten.php' : 'ajax/fecth_post_upnotimainten.php', datasave === "save" ? 'save' : 'update'
+            datasave === "save" ? 'ajax/fecth_post_innotimainten.php' : 'ajax/fecth_update_standard.php', datasave === "save" ? 'save' : 'update'
           );
           crudManager.performCRUD();
         } else if (result.dismiss === Swal.DismissReason.cancel) {

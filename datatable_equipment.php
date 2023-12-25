@@ -73,6 +73,25 @@
                       </div>
                     </div>
 
+                    <div class="row">
+                      <div class="col-12">
+                        <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
+                          <thead class="thead-light">
+                            <tr>
+                              <th>ลำดับ</th>
+                              <th>ข้อมูล</th>
+                              <th>เลขที่</th>
+                              <th>ชื่อ</th>
+                              <th>ประเภท</th>
+                              <th>รหัส</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
 
                   </div>
                 </div>
@@ -83,24 +102,7 @@
 
 
 
-            <div class="row">
-              <div class="col-12">
-                <table id="table_datahd" class="nowrap table table-striped table-bordered align-middle" width='100%'>
-                  <thead class="thead-light">
-                    <tr>
-                      <th>ลำดับ</th>
-                      <th>ข้อมูล</th>
-                      <th>เลขที่</th>
-                      <th>ชื่อ</th>
-                      <th>ประเภท</th>
-                      <th>รหัส</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+
           </section>
 
           <section>
@@ -795,7 +797,7 @@
       }).then((result) => {
         if (result.isConfirmed) {
           const crudManager = new CRUDManager(
-            datasave === "save" ? 'ajax/fecth_post_inequiment.php' : 'ajax/fecth_post_upequiment.php', datasave === "save" ? 'save' : 'update'
+            datasave === "save" ? 'ajax/fecth_post_inequiment.php' : 'ajax/fecth_update_img.php', datasave === "save" ? 'save' : 'update'
           );
           crudManager.performCRUD();
         } else if (result.dismiss === Swal.DismissReason.cancel) {

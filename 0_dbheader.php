@@ -126,6 +126,17 @@
         </ul>
       </li>
 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          แก้ไขฉุกเฉิน
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="debugsuppinv.php">ใบแจ้งหนี้ฝ่ายซื้อ</a></li>
+          <li><a class="dropdown-item" href="debugpatty.php">ยกยอด</a></li>
+        </ul>
+      </li>
+
+
 
     </ul>
 

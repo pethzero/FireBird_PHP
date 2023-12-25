@@ -341,14 +341,6 @@
             }
         };
 
-
-        // var encodedURL = encodeURIComponent('ajax_select_sql_firdbird.php');
-        // var encodeData = "<?php echo $csrfToken; ?>";
-
-        // function secertkey() {
-        //     return encodeData;
-        // }
-
         var encodedURL = encodeURIComponent('ajax_select_sql_mysql.php');
         var data_array = [];
         var detailtable = $('#table_datahd').DataTable({
@@ -458,9 +450,7 @@
                     }
                     $(this).addClass('table-custom');
                     selectedRow = this;
-
                     if (selectedRecno !== data.RECNO) {
-                        // เช็คว่ามีแถวที่ถูกเลือกอยู่หรือไม่
                         selectedRecno = data.RECNO;
                     }
                 });
@@ -478,24 +468,20 @@
             autoclose: true
         });
 
-        $("#datepicker_first").datepicker({
-            format: "dd/mm/yyyy",
-            clearBtn: true,
-            todayHighlight: true,
-            autoclose: true
-        });
+        // $("#datepicker_first").datepicker({
+        //     format: "dd/mm/yyyy",
+        //     clearBtn: true,
+        //     todayHighlight: true,
+        //     autoclose: true
+        // });
 
-        $("#datepicker_last").datepicker({
-            format: "dd/mm/yyyy",
-            clearBtn: true,
-            todayHighlight: true,
-            autoclose: true
-        });
+        // $("#datepicker_last").datepicker({
+        //     format: "dd/mm/yyyy",
+        //     clearBtn: true,
+        //     todayHighlight: true,
+        //     autoclose: true
+        // });
 
-
-        $('#seacrh').click(function() {
-
-        })
 
         $('#date_search').val(moment(new Date()).format('DD/MM/YYYY'));
 
@@ -523,9 +509,6 @@
             $('#date').prop('readonly', false);
             $('#remark').prop('readonly', false);
             $('#recuser').prop('readonly', false);
-
-            // $("#btnmodified").hide();
-
             $("#myModal").modal("show"); // เปิดกล่องโมดอล
         });
 
@@ -533,26 +516,18 @@
             var rowData = $('#table_datahd').DataTable().row($(this).closest('tr')).data();
             $('#ok').removeClass('btn-primary btn-success btn-warning').addClass('btn-danger').text('บันทึกแก้ไข');
             $('#story').removeClass('bg-secondary bg-success').addClass('bg-danger').text('แก้ไข');
-            // recno_edit = rowData.RECNO;
             viewstatus = 'T';
             datasave = 'update';
-
-            // $("#btnmodified").show();
-
             $('#custname').prop('readonly', true);
             $('#drawno').prop('readonly', false);
             $('#partname').prop('readonly', false);
             $('#date').prop('readonly', false);
             $('#remark').prop('readonly', false);
             $('#recuser').prop('readonly', false);
-
-            // search_datalist(rowData.RECNO);
-            // $("#myModal").modal("show");
             recno_edit = rowData.RECNO;
             console.log(recno_edit)
             CRUDSQL('ajax/fecth_item.php', 'select')
                 .then(() => {
-                    // console.log('end')
                     $("#myModal").modal("show");
                 })
                 .catch(error => {
@@ -864,6 +839,8 @@
                 // กรณีอื่น ๆ
                 // other cases
             }
+            formData.append('checkData', 'CHECK_DRAWING');
+            formData.append('checkCondition', 'CHECK_DRAWING');
 
             // formData.append('checkname', 'CHECK_DRAWING');
             // formData.append('checkvalue', 'T');
@@ -1051,10 +1028,6 @@
         };
 
         ////////////////////////////////////////////// MISCELLANEOUS /////////////////////////////////////////////////
-        //  $('html, body').animate({
-        //       scrollTop: $('#dataoffset').offset().top
-        //   }, 100); // ค่าความเร็วในการเลื่อน (มิลลิวินาที)
-
         $('#backhis').click(function() {
             window.location = 'main.php';
         });

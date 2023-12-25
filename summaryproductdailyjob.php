@@ -168,7 +168,7 @@
 
                       </div>
 
-                    
+
                     </div>
 
                     <div class="row">
@@ -177,6 +177,7 @@
                           <thead class="thead-light">
                             <tr>
                               <th>ลำดับ</th>
+                              <th>เลขที่ใบสั่งผลิต</th>
                               <th>เริ่มเวลา</th>
                               <th>เสร็จเวลา</th>
                               <th>กระบวนการ</th>
@@ -185,7 +186,6 @@
                               <th>ดี</th>
                               <th>เสีย</th>
                               <th>คืน</th>
-                              <th>เลขที่ใบสั่งผลิต</th>
                               <th>ลูกค้า</th>
                               <th>สินค้าผลิต</th>
                             </tr>
@@ -264,6 +264,9 @@
           }
         },
         {
+          data: 'DOCNO',
+        },
+        {
           data: 'STEPSTART',
           render: formatMin
         },
@@ -297,9 +300,7 @@
           data: 'RETPROD',
           render: convertToInteger
         },
-        {
-          data: 'DOCNO',
-        },
+
         {
           data: 'NAME',
         },

@@ -206,3 +206,14 @@ max-width: 960px;
 		font-family: cursive; /* เลือกฟอนต์ลายเซ็นต์ (เช่น cursive) */
 		font-weight: bold; /* น้ำหนักของตัวอักษร (bold) */
 	  }
+
+
+	  .inputreadonly:read-only {
+		background: #c6c6c6;
+	  }
+	  
+	  .inputreadonly:focus {
+		outline: none; /* ไม่แสดง outline เมื่อ input ได้รับ focus */
+		border-color: #888; /* สีเทาเข้มเมื่อ input ได้รับ focus */
+	  }
+	  

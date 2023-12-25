@@ -650,7 +650,6 @@ const CRUDSQL = (url, status_sql) => {
 
             } else if (status_sql == 'delete') {
                 if (data.status === "success") {
-                    // RemoveRowTable();
                     getDataFromServer();
                     Swal.fire({
                         title: "ข้อมูลถูกลบแล้ว",

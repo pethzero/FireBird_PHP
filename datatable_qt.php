@@ -179,18 +179,6 @@
       <form id="idForm" method="POST">
        
   <section>
-
-      <!-- <div class="row pb-3">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
-        </div>
-      </div>
-
-   
-
-      <h2>ใบเสนอราคา</h2> -->
-
-      <!-- <hr> -->
   <div class="row pt-2 mb-2">
   <div class="col-md-12">
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
