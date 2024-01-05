@@ -1,16 +1,27 @@
 <?php
-
-function database_config($key)
+class TBname
 {
-    $configurations = [
-        'fbserver' => ['firebird', '192.168.1.28', 'SAN', 'SYSDBA', 'masterkey'],
-        'fbtest' => ['firebird', 'localhost', 'SAN', 'SYSDBA', 'masterkey'],
-        'sanserver' => ['mysql', 'localhost', 'SAN', 'root', '1234'],
-        // เพิ่มค่าอื่นๆ ตามต้องการ
-    ];
+    private $tbname = array();
+    public function __construct()
+    {
+        $this->tbname['0000'] = ["tablename" => "", "aid" => ""];
+        $this->tbname['0088'] = ["id" => "0088","tablename" => "SAN", "aid" => "GEN_INVREQHD","spcondition" => "-"];
+        $this->tbname['0089'] = ["id" => "0089","tablename" => "SAN", "aid" => "GEN_INVREQDT","spcondition" => "-"];
+    }
 
-    return $configurations[$key] ?? null;
+    public function getTBName($tbanme)
+    {
+        // ตรวจสอบว่า $tbanme มีอยู่ใน $tbname หรือไม่
+        if (isset($this->tbname[$tbanme])) {
+            return $this->tbname[$tbanme];
+        } else {
+            return null; // หรือค่าเริ่มต้นที่คุณต้องการ
+        }
+    }
 }
+
+
+
 
 
 function uniquecondition($condition_unique, $result_unique, $result_data)
@@ -45,4 +56,15 @@ function uniquecondition($condition_unique, $result_unique, $result_data)
         }
     }
     return $condition_data;
+}
+
+function DataMapping($data,$condition,$replace)
+{
+    foreach ($data as &$item) {
+        if($condition == '0089'){
+            $item['invreqhd'] = $replace;
+        }
+    }
+
+    return $data;
 }

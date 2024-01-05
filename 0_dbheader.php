@@ -101,7 +101,6 @@
           <li><a class="dropdown-item" href="dataquancontrol.php">ประเมินคุณภาพสินค้า</a></li>
         </ul>
       </li>
-
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           บันทึกงาน
@@ -112,7 +111,6 @@
           <li><a class="dropdown-item" href="datargdrawing.php">ออกแบบ</a></li>
         </ul>
       </li>
-
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -142,13 +140,20 @@
 
     <ul class="navbar-nav ms-auto "> <!-- เพิ่มคลาส ms-md-0 เพื่อปรับการจัดตำแหน่งในหน้าจอขนาดเล็ก -->
       <li class="nav-item d-flex align-items-center">
-        <span class="nav-link text-white"><?php echo $_SESSION["EMPNAME"] ?></span>
+        <span class="nav-link text-white">
+          <?php 
+          // echo $_SESSION["EMPNAME"] 
+          echo isset( $_SESSION["EMPNAME"]) ?  $_SESSION["EMPNAME"] : '';
+          ?>
+      </span>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" data-bs-expanded="false">
           <!-- <img src="images/fox.jpg" width="40" height="40" class="rounded-circle"> -->
           <?php
-          echo $_SESSION["IMAGEEMPL"];
+        
+            echo isset( $_SESSION["IMAGEEMPL"]) ?  $_SESSION["IMAGEEMPL"] : '<img src="images/fox.jpg" width="40" height="40" class="rounded-circle">';
+          // echo $_SESSION["IMAGEEMPL"];
           ?>
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">

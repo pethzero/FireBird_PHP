@@ -1,0 +1,12 @@
+[
+    {   
+        "method": "UPDATA",
+        "queryID": "IAD_INVENT",
+        "condition": "QUANINVENT",
+        "tbanme":"0088",
+        "listdata": [
+            {"recno": 0,"reqtype": 4,"io": "0","docno": "888","docdate":"10.12.2023"}
+        ]
+    }
+]
+

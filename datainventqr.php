@@ -5,18 +5,15 @@
     <script src="assets/js/color-modes.js"></script>
 
     <?php
-    session_start();
-    if (!isset($_SESSION["RECNO"])) {
-        header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
-        exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
-    }
+    // session_start();
+    // if (!isset($_SESSION["RECNO"])) {
+    //     header("Location: index.php"); // ตัวอย่างการเด้งไปยังหน้า login.php
+    //     exit(); // ออกจากสคริปต์เพื่อหยุดการทำงานต่อ
+    // }
     include("0_headcss.php");
     ?>
     <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <!-- <link rel="preload" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"> -->
     <link rel="preload" href="css/fixedColumns.dataTables.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -118,7 +115,9 @@
 </head>
 
 <body>
-    <?php include("0_dbheader.php"); ?>
+    <?php
+    include("0_dbheader.php");
+    ?>
     <div class="container- ">
         <div class="row">
             <?php include("0_sidebar.php"); ?>
@@ -130,8 +129,40 @@
                                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                     <div class="col p-4 d-flex flex-column position-static">
                                         <div class="row">
-                                            <h3>สแกนรายการ</h3>
+                                            <h2>สแกนรายการ</h2>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="selectradio" id="withdraw" value="O">
+                                                    <label class="form-check-label" for="withdraw">เบิกสินค้า</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="selectradio" id="receive" value="I">
+                                                    <label class="form-check-label" for="receive">รับสินค้า</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row pt-2">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                <div class="input-group input-daterange">
+                                                    <span class="input-group-text">เริ่มต้น</span>
+                                                    <input type="text" class="form-control" id="datedocno">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row pt-2">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text ">เลขที่ใบสินค้า:</span>
+                                                    <input type="text" class="form-control" id="docno" placeholder="">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <hr>
                                         <h3>สรุปผล</h3>
                                         <div class="row">
@@ -155,28 +186,51 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <div class="input-group mb-3">
+                                                    <span class="input-group-text c_activity">ราคาต้น:</span>
+                                                    <input type="text" class="form-control inputreadonly" id="psell" placeholder="0.00" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text c_activity">ราคาขาย:</span>
+                                                    <input type="text" class="form-control inputreadonly" id="pcost" placeholder="0.00" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                <div class="input-group mb-3">
                                                     <span class="input-group-text ">จำนวนเหลือ:</span>
-                                                    <input type="number" class="form-control inputreadonly" id="qaun" placeholder="ป้อนจำนวน" readonly>
+                                                    <input type="number" class="form-control inputreadonly" id="constqaun" placeholder="ป้อนจำนวน" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text ">จำนวนขอ:</span>
+                                                    <input type="number" class="form-control " id="qaunreq" placeholder="ใส่จำนวน" value="1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text ">ยอดเบิก/รับ:</span>
+                                                    <input type="number" class="form-control " id="qauntotal" placeholder="ใส่จำนวน" value="1">
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                                    <label class="form-check-label" for="inlineRadio1">เบิกสินค้า</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                                    <label class="form-check-label" for="inlineRadio2">คืนสินค้า</label>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="row">
                                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                                                
+                                                <button id="ok" type="submit" class="btn btn-primary">บันทึก</button>
                                             </div>
                                         </div>
 
@@ -186,7 +240,7 @@
                         </div>
 
 
-                        <div class="row  mb-2">
+                        <!-- <div class="row  mb-2">
                             <div class="col-md-12">
                                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                     <div class="col p-4 d-flex flex-column position-static">
@@ -204,7 +258,6 @@
                                                                 <th> ขั้นต่ำ</th>
                                                                 <th> หน่วยนับ </th>
                                                                 <th> ประเภทสินค้า </th>
-                                                                <!-- <th> หมวดบัญชี </th> -->
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -216,7 +269,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </section>
                 </form>
             </main>
@@ -238,67 +291,166 @@
             }
         });
         $('.loading').show();
-
-        var qid = 'STOCKNOTI'; //
-        var condotion_id = 'TYPE'; //
         var datasave = '';
         ////////////////////////////////////////////////////
-        // var Param = [{
-        //     recno: -1,
-        // }];
-
-        var Param = [{
+        var ParamHead = [{
             recno: -1,
+            status: -1,
+            io: "",
+            reqtype: 0,
+            docno: "",
+            docdate: "",
         }];
-
-
-        //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
-        var tabledatahd = $('#table_datahd').DataTable({
-            fixedColumns: true,
-            scrollX: true,
-            columns: [{
-                    data: null,
-                    render: function(data, type, row, meta) {
-                        return meta.row + 1;
-                    }
-                },
-                {
-                    data: 'CODE',
-                },
-                {
-                    data: 'PRODNAME',
-                },
-                {
-                    data: 'QUAN',
-                },
-                {
-                    data: 'QTYMIN',
-                },
-                {
-                    data: 'UNITNAME',
-                },
-                {
-                    data: 'TYPENAME',
-                },
-            ],
-            columnDefs: [{
-                "visible": false,
-                "targets": [0]
-            }, ],
+        var ParamDetail = [{
+            recno: -1,
+            status: "",
+            corp: 1,
+            invreqhd: 0,
+            reqtype: 0,
+            io: "",
+            refdochd: "",
+            refdocdt: "",
+            lineno: 0,
+            itemno: 1,
+            invent: -1,
+            quanord: 0,
+            quandly: 0,
+            listunit: ""
+        }];
+        var ParamInvent;
+        var sqlinvent = '';
+        var  max_on;
+        ////////////////////////////////////////////////////
+        $('input[type=radio][name=selectradio]').change(function() {
+            ParamDetail[0].io = ParamHead[0].io = this.value;
+            if (this.value == 'I') {
+                ParamHead[0].reqtype = ParamDetail[0].reqtype = 104;
+                max_on = max_data['doc_i'];
+                ParamHead[0].docno = max_on;
+                $('#docno').val(max_on);
+                sqlinvent = 'IAD_INVENT';
+            } else if (this.value == 'O') {
+                ParamHead[0].reqtype = ParamDetail[0].reqtype = 4;
+                max_on = max_data['doc_o'];
+                ParamHead[0].docno = max_on;
+                $('#docno').val(max_on);
+                sqlinvent = 'IDE_INVENT';
+            }
         });
 
+        function proessendcontinue(data){
+            let max_no;
+            if(data == 'I'){
+                max_data.doc_i = incrementFraction(max_data.doc_i);
+                max_no = max_data.doc_i;
+                ParamHead[0].docno = max_no;
+            } else 
+            {
+                max_data.doc_o = incrementFraction(max_data.doc_o);
+                max_no = max_data.doc_o;
+                ParamHead[0].docno = max_no;
+            }
+            $("#docno").val(max_no);
+            $("#qaunreq").val(0);
+            $("#qauntotal").val(0);
+        }
+
+        $("#datedocno").datepicker({
+            format: "dd/mm/yyyy",
+            todayHighlight: true,
+            autoclose: true,
+            clearBtn: true
+        }).datepicker("setDate", 'now');
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         class DataFetcher {
             constructor() {
 
             }
-            async ProssParamCustomize(status) {
+            async AlertSave() {
                 try {
-                    if (true == status) {
-                        const recnoValue = getRecnoFromURL();
-                        Param[0].recno = recnoValue;
-                        $('#recno').val(recnoValue);
+                    const result = await Swal.fire({
+                        title: 'คุณแน่ใจแล้วใช่ไหม',
+                        text: "คุณจะเปลี่ยนกลับไม่ได้!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'ตกลงบันทึก',
+                        cancelButtonText: 'ยกเลิก',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        customClass: {
+                            confirmButton: 'ok',
+                            cancelButton: 'cancel'
+                        },
+                        reverseButtons: true
+                    });
+
+                    if (result.isConfirmed) {
+                        return true;
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        Swal.fire('ยกเลิก', 'ยังไม่มีการบันทึก', 'error');
+                        return false;
                     }
-                    // ทำสิ่งที่คุณต้องการทำหลังจาก ProssParamCustomize เสร็จ
+                } catch (error) {
+                    console.error(error);
+                    return false;
+                }
+            }
+            async ProcessAlert() {
+                try {
+                    let message = '';
+                    if ($('#datedocno').val() === "") {
+                        message = 'กรุณากรอกวันหยุด';
+                        Swal.fire('ยกเลิก', message, 'error');
+                        return false;
+                    }
+                    if (ParamHead[0].io === undefined || ParamHead[0].io === "") {
+                        message = 'กรุณาเลือกการเบิก/รับสินค้า';
+                        Swal.fire('ยกเลิก', message, 'error');
+                        return false;
+                    }
+
+                    if (isNaN(ParamDetail[0].quanord) || isNaN(ParamDetail[0].quandly) || ParamDetail[0].quanord === 0 || ParamDetail[0].quandly === 0) {
+                        message = 'กรุณากรอกจำนวน';
+                        Swal.fire('ยกเลิก', message, 'error');
+                        return false;
+                    } else if (ParamDetail[0].quanord < ParamDetail[0].quandly) {
+                        message = 'กรุณากรอกจำนวนขอมากกว่ายอดรับ';
+                        Swal.fire('ยกเลิก', message, 'error');
+                        return false;
+                    }
+
+
+                    return true;
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            async ParamCustomize() {
+                try {
+                    const recnoValue = getRecnoFromURL();
+                    $('#recno').val(recnoValue);
+                    ParamHead[0].recno = parseInt(recnoValue);
+                    ParamHead[0].docdate = moment($('#datedocno').val(), 'DD/MM/YYYY').format('DD.MM.YYYY');
+
+                    ParamDetail[0].quanord = parseInt($('#qaunreq').val());
+                    ParamDetail[0].quandly = parseInt($('#qauntotal').val());
+
+                    if (ParamDetail[0].quanord === ParamDetail[0].quandly) {
+                        ParamHead[0].status = ParamDetail[0].status = 'D';
+                    } else {
+                        ParamHead[0].status = ParamDetail[0].status = 'A';
+                    }
+                    ////////////////
+                    ParamInvent = ParamDetail.map(function(item) {
+                        return {
+                            recno: item.invent,
+                            quan: item.quandly,
+                        }
+                    });
+
+                    return true;
                 } catch (error) {
                     console.error(error);
                 }
@@ -306,7 +458,6 @@
             async fetchData(url, section, status) {
                 try {
                     // ดึงข้อมูล  จากเซิร์ฟเวอร์
-                    await this.ProssParamCustomize(status);
                     const jsonResponse = await fetch(url, {
                         method: 'POST',
                         body: set_formdata(section),
@@ -323,22 +474,85 @@
                 }
             }
         }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $("#idForm").submit(function(e) {
+            event.preventDefault();
+            var clickedButtonName = e.originalEvent.submitter.name;
+
+            dataFetcher.ParamCustomize()
+                .then(async () => {
+                    set_formdata('add')
+                    processstatus = await dataFetcher.ProcessAlert();
+                    if (processstatus) {
+                        const crudstatus = await dataFetcher.AlertSave();
+                        if (crudstatus) {
+                            $('.loading').show();
+                            let prosscessdata = await dataFetcher.fetchData('ajax/new_fecth_fbdata.php', 'add', true);
+                            await proessendcontinue(ParamHead[0].io);
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                })
+                .finally(() => {
+                    $('.loading').hide();
+                });
+
+
+        });
+
+        //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
+        // var tabledatahd = $('#table_datahd').DataTable({
+        //     fixedColumns: true,
+        //     scrollX: true,
+        //     columns: [{
+        //             data: null,
+        //             render: function(data, type, row, meta) {
+        //                 return meta.row + 1;
+        //             }
+        //         },
+        //         {
+        //             data: 'CODE',
+        //         },
+        //         {
+        //             data: 'PRODNAME',
+        //         },
+        //         {
+        //             data: 'QUAN',
+        //         },
+        //         {
+        //             data: 'QTYMIN',
+        //         },
+        //         {
+        //             data: 'UNITNAME',
+        //         },
+        //         {
+        //             data: 'TYPENAME',
+        //         },
+        //     ],
+        //     columnDefs: [{
+        //         "visible": false,
+        //         "targets": [0]
+        //     }, ],
+        // });
 
 
         // ใช้งาน class
-        // ใช้งาน class
+        var max_data;
         const dataFetcher = new DataFetcher();
-        dataFetcher.fetchData('ajax/new_fecth_oitem_fb.php', 'select', true).then(async (jsonDataHD) => {
-            // ในที่นี้คุณสามารถใช้ jsonDataHD ได้
-            // console.log(jsonDataHD.data[0][0]);
+        dataFetcher.ParamCustomize().then(async (processstatus) => {
+            const jsonDataHD = await dataFetcher.fetchData('ajax/new_fecth_oitem_fb.php', 'select', true);
             await search_datalist(jsonDataHD.data[0][0]);
-            await tabledatahd.clear().rows.add([]).draw();
+            max_data = {
+                doc_i: incrementFraction(jsonDataHD.data[1][0]['DOCNO_I']),
+                doc_o: incrementFraction(jsonDataHD.data[1][0]['DOCNO_O']),
+            }
         }).catch((error) => {
             console.error(error);
         }).finally(() => {
             $('.loading').hide();
         });
-
 
         // ดึงค่า recno จาก URL
         function getRecnoFromURL() {
@@ -347,54 +561,107 @@
         }
 
 
-        apidata = [{
-            method: null,
-            queryID: null,
-            condition: null,
-            listdata: null
-        }]
+
+        function createNewApidata() {
+            return [{
+                method: null,
+                queryID: null,
+                condition: null,
+                tbanme: null,
+                listdata: null
+            }];
+        }
+
+        var apidata;
 
         function set_formdata(conditionsformdata) {
+            apidata = createNewApidata();
+
             var formData = new FormData();
             if (conditionsformdata == "select") {
+
                 apidata[0].method = "GET";
                 apidata[0].queryID = "IDSEL_INVENT";
                 apidata[0].condition = "RECNO000";
-                apidata[0].listdata = Param;
-                // formData.append('apidata', "SEL_INVENT_DR");
-                // formData.append('condition', "RECNO000");
+                apidata[0].tbanme = "0000";
+                apidata[0].listdata = ParamHead;
+
+                apidata.push({
+                    method: "GET",
+                    queryID: "SELMAX_INVREQHD",
+                    condition: "0000",
+                    tbanme: "0000",
+                    listdata: [null]
+                });
+
+            } else if (conditionsformdata == "add") {
+                apidata[0].method = "POSTHEAD1";
+                apidata[0].queryID = "IND_INVREQHD";
+                apidata[0].condition = "001_INVREQHD";
+                apidata[0].tbanme = "0088";
+                apidata[0].listdata = ParamHead;
+
+                apidata.push({
+                    method: "POSTHEAD2",
+                    queryID: "IND_INVREQDT",
+                    condition: "001_INVREQDT",
+                    tbanme: "0089",
+                    listdata: ParamDetail
+                });
+
+                apidata.push({
+                    method: "UPDATA",
+                    queryID: sqlinvent, // sqlinvent
+                    condition: "001_QUAN",
+                    tbanme: "0000",
+                    listdata: ParamInvent
+                });
+
             } else {}
             formData.append('apidata', JSON.stringify(apidata));
-            console.log(apidata)
+            console.log(apidata);
             ////////////////
             return formData;
         }
 
-        $('#idForm').on('submit', function(e) {
-            e.preventDefault(); // ป้องกันการส่ง form ไปยังหน้าอื่น
-            // ตรวจสอบว่าปุ่มที่ถูกคลิกคือ "save" หรือ "edit"
-            let url = "";
-            let status_sql = "";
-            var clickedButtonName = e.originalEvent.submitter.name;
-        });
-        ////////////////////////////////////////////////// CHART  //////////////////////////////////////////////////
+        ////////////////////////////////////////////////// miscellaneous //////////////////////////////////////////////////
         function search_datalist(data) {
             console.log(data)
             const fieldMappings = {
                 name: 'PRODNAME',
-                qaun: 'QUAN',
+                constqaun: 'QUAN',
+                pcost: 'COSTAMT',
+                psell: 'SALEAMT'
             };
 
+            // ParamHead[1].invent = parseInt(recnoValue);
             const data_list = data;
             Object.entries(fieldMappings).forEach(([elementId, fieldName]) => {
-                // ถ้า data_list[fieldName] เป็น null หรือ undefined ให้กำหนดค่าเป็น ''
                 const fieldValue = data_list[fieldName] ?? '';
                 $(`#${elementId}`).val(fieldValue);
+
+            });
+
+            const ParamDetailMappings = {
+                invent: 'RECNO',
+                listunit: 'LISTUNIT',
+            };
+            Object.keys(ParamDetailMappings).forEach(field => {
+                ParamDetail[0][field] = data[ParamDetailMappings[field]];
             });
         }
+
+        function incrementFraction(fraction) {
+            const [numerator, denominator] = fraction.split('/').map(Number);
+            // const incrementedNumerator = numerator + 1;
+            const incrementedDenominator = denominator + 1;
+            const result = `${numerator}/${incrementedDenominator}`;
+            return result;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
     });
 </script>
 

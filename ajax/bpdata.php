@@ -136,8 +136,35 @@ class bindParamData
                 $stmt->bindParam(':recno', $data['recno']);
                 $stmt->bindParam(':addamt', $data['addamt']);
                 break;
+            case '001_INVREQHD':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':reqtype', $data['reqtype']);
+                $stmt->bindParam(':status', $data['status']);
+                $stmt->bindParam(':io', $data['io']);
+                $stmt->bindParam(':docno', $data['docno']);
+                $stmt->bindParam(':docdate', $data['docdate']);
+                break;
+            case '001_INVREQDT':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':status', $data['status']);
+                $stmt->bindParam(':corp', $data['corp']);
+                $stmt->bindParam(':invreqhd', $data['invreqhd']);
+                $stmt->bindParam(':reqtype', $data['reqtype']);
+                $stmt->bindParam(':io', $data['io']);
+                $stmt->bindParam(':refdochd', $data['refdochd']);
+                $stmt->bindParam(':refdocdt', $data['refdocdt']);
+                $stmt->bindParam(':lineno', $data['lineno']);
+                $stmt->bindParam(':itemno', $data['itemno']);
+                $stmt->bindParam(':invent', $data['invent']);
+                $stmt->bindParam(':quanord', $data['quanord']);
+                $stmt->bindParam(':quandly', $data['quandly']);
+                $stmt->bindParam(':listunit', $data['listunit']);
+                break;
+            case '001_QUAN':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':quan', $data['quan']);
+                break;
                 // เพิ่มเงื่อนไขเพิ่มเติมตามความต้องการ
-
             default:
                 // ไม่มีเงื่อนไขที่ตรงกัน
                 break;

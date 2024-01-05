@@ -1,5 +1,17 @@
 <?php
-
+////////////////////////////////////
+function database_config($key)
+{
+    $configurations = [
+        'fbserver' => ['firebird', '192.168.1.28', 'SAN', 'SYSDBA', 'masterkey'],
+        // 'fbserver' => ['firebird', 'localhost', 'SAN', 'SYSDBA', 'masterkey'],
+        'fbtest' => ['firebird', 'localhost', 'SAN', 'SYSDBA', 'masterkey'],
+        'sanserver' => ['mysql', 'localhost', 'SAN', 'root', '1234'],
+        // เพิ่มค่าอื่นๆ ตามต้องการ
+    ];
+    return $configurations[$key] ?? null;
+}
+///////////////////////////////////
 class Database
 {
     private $engine;
@@ -278,7 +290,7 @@ class CRUDDATA
             // return false;
         }
     }
-
+  
 
     //////////////////////////////////////////////////////// NEW ////////////////////////////////////////////////////////////
     public function SelectRecordConditionNEW($data, $sqlQuery, $condition)
@@ -319,7 +331,59 @@ class CRUDDATA
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////   FB        ////////////////////////////////////////////////////////////////////////
+    // public function AutoRecnoFireBirdMultiple($data, $genid)
+    // {
+    //     try {
+    //         $result = [];
+    //         $sqlQuery = 'SELECT NEXT VALUE FOR ' . $genid . ' FROM RDB$DATABASE';// SERVER
+    //         foreach ($data as &$item) {
+    //                 $stmt = $this->conn->prepare($sqlQuery);
+    //                 $stmt->execute();
+    //                 $nextValueHD = $stmt->fetchColumn();
+    //                 $result =  $nextValueHD;
+    //         }
+    //         return array('result' => $result, 'status' => true, 'db_connect' => $this->message_log, 'message' => 'select success');
+    //     } catch (PDOException $e) {
+    //         $this->message_log = "Error: " . $e->getMessage();
+    //         return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());
+    //     }
+    // }
+
+    private function applySpecialCondition(&$item, $tbanmeData, $listhead)
+{
+    if ($tbanmeData['id'] === "0089") {
+        $item['invreqhd'] = $listhead['recno'];
+    }
+}
+
+
+    public function RecnoFireBirdMultiple($data, $tbanmeData,$listhead)
+    {
+        try {
+
+            $sqlQuery = 'SELECT NEXT VALUE FOR ' . $tbanmeData['aid'] . ' FROM RDB$DATABASE';// SERVER
+            foreach ($data as &$item) {
+                if (isset($item['recno'])) {
+                    $stmt = $this->conn->prepare($sqlQuery);
+                    $stmt->execute();
+                    $nextValueHD = $stmt->fetchColumn();
+                    $item['recno'] =  $nextValueHD;
+
+                    $this->applySpecialCondition($item, $tbanmeData, $listhead);
+                }
+            }
+
+            return array('result' => $data,'listhead'=>$data[0],'status' => true, 'db_connect' => $this->message_log, 'message' => 'select success');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());
+        }
+    }
+
+
+
+
     public function SelectRecordFireBirdConditionMultipleNew($dataArray, $sqlQuery, $condition)
     {
         try {
@@ -329,7 +393,7 @@ class CRUDDATA
                 $stmt = $this->conn->prepare($sqlQuery);
                 bindParamData::bindParams($stmt, $data, $condition);
                 $stmt->execute();
-    
+
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     foreach ($row as $key => $value) {
                         if (is_string($value)) {
@@ -341,17 +405,17 @@ class CRUDDATA
                 }
                 $results[] = $dataRows;
             }
-    
-            return array('result' => $results, 'status' => true, 'db_connect' => $this->message_log, 'fecth_select' => 'select success');
+
+            return array('result' => $results, 'status' => true, 'db_connect' => $this->message_log, 'message' => 'select success');
         } catch (PDOException $e) {
             $this->message_log = "Error: " . $e->getMessage();
-            return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'fecth_select' => $e->getMessage());
+            return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());
         }
     }
-    
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function insertRecordMultipleNew($dataArray, $sqlQuery, $condition)
+    public function ProcessFBMultiple($dataArray, $sqlQuery, $condition)
     {
         try {
             foreach ($dataArray as $data) {
@@ -359,10 +423,26 @@ class CRUDDATA
                 bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
                 $stmt->execute();
             }
-            return true;
+            return array('result' => $dataArray, 'status' => true, 'message' => 'Process Successfully');
         } catch (PDOException $e) {
             $this->message_log = "Error: " . $e->getMessage();
-            return false;
+            return array('result' => [], 'status' => false, 'message' => $this->message_log);
         }
     }
+
+    public function ProcessFBMultipleXX($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            foreach ($dataArray as $data) {
+                $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+                $stmt->execute();
+            }
+            return array('result' => $dataArray, 'status' => true, 'message' => 'Process Successfully');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'message' => $this->message_log);
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
