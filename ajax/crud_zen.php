@@ -72,7 +72,6 @@ class CRUDDATA
         $this->username =  $username;
         $this->password =  $password;
 
-        // $db = new Database('mysql', 'localhost', 'SAN', 'root', '1234');
         $db = new Database($engine, $host, $db_name, $username, $password);
         $this->conn = $db->connect();
         $this->message_log = $db->message_log;
