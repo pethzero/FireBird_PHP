@@ -64,7 +64,7 @@ class SQLQueries
         $this->sqlsreach['IND_INVREQHD'] = "INSERT INTO INVREQHD (RECNO, LASTUPD, STATUS, CORP, REQTYPE, IO, DOCDATE, DOCNO) VALUES (:recno, 'NOW', :status, '1', :reqtype, :io, :docdate,:docno)";
         // $this->sqlsreach['IND_INVREQHD'] = "INSERT INTO INVREQHD (RECNO, LASTUPD) VALUES (:recno, 'NOW')";
         $this->sqlsreach['UPD_INVREQHD'] = "UPDATE INVREQHD SET IO = 'I' WHERE RECNO = :recno";
-        $this->sqlsreach['IND_INVREQDT'] = "INSERT INTO INVREQDT (RECNO, LASTUPD, STATUS, CORP,INVREQHD,REQTYPE,IO, CUST, SUPP, REFDOCHD, REFDOCDT, LINENO, ITEMNO, INVENT, QUANORD, QUANDLY, LISTUNIT, PURPOSE) VALUES (:recno, 'NOW', :status, :corp, :invreqhd,:reqtype,:io, NULL, NULL, :refdochd, :refdocdt, :lineno, :itemno, :invent, :quanord, :quandly, :listunit, NULL)";        
+        $this->sqlsreach['IND_INVREQDT'] = "INSERT INTO INVREQDT (RECNO, LASTUPD, STATUS, CORP,INVREQHD,REQTYPE,IO, CUST, SUPP, REFDOCHD, REFDOCDT, LINENO, ITEMNO, INVENT, QUANORD, QUANDLY, LISTUNIT, PURPOSE) VALUES (:recno, 'NOW', :status, :corp, :invreqhd,:reqtype,:io, NULL, NULL, :refdochd, :refdocdt, :lineno, :itemno, :invent, :quanord, :quandly, :listunit, NULL)";
         $this->sqlsreach['IAD_INVENT'] = "UPDATE INVENT SET LASTUPD='NOW', QUAN=QUAN + :quan WHERE RECNO=:recno";
         $this->sqlsreach['IDE_INVENT'] = "UPDATE INVENT SET LASTUPD='NOW', QUAN=QUAN - :quan WHERE RECNO=:recno";
         //EQUIPMENT
@@ -86,12 +86,30 @@ class SQLQueries
         //EMPL
         $this->sqlsreach['EMPL_LIST']     =  "SELECT RECNO,EMPNAME,EMPNO  FROM empl";
         $this->sqlsreach['ID_EMPL_LIST'] =  "SELECT * FROM empl WHERE RECNO = :recno";
+        $this->sqlsreach['ID_EMPL_LIST_ID'] =  "SELECT ID,EMPNO,EMPNAME,EMPNICK,LOGIN,PASS,USERLEVEL FROM empl WHERE ID = :id";
         $this->sqlsreach['ALL_EMPL_LIST'] =  "SELECT * FROM empl";
+        // $this->sqlsreach['ALL_EMPL_LISTMYSQL'] =  "SELECT * FROM empl";
         $this->sqlsreach['CHECK_EMPL_RECNO'] = "SELECT COUNT(*) AS count FROM empl WHERE RECNO = :recno";
         $this->sqlsreach['CHECK_EMPL_COUNT'] = "SELECT COUNT(CASE WHEN EMPNO = :empno THEN 1 ELSE NULL END) AS count_empno, COUNT(CASE WHEN LOGIN = :login THEN 1 ELSE NULL END) AS count_login FROM empl WHERE EMPNO = :empno OR LOGIN = :login";
+
+
         $this->sqlsreach['IND_EMPL'] =  "INSERT INTO empl (LASTUPD, PERMISSION, STATUS, USERLEVEL, EMPNO, EMPNAME, EMPNAMEEN, EMPNICK, LOGIN, PASS, CREATED, IMG) VALUES (NOW() ,'' ,'T' ,:userlevel ,:empno ,:empname ,'' ,:empnick ,:login ,:pass ,NOW() ,'')";
         $this->sqlsreach['UPD_EMPL'] =  "UPDATE empl SET EMPNO = :empno, LASTUPD = NOW(), USERLEVEL = :userlevel, EMPNAME = :empname, EMPNICK = :empnick, LOGIN = :login, PASS = :pass WHERE RECNO = :recno ";
         $this->sqlsreach['DLD_EMPL'] = "DELETE FROM empl WHERE RECNO= :recno ";
+        $this->sqlsreach['INSERT_EMPL_NEW'] = "INSERT INTO empl (RECNO,LASTUPD, PERMISSION, STATUS, USERLEVEL, EMPNO, EMPNAME, EMPNAMEEN, EMPNICK, LOGIN, PASS, CREATED, IMG,STYPE)
+        VALUES (:recno,NOW(), '', 'T', :userlevel, :empno, :empname, '', :empnick, :login, :pass, NOW(), '','IR')
+        ON DUPLICATE KEY UPDATE
+            LASTUPD = NOW(),
+            RECNO = VALUES(RECNO)";
+        //EMPL MYSQL ID
+        $this->sqlsreach['CHECK_EMPL_UPID'] = " SELECT 
+        COUNT(CASE WHEN EMPNO = :empno THEN 1 ELSE NULL END) AS count_empno, 
+        COUNT(CASE WHEN LOGIN = :login THEN 1 ELSE NULL END) AS count_login 
+        FROM empl 
+        WHERE (EMPNO = :empno OR LOGIN = :login) AND (ID <> :id)";
+        $this->sqlsreach['DLD_EMPL_ID'] = "DELETE FROM empl WHERE ID= :id ";
+        $this->sqlsreach['UPD_EMPL_ID'] =  "UPDATE empl SET EMPNO = :empno, LASTUPD = NOW(), USERLEVEL = :userlevel, EMPNAME = :empname, EMPNICK = :empnick, LOGIN = :login, PASS = :pass WHERE ID = :id ";
+
 
         //PTYCASH
         $this->sqlsreach['PTYCASH_LIST'] = "SELECT RECNO,DOCDATE,DESCRIPT,ADDAMT  FROM PTYCASH WHERE DOCTYPE = 'C' ORDER BY DOCDATE ASC";
@@ -118,6 +136,8 @@ class SQLQueries
 
         //STOCK
         $this->sqlsreach['UPD_STOCK'] = "UPDATE INVENT SET LASTUPD='NOW', QUAN=QUAN - :quan,LASTOUT='NOW' WHERE RECNO=:recno";
+        //HR
+        $this->sqlsreach['EMPL_REST'] = "SELECT BDATE,BTIME,EDATE,ETIME,EMPL,RECNO,STATUS FROM EMPLREST";
     }
     public function scanSQL($queryId)
     {

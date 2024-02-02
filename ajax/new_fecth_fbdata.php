@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             } else if ($data['method'] === "GET")
              {
                 $result = $fecthData->SelectRecordFireBirdConditionMultipleNew($data['listdata'], $sqlQuery, $data['condition']);
-                // $result = array('result' => 'Data A', 'status' => true, 'message' => $sqlQuery);
             } else {
                 $result = array('result' => 'Data Error', 'status' => false, 'message' => 'Data Error');
             }
@@ -48,9 +47,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $fecthData->data_commit->rollBack();
                 throw new Exception($result['result']);
             }
-            // $datasql = array_merge($datasql, $result['result']);
-
-            $datasql = $result;
+   
+            $datasql[] = $result;
         }
 
         $fecthData->data_commit->commit();

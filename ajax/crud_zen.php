@@ -289,14 +289,14 @@ class CRUDDATA
             // return false;
         }
     }
-  
+
 
     //////////////////////////////////////////////////////// NEW ////////////////////////////////////////////////////////////
     public function SelectRecordConditionNEW($data, $sqlQuery, $condition)
     {
         try {
             $stmt = $this->conn->prepare($sqlQuery);
-            bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+            bindParamData::bindParams($stmt, $data, $condition);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             // // ส่งค่าผลลัพธ์กลับ
@@ -308,26 +308,60 @@ class CRUDDATA
         }
     }
 
-    public function SelectRecordConditionMultipleNew($dataArray, $sqlQuery, $condition)
+    public function SELECTID_MUTIPLE($dataArray, $sqlQuery, $condition)
     {
         try {
-            $results = []; // สร้าง array เพื่อเก็บผลลัพธ์ทั้งหมด
-
-            foreach ($dataArray as $data) {
-                $stmt = $this->conn->prepare($sqlQuery);
-                bindParamData::bindParams($stmt, $data, $condition);
-                $stmt->execute();
-
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                $results[] = $result; // เพิ่มผลลัพธ์ของแต่ละรอบลงใน array
+            $results = [];
+            foreach ($dataArray as $data) 
+            {
+            $stmt = $this->conn->prepare($sqlQuery);
+            bindParamData::bindParams($stmt, $data, $condition);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results[] = $result; // เพิ่มผลลัพธ์ของแต่ละรอบลงใน array
             }
-
-            return array('result' => $results, 'status' => true, 'db_connect' => $this->message_log, 'message' => 'select success');
+            // // ส่งค่าผลลัพธ์กลับ
+            return array('result' => $result, 'status' => true,  'db_connect' => $this->message_log, 'message' => 'select success');
         } catch (PDOException $e) {
-            $this->message_log = "Error: " . $e->getMessage();
+            // $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
             return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());
+            // return false;
         }
     }
+
+
+    public function ProcessRecordMultiple_NEW($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            foreach ($dataArray as $data) {
+                $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+                $stmt->execute();
+            }
+            return array('result' => $dataArray, 'status' => true, 'message' => 'Process Successfully');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'message' => $this->message_log);
+        }
+    }
+
+
+
+    public function insertRecordMultiple_NEW($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            foreach ($dataArray as $data) {
+                $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+                $stmt->execute();
+            }
+            return array('result' => $dataArray, 'status' => true, 'message' => 'Process Successfully');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'message' => $this->message_log);
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////////////   FB        ////////////////////////////////////////////////////////////////////////
@@ -350,18 +384,18 @@ class CRUDDATA
     // }
 
     private function applySpecialCondition(&$item, $tbanmeData, $listhead)
-{
-    if ($tbanmeData['id'] === "0089") {
-        $item['invreqhd'] = $listhead['recno'];
+    {
+        if ($tbanmeData['id'] === "0089") {
+            $item['invreqhd'] = $listhead['recno'];
+        }
     }
-}
 
 
-    public function RecnoFireBirdMultiple($data, $tbanmeData,$listhead)
+    public function RecnoFireBirdMultiple($data, $tbanmeData, $listhead)
     {
         try {
 
-            $sqlQuery = 'SELECT NEXT VALUE FOR ' . $tbanmeData['aid'] . ' FROM RDB$DATABASE';// SERVER
+            $sqlQuery = 'SELECT NEXT VALUE FOR ' . $tbanmeData['aid'] . ' FROM RDB$DATABASE'; // SERVER
             foreach ($data as &$item) {
                 if (isset($item['recno'])) {
                     $stmt = $this->conn->prepare($sqlQuery);
@@ -373,7 +407,7 @@ class CRUDDATA
                 }
             }
 
-            return array('result' => $data,'listhead'=>$data[0],'status' => true, 'db_connect' => $this->message_log, 'message' => 'select success');
+            return array('result' => $data, 'listhead' => $data[0], 'status' => true, 'db_connect' => $this->message_log, 'message' => 'select success');
         } catch (PDOException $e) {
             $this->message_log = "Error: " . $e->getMessage();
             return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());

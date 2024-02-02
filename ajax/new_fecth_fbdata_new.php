@@ -16,34 +16,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQueries = new SQLQueries();
         $tbanmeInstance = new TBname();
 
+        ///////////////////////// SPEACAIL Value /////////////////////////
         $datasql = [];
         $newdatalist;
+        $idhead1 = 0;
+        $listhead = [];
+        /////////////////////////////////////////////////////////////////
         $fecthData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
+
         foreach ($apidata_Json as $data) {
             $tbanmeData = $tbanmeInstance->getTBName($data['tbanme']);
             $sqlQuery = $sqlQueries->scanSQL($data['queryID']);
-            if ($data['method'] === "POST") {
-                $newdatalist = $fecthData->RecnoFireBirdMultiple($data['listdata'], $tbanmeData['aid']);
-                $result = $fecthData->ProcessFBMultiple($newdatalist['result'], $sqlQuery, $data['condition']);
-            } else if ($data['method'] === "UPDATA") {
-                $sqlQuery = $sqlQueries->scanSQL($data['queryID']);
-                $result = $fecthData->ProcessFBMultiple($data['listdata'], $sqlQuery, $data['condition']);
+            if ($data['method'] === "GET") {
+                $result = $fecthData->SelectRecordFireBirdConditionMultipleNew($data['listdata'], $sqlQuery, $data['condition']);
             } else {
-                $result = array('result' => 'Data Error', 'status' => false, 'message' => 'Data Error');
+                $result = array('result' => [null], 'status' => false, 'message' => 'Data Error');
             }
 
             if (!$result['status']) {
                 $fecthData->data_commit->rollBack();
-                throw new Exception('error');
+                throw new Exception($result['result']);
             }
-            $datasql =  $result['result'];
+            $datasql[] = $result['result'];
         }
 
         $fecthData->data_commit->commit();
 
         $response = array(
             'message' => 'Data suscess',
-            'data' =>  $datasql,
+            'data' =>   $datasql,
             'status' => 'suscess',
         );
 

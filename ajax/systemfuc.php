@@ -7,6 +7,9 @@ class TBname
         $this->tbname['0000'] = ["tablename" => "", "aid" => ""];
         $this->tbname['0088'] = ["id" => "0088","tablename" => "SAN", "aid" => "GEN_INVREQHD","spcondition" => "-"];
         $this->tbname['0089'] = ["id" => "0089","tablename" => "SAN", "aid" => "GEN_INVREQDT","spcondition" => "-"];
+
+        $this->tbname['C0001'] = ["checkqueryid" => "CHECK_EMPL_COUNT", "checkcondition" => "EMPNOCHECK"];
+        $this->tbname['C0002'] = ["checkqueryid" => "CHECK_EMPL_UPID", "checkcondition" => "EMPNOCHECK_UPD"];
     }
 
     public function getTBName($tbanme)
@@ -26,9 +29,9 @@ class TBname
 
 function uniquecondition($condition_unique, $result_unique, $result_data)
 {
-    $condition_data = ['' => '', 'condition' => false];
+    $condition_data = ['message' => '', 'condition' => false];
 
-    if ($condition_unique == "IND_EMPL") {
+    if ($condition_unique == "IND_EMPL" || $condition_unique == "UPD_EMPL_ID" ) {
         if ($result_unique['result']['count_empno'] > 0 || $result_unique['result']['count_login'] > 0) {
             $condition_data['condition'] = true;
 
@@ -37,8 +40,9 @@ function uniquecondition($condition_unique, $result_unique, $result_data)
             } else if ($result_unique['result']['count_login'] > 0) {
                 $condition_data['message']  = "รหัสผู้ใช้งานซ้ำ";
             }
-        }
-    } else if ($condition_unique == "UPD_EMPL") {
+        } 
+    } 
+    else if ($condition_unique == "UPD_EMPL") {
         if ($result_unique['result']['count_empno'] > 0 || $result_unique['result']['count_login'] > 0) {
 
             if ($result_unique['result']['count_empno'] > 0) {

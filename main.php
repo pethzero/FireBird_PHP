@@ -187,27 +187,30 @@
             </div>
           </div>
 
-          <?php
-          if ($_SESSION['USERLEVEL'] === 'S') {
-          ?>
-            <div class="col-md-6">
-              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                  <strong class="d-inline-block mb-2 text-primary-emphasis">
-                    <h3>บุคคล</h3>
-                  </strong>
-                  <ul>
+
+          <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+              <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-2 text-primary-emphasis">
+                  <h3>บุคคล</h3>
+                </strong>
+                <ul>
+                  <?php
+                  if ($_SESSION['USERLEVEL'] === 'S') {
+                  ?>
                     <li><a href="dataempl.php">บุคคล</a></li>
-                  </ul>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                  <img src="images/Maintenance_IMG1.jpg" alt="Thumbnail" width="200" height="250">
-                </div>
+                  <?php
+                  }
+                  ?>
+
+                  <li><a href="dataempl_stop.php">ประวัติการลา</a></li>
+                </ul>
+              </div>
+              <div class="col-auto d-none d-lg-block">
+                <img src="images/Maintenance_IMG1.jpg" alt="Thumbnail" width="200" height="250">
               </div>
             </div>
-          <?php
-          }
-          ?>
+          </div>
 
 
         </div>

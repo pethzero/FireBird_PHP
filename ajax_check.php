@@ -5,7 +5,7 @@ if (isset($_POST["username"])) {
 	include("connect_sql.php");
 	$username = $_POST["username"];
 	$password = $_POST["password"];
-	$sql = "SELECT RECNO, EMPNO, EMPNAME, PASS,IMG,USERLEVEL,PERMISSION FROM empl WHERE UPPER(LOGIN)=:LOGIN";
+	$sql = "SELECT ID,RECNO, EMPNO, EMPNAME, PASS,IMG,USERLEVEL,PERMISSION FROM empl WHERE UPPER(LOGIN)=:LOGIN";
 	//////////////////////////////////////
 	$query = $pdo->prepare($sql);
 	// ผูกค่าพารามิเตอร์
@@ -28,6 +28,7 @@ if (isset($_POST["username"])) {
 					setcookie("remember_check", "", time() - 3600, "/");
 				}
 
+				$_SESSION["ID"] =   $row["ID"];
 				$_SESSION["RECNO"] =   $row["RECNO"];
 				$_SESSION["EMPNO"] =   $row["EMPNO"];
 				$_SESSION["EMPNAME"] = $row["EMPNAME"];

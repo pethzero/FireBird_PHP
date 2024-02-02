@@ -1,0 +1,19 @@
+[
+    {   
+        "method": "POST_DUPLICATE",
+        "queryID": "INSERT_EMPL_NEW",
+        "condition": "EMPNOUPD",
+		"tbanme":"0000",
+        "listdata": [
+            {
+        "recno": 5,
+        "empno": "0257",
+        "empname": "ธวัชพงศ์ ช่วยบุดดา",
+        "empnick": "เพชร",
+        "login": "superadmin",
+        "pass": "1234",
+        "userlevel": "S"
+			}
+        ]
+    }
+]

@@ -481,7 +481,7 @@
 
             dataFetcher.ParamCustomize()
                 .then(async () => {
-                    set_formdata('add')
+                    // set_formdata('add')
                     processstatus = await dataFetcher.ProcessAlert();
                     if (processstatus) {
                         const crudstatus = await dataFetcher.AlertSave();
@@ -502,47 +502,12 @@
 
         });
 
-        //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
-        // var tabledatahd = $('#table_datahd').DataTable({
-        //     fixedColumns: true,
-        //     scrollX: true,
-        //     columns: [{
-        //             data: null,
-        //             render: function(data, type, row, meta) {
-        //                 return meta.row + 1;
-        //             }
-        //         },
-        //         {
-        //             data: 'CODE',
-        //         },
-        //         {
-        //             data: 'PRODNAME',
-        //         },
-        //         {
-        //             data: 'QUAN',
-        //         },
-        //         {
-        //             data: 'QTYMIN',
-        //         },
-        //         {
-        //             data: 'UNITNAME',
-        //         },
-        //         {
-        //             data: 'TYPENAME',
-        //         },
-        //     ],
-        //     columnDefs: [{
-        //         "visible": false,
-        //         "targets": [0]
-        //     }, ],
-        // });
-
-
         // ใช้งาน class
         var max_data;
         const dataFetcher = new DataFetcher();
         dataFetcher.ParamCustomize().then(async (processstatus) => {
             const jsonDataHD = await dataFetcher.fetchData('ajax/new_fecth_oitem_fb.php', 'select', true);
+            console.log(jsonDataHD);
             await search_datalist(jsonDataHD.data[0][0]);
             max_data = {
                 doc_i: incrementFraction(jsonDataHD.data[1][0]['DOCNO_I']),
@@ -619,7 +584,6 @@
 
             } else {}
             formData.append('apidata', JSON.stringify(apidata));
-            console.log(apidata);
             ////////////////
             return formData;
         }
