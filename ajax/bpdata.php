@@ -11,6 +11,9 @@ class bindParamData
                 $stmt->bindParam(':recno', $data['recno']);
                 $stmt->bindParam(':status', $data['status']);
                 break;
+            case 'L00001':
+                $stmt->bindParam(':login', $data['login']);
+                break;
             case 'ID000':
                 $stmt->bindParam(':id', $data['id']);
                 break;
@@ -135,7 +138,7 @@ class bindParamData
                 $stmt->bindParam(':pass', $data['pass']);
                 if ($condition === 'EMPNOUPD') {
                     $stmt->bindParam(':recno', $data['recno']);
-                }else if($condition === 'EMPNOUPD_ID'){
+                } else if ($condition === 'EMPNOUPD_ID') {
                     $stmt->bindParam(':id', $data['id']);
                 }
                 break;

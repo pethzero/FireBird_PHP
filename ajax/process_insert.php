@@ -16,7 +16,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // ใช้เมทอด scanSQL() เพื่อรับคำสั่ง SQL ตาม $queryId
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
         if ($sqlQuery !== null) {
-            $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+
+            $config_setting = database_config('mysqlserver');
+            $insertData = new CRUDDATA(...$config_setting);
+			
+            // $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
             $insertData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             if ($insertData->insertRecordMultiple($tableData_Json, $sqlQuery, $condition))
             {

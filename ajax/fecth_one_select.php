@@ -18,7 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         
         if ($sqlQuery !== null) {
-            $selectData = new CRUDDATA('firebird','192.168.1.28', 'SAN', 'SYSDBA', 'masterkey');
+            $config_setting = database_config('fbserver');
+            $selectData = new CRUDDATA(...$config_setting);
+            
             $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             
             // $result = $selectData->SelectRecordFireBird($sqlQuery); // ส่งค่า $message_db มาด้วย

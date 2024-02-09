@@ -40,7 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
 
         if ($sqlQuery !== null) {
-            $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            
+            $config_setting = database_config('mysqlserver');
+            $insertData = new CRUDDATA(...$config_setting);
+			
+            // $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
             $insertData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             $run_number = $insertData->autoincrement_sql('san','equipment');
 

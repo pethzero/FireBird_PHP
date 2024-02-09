@@ -1,5 +1,4 @@
 <?php
-// include("database.php");
 include("sql.php");
 include("bpdata.php");
 include("crud_zen.php");
@@ -21,7 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlDropDown = $sqlQueries->scanSQL($queryDropDown);
 
         if ($sqlQuery !== null &&  $sqlDropDown !== null) {
-            $selectData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+
+            $config_setting = database_config('mysqlserver');
+            $selectData = new CRUDDATA(...$config_setting);
+            // $selectData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
             $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             
             $result = $selectData->SelectRecord($sqlQuery); // ส่งค่า $message_db มาด้วย

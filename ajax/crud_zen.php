@@ -3,10 +3,18 @@
 function database_config($key)
 {
     $configurations = [
-        'fbserver' => ['firebird', '192.168.1.28', 'SAN', 'SYSDBA', 'masterkey'],
+
+        //FB Test
+        // 'fbserver' => ['firebird', '192.168.1.205', 'JKP', 'SYSDBA', 'masterkey'],
+         'fbserver' => ['firebird', '192.168.1.28', 'SAN', 'SYSDBA', 'masterkey'],
         // 'fbserver' => ['firebird', 'localhost', 'SAN', 'SYSDBA', 'masterkey'],
-        'fbtest' => ['firebird', 'localhost', 'SAN', 'SYSDBA', 'masterkey'],
-        'sanserver' => ['mysql', 'localhost', 'SAN', 'root', '1234'],
+
+        //MYSQL Test 
+        // 'mysqlserver' => ['mysql', 'localhost', 'JKP', 'root', '1234'],
+        'mysqlserver' => ['mysql', 'localhost', 'SAN', 'root', '1234'],
+
+        // TEST
+        // 'fbtest' => ['firebird', 'localhost', 'SAN', 'SYSDBA', 'masterkey'],
         // เพิ่มค่าอื่นๆ ตามต้องการ
     ];
     return $configurations[$key] ?? null;
@@ -53,11 +61,11 @@ class Database
 
 class CRUDDATA
 {
-    private $engine;
-    private $host;
-    private $db_name;
-    private $username;
-    private $password;
+    // private $engine;
+    // private $host;
+    // private $db_name;
+    // private $username;
+    // private $password;
     private $conn;
     public $data_commit;
     public $message_log;
@@ -66,11 +74,11 @@ class CRUDDATA
     // __construct คือเมื่อ class CRUDDATA เรียกใช้งาน จะถูกใช้เลย
     public function __construct($engine, $host, $db_name, $username, $password)
     {
-        $this->engine =  $engine;
-        $this->host =  $host;
-        $this->db_name =  $db_name;
-        $this->username =  $username;
-        $this->password =  $password;
+        // $this->engine =  $engine;
+        // $this->host =  $host;
+        // $this->db_name =  $db_name;
+        // $this->username =  $username;
+        // $this->password =  $password;
 
         $db = new Database($engine, $host, $db_name, $username, $password);
         $this->conn = $db->connect();

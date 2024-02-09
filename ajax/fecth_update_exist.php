@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
         $sqlQueryCheck = $sqlQueries->scanSQL($checkData);
         if ($sqlQueryCheck !== null && $sqlQueries !== null) {
-            $config_setting = database_config('sanserver');
+            $config_setting = database_config('mysqlserver');
             $processfecth = new CRUDDATA(...$config_setting);
             $processfecth->data_commit->beginTransaction();
 

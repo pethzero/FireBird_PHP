@@ -27,7 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $SqlID001 = $sqlQueries->scanSQL($queryId001);
 
         if ($SqlID001 !== null) {
-            $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            // $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+
+            $config_setting = database_config('mysqlserver');
+            $insertData = new CRUDDATA(...$config_setting);
+
             $insertData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             $run_number = $insertData->autoincrement_sql('san','notimainten');
             $tableData_Json[0]['docno'] =  substr(date("Y") + 543, -2) . '/' . sprintf("%04d", $run_number['result']);

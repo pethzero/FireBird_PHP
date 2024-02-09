@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($SqlID001 !== null) {
             $config_setting = database_config('fbserver');
-            // $config_setting = database_config('fbtest');
             $selectData = new CRUDDATA(...$config_setting);
 
             $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData

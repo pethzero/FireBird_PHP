@@ -14,7 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
 
         if ($sqlQuery !== null) {
-            $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            // $insertData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            $config_setting = database_config('mysqlserver');
+            $insertData = new CRUDDATA(...$config_setting);
             $insertData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             if ($insertData->updateRecord($tableData_Json[0], $sqlQuery, $condition))
             {

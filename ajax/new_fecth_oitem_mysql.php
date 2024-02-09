@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ///////////////////////////VARAIBLE////////////////////////////////
         $datasql = [];
         //////////////////////// CONFIG  /////////////////////////////////
-        $config_setting = database_config('sanserver');
+        $config_setting = database_config('mysqlserver');
         $fecthData = new CRUDDATA(...$config_setting);
         $sqlQueries = new SQLQueries();
         ///////////////////////  FETCH   /////////////////////////////////

@@ -1,6 +1,7 @@
 <?php
 $host = 'localhost';
 $db_name = 'SAN';
+// $db_name = 'JKP';
 $username = 'root';
 $password = '1234';
 

@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $apidata_Json = json_decode($apidata, true);
     try {
         $config_setting = database_config('fbserver');
-
         $fecthData = new CRUDDATA(...$config_setting);
         $sqlQueries = new SQLQueries();
         $tbanmeInstance = new TBname();

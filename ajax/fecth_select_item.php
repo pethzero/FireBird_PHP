@@ -14,7 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQueries = new SQLQueries();
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
         if ($sqlQuery !== null) {
-            $selectData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            // $selectData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            $config_setting = database_config('mysqlserver');
+            $selectData = new CRUDDATA(...$config_setting);
+			
             $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
             $result = $selectData->SelectRecordCondition($tableData_Json[0], $sqlQuery, $condition); // ส่งค่า $message_db มาด้วย
             if ($result['status'] !== false) {

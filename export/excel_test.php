@@ -69,8 +69,10 @@ class ExcelGenerator
             foreach ($this->data as $rowData) {
                 $col = 'A'; // Start with the first column
                 foreach ($rowData as $cellData) {
+                
                     $sheet->setCellValue($col . $row, $cellData);
-                    // $sheet->setCellValue($col . $row, iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $cellData));
+
+
                     $col++;
                 }
                 $row++;
@@ -116,12 +118,16 @@ class ExcelGenerator
 }
 
 
-$queryIdExcel = isset($_POST['queryIdExcel']) ? $_POST['queryIdExcel'] : ''; //
-$blobData = isset($_POST['blobData']) ? $_POST['blobData'] : '';
-$TureTotalAmt = isset($_POST['TureTotalAmt']) ? $_POST['TureTotalAmt'] : '';
-$condition_footer = isset($_POST['condition_footer']) ? $_POST['condition_footer'] : '';
-$data = json_decode($blobData, true);
-
+$queryIdExcel = "EXCEL_TEST"; //
+$TureTotalAmt = 0;
+$condition_footer = 'F';
+// แก้ไขให้ JSON object ถูกล้อมรอบด้วย {}
+$blobData = '[
+    {"CODE":"001","จำนวนผลิต":1500,"จำนวนส่งออก":1000}
+  ]';
+  
+  $data = json_decode($blobData, true);
+  
 // Get the data from the POST request
 $filename = 'exported_data.xlsx';
 $headMaker = new HeadMake();

@@ -416,12 +416,6 @@ var tabledatahd = $('#table_datahd').DataTable({
         return formatCurrency((data.EXCHGRATE * data.TOTALAMT) * (1 + (data.VATRATE / 100)))
       }
     },
-    // {
-    //   data: null,
-    //   render: function(data, type, row, meta) {
-    //     return data.VATRATE / 100;
-    //   }
-    // }
   ],
   columnDefs: [{
       className: 'dt-right',
@@ -477,6 +471,7 @@ async function fecth_databased(data_begin, date_end) {
 
     const jsonDataHD = await jsonResponse.json();
     await tabledatahd.clear().rows.add(jsonDataHD.datasql).draw();
+    console.log(jsonDataHD)
     excel_data = data_map(jsonDataHD.datasql)
 
     TureTotalAmt = 0
@@ -488,7 +483,6 @@ async function fecth_databased(data_begin, date_end) {
         }
       }
     });
-    // console.log(data_map(jsonDataHD.datasql))
     console.log(excel_data)
     $('.loading').hide();
   } catch (error) {
@@ -537,7 +531,7 @@ function set_formdata(conditionsformdata) {
     formData.append('condition', condotion_id);
     formData.append('Param', JSON.stringify(Param));
   } else {
-    formData.append('queryIdExcel', 'EXCEL_QOUT_INVOICE');
+    formData.append('queryIdExcel', 'EXCEL_QOUT_INVOICE_SUMMARY_SAN');
     formData.append('blobData', JSON.stringify(excel_data));
     formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
     formData.append('condition_footer', 'T');
@@ -624,22 +618,28 @@ function netcal(total, exchgate, vat) {
 }
 
 function data_map(data_json) {
-  data_organize = data_json.map((item) => ({
-    DOCDATE: formatDate(item.DOCDATE),
-    DOCNO: item.DOCNO,
-    ORDERNO: item.ORDERNO,
-    CODE: item.CODE,
-    SNAME: item.SNAME,
-    NAME: item.NAME,
-    CONTNAME: item.CONTNAME,
-    EMPNAME: item.EMPNAME,
-    DETAIL: item.DETAIL,
-    QUAN: item.QUANDLY,
-    UNITAMT: item.UNITAMT,
-    TOTALAMT: item.TOTALAMT,
-  }));
+
+  data_organize = data_json.map((item) => {
+    return {
+      DOCDATE: formatDate(item.DOCDATE),
+      DOCNO: item.DOCNO,
+      ORDERNO: item.ORDERNO,
+      CODE: item.CODE,
+      SNAME: item.SNAME,
+      NAME: item.NAME,
+      CONTNAME: item.CONTNAME,
+      EMPNAME: item.EMPNAME,
+      DETAIL: item.DETAIL,
+      QUAN: item.QUAN,
+      UNITAMT: item.UNITAMT,
+      TOTALAMT: item.TOTALAMT,
+      CURCODE: curcodeex(item.CURCODE),
+    };
+  });
+
   return data_organize;
 }
+
 
 
 $("#downloadExcel").click(function() {

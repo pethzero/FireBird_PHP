@@ -22,7 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQueryCheck = $sqlQueries->scanSQL($checkRecno);
 
         if ($sqlQuery !== null) {
-            $updateData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+
+            $config_setting = database_config('mysqlserver');
+            $updateData = new CRUDDATA(...$config_setting);
+            // $updateData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
             $updateData->data_commit->beginTransaction();
 
             $result_check = $updateData->checkExists($DataEdit_Json[0], $sqlQueryCheck, $checkCondition); // ส่งค่า $message_db มาด้วย

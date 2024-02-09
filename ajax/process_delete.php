@@ -17,7 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
         $sqlQueryCheck = $sqlQueries->scanSQL($checkRecno);
         if ($sqlQuery !== null) {
-            $deleteData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+
+            // $deleteData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            $config_setting = database_config('mysqlserver');
+            $deleteData = new CRUDDATA(...$config_setting);
             $deleteData->data_commit->beginTransaction();  
 
             $result_check = $deleteData->checkExists($DataRemove_Json[0], $sqlQueryCheck, $checkCondition); // ส่งค่า $message_db มาด้วย

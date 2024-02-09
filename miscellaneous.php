@@ -13,7 +13,6 @@
   ?>
   <link rel="preload" href="css/loader.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <style>
-
     .c_activity {
       width: 100px;
     }
@@ -36,55 +35,58 @@
     .datepicker {
       border: 1px solid black;
     }
+
     @media (min-width: 768px) {
-            .custom-input-pc {
-                width: 450px;
-            }
+      .custom-input-pc {
+        width: 450px;
+      }
 
-            .btn-input {
-                width: 120px;
-            }
-            .date-input {
-                width: 140px;
-            }
-        }
+      .btn-input {
+        width: 120px;
+      }
 
-        @media (max-width: 767px) {
-            .custom-input-phone {
-                width: 300px;
-            }
-            .company-input {
-                width: 250px;
-            }
+      .date-input {
+        width: 140px;
+      }
+    }
 
-            .detail-input {
-                width: 300px;
-            }
+    @media (max-width: 767px) {
+      .custom-input-phone {
+        width: 300px;
+      }
 
-            .remark-input {
-                width: 200px;
-            }
+      .company-input {
+        width: 250px;
+      }
 
-            .date-input {
-                width: 120px;
-            }
-        }
+      .detail-input {
+        width: 300px;
+      }
 
-        .table-custom {
-            --bs-table-color: #000;
-            --bs-table-bg: #4caf50;
-            --bs-table-border-color: #bacbe6;
-        }
+      .remark-input {
+        width: 200px;
+      }
 
-        .table-postpone {
-            --bs-table-color: #000;
-            --bs-table-bg: #ff980099;
-            --bs-table-border-color: #bacbe6;
-        }
+      .date-input {
+        width: 120px;
+      }
+    }
 
-        .bg-postpone {
-            background-color: #ff6600;
-        }
+    .table-custom {
+      --bs-table-color: #000;
+      --bs-table-bg: #4caf50;
+      --bs-table-border-color: #bacbe6;
+    }
+
+    .table-postpone {
+      --bs-table-color: #000;
+      --bs-table-bg: #ff980099;
+      --bs-table-border-color: #bacbe6;
+    }
+
+    .bg-postpone {
+      background-color: #ff6600;
+    }
   </style>
   <link href="dashboard.css" rel="stylesheet">
 </head>
@@ -98,67 +100,67 @@
       <!-- CONTENT -->
       <div class="loading" style="display: none;"></div>
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <form id="idForm" method="POST">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">ดาวโหลดส่วนเสริม</h1>
-        </div>
-        <div class="section">
-    <div class="container-fluid">
+        <form id="idForm" method="POST">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">ดาวโหลดส่วนเสริม</h1>
+          </div>
+          <div class="section">
+            <div class="container-fluid">
 
-    <div class="row pb-3">
-        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
-          <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
-        </div>
-      </div>
+              <div class="row pb-3">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+                  <button id='backhis' type="button" class="btn btn-primary">กลับหน้าหลัก</button>
+                </div>
+              </div>
 
-    <div class="row mb-2">
-    <div class="col-md-6">
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-        <h3 class="mb-0">รายงานฝ่ายขาย</h3>
-        <div class="row pt-3">
-            <div class="input-group input-daterange">
-              <span class="input-group-text">เริ่มต้น</span>
-              <input type="text" class="form-control" id="datepickerbegin">
-              <span class="input-group-text">จนถึง</span>
-              <input type="text" class="form-control" id="datepickerend">
+              <div class="row mb-2">
+                <div class="col-md-6">
+                  <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                      <h3 class="mb-0">รายงานฝ่ายขาย</h3>
+                      <div class="row pt-3">
+                        <div class="input-group input-daterange">
+                          <span class="input-group-text">เริ่มต้น</span>
+                          <input type="text" class="form-control" id="datepickerbegin">
+                          <span class="input-group-text">จนถึง</span>
+                          <input type="text" class="form-control" id="datepickerend">
+                        </div>
+                      </div>
+
+                      <div class="row pt-3">
+                        <div class="input-group ">
+                          <span class="input-group-text">ประเภท</span>
+                          <select id='slcdata' class="form-select" aria-label="Default select example">
+                            <option value="0" selected>ใบเสนอราคา</option>
+                            <option value="1">ใบสั่งขาย</option>
+                            <option value="2">ใบส่งของสินค้า</option>
+                            <option value="3">ใบแจ้งหนี้</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row pt-3">
+                        <div class="input-group ">
+                          <span class="input-group-text">ชื่อไฟล์</span>
+                          <input type="text" class="form-control" id="namelink" value="Excel_ใบเสนอราคา" maxlength="125" placeholder="ใส่ชื่อ">
+                        </div>
+                      </div>
+
+                      <div class="row pt-3">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                          <button class="btn btn-success" id="downloadExcel">download excel</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+
             </div>
-        </div>
-
-        <div class="row pt-3">
-          <div class="input-group ">
-            <span class="input-group-text">ประเภท</span>
-            <select id='slcdata' class="form-select" aria-label="Default select example">
-              <option value="0" selected>ใบเสนอราคา</option>
-              <option value="1">ใบสั่งขาย</option>
-              <option value="2">ใบส่งของสินค้า</option>
-              <option value="3">ใบแจ้งหนี้</option>
-            </select>
           </div>
-      </div>
-
-      <div class="row pt-3">
-          <div class="input-group ">
-            <span class="input-group-text">ชื่อไฟล์</span>
-            <input type="text" class="form-control" id="namelink" value="Excel_ใบเสนอราคา"  maxlength="125" placeholder="ใส่ชื่อ">
-          </div>
-      </div>
-
-      <div class="row pt-3">
-        <div class="col-sm-12 col-md-6 col-lg-6">
-          <button class="btn btn-success" id="downloadExcel">download excel</button>
-        </div>
-      </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  
-
-    </div>
-  </div>
         </form>
       </main>
     </div>
@@ -166,7 +168,6 @@
 </body>
 <?php include("0_footerjs_piority.php"); ?>
 <script>
-
   $(document).ready(function() {
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
     $(window).keydown(function(event) {
@@ -183,9 +184,9 @@
       let status_sql = "";
       var clickedButtonName = e.originalEvent.submitter.name;
     });
-    
+
     // $('.loading').hide();
-    
+
     $("#slcdata").on("change", function() {
       var selectedValue = $('#slcdata').val();
       var namelink = "";
@@ -342,10 +343,12 @@
         }
 
         const jsonData = await jsonResponse.json();
-        console.log(jsonData)
+        // console.log(jsonData)
         // เรียกใช้ฟังก์ชัน mapData สำหรับแปลงข้อมูล
         let TureTotalAmt = 0;
         const mappedData = mapData(jsonData.datasql, slcdata.queryid);
+        console.log('END')
+        
         mappedData.forEach((item) => {
           if (typeof item.TOTALAMT !== 'undefined') {
             const totalAmtAsFloat = parseFloat(item.TOTALAMT);
@@ -354,35 +357,50 @@
             }
           }
         });
-
+        console.log(mappedData)
         ////////////////////
-        formData.append('blobData', JSON.stringify(mappedData));
-        formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
-        formData.append('condition_footer', 'T');
-        // console.log(mappedData)
-        const blobResponse = await fetch('export/excel_export.php', {
-          method: 'POST',
-          body: formData,
-        });
 
-        if (!blobResponse.ok) {
-          throw new Error('Error sending data to server');
-          $('.loading').hide();
+        if (mappedData && Array.isArray(mappedData) && mappedData.length > 0) {
+          // ทำสิ่งที่คุณต้องการกับ mappedData ที่ได้
+          // ตัวอย่าง: นำไปใช้ในการแสดงผลหรือประมวลผลต่อ
+          formData.append('blobData', JSON.stringify(mappedData));
+          formData.append('TureTotalAmt', JSON.stringify(TureTotalAmt));
+          formData.append('condition_footer', 'T');
+          // console.log(formData)
+          const blobResponse = await fetch('export/excel_export.php', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!blobResponse.ok) {
+            throw new Error('Error sending data to server');
+            $('.loading').hide();
+          }
+
+          const namelike = $('#namelink').val();
+          // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
+          const blobData = await blobResponse.blob();
+
+          const url = window.URL.createObjectURL(blobData);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = namelike + '.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
+          document.body.appendChild(a);
+          a.click();
+
+          window.URL.revokeObjectURL(url);
+
+        } else {
+          // กรณีไม่มีข้อมูล
+          Swal.fire(
+            'ไม่มีข้อมูลในช่วงเวลานี้',
+            'กรุณาเลือกวันที่ให้ถูกต้อง',
+            'error'
+          )
+          // console.log("ไม่พบข้อมูลที่มีตามเงื่อนไข");
         }
 
-        const namelike = $('#namelink').val();
-        // ดาวน์โหลดข้อมูลเป็น Blob หรือทำอะไรกับ blobResponse ตามที่คุณต้องการ
-        const blobData = await blobResponse.blob();
-
-        const url = window.URL.createObjectURL(blobData);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = namelike + '.xlsx'; // ตั้งชื่อไฟล์ที่จะดาวน์โหลด
-        document.body.appendChild(a);
-        a.click();
-
-        window.URL.revokeObjectURL(url);
 
         $('.loading').hide();
       } catch (error) {
@@ -391,6 +409,7 @@
     }
 
     function mapData(datamapsql, conditionmap) {
+      // console.log(datamapsql)
       const mappedData = datamapsql.map((item) => {
         if (conditionmap == 'EXCEL_CUSTOMERSALE') {
           return {
@@ -442,6 +461,7 @@
         } else if (conditionmap == 'EXCEL_QOUT_INVOICE') {
           return {
             DOCDATE: formatDate(item.DOCDATE),
+            DUEDATE: formatDate(item.DUEDATE),
             DOCNO: item.DOCNO,
             ORDERNO: item.ORDERNO,
             CODE: item.CODE,
@@ -451,7 +471,7 @@
             EMPNAME: item.EMPNAME,
             DETAIL: item.DETAIL,
             QUAN: item.QUAN,
-            QUANDLY:item.QUANDLY,
+            QUANDLY: item.QUANDLY,
             UNITAMT: item.UNITAMT,
             TOTALAMT: item.TOTALAMT,
           };

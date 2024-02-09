@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $sqlQuery = $sqlQueries->scanSQL($queryIdHD);
 
         if ($sqlQuery !== null) {
-            $config_setting = database_config('sanserver');
+            $config_setting = database_config('mysqlserver');
             $processfecth = new CRUDDATA(...$config_setting);
             // $processfecth = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
             $processfecth->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData

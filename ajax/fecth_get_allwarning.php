@@ -21,7 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $SqlID003 = $sqlQueries->scanSQL($queryId003);
 
         if ($SqlID001 !== null &&  $SqlID002 !== null &&  $SqlID003 !== null) {
-            $selectData = new CRUDDATA('mysql', 'localhost', 'SAN', 'root', '1234');
+            $config_setting = database_config('mysqlserver');
+            $selectData = new CRUDDATA(...$config_setting);
             $selectData->data_commit->beginTransaction();  // เริ่ม Transaction ดึงมาจาก class InsertData
 
             $resultID001 = $selectData->SelectRecord($SqlID001);
