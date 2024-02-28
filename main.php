@@ -3,6 +3,8 @@
 
 <head>
   <script src="assets/js/color-modes.js"></script>
+  <script src="js/system_main.js"></script>
+
   <?php
   session_start();
   if (!isset($_SESSION["RECNO"])) {
@@ -85,7 +87,7 @@
       z-index: 1500;
     }
   </style>
-  <link href="dashboard.css" rel="stylesheet">
+  <link href="layout/bs5/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -97,7 +99,9 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">SAN ENGINEERING</h1>
         </div>
-        <div class="row mb-2">
+
+        <!-- <button type="button" id="test">TEST</button> -->
+        <div class="row mb-2" id="head">
           <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
               <div class="col p-4 d-flex flex-column position-static">
@@ -113,7 +117,7 @@
                 </ul>
               </div>
               <div class="col-auto d-none d-lg-block">
-                <img src="images/QT_IMG1.jpg" alt="Thumbnail" width="200" height="250">
+                <img src="images/main/marketing.png"  onerror="imageFailed(event)" alt="Thumbnail" width="200" height="250">
               </div>
             </div>
           </div>
@@ -131,7 +135,7 @@
                 </ul>
               </div>
               <div class="col-auto d-none d-lg-block">
-                <img src="images/PO_IMG1.jpg" alt="Thumbnail" width="200" height="250">
+                <img src="images/main/slae.png"  onerror="imageFailed(event)" alt="Thumbnail" width="200" height="250">
               </div>
             </div>
           </div>
@@ -148,7 +152,7 @@
                 </ul>
               </div>
               <div class="col-auto d-none d-lg-block">
-                <img src="images/Maintenance_IMG1.jpg" alt="Thumbnail" width="200" height="250">
+                <img src="images/main/takenote.png"  onerror="imageFailed(event)" alt="Thumbnail" width="200" height="250">
               </div>
             </div>
           </div>
@@ -167,10 +171,11 @@
                 </ul>
               </div>
               <div class="col-auto d-none d-lg-block">
-                <img src="images/product.jpg" alt="Thumbnail" width="200" height="250">
+                <img src="images/main/i_production.jpg"  onerror="imageFailed(event)" alt="Thumbnail" width="200" height="250">
               </div>
             </div>
           </div>
+
           <div class="col-md-6">
             <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
               <div class="col p-4 d-flex flex-column position-static">
@@ -182,7 +187,7 @@
                 </ul>
               </div>
               <div class="col-auto d-none d-lg-block">
-                <img src="images/Maintenance_IMG1.jpg" alt="Thumbnail" width="200" height="250">
+                <img src="images/main/i_store.jpg"  onerror="imageFailed(event)" alt="Thumbnail" width="200" height="250">
               </div>
             </div>
           </div>
@@ -202,22 +207,79 @@
                   <?php
                   }
                   ?>
-
                   <li><a href="dataempl_stop.php">ประวัติการลา</a></li>
+                  <li><a href="datacustomer.php">ใบวางบิลลูกค้า</a></li>
                 </ul>
               </div>
               <div class="col-auto d-none d-lg-block">
-                <img src="images/Maintenance_IMG1.jpg" alt="Thumbnail" width="200" height="250">
+                <img src="images/main/i_humanresource.png" onerror="imageFailed(event)" alt="Thumbnail" width="200" height="250">
+                <!-- <img src="" onerror="imageFailed(event)" alt="Thumbnail" width="200" height="250"> -->
               </div>
             </div>
           </div>
 
 
         </div>
+
+        <div class="row mb-2" id="detail">
+
+        </div>
+
       </main>
     </div>
   </div>
   <script src="js/bootstrap-5.3.1.bundle.min.js"></script>
 </body>
+<script>
+ var dataArray = [
+    {
+      id: 1,
+      code: "M",
+      head: "สโตร์",
+      list: [{ link: "summarystocknotify.php", text: "สต๊อกต่ำกว่าเกณฑ์" }],
+      img: "images/Maintenance_IMG1.jpg"
+    },
+    {
+      id: 2,
+      code: "L",
+      head: "A2",
+      list: [{ link: "A2", text: "A2" }],
+      img: "images/Maintenance_IMG1.jpg"
+    }
+  ];
+
+  // สร้าง div ตามข้อมูลใน Array
+  // dataArray.forEach(item => {
+  //   var div = document.createElement("div");
+  //   div.className = "col-md-6";
+
+  //   var innerHTML = `
+  //     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+  //       <div class="col p-4 d-flex flex-column position-static">
+  //         <strong class="d-inline-block mb-2 text-primary-emphasis">
+  //           <h3>${item.head}</h3>
+  //         </strong>
+  //         <ul>
+  //   `;
+
+  //   // เพิ่ม list items
+  //   item.list.forEach(listItem => {
+  //     innerHTML += `<li><a href="${listItem.link}">${listItem.text}</a></li>`;
+  //   });
+
+  //   innerHTML += `
+  //         </ul>
+  //       </div>
+  //       <div class="col-auto d-none d-lg-block">
+  //         <img src="${item.img}" alt="Thumbnail" width="200" height="250">
+  //       </div>
+  //     </div>
+  //   `;
+
+  //   div.innerHTML = innerHTML;
+
+  //   document.getElementById("detail").appendChild(div);
+  // });
+</script>
 
 </html>

@@ -33,7 +33,7 @@
             border: 1px solid black;
         }
     </style>
-    <link href="dashboard.css" rel="stylesheet">
+    <link href="layout/bs5/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -130,7 +130,7 @@
 </body>
 <?php include("0_footerjs_piority.php"); ?>
 <script src="js/systemdtcolum.js"></script>
-<script src="js/systemzero.js"></script>
+<script src="js/system_components.js"></script>
 <script>
     $(document).ready(function() {
         /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////

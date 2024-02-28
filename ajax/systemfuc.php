@@ -10,6 +10,9 @@ class TBname
 
         $this->tbname['C0001'] = ["checkqueryid" => "CHECK_EMPL_COUNT", "checkcondition" => "EMPNOCHECK"];
         $this->tbname['C0002'] = ["checkqueryid" => "CHECK_EMPL_UPID", "checkcondition" => "EMPNOCHECK_UPD"];
+
+        // $this->tbname['C0003'] = ["checkqueryid" => "CHK_BILLDETAIL_001", "checkcondition" => "000_RY"];
+        $this->tbname['C0003'] = ["checkqueryid" => "CHK_BILLDETAIL_001", "checkcondition" => "000_RY"];
     }
 
     public function getTBName($tbanme)
@@ -59,6 +62,14 @@ function uniquecondition($condition_unique, $result_unique, $result_data)
             }
         }
     }
+
+    else if ($condition_unique == "BILL00001") {
+        if ($result_unique['result']['count_detail'] > 0){
+            $condition_data['condition'] = true;
+            $condition_data['message']  = "ปีนี้ข้อมูลถูกบันทึกเรียบร้อยแล้ว";
+        }
+    }
+
     return $condition_data;
 }
 

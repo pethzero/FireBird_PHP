@@ -42,7 +42,7 @@
       /* ระยะห่างระหว่างปุ่ม */
     }
   </style>
-  <link href="dashboard.css" rel="stylesheet">
+  <link href="layout/bs5/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -158,7 +158,6 @@
                                   <div class="input-group mb-3">
                                     <span class="input-group-text c_activity">รหัสผ่าน:</span>
                                     <input type="password" class="form-control" id="pass" placeholder="รหัสผ่าน" maxlength="128" autocomplete="current-pass">
-
                                   </div>
                                 </div>
                               </div>
@@ -216,7 +215,7 @@
       }
     });
     //////////////////////////////////////////////////////////////// TABLE  ////////////////////////////////////////////////////////////////
-    var detailtable = $('#table_datahd').DataTable({
+    var mainTable  = $('#table_datahd').DataTable({
       scrollX: true,
       columns: [{
           data: 'ID'
@@ -383,7 +382,7 @@
       dataFetcher.fetchData('ajax/new_fecth_oitem_mysqldata.php', 'select', true)
         .then(async (data) => {
           datajson = data['data'][0];
-          await detailtable.clear().rows.add(datajson).draw();
+          await mainTable .clear().rows.add(datajson).draw();
         })
         .catch((error) => {
           console.error(error);

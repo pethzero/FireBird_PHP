@@ -42,7 +42,7 @@
       /* ระยะห่างระหว่างปุ่ม */
     }
   </style>
-  <link href="dashboard.css" rel="stylesheet">
+  <link href="layout/bs5/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -150,10 +150,9 @@
                                     <input type="text" class="form-control" id="login" placeholder="ชื่อล๊อคอิน" maxlength="128">
                                   </div>
 
-                                  <div class="input-group mb-3">
+                                  <div class="input-group mb-3" style="display: none;" >
                                     <span class="input-group-text c_activity">รหัสผ่าน:</span>
-                                    <!-- <input type="pass" class="form-control" id="pass" placeholder="รหัสผ่าน" maxlength="128" autocomplete="current-pass"> -->
-                                    <input type="password" class="form-control" id="pass" placeholder="รหัสผ่าน" maxlength="128" autocomplete="current-pass">
+                                    <input type="pass" class="form-control" id="pass" placeholder="รหัสผ่าน" maxlength="128" autocomplete="current-pass">
 
                                   </div>
                                 </div>
@@ -162,7 +161,7 @@
                           </div>
 
                           <div class="modal-footer">
-                            <button id="ok" type="submit" name='savedata' class="btn btn-primary">บันทึก</button>
+                            <button id="ok" type="submit" name='savedata' class="btn btn-danger">แก้ไข</button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                           </div>
                         </div>
@@ -362,6 +361,7 @@
         }
 
         const data = await response.json();
+        console.log(data);
         if (status_sql === 'save' || status_sql === 'update') {
           if (data.status === 'warnning') {
             await alertmessage(data.message, 'กรุณากรอกข้อมูลใหม่', 'error', 'OK');
@@ -439,7 +439,7 @@
       console.log('suub', clickedButtonName)
       if (clickedButtonName == "savedata") {
         if (viewstatus == 'T') {
-          if ($('#code').val().trim() === '' || $('#login').val().trim() === '' || $('#pass').val().trim() === '') {
+          if ($('#code').val().trim() === '' || $('#login').val().trim() === '' ) {
             let messagedata;
             if ($('#code').val().trim() === '') {
               messagedata = "กรุณากรอกรหัสประจำตัว"
@@ -447,9 +447,9 @@
             else if ($('#login').val().trim() === '') {
               messagedata = "กรุณากรอกรหัสไอดีผู้ใช้งาน"
             }
-            else if ($('#pass').val().trim() === '') {
-              messagedata = "กรุณากรอกรหัสผ่าน"
-            }
+            // else if ($('#pass').val().trim() === '') {
+            //   messagedata = "กรุณากรอกรหัสผ่าน"
+            // }
             Swal.fire({
                 title: messagedata,
                 text: "ข้อมูลไม่สามารถบันทึกหรือแก้ไขได้",
@@ -497,7 +497,7 @@
           condition: 'RECNO000'
         }, //
         save: {
-          queryIdHD: 'IND_EMPL',
+          queryIdHD: 'IND_EMPL_HASH',
           condition: 'EMPNOIND',
           checkData: 'CHECK_EMPL_COUNT',
           checkCondition: 'EMPNOCHECK'
@@ -602,7 +602,7 @@
       };
 
       const showData = () => {
-        CRUDSQL('ajax/fecth_item.php', 'select_id')
+        CRUDSQL('ajax/fecth_item_pass.php', 'select_id')
           .then(() => $("#myModal").modal("show"))
           .catch(error => console.error('เกิดข้อผิดพลาดใน CRUDSQL:', error));
       };
@@ -634,7 +634,7 @@
         namereal: 'EMPNAME',
         namenick: 'EMPNICK',
         login: 'LOGIN',
-        pass: 'PASS',
+        // pass: 'PASS',
         userlevel: 'USERLEVEL',
       };
 

@@ -1,0 +1,16 @@
+[
+    {   
+        "method": "POST_CHECK",
+        "queryID": "BILL00001",
+        "condition": "000_NAME",
+        "tbanme":"C0003",
+        "listdata": [
+  {"recno":4,
+            "code":"AA",
+            "sname":"AA",
+            "name":"555",
+            "year":2022,
+            "dateail":"aaa"}
+]
+    }
+]

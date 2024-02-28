@@ -6,7 +6,7 @@ function database_config($key)
 
         //FB Test
         // 'fbserver' => ['firebird', '192.168.1.205', 'JKP', 'SYSDBA', 'masterkey'],
-         'fbserver' => ['firebird', '192.168.1.28', 'SAN', 'SYSDBA', 'masterkey'],
+        'fbserver' => ['firebird', '192.168.1.28', 'SAN', 'SYSDBA', 'masterkey'],
         // 'fbserver' => ['firebird', 'localhost', 'SAN', 'SYSDBA', 'masterkey'],
 
         //MYSQL Test 
@@ -320,20 +320,18 @@ class CRUDDATA
     {
         try {
             $results = [];
-            foreach ($dataArray as $data) 
-            {
             $stmt = $this->conn->prepare($sqlQuery);
-            bindParamData::bindParams($stmt, $data, $condition);
-            $stmt->execute();
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $results[] = $result; // เพิ่มผลลัพธ์ของแต่ละรอบลงใน array
+            foreach ($dataArray as $data) {
+                // $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $results[] = $result; // เพิ่มผลลัพธ์ของแต่ละรอบลงใน array
             }
             // // ส่งค่าผลลัพธ์กลับ
             return array('result' => $result, 'status' => true,  'db_connect' => $this->message_log, 'message' => 'select success');
         } catch (PDOException $e) {
-            // $this->conn->rollBack(); // Rollback การ Transaction เมื่อเกิดข้อผิดพลาด
             return array('result' => [], 'status' => false, 'db_connect' => $this->message_log, 'message' => $e->getMessage());
-            // return false;
         }
     }
 
@@ -456,11 +454,38 @@ class CRUDDATA
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function ProcessFBMultiple($dataArray, $sqlQuery, $condition)
+    public function FetchFB_Select($dataArray, $sqlQuery, $condition)
     {
         try {
+            $stmt = $this->conn->prepare($sqlQuery);
             foreach ($dataArray as $data) {
-                $stmt = $this->conn->prepare($sqlQuery);
+                $dataRows = [];
+                // $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition);
+                $stmt->execute();
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    foreach ($row as $key => $value) {
+                        if (is_string($value)) {
+                            // ข้อมูลเป็น string
+                            $row[$key] = iconv('TIS-620', 'UTF-8//TRANSLIT//IGNORE', $value);
+                        }
+                    }
+                    $dataRows[] = $row;
+                }
+            }
+            return array('result' => $dataRows, 'status' => true,  'message' => 'select success');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'message' => $e->getMessage());
+        }
+    }
+    public function FetchMySQL_Select($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            $stmt = $this->conn->prepare($sqlQuery);
+            foreach ($dataArray as $data) {
+                // $stmt = $this->conn->prepare($sqlQuery);
                 bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
                 $stmt->execute();
             }
@@ -471,11 +496,35 @@ class CRUDDATA
         }
     }
 
-    public function ProcessFBMultipleXX($dataArray, $sqlQuery, $condition)
+    ////// FetchMySQL INSERT UPDATE DELETE
+    public function FetchMySQL_IUD($dataArray, $sqlQuery, $condition)
     {
         try {
+            // $results = [] ;
+            $stmt = $this->conn->prepare($sqlQuery);
             foreach ($dataArray as $data) {
                 $stmt = $this->conn->prepare($sqlQuery);
+                bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
+                $stmt->execute();
+                //  EDIT 
+                // $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                // $results[] = $result; // เพิ่มผลลัพธ์ของแต่ละรอบลงใน array
+            }
+            // return array('result' => $results, 'status' => true, 'message' => 'Process Successfully');
+            return array('result' => $dataArray, 'status' => true, 'message' => 'Process Successfully');
+        } catch (PDOException $e) {
+            $this->message_log = "Error: " . $e->getMessage();
+            return array('result' => [], 'status' => false, 'message' => $this->message_log);
+        }
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public function ProcessFBMultiple($dataArray, $sqlQuery, $condition)
+    {
+        try {
+            $stmt = $this->conn->prepare($sqlQuery);
+            foreach ($dataArray as $data) {
+                // $stmt = $this->conn->prepare($sqlQuery);
                 bindParamData::bindParams($stmt, $data, $condition); // เรียกใช้งาน bindParamData
                 $stmt->execute();
             }
@@ -485,5 +534,8 @@ class CRUDDATA
             return array('result' => [], 'status' => false, 'message' => $this->message_log);
         }
     }
+
+
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

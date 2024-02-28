@@ -954,7 +954,6 @@
 
     function select2_contact_list(recno_data) {
       $.ajax({
-        // url: 'ajax_data_select.php',
         url: encodedURL_Select,
         data: {
           queryId: 'CUSTCONT_LIST',

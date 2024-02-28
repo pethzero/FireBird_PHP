@@ -12,7 +12,7 @@
         <li class="nav-item">
           <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="main.php">
             <svg class="bi">
-              <use xlink:href="0_image.svg#house-fill" />
+              <use xlink:href="images/svg/0_image.svg#house-fill" />
             </svg>
             หนัาหลัก
           </a>
@@ -33,7 +33,7 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="appointment_up.php">
               <svg class="bi">
-                <use xlink:href="0_image.svg#appointment" />
+                <use xlink:href="images/svg/0_image.svg#appointment" />
               </svg>
               ตารางหนัดหมาย
             </a>
@@ -41,7 +41,7 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="datatable_qt.php">
               <svg class="bi">
-                <use xlink:href="0_image.svg#cuprank" />
+                <use xlink:href="images/svg/0_image.svg#cuprank" />
               </svg>
               อันดับลูกค้าใบเสนอราคา
             </a>
@@ -61,7 +61,7 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="miscellaneous.php">
               <svg class="bi">
-                <use xlink:href="0_image.svg#file-earmark-text" />
+                <use xlink:href="images/svg/0_image.svg#file-earmark-text" />
               </svg>
               รายงาน
             </a>
@@ -77,7 +77,7 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="datatable_po.php">
               <svg class="bi">
-                <use xlink:href="0_image.svg#cuprank" />
+                <use xlink:href="images/svg/0_image.svg#cuprank" />
               </svg>
               อันดับผู้จำหน่ายใบสั่งซื้อ
             </a>
@@ -97,7 +97,7 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="dataquancontrol.php">
               <svg class="bi">
-                <use xlink:href="0_image.svg#file-earmark-text" />
+                <use xlink:href="images/svg/0_image.svg#file-earmark-text" />
               </svg>
               ประเมินคุณภาพสินค้า
             </a>
@@ -169,7 +169,7 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="logout.php">
               <svg class="bi">
-                <use xlink:href="0_image.svg#door-closed" />
+                <use xlink:href="images/svg/0_image.svg#door-closed" />
               </svg>
               Sign out
             </a>
@@ -183,7 +183,7 @@
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center gap-2" href="logout.php">
               <svg class="bi">
-                <use xlink:href="0_image.svg#door-closed" />
+                <use xlink:href="images/svg/0_image.svg#door-closed" />
               </svg>
               Sign out
             </a>

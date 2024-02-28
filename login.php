@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="field">
-                    <input type="password" name="password" value="<?php echo isset($_COOKIE['remember_password']) ? $_COOKIE['remember_password'] : ''; ?>" required>
+                    <input type="password" id='password' name="password" value="<?php echo isset($_COOKIE['remember_password']) ? $_COOKIE['remember_password'] : ''; ?>" required>
                     <label>Password</label>
                 </div>
 
@@ -115,11 +115,9 @@
         document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
             event.preventDefault(); // ป้องกันการเปลี่ยนหน้าเว็บ
 
-            // เพิ่มการใช้งาน SweetAlert หรือปรับแต่งตามที่คุณต้องการ
-            // ตัวอย่าง: แสดง SweetAlert เมื่อคลิกที่ลิงก์
             Swal.fire({
                 title: 'ลืมรหัสผ่าน',
-                html: '<img src="doc/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์ลืม</h4>',
+                html: '<img src="images/main/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์ลืม</h4>',
                 // text: 'ตอนนี้ กดได้ เฉยๆ ยังไม่มีอะไรหลอก',
                 icon: 'info',
                 confirmButtonText: 'OK'
@@ -135,47 +133,46 @@
             console.log($("input[name='username']"))
 
             dataFetcher.fetchData('ajax/db_login.php', 'add', true).then(async (data) => {
+
                 console.log(data);
-                Swal.fire({
-                title: 'ลืมรหัสผ่าน',
-                html: '<img src="doc/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์ลืม</h4>',
-                // text: 'ตอนนี้ กดได้ เฉยๆ ยังไม่มีอะไรหลอก',
-                icon: 'info',
-                confirmButtonText: 'OK'
-            });
+                  //  console.log(data['condition']);
+                    
+                    switch (data['condition']) {
+                        case "T":
+                            window.location = 'main.php';
+                            break;
+                        case "W":
+                            Swal.fire({
+                                title: 'ใส่รหัสผ่านผิด',
+                                html: '<img src="images/main/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์...</h4>',
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                            break;
+                        default:
+                        Swal.fire({
+                                title: 'ไม่เจอ User',
+                                html: '<img src="images/main/nopermission.jpg"  width="150" height="150"  alt="รูปภาพ"><br><br><h4>แกไม่มีสิทธ์...</h4>',
+                                icon: 'info',
+                                confirmButtonText: 'OK'
+                            });
+                    }
+
                 }).catch((error) => {
                     console.error(error);
                 })
                 .finally(() => {
 
                 });
-            // dataFetcher.ParamCustomize()
-            //     .then(async () => {
-            //         // set_formdata('add')
-            //         processstatus = await dataFetcher.ProcessAlert();
-            //         if (processstatus) {
-            //             const crudstatus = await dataFetcher.AlertSave();
-            //             if (crudstatus) {
-            //                 $('.loading').show();
-            //                 let prosscessdata = await dataFetcher.fetchData('ajax/db_login.php', 'add', true);
-            //                 await proessendcontinue(ParamHead[0].io);
-            //             }
-            //         }
-            //     })
-            //     .catch((error) => {
-            //         console.error(error);
-            //     })
-            //     .finally(() => {
-            //         $('.loading').hide();
-            //     });
-
-
         });
 
         function set_formdata(conditionsformdata) {
             var formData = new FormData();
-        	formData.append('username', $('#username'));
-            formData.append('password', $('#password'));
+            console.log($('#remember-me')[0].checked)
+            formData.append('username', $('#username').val());
+            formData.append('password', $('#password').val());
+            formData.append('remember', $('#remember-me')[0].checked );
+            
             ////////////////
             return formData;
         }

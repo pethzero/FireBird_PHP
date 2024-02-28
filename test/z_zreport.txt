@@ -1,6 +1,0 @@
-SELECT 2
-
-theme: 'bootstrap-5',
-
-กรณีใช้ Modal
-dropdownParent: $('#myModal .modal-content'),

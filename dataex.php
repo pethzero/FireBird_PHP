@@ -63,7 +63,7 @@
       padding: 3px;
     }
   </style>
-  <link href="dashboard.css" rel="stylesheet">
+  <link href="layout/bs5/dashboard.css" rel="stylesheet">
 </head>
 
 <body>

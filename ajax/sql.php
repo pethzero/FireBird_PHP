@@ -6,6 +6,13 @@ class SQLQueries
     {
         $this->sqlsreach['L00000'] = "SELECT ID,RECNO, EMPNO, EMPNAME, PASS,IMG,USERLEVEL,PERMISSION FROM empl WHERE UPPER(LOGIN)=:login";
         // กำหนดคำสั่ง SQL สำหรับแต่ละค่า $queryIdHD ที่คุณต้องการ
+        //CUST
+        $this->sqlsreach['SELECT_CUST'] = "SELECT recno,name,sname,code FROM cust ORDER BY RECNO ASC";
+        $this->sqlsreach['SC_BILLDETAIL'] = "SELECT * FROM billdetail ORDER BY ITEMNO ASC";
+        $this->sqlsreach['BILL00001'] = "INSERT INTO billdetail (recno, lastupd, created, code, sname, name, year, itemno, detail) VALUES (:recno, NOW(), NOW(), :code, :sname, :name, :year, 1, :detail)";
+        $this->sqlsreach['B000002'] = "UPDATE billdetail SET detail=:detail  WHERE recno=:recno and year=:year ";
+        $this->sqlsreach['CHK_BILLDETAIL_001'] = "SELECT COUNT(*) AS count_detail FROM billdetail where recno = :recno and year = :year ";
+
         //APPPOINTMENT
         $this->sqlsreach['IND_APPPOINTMENT'] = "INSERT INTO appointment (CREATED,LASTUPD,CUSTNAME,STATUS,DETAIL,REMARK,STARTD,WARND,OWNERNAME) VALUES (NOW(),NOW(),:name,'A',:detail,:remark,:startd,:warmd,:ownername,)";
         $this->sqlsreach['IND_APPPOINTMENT_NEW'] = "INSERT INTO appointment (CREATED,LASTUPD,CUSTNAME,STATUS,DETAIL,REMARK,STARTD,WARND,OWNERNAME,ADDR) VALUES (NOW(),NOW(),:name,'A',:detail,:remark,:startd,:warmd,:ownername,:location)";
@@ -15,7 +22,6 @@ class SQLQueries
         $this->sqlsreach['CHK_APPPOINTMENT'] = " SELECT COUNT(*) as count FROM appointment WHERE RECNO = :recno";
         $this->sqlsreach['SELECT_APPPOINTMENT'] = "SELECT * FROM appointment ORDER BY RECNO DESC";
         $this->sqlsreach['001'] = "INSERT INTO appointment (CUSTNAME) VALUES (:name)";
-        $this->sqlsreach['SELECT_CUST'] = "SELECT RECNO,NAME FROM cust ORDER BY RECNO DESC";
 
         //QOUT
         $this->sqlsreach['COUNT_QUOTHD0'] = "SELECT QUOTHD.CUST, CUST.NAME AS CustomerName, CUST.CODE  AS CODE, CUST.CORP  AS CORPNAME, COUNT(QUOTHD.CUST) AS QUAN FROM QUOTHD LEFT JOIN CUST ON QUOTHD.CUST = CUST.RECNO GROUP BY QUOTHD.CUST, CUST.NAME, CUST.CODE, CUST.CORP ORDER BY QUAN DESC";
@@ -95,7 +101,9 @@ class SQLQueries
 
 
         $this->sqlsreach['IND_EMPL'] =  "INSERT INTO empl (LASTUPD, PERMISSION, STATUS, USERLEVEL, EMPNO, EMPNAME, EMPNAMEEN, EMPNICK, LOGIN, PASS, CREATED, IMG) VALUES (NOW() ,'' ,'T' ,:userlevel ,:empno ,:empname ,'' ,:empnick ,:login ,:pass ,NOW() ,'')";
+        $this->sqlsreach['IND_EMPL_HASH'] =  "INSERT INTO empl (LASTUPD, PERMISSION, STATUS, USERLEVEL, EMPNO, EMPNAME, EMPNAMEEN, EMPNICK, LOGIN, PASS, CREATED, IMG) VALUES (NOW() ,'' ,'T' ,:userlevel ,:empno ,:empname ,'' ,:empnick ,:login ,:pass ,NOW() ,'')";
         $this->sqlsreach['UPD_EMPL'] =  "UPDATE empl SET EMPNO = :empno, LASTUPD = NOW(), USERLEVEL = :userlevel, EMPNAME = :empname, EMPNICK = :empnick, LOGIN = :login, PASS = :pass WHERE RECNO = :recno ";
+        $this->sqlsreach['IND_EMPL_HASH'] =  "UPDATE empl SET EMPNO = :empno, LASTUPD = NOW(), USERLEVEL = :userlevel, EMPNAME = :empname, EMPNICK = :empnick, LOGIN = :login WHERE RECNO = :recno ";
         $this->sqlsreach['DLD_EMPL'] = "DELETE FROM empl WHERE RECNO= :recno ";
         $this->sqlsreach['INSERT_EMPL_NEW'] = "INSERT INTO empl (RECNO,LASTUPD, PERMISSION, STATUS, USERLEVEL, EMPNO, EMPNAME, EMPNAMEEN, EMPNICK, LOGIN, PASS, CREATED, IMG,STYPE)
         VALUES (:recno,NOW(), '', 'T', :userlevel, :empno, :empname, '', :empnick, :login, :pass, NOW(), '','IR')
@@ -139,6 +147,12 @@ class SQLQueries
         $this->sqlsreach['UPD_STOCK'] = "UPDATE INVENT SET LASTUPD='NOW', QUAN=QUAN - :quan,LASTOUT='NOW' WHERE RECNO=:recno";
         //HR
         $this->sqlsreach['EMPL_REST'] = "SELECT BDATE,BTIME,EDATE,ETIME,EMPL,RECNO,STATUS FROM EMPLREST";
+
+
+        //DEVELOP
+        $this->sqlsreach['DEV001254'] = "SELECT id,recno,pass FROM empl WHERE LOGIN != '' ";
+        $this->sqlsreach['DEV011254'] = "UPDATE empl SET pass=:pass  WHERE id=:id";
+
     }
     public function scanSQL($queryId)
     {

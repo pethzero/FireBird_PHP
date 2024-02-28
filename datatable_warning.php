@@ -24,7 +24,7 @@
       border: 1px solid black;
     }
   </style>
-  <link href="dashboard.css" rel="stylesheet">
+  <link href="layout/bs5/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -264,7 +264,7 @@
 </body>
 <?php include("0_footerjs_piority.php"); ?>
 <script src="js/systemdtcolum.js"></script>
-<script src="js/systemzero.js"></script>
+<script src="js/system_components.js"></script>
 <script>
   $(document).ready(function() {
     /////////////////////////////////////////////////////////////// INITOPEATION /////////////////////////////////////////////////////////
@@ -308,6 +308,7 @@
         if (onprocess) {
           empl_list = jsonDataMain.dataempl;
           euqip_list = jsonDataMain.dataeuip;
+          
           const dataProcessor = new DataProcessor();
           const processedDataEmpl = await dataProcessor.process(empl_list, 'RECNO', 'EMPNO', 'EMPNAME');
           const processedDataEquip = await dataProcessor.process(euqip_list, 'RECNO', 'CODE', 'NAME');

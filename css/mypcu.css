@@ -214,13 +214,59 @@
 }
 
 
-.inputreadonly:read-only {
+/* [data-bs-theme="light"] .inputreadonly {
     background: #c6c6c6;
+  }
+
+
+  [data-bs-theme="dark"] .inputreadonly {
+    background: #c6c6c6;
+    color: #000000;
+  }
+
+
+.inputreadonly:focus {
+    outline: none;
+    border-color: #888;
+}
+ */
+
+.inputreadonly {
+    outline: none;
+    border-color: #888;
+    /* สีเทาเข้มเมื่อ input ได้รับ focus */
+    background: #d0d0d0;
+}
+
+[data-bs-theme="dark"] .inputreadonly {
+    /* color: #000000;  */
+    background: #717171;
 }
 
 .inputreadonly:focus {
     outline: none;
-    /* ไม่แสดง outline เมื่อ input ได้รับ focus */
     border-color: #888;
     /* สีเทาเข้มเมื่อ input ได้รับ focus */
 }
+
+
+
+
+/* .swal2-actions.actions-right .swal2-cancel {
+    order: 2;
+  }
+
+  .swal2-actions.actions-right .swal2-confirm {
+    order: 1;
+  }
+
+  .swal2-actions.actions-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .swal2-confirm,
+  .swal2-cancel {
+    margin-left: 10px;
+    width: auto;
+  } */

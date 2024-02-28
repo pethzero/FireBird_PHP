@@ -1,4 +1,5 @@
-<script src="js/jquery-3.6.0.min.js" rel="preload" as="script"></script>
+<!-- <script src="js/jquery-3.6.0.min.js" rel="preload" as="script"></script> -->
+<script src="js/jquery-3.7.0.min.js" rel="preload" as="script"></script> 
 <script src="js/bootstrap.bundle.min.js" rel="preload" as="script"></script>
 <script src="js/select2-4.1.0.min.js" rel="preload" as="script"></script>
 

@@ -17,6 +17,7 @@ class bindParamData
             case 'ID000':
                 $stmt->bindParam(':id', $data['id']);
                 break;
+
             case '001':
                 $stmt->bindParam(':name', $data['name']);
                 $stmt->bindParam(':detail', $data['detail']);
@@ -176,6 +177,28 @@ class bindParamData
             case '001_QUAN':
                 $stmt->bindParam(':recno', $data['recno']);
                 $stmt->bindParam(':quan', $data['quan']);
+                break;
+            case '000_NAME':
+                $stmt->bindParam(':name', $data['name']);
+                break;
+            case 'BILLDETAIL':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':code', $data['code']);
+                $stmt->bindParam(':sname', $data['sname']);
+                $stmt->bindParam(':name', $data['name']);
+                $stmt->bindParam(':year', $data['year']);
+                $stmt->bindParam(':detail', $data['detail']);
+            case 'BD01745':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':year', $data['year']);
+                $stmt->bindParam(':detail', $data['detail']);
+            case '000_RY':
+                $stmt->bindParam(':recno', $data['recno']);
+                $stmt->bindParam(':year', $data['year']);
+                break;
+            case 'DEV14893':
+                $stmt->bindParam(':id', $data['id']);
+                $stmt->bindParam(':pass', $data['pass']);
                 break;
                 // เพิ่มเงื่อนไขเพิ่มเติมตามความต้องการ
             default:
